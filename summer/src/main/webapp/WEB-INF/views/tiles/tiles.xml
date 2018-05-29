@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd"> 
+
+<tiles-definitions>
+	<definition name = "base-definition"
+	template = "/WEB-INF/views/tiles/layouts/defaultLayout.jsp">
+	<!--  화면 title -->
+	<put-attribute name = "title" value = ""/>
+	<!--  header -->
+	<put-attribute name = "header" value = "/WEB-INF/views/tiles/template/header.jsp" />
+	<!--  menu -->
+	<put-attribute name = "menu" value = "/WEB-INF/views/tiles/template/menu.jsp" />
+	<!--  body (contents)-->
+	<put-attribute name = "body" value = "" />
+
+	</definition>
+	
+	<!--  HELLO -->
+	<definition name = "home"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "HSB>hello" />
+		<put-attribute name  = "body"   value = "/home.jsp" />
+	</definition>
+
+</tiles-definitions>
+
