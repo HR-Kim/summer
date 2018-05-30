@@ -25,8 +25,6 @@ moneyMade는 웹으로 편리하게 소비/지출을 입력하고 나의 소비�
 https://github.com/HR-Kim/summer/blob/master/SUMMER.exerd
 
 ## 개발 환경 / 툴  
-
-## 적용 기술 / 라이브러리 의존성  
 - [Java SE 8 (Oracle JDK 1.8.0)](http://www.oracle.com/technetwork/java/javase/downloads)
 - [Oracle Database 11g Release 2 (11.2.0.1.0)](http://www.oracle.com/technetwork/database/enterprise-edition/downloads)
 - [Spring Tool Suite (3.9.4)](http://spring.io/tools/sts/all)
