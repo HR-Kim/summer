@@ -5,6 +5,10 @@ moneyMade는 웹으로 편리하게 소비/지출을 입력하고 나의 소비�
 ### team Summer  
 김혜진, 도은지, 박준규, 신지인, 유효정, 전아름  
 
+### Commit 원칙  
+commit하기 전에 pull  
+집에 가기 전에 꼭 push & commit  
+
 ### 일정 
 
 |월|화|수|목|금|
