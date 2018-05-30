@@ -2,10 +2,10 @@
 moneyMade는 웹으로 편리하게 소비/지출을 입력하고 나의 소비생활은 물론 
 나와 비슷한 연령대의 소비트렌드 파악, 상품 최저가 검색, 금융 상품 추천까지 받을 수 있는 서비스입니다.  
 
-## team Summer  
+### team Summer  
 김혜진, 도은지, 박준규, 신지인, 유효정, 전아름  
 
-## 일정 
+### 일정 
 
 |월|화|수|목|금|
 |:---:|:---:|:---:|:---:|:---:|
@@ -24,7 +24,7 @@ moneyMade는 웹으로 편리하게 소비/지출을 입력하고 나의 소비�
 ### ERD  
 https://github.com/HR-Kim/summer/blob/master/SUMMER.exerd
 
-## 개발 환경 / 툴  
+### 개발 환경 / 툴  
 - [Java SE 8 (Oracle JDK 1.8.0)](http://www.oracle.com/technetwork/java/javase/downloads)
 - [Oracle Database 11g Release 2 (11.2.0.1.0)](http://www.oracle.com/technetwork/database/enterprise-edition/downloads)
 - [Spring Tool Suite (3.9.4)](http://spring.io/tools/sts/all)
@@ -34,7 +34,7 @@ https://github.com/HR-Kim/summer/blob/master/SUMMER.exerd
 - [GitHub](http://github.com)
 - [Maven Central Repository](http://maven.org)
 
-## 적용 기술 및 라이브러리 의존성
+### 적용 기술 및 라이브러리 의존성
 - [Spring Framework 4.3.16](http://projects.spring.io/spring-framework)
 - [JUnit 4.11](http://junit.org/junit4)
 - [MyBatis 3.4.5](http://www.mybatis.org/mybatis-3)
