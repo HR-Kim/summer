@@ -25,8 +25,14 @@ commit하기 전에 pull
 |테스트|테스트<br>발표자료작성|발표|---|---|
 
 ## 참고  
+### Naming Rule
+|   | Controller         | Service                                                                                                           | Dao         | Mapper        | VO                  |
+|---|--------------------|-------------------------------------------------------------------------------------------------------------------|-------------|---------------|---------------------|
+|   | XXXController.java | XXXService.java<br> XXXServiceImple.java                                                                          | XXXDao.java | XXXMapper.xml | XXXVo (extends DTO) |
+|   |                    | do_save (등록)<br> do_update (수정)<br> do_delete (삭제)<br> do_selectOne (단건조회)<br> do_selectList (다건조회) |             |               |                     |
+
 ### ERD  
-https://github.com/HR-Kim/summer/blob/master/SUMMER.exerd
+https://github.com/HR-Kim/summer/blob/master/SUMMER_final.exerd
 
 ### 개발 환경 / 툴  
 - [Java SE 8 (Oracle JDK 1.8.0)](http://www.oracle.com/technetwork/java/javase/downloads)
