@@ -32,7 +32,7 @@ VALUES
 WHERE favs_no = #{favsNo}{    
     </delete>
     
-    <select id = "do_selectList" parameterType="com.summer.comm.SearchVO" resultType = "FinFavs" >
+    <select id = "do_selectList" parameterType="SearchVO" resultType = "FinFavs" >
      SELECT t1.favs_no,                                                   					
        t1.id,                                                 						
        t1.dcls_month,                                             						

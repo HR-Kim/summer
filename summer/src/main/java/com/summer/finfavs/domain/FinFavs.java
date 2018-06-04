@@ -25,6 +25,14 @@ public class FinFavs {
 
 
 
+	@Override
+	public String toString() {
+		return "FinFavs [favsNo=" + favsNo + ", id=" + id + ", dclsMonth=" + dclsMonth + ", finCoNo=" + finCoNo
+				+ ", finPrdtCd=" + finPrdtCd + ", regDt=" + regDt + "]";
+	}
+
+
+
 	public int getFavsNo() {
 		return favsNo;
 	}
