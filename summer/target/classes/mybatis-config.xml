@@ -6,5 +6,10 @@
   	<settings>
   			<setting name="mapUnderscoreToCamelCase" value = "true" />
   	</settings>
+  	
+  	<typeAliases>
+  		<typeAlias type = "com.summer.finfavs.domain.FinFavs" alias="FinFavs"/>
+  		<typeAlias type="com.summer.comm.SearchVO" alias = "SearchVO"/>
+  	</typeAliases>
 
   </configuration>

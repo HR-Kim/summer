@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.summer.finfavs.mappers">
+    
+    <insert id = "do_add" parameterType = "FinFavs">
+    
+INSERT INTO SU_FINFAVS
+(
+    favs_no,
+    id,
+    dcls_month,
+    fin_co_no,
+    fin_prdt_cd,
+    reg_dt
+)
+VALUES
+(
+    finfavs_seq.nextval,
+    #{favsNo},
+    #{id},
+    #{dclsMonth},
+    #{finCoNo},
+    #{finPrdtCd},
+    sysdate
+)    
+    </insert>
+    
+    <delete id = "do_delete" parameterType = "FinFavs">
+    DELETE FROM SU_FINFAVS
+WHERE favs_no = #{favsNo}{    
+    </delete>
+    
+    <select id = "do_selectList" parameterType="com.summer.comm.SearchVO" resultType = "FinFavs" >
+     SELECT t1.favs_no,                                                   					
+       t1.id,                                                 						
+       t1.dcls_month,                                             						
+       t1.fin_co_no,                                                						
+       t1.fin_prdt_cd,                                                						
+       t1.reg_dt,                                            						
+       t1.total_cnt,                                              						
+       t1.rnum    as no                                                					
+  FROM                                                            						
+      (                                                           						
+        SELECT f.*,                                               						
+               ROW_NUMBER() OVER(ORDER BY h.reg_dt desc) as rnum, 						
+               COUNT(*) OVER() as total_cnt                       						
+        FROM SU_FINFAVS f                         
+        -- ID
+        WHERE f.id = #{searchWord}
+       )t1                                                        						
+--<![CDATA[
+WHERE t1.rnum >= (#{pageSize}*(#{pageNum}-1)+1) 
+ 						AND t1.rnum <= (#{pageSize}*(#{pageNum}-1)+#{pageSize})       
+--]]>    
+    </select>
+    
+    </mapper>
