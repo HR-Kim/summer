@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/linux,windows,eclipse,java-web
 
+### pom.properties
+pom.properties
+
 ### Eclipse ###
 
 .metadata
