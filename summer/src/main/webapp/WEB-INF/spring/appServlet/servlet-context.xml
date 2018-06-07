@@ -22,7 +22,7 @@
 		<beans:property name = "order" value="3"></beans:property>
 	</beans:bean>
 	
-	<context:component-scan base-package="com.sist" />
+	<context:component-scan base-package="com.summer" />
 	
 	<!--  Download Order : 2 -->
 	<beans:bean class ="org.springframework.web.servlet.view.BeanNameViewResolver">
