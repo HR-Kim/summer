@@ -13,12 +13,12 @@ import com.summer.comm.MessageVO;
 import com.summer.finfavs.domain.FinFavs;
 import com.summer.finfavs.service.FinFavsService;
 
-@Controller
+//@Controller
 public class FinFavsController {
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
+//	@Autowired
 	private FinFavsService finFavsService;
 	
 	/**
@@ -27,10 +27,10 @@ public class FinFavsController {
 	 * @throws Exception
 	 */
 
-	@RequestMapping(value="/fin/doAdd.do"
-											   ,method=RequestMethod.POST
-											   ,produces="application/json;charset=UTF-8")
-	@ResponseBody
+//	@RequestMapping(value="/fin/doAdd.do"
+//											   ,method=RequestMethod.POST
+//											   ,produces="application/json;charset=UTF-8")
+//	@ResponseBody
 	public String add(FinFavs finFavs) throws Exception {
 		log.debug("1. add==============");
 		Gson gson = new Gson();
