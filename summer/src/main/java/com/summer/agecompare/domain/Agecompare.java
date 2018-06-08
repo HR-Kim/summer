@@ -6,6 +6,7 @@ public class Agecompare {
 	private String categoryId;
 	private String aDate;
 	private String item;
+	private String amount;
 	private String accountId;
 	private String tradeId;
 	
@@ -14,21 +15,30 @@ public class Agecompare {
 	private String nickname;
 	private String gender;
 	private String birth;
-	private String email;
-	private String phone;
+	private String age;
+	
+	private String tradeTotal;
+	private String idTotal;
+	private String total;
+	private String idtradeTotal;
 	
 	
 	public Agecompare() {}
 
-	public Agecompare(String id, String ano, String categoryId, String aDate, String item, String accountId,
-			String tradeId, String userId, String name, String nickname, String gender, String birth, String email,
-			String phone) {
+	
+
+
+
+	public Agecompare(String id, String ano, String categoryId, String aDate, String item, String amount,
+			String accountId, String tradeId, String userId, String name, String nickname, String gender, String birth,
+			String age, String tradeTotal, String idTotal, String total, String idtradeTotal) {
 		super();
 		this.id = id;
 		this.ano = ano;
 		this.categoryId = categoryId;
 		this.aDate = aDate;
 		this.item = item;
+		this.amount = amount;
 		this.accountId = accountId;
 		this.tradeId = tradeId;
 		this.userId = userId;
@@ -36,22 +46,38 @@ public class Agecompare {
 		this.nickname = nickname;
 		this.gender = gender;
 		this.birth = birth;
-		this.email = email;
-		this.phone = phone;
+		this.age = age;
+		this.tradeTotal = tradeTotal;
+		this.idTotal = idTotal;
+		this.total = total;
+		this.idtradeTotal = idtradeTotal;
 	}
+
+
 
 
 
 	@Override
 	public String toString() {
 		return "Agecompare [id=" + id + ", ano=" + ano + ", categoryId=" + categoryId + ", aDate=" + aDate + ", item="
-				+ item + ", accountId=" + accountId + ", tradeId=" + tradeId + ", userId=" + userId + ", name=" + name
-				+ ", nickname=" + nickname + ", gender=" + gender + ", birth=" + birth + ", email=" + email + ", phone="
-				+ phone + "]";
+				+ item + ", amount=" + amount + ", accountId=" + accountId + ", tradeId=" + tradeId + ", userId="
+				+ userId + ", name=" + name + ", nickname=" + nickname + ", gender=" + gender + ", birth=" + birth
+				+ ", age=" + age + ", tradeTotal=" + tradeTotal + ", idTotal=" + idTotal + ", total=" + total
+				+ ", idtradeTotal=" + idtradeTotal + "]";
 	}
 
 
 
+
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -172,25 +198,55 @@ public class Agecompare {
 	}
 
 
-	public String getEmail() {
-		return email;
+	public String getAge() {
+		return age;
 	}
 
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAge(String age) {
+		this.age = age;
 	}
 
 
-	public String getPhone() {
-		return phone;
+	public String getTradeTotal() {
+		return tradeTotal;
 	}
 
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setTradeTotal(String tradeTotal) {
+		this.tradeTotal = tradeTotal;
 	}
-	
+
+
+	public String getIdTotal() {
+		return idTotal;
+	}
+
+
+	public void setIdTotal(String idTotal) {
+		this.idTotal = idTotal;
+	}
+
+
+	public String getTotal() {
+		return total;
+	}
+
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
+
+
+	public String getIdtradeTotal() {
+		return idtradeTotal;
+	}
+
+
+	public void setIdtradeTotal(String idtradeTotal) {
+		this.idtradeTotal = idtradeTotal;
+	}
+
 	
 	
 }

@@ -1,5 +1,7 @@
 <%@page import="org.slf4j.Logger"%>
 <%@page import="org.slf4j.LoggerFactory"%>
+<%@page import="com.summer.comm.StringUtil"%>
+<%@page import="com.summer.comm.SearchVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,6 +11,22 @@
 	log.debug("===========================");
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===========================");
+	
+	String searchWord = ""; //검색어
+	String searchDiv = ""; //검색구분
+	String pageSize = "10"; //페이지 사이즈
+	String pageNum = "1";  //현재 페이지
+	
+	SearchVO searchVO = new SearchVO();
+	if(null != request.getAttribute("searchVO")){
+		searchVO = (SearchVO)request.getAttribute("searchVO");
+	}
+	log.debug("=searchVO="+searchVO.toString());
+	
+	pageSize = StringUtil.nvl(searchVO.getPageSize(),"10");
+	pageNum = StringUtil.nvl(searchVO.getPageNum(),"1");	
+	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
+	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
 %>
 
 <html lang="ko">
@@ -21,18 +39,25 @@
 	<link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-at
-	<input type="button" id="btn" onclick="searchbtnclick();"= value="조회" />
+	<input type="button" id="btn" onclick="doSearch();" value="조회" />
+	
+	<form class="form-inline" name="frm" id="frm" method="get">
+		<input type="hidden"  name="searchDiv" id="searchDiv""/>
+
+		<input type="text" class="form-control input-sm" name="searchWord" 
+		id="searchWord" value="${searchVO.searchWord}"/>
+											
+	</form>
 	
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
     	  
-	function searchbtnclick() {
-		alert("버튼1을 누르셨습니다.");
-		
-		if(false==confirm("조회 하시겠습니까?"))return;
-		
+	//조회
+	function doSearch(){
+		var frm = document.frm;
+		frm.action = "do_selectAgeList.do";
+		frm.submit();
 	}
     
     </script>

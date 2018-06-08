@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import com.google.gson.Gson;
+import com.summer.comm.StringUtil;
+import com.summer.comm.SearchVO;
 import com.summer.agecompare.domain.Agecompare;
 import com.summer.agecompare.service.AgecompareService;
 
@@ -28,34 +30,29 @@ public class AgecompareController {
 	
 	@Autowired
 	private AgecompareService agecompareService;
-	
-	/**
-	 * 단건조회
-	 * @param user
-	 * @return json
-	 * @throws SQLException
-	 */
-	@RequestMapping(value="/agecompare/doSelectOne.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String get(Agecompare agecompare, Model model) throws SQLException {
 		
+	@RequestMapping(value="/agecompare/do_selectAgeList.do", method=RequestMethod.GET)
+	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
+		log.debug("1===doSelectList.do=======================");
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"30"));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
+		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
 		
-		log.debug("1=doSelectOne.do===============");
+		log.debug("2===SearchVO=="+vo.toString());
 		
-		if(null == agecompare.getUserId()) {
-			agecompare.setUserId("Un knwon Id");
+		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
+		log.debug("TTTT3=list================"+list.toString());
+		
+		int totalCnt = 0;
+		
+		if(null != list && list.size()>0) {
+			log.debug("4=totalCnt======================"+totalCnt);
 		}
 		
-		Agecompare outVO = agecompareService.get(agecompare);
-		log.debug("=3=doSelectOne.do=outVO="+outVO.toString());
-		log.debug("============================");
-		//model.addAttribute("userVO", outVO);
+		model.addAttribute("searchVO", vo);
+		model.addAttribute("list",list);
 		
-		Gson gson = new Gson();
-		String jsonStr = gson.toJson(outVO);
-		
-		log.debug("=jsonStr="+jsonStr);
-		
-		return jsonStr;
+		return "agecompare/agecompare";
 	}
 }
