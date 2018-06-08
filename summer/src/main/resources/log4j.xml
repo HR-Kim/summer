@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.sist">
+	<logger name="com.summer">
 		<level value="debug" />
 	</logger>
 	

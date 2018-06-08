@@ -1,5 +1,7 @@
 package com.summer.comm;
 
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,6 +95,50 @@ public class StringUtil {
 
 		   return html.toString();
 		  }
+		 /**
+			 * 시작 알파벳/숫자 이면 true
+			 * @param strInput
+			 * @return boolean
+			 */
+			public static boolean isAlphabetDigit(String strInput) {
+				String pattern = "^[a-zA-Z0-9]{8,20}$";
+				log.debug("1=isAlphabetDisit==pattern="+pattern);
+				log.debug("1=isAlphabetDisit==strInput="+strInput);
+				boolean flag = Pattern.matches(pattern, strInput);
+				
+				log.debug("1=isAlphabetDisit==flag="+flag);
+				return flag;
+			}
+			
+			/**
+			 * 숫자이면 true
+			 * @param strInput
+			 * @return boolean
+			 */
+			public static boolean isDisit(String strInput) {
+				String pattern = "^[0-9]*$";
+				log.debug("1=isAlphabetDisit==pattern="+pattern);
+				log.debug("1=isAlphabetDisit==strInput="+strInput);
+				boolean flag = Pattern.matches(pattern, strInput);
+				
+				log.debug("1=isAlphabetDisit==flag="+flag);
+				return flag;
+			}
+			
+			/**
+			 * 알파벳이면 true
+			 * @param strInput
+			 * @return boolean
+			 */
+			public static boolean isAlphabet(String strInput) {
+				String pattern = "^[a-zA-Z0-9]*$";
+				log.debug("1=isAlphabetDisit==pattern="+pattern);
+				log.debug("1=isAlphabetDisit==strInput="+strInput);
+				boolean flag = Pattern.matches(pattern, strInput);
+				
+				log.debug("1=isAlphabetDisit==flag="+flag);
+				return flag;
+			}
 
 		 
 		/**

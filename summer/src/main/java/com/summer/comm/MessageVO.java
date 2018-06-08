@@ -1,7 +1,7 @@
 package com.summer.comm;
 
 public class MessageVO {
-	private String msgId; // 0 : 실패, 1 : 성공
+	private String msgId; 	// 0 : 실패, 1 : 성공
 	private String message; // 성공, 실패 메시지
 	
 	private String uId; // 화면 form Id, validation 용도

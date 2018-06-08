@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.summer.user.mappers">
+	<!-- SQL -->
+	<sql id="baseCondition">
+		<where>
+			<choose>
+				<when test="searchDiv == '10'">
+					su.id like #{searchWord} ||'%'
+				</when>
+				<when test="searchDiv == '20'">
+					su.name like #{searchWord} ||'%'
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+	</sql>
+	
+	   <select id="do_viewMember" resultType="User">
+        SELECT 
+            name 
+            ,id 
+            ,email 
+            ,regdt 
+        FROM SU_USERS
+        WHERE id = #{id} AND pwd = #{pwd}
+    </select>
+	
+	
+	<select id="do_loginCheck" resultType="String">
+		SELECT name 
+		FROM SU_USERS
+       WHERE ID  = #{id} 
+         AND PWD = #{pwd}
+	</select>
+
+	<select id="do_search" parameterType="SearchVO" resultType="User">
+	<![CDATA[
+		SELECT T1.TOTAL_CNT
+                ,T1.ID
+                ,T1.PWD
+                ,T1.NAME                         
+                ,T1.NICKNAME                          
+                ,T1.GENDER                        
+                ,T1.BIRTH                         
+                ,T1.EMAIL                        
+                ,T1.PHONE                        
+                ,T1.GRADE
+                ,case when TO_CHAR(T1.regdt,'YYYY/MM/DD') = TO_CHAR(sysdate,'YYYY/MM/DD')
+                        then TO_CHAR(T1.regdt,'HH24:MI')
+                 else      TO_CHAR(T1.regdt,'YYYY/MM/DD') END AS REGDT
+                ,T1.RNUM AS NO
+        FROM(
+                SELECT SU.*
+                        ,ROW_NUMBER() OVER (ORDER BY ID) as RNUM
+                        ,COUNT(*) OVER() as TOTAL_CNT
+                  FROM SU_USERS SU
+                    ]]>
+        <include refid="baseCondition" />
+        <![CDATA[
+        )T1 
+		WHERE (#{pageSize} * (#{pageNum} -1)+1) <= rnum
+		  AND rnum <= (#{pageSize} * (#{pageNum} -1)+#{pageSize})
+		]]>
+	</select>
+
+	<select id="do_selectOne" parameterType="User" resultType="User">
+		SELECT ID
+		      ,PWD
+		      ,NAME
+		      ,NICKNAME
+		      ,GENDER
+		      ,BIRTH
+		      ,EMAIL
+		      ,PHONE
+		      ,GRADE
+		      ,REGDT
+  		FROM  SU_USERS
+ 		WHERE ID 	= #{id,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="do_delete" parameterType="User">
+		DELETE FROM SU_USERS  
+	  	WHERE ID = #{id}
+	</delete>
+
+	<update id="do_update" parameterType="User">
+		UPDATE SU_USERS      
+  		SET PWD		= #{name, 		jdbcType=VARCHAR}
+		   ,NICKNAME 	= #{nickname, jdbcType=VARCHAR}
+	  	   ,EMAIL		= #{email, 	jdbcType=VARCHAR}
+          ,PHONE		= #{phone, 	jdbcType=VARCHAR}
+		   ,GRADE		= #{grade,		jdbcType=VARCHAR}
+ 		WHERE ID  		= #{id, 		jdbcType=VARCHAR}
+	</update>
+
+	<insert id="do_add" parameterType="User">
+		INSERT INTO SU_USERS(
+						ID
+                    ,PWD
+                    ,NAME
+                    ,NICKNAME
+                    ,GENDER
+                    ,BIRTH
+                    ,EMAIL
+                    ,PHONE
+                    ,GRADE
+                    ,REGDT
+		)VALUES(
+		 				#{id, 			jdbcType=VARCHAR}
+		 			   ,#{pwd, 		jdbcType=VARCHAR}
+		 			   ,#{name, 		jdbcType=VARCHAR}
+		 			   ,#{nickname, 	jdbcType=VARCHAR}
+		 			   ,#{gender, 	jdbcType=VARCHAR}
+		 			   ,#{birth, 		jdbcType=VARCHAR}
+		 			   ,#{email, 		jdbcType=VARCHAR}
+		 			   ,#{phone, 		jdbcType=VARCHAR}
+		 			   ,#{grade, 		jdbcType=VARCHAR}
+                    ,SYSDATE
+		)
+	</insert>
+	
+	
+	
+	
+	
+	<update id="do_upsert" parameterType="User">
+	MERGE INTO hr_users T1
+USING ( SELECT #{hId} 			AS h_id
+              ,#{hName} 		AS H_NAME
+              ,#{hPasswd}	 	AS H_PASSWORD
+              ,#{levelInt} 	AS H_LEVEL
+              ,#{hLogin} 		AS H_LOGIN
+              ,#{hRecommend}	AS H_RECOMMEND
+              ,#{hEmail}		AS H_EMAIL
+              ,sysdate 			AS REG_DT
+        FROM DUAL)T2
+ON(T1.h_id = T2.h_id)
+WHEN MATCHED THEN
+  UPDATE SET T1.h_NAME      = T2.H_NAME
+            ,T1.H_PASSWORD  = T2.H_PASSWORD
+            ,T1.H_LEVEL     = T2.H_LEVEL
+            ,T1.H_LOGIN     = T2.H_LOGIN
+            ,T1.H_RECOMMEND = T2.H_RECOMMEND
+            ,T1.H_EMAIL     = T2.H_EMAIL
+            ,T1.REG_DT      = T2.REG_DT
+WHEN NOT MATCHED THEN
+  INSERT (T1.h_id, T1.h_NAME, T1.H_PASSWORD, T1.H_LEVEL, T1.H_LOGIN, T1.H_RECOMMEND, T1.H_EMAIL, T1.REG_DT  )
+  VALUES (T2.h_id, T2.h_NAME, T2.H_PASSWORD, T2.H_LEVEL, T2.H_LOGIN, T2.H_RECOMMEND, T2.H_EMAIL, T2.REG_DT  )
+          </update>
+</mapper>
