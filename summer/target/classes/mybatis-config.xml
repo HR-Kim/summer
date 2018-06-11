@@ -13,6 +13,7 @@
   		<typeAlias type="com.summer.accounts.domain.Accounts" alias="Accounts"/>
   		<typeAlias type="com.summer.user.domain.User" alias="User"/>
   		<typeAlias type="com.summer.agecompare.domain.Agecompare" alias="Agecompare"/>
+  		<typeAlias type="com.summer.chart.domain.Chart" alias="Chart"/>
   	</typeAliases>
 
   </configuration>
