@@ -21,6 +21,14 @@ import com.summer.user.domain.User;
 public interface UserService {
 	
 	/**
+	 * 아이디 중복검사
+	 * @param user
+	 * @return
+	 * @throws SQLException
+	 */
+	public int idCheck(User user) throws SQLException;
+	
+	/**
 	 * upsert(등록/수정)
 	 * @param user
 	 * @return
@@ -82,5 +90,6 @@ public interface UserService {
 	
     // 01_02. 회원 로그인 정보
     public User viewMember(User user) throws SQLException;
+    
 	
 }

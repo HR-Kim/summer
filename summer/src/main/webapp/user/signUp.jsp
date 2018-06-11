@@ -54,23 +54,28 @@
 			<form class="form-horizontal" name="frm" id="frm" method="post">	
 				<div class="form-group">
 					<div class="col-lg-8">
-							<input type="text" name="id" id="id" size="29"
+							<input type="text" name="id" id="id" size="40" onkeyup="idCheckFunction();" 
 								placeholder="아이디" maxlength="20" />
-							<button type="idCheck" id="idCheck">중복확인</button>
 					</div>
 				</div>
+				<tr>
+					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="idCheckMessage"></h5>					
+				</tr>
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="password" name="pwd" id="pwd" size="40"
+						<input type="password" name="pwd1" id="pwd1" size="40" onkeyup="passwordCheckFunction();"
 							placeholder="비밀번호" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="password" name="pwd" id="pwd" size="40"
+						<input type="password" name="pwd2" id="pwd2" size="40" onkeyup="passwordCheckFunction();"
 							placeholder="비밀번호확인" maxlength="20" />
 					</div>
 				</div>
+				<tr>
+					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="passwordCheckMessage"></h5>					
+				</tr>
 				<div class="form-group">
 					<div class="col-lg-8">
 						<input type="text" name="name" id="name" size="40"
@@ -81,7 +86,7 @@
 					<div class="col-lg-8">
 						<input type="text" name="nickname" id="nickname" size="29"
 							placeholder="별명" maxlength="20" />
-						<button type="nickCheck" id="nickCheck">중복확인</button>
+						<button id="nickCheck" onclick="bt_nickCheck();">중복확인</button>
 					</div>
 				</div>
 				
@@ -119,9 +124,9 @@
 		<!--// Input Form------------------------------------- -->
 		
 		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-center">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/go_login.do'">취소</button>
+		 <div class="clearfix">
+		 	<button type="submit" class="signupbtn" disable="disabled">등록</button>
+		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/go_login.do'">취소</button>
 		 </div>
 		 
 		 
@@ -154,74 +159,162 @@
     <script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
-    
-    	
 		<script type="text/javascript">
-		
-	
-		
-	
-	
+
+		function passwordCheckFunction(){
+			var pwd1 = $('#pwd1').val();
+			var pwd2 = $('#pwd2').val();
+			if(pwd1 != pwd2){
+				$('#passwordCheckMessage').html('비밀번호가 일치하지 않습니다.');
+			}else{
+				$('#passwordCheckMessage').html('비밀번호가 일치합니다');
+			}			
+		}
+
+		function idCheckFunction(){
+				$.ajax({
+					url : "do_idCheck.do",
+					dataType : "html",// JSON/Html
+					async : false,
+					data : {
+						"id" : $('#id').val()
+					},
+					success : function(data){
+						var idlength = $('#id').val().length;
+						data = $.trim(data)
+						console.log(data)
+						console.log("idlength="+idlength)
+						if(idlength == 0 && data == '0') {						
+							$('#idCheckMessage').html('아이디를 입력하세요.');
+						}else if(idlength < 8){
+							$('#idCheckMessage').html('8글자 이상 입력하세요');								
+						}else if(data == '0') {
+							$("#idCheckMessage").css("color","#B0F6AC");
+							$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
+						}else if(data == '1') {
+							$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');									
+						}
+					}
+				});
+			}
+//			var id = $("#id").val();
+//			if(id == "" ){
+//				$('#idCheckMessage').html('아이디를 입력하세요');
+//			}else{
+//				$('#idCheckMessage').html('사용가능합니다');
+//			}
+//			$.ajax({
+//				data : {
+//					"id" : $("#id").val()
+//				},
+//				url : "do_idCheck.do",
+//				success : function(data){
+//					if( id == "" && data =='0'){
+//						$('#idCheckMessage').html('아이디를 입력하세요.');
+//						idCheck = 0;
+//					}else if(data =='0'){
+//						$("#checkaa").css("background-color", "#B0F6AC");
+//						idCheck = 1;
+//						if(idCheck ==1){
+//							$("#do_add").prop("disabled",false);
+//							$("#do_add").css("background-color","#4CAF50");
+//							signupCheck();
+//						}
+//					}else if( id != reinputed){
+						
+//					}
+//				}
+//			});
+//		}
 		//Null check
 		function isEmpty(value) {
 			if (!value) {
 				alert("값을 입력하세요.");
 				return true;
 			}
-		}	
-
-		$(document).ready(function() {			
+		}
+//		$(document).ready(function() {
+			//중복검사
+//			$("#bt_idCheck").on("click", function(){
+//				console.log("bt_idCheck")
+//				alert("버튼을 누름.");
+//				$.ajax({
+//					type : "POST",
+//					url : "do_idCheck.do",
+//					dataType : "html",// JSON/Html
+//					async : false,
+//					data : {
+//						id : $("#id").val()
+//					},
+//					success : function(data){
+//						if(data == 1){
+//							$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
+//						}else{
+//							$('#checkMessage').html('사용할 수 없는 아이디입니다.');						
+//						}
+//					}
+//				});
+//			});
 			//등록
-			$("#do_add").on("click", function() {
-				console.log("do_add")
+			//$("#do_add").on("click", function() {
+//				console.log("do_add")
 
-				if (false == confirm("등록 하시겠습니까?"))
-					return;
+//				if (false == confirm("등록 하시겠습니까?"))
+//					return;
 				
-				$.ajax({
-					type : "POST",
-					url : "do_add.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"id" : $("#id").val(),
-						"pwd" : $("#pwd").val(),
-						"name" : $("#name").val(),
-						"nickname" : $("#nickname").val(),
-						"gender" : $("#gender").val(),
-						"birth" : $("#birth").val(),
-						"email" : $("#email").val(),
-						"phone" : $("#phone").val(),
-						"grade" : 1
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-						
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							
-							var frm = document.frm;
-							frm.action = '${CONTEXT}'+"/user/go_login.do";
-							frm.submit();							
-						} else {
-							alert(parseData.message);
-						}
-					},
-					complete : function(data) {//무조건 수행
+//				$.ajax({
+//					type : "POST",
+//					url : "do_add.do",
+//					dataType : "html",// JSON/Html
+//					async : false,
+//					data : {
+//						"id" : $("#id").val(),
+//						"pwd" : $("#pwd").val(),
+//						"name" : $("#name").val(),
+//						"nickname" : $("#nickname").val(),
+//						"gender" : $("#gender").val(),
+//						"birth" : $("#birth").val(),
+//						"email" : $("#email").val(),
+//						"phone" : $("#phone").val(),
+//						"grade" : 1
+//					},
+//					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
+//						console.log("data=" + data);
+//						//json parsing
+//						var parseData = $.parseJSON(data);
+//						console.log("parseData=" + parseData);
 
-					},
-					error : function(xhr, status, error) {
-						console.log("do_add error: " + error);
-					},
-					error {
-						color : red;
-					}
-				});//--그리드 click -> ajax
-			});//--등록
-		});//--document.ready
+//						if (parseData.msgId == "1") {
+//							alert(parseData.message);
+//							doSearch();
+//						} else {
+//							alert(parseData.message);
+//						}
+
+//						console.log("data=" + data);
+//						//json parsing
+//						var parseData = $.parseJSON(data);
+//						console.log("parseData=" + parseData);
+//						
+//						if (parseData.msgId == "1") {
+//							alert(parseData.message);
+//							
+//							var frm = document.frm;
+//							frm.action = '${CONTEXT}'+"/user/go_login.do";
+//							frm.submit();							
+//						} else {
+//							alert(parseData.message);
+//						}
+//					},
+//					complete : function(data) {//무조건 수행
+
+//					},
+//					error : function(xhr, status, error) {
+//						console.log("do_add error: " + error);
+//					}
+//				});//--그리드 click -> ajax
+//			});//--등록
+//		});//--document.ready
 	</script>
 </body>
 </html>

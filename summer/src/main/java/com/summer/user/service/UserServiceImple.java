@@ -150,5 +150,11 @@ public class UserServiceImple implements UserService {
     public User viewMember(User user) throws SQLException {
         return userDao.viewMember(user);
     }
+    
+
+	@Override
+	public int idCheck(User user) throws SQLException {
+		return userDao.idCheck(user);
+	}
 	
 }

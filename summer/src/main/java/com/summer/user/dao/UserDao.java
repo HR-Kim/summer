@@ -32,4 +32,6 @@ public interface UserDao {
     // 01_02. 회원 로그인 정보
     public User viewMember(User user) throws SQLException;
 	
+
+	public int idCheck(User user) throws SQLException;
 }

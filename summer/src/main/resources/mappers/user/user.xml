@@ -18,6 +18,13 @@
 		</where>
 	</sql>
 	
+	<!-- id 중복검사  -->
+	<select id="do_idCheck" parameterType="User" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		  FROM SU_USERS
+		 WHERE id = #{id}
+	</select>
+	
 	   <select id="do_viewMember" resultType="User">
         SELECT 
             name 

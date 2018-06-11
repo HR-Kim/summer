@@ -43,6 +43,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value="user/do_idCheck.do", method= {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public  int idCheck(User user) throws SQLException {
+		int hi = userService.idCheck(user);
+		log.debug("*************************************************");
+		log.debug(Integer.toString(hi));
+		return userService.idCheck(user);
+	}
+	
+	
 	/**
 	 * 목록 조회
 	 * @param vo
