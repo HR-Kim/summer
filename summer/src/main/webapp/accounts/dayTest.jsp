@@ -1,5 +1,9 @@
 
 
+<%@page import="com.summer.comm.DTO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.summer.codes.dao.CodeDao"%>
+<%@page import="com.summer.codes.domain.CodeVO"%>
 <%@page import="com.summer.comm.StringUtil"%>
 <%@page import="com.summer.comm.SearchVO"%>
 <%@page import="org.slf4j.LoggerFactory"%>
@@ -8,6 +12,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%
 	Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -40,11 +45,7 @@
 			(null == request.getAttribute("totalCnt"))?"0":request.getAttribute("totalCnt").toString();
 	totalCnt = Integer.parseInt(o_TotalCnt);
 	
-// 	CodeVO vo01 = new CodeVO();
-// 	vo01.setMst_cd_id("ACC_CAT_EXPENSES");
-// 	CodeDao codeDao = new CodeDao();
-// 	List<CodeVO> list1 = codeDao.getSelectList(vo01);
-	//todo
+	
 %>
 
 <%-- CONTEXT --%>
@@ -104,19 +105,24 @@
 <!--    <!-- //Modal -->
   
   
+  
+
+  
+  
+  
+  
+  
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
+<%-- 	<form:form commandName="frm" action="doSelectList.do" method="get"> --%>
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
 
    		<table class="table">
    			<tr>
    				<td class="text-left">
    					<div class="form-group col-lg6 col-sm6">
-   						<select name="level" id="level" class="form-control input-sm">
-   							<option value="">지출</option>
-	    					<option value="1">수입</option>
-	    				</select>
-   					
+   						
+   						
    						<select name="level" id="level" class="form-control input-sm">
    							<option value="">구분</option>
 	    					<option value="1">현금</option>
@@ -144,11 +150,13 @@
    						</select>
     					
     					<button class="btn btn-sm btn-success" onclick="javascript:doSearch();">조회</button>
+							
    					</div>
    				
    			</tr>
    		</table>
    	</form> 
+<%-- </form:form> --%>
    	<!--// Search --------------------------------------------------------->
    
   
@@ -291,11 +299,13 @@
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
+
 		//리스트 조회
 		function doSearch(){
 			var frm = document.frm;
 			
 			frm.action = "doSelectList.do";
+			
 			frm.submit();
 		}
 		
@@ -308,6 +318,7 @@
 		}
 		
 		$(document).ready(function(){
+		
 			
 			//그리드 클릭
     		$("#listTable>tbody").on("dblclick","tr",function(){

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.summer.codes.mappers">
+	<select id="do_selectList" parameterType="CodeVO" resultType="CodeVO">
+		SELECT cd_dtl_nm
+		FROM su_codes
+		WHERE cd_mst_id=#{cdMstId}
+	</select>
+</mapper>
