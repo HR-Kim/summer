@@ -23,8 +23,6 @@
 	}
 	log.debug("=searchVO="+searchVO.toString());
 	
-	pageSize = StringUtil.nvl(searchVO.getPageSize(),"10");
-	pageNum = StringUtil.nvl(searchVO.getPageNum(),"1");	
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
 %>
