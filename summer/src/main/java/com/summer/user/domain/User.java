@@ -6,23 +6,13 @@ import javax.validation.constraints.Size;
 import com.summer.comm.DTO;
 
 public class User extends DTO {
-	@Size(min = 6, max = 12, message = "아이디는 6글자 이상 12글자 이하입니다.")
-	@NotEmpty(message = "아이디를 입력하세요.")
 	private String id;
-	@NotEmpty(message = "비밀번호를 입력하세요.")
-	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[@#$%]).{8,})", message = "비밀 번호는 8자리 이상, 숫자와 특수 문자가 포함되게 입력해 주세요")
 	private String pwd;
-	@NotEmpty(message = "이름을 입력하세요.")
 	private String name;
-	@NotEmpty(message = "별명을 입력하세요.")
 	private String nickname;
-	@NotEmpty(message = "성별을 선택하세요.")
 	private String gender;
-	@NotEmpty(message = "생년월일을 입력하세요.")
 	private int 	 birth;
-	@NotEmpty(message = "이메일을 입력하세요.")
 	private String email;
-	@NotEmpty(message = "연락처를 입력하세요.")
 	private String phone;
 	private int 	 grade;
 	private String regdt;

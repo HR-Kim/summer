@@ -41,54 +41,9 @@
 		<!--// Title------------------------------------------ -->
 		
 		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
-		 </div>
 		<!--// Button------------------------------------------ -->
 
 		<!-- Test 화면 -->
-<div class="container">
-        <div class="row">
-            <div class="span12">
-                <section id="typography">
-                <div class="page-header">
-                    <h1>회원가입</h1>
-                </div>
-                <form:form modelAttribute="user" cssClass="form-horizontal"
-                    action="/users" method="post">
-                    <div class="control-group">
-                        <label class="control-label" for="id">사용자 아이디</label>
-                        <div class="controls">
-                            <form:input path="id" />
-                            <form:errors path="id" cssClass="error" />        <!-- 에러 메시지 추가 -->
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="pwd">비밀번호</label>
-                        <div class="controls">
-                            <form:password path="pwd" />
-                            <form:errors path="pwd" cssClass="error" />  <!-- 에러 메시지 추가 -->
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="name">이름</label>
-                        <div class="controls">
-                            <form:input path="name" />
-                            <form:errors path="name" cssClass="error" />      <!-- 에러 메시지 추가 -->
-                        </div>
-                    </div>
- 
-                    <div class="control-group">
-                        <label class="control-label" for="email">이메일</label>
-                        <div class="controls">
-                            <form:input path="email" />
-                            <form:errors path="email" cssClass="error" />     <!-- 에러 메시지 추가 -->
-                        </div>
-                    </div>
-                </form:form>
-            </div>
-        </div>
-    </div>
 		<!--//Test 화면 -->
 
 		<!-- Input Form--------------------------------------- -->
@@ -96,63 +51,67 @@
 			<div class="col-lg-12"></div>
 			<div class="col-lg-12"></div>
 			<div class="panel panel-default"></div>
-			<form class="form-horizontal" name="frm" id="frm" method="post">				
+			<form class="form-horizontal" name="frm" id="frm" method="post">	
 				<div class="form-group">
-					<label class="col-lg-4 control-label">아이디</label>
 					<div class="col-lg-8">
-						<input type="text" name="id" id="id"
-							class="form-control input-sm" placeholder="아이디" maxlength="20" />
+							<input type="text" name="id" id="id" size="29"
+								placeholder="아이디" maxlength="20" />
+							<button type="idCheck" id="idCheck">중복확인</button>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-4 control-label">비밀번호</label>
 					<div class="col-lg-8">
-						<input type="password" name="pwd" id="pwd"
-							class="form-control input-sm" placeholder="비밀번호" maxlength="20" />
+						<input type="password" name="pwd" id="pwd" size="40"
+							placeholder="비밀번호" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-4 control-label">이름</label>
 					<div class="col-lg-8">
-						<input type="text" name="name" id="name"
-							class="form-control input-sm" placeholder="이름" maxlength="20" />
+						<input type="password" name="pwd" id="pwd" size="40"
+							placeholder="비밀번호확인" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-4 control-label">별명</label>
 					<div class="col-lg-8">
-						<input type="text" name="nickname" id="nickname"
-							class="form-control input-sm" placeholder="별명" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">성별</label>
-					<div class="col-lg-8">
-						<input type="text" name="gender" id="gender"
-							class="form-control input-sm" placeholder="성별" maxlength="20" />
+						<input type="text" name="name" id="name" size="40"
+							placeholder="이름" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-4 control-label">생년월일</label>
 					<div class="col-lg-8">
-						<input type="text" name="birth" id="birth"
-							class="form-control input-sm" placeholder="생년월일" maxlength="20" />
+						<input type="text" name="nickname" id="nickname" size="29"
+							placeholder="별명" maxlength="20" />
+						<button type="nickCheck" id="nickCheck">중복확인</button>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="col-lg-4 control-label">이메일</label>
 					<div class="col-lg-8">
-						<input type="text" name="email" id="email"
-							class="form-control input-sm" placeholder="이메일" maxlength="20" />
+										<!-- <input type="text" name="datepicker" id="datepicker" placeholder="날짜선택"> -->
+						<input type="text" name="datepicker" id="datepicker" size="40"
+							placeholder="생년월일" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-8">
+						<input type="text" name="email" id="email" size="40"
+							placeholder="이메일 ( ex) abc@abc.com )" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-4 control-label">연락처</label>
 					<div class="col-lg-8">
-						<input type="text" name="phone" id="phone"
-							class="form-control input-sm" placeholder="연락처" maxlength="20" />
+						<input type="text" name="phone" id="phone" size="40"
+							placeholder="연락처 ( - 없이 번호만 입력하세요. )" maxlength="20" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-8">
+						<input type="radio" id="man" name="sex" value="0" onclick="checkSex()">
+						<label id="manLb" for="man">남자</label>
+						<input type="radio" id="woman" name="sex" value="1" onclick="checkSex()">
+						<label id="womanLb" for="man">여자</label>
 					</div>
 				</div>
 			</form>
@@ -160,22 +119,48 @@
 		<!--// Input Form------------------------------------- -->
 		
 		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
+		 <div class="form-inline pull-center">
 		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/go_login.do'">취소</button>
 		 </div>
 		 
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/go_login.do'">로그인창으로</button>
-		 </div>
+		 
 		<!--// Button------------------------------------------ -->
 		
 		
 		</div>
+		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script>
+	
+			$('#datepicker').datepicker({
+			    altField : '#getdate',
+			    dateFormat : 'yymmdd',	
+			    changeMonth: true, 
+			    changeYear: true,
+			    yearRange : '-100:+0',
+			    dayNames: ['일요일','월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+		        dayNamesMin: ['일','월', '화', '수', '목', '금', '토'], 
+		        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+		        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],	
+			});	
+			
+		</script>
+		
+		
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
+    
+    	
+		<script type="text/javascript">
+		
+	
+		
+	
 	
 		//Null check
 		function isEmpty(value) {
