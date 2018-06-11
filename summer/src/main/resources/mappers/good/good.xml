@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.summer.good.mappers">
+  	<select id="do_selectList" parameterType="SearchVO" resultType="Good">
+  		SELECT T1.rnum, T1.gname, T1.gprice
+		FROM (SELECT rownum as rnum, sg.good_name as gname, sp.price as gprice, COUNT(*) OVER() as total_cnt
+        		FROM su_good sg
+        		JOIN (SELECT good_id, min(good_price) as price
+            			FROM su_pne
+            			GROUP BY good_id) sp 
+        				ON sg.good_id = sp.good_id) T1
+		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) + 1) AND (#{pageSize} * (#{pageNum}-1)+#{pageSize})
+  	</select>
+  
+  
+  </mapper>
