@@ -4,12 +4,13 @@
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+	<form class="form-inline" name="frm" id="frm" method="get">
           <ul class="nav">
             <li class="nav-item nav-category">
               <span class="nav-link">내 가계부</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="#" onclick="javascript:doSearch();">
                 <span class="menu-title">일간</span>
                 <i class="icon-speedometer menu-icon"></i>
               </a>
@@ -90,4 +91,21 @@
               </div>
             </li>
           </ul>
+	</form>
         </nav>
+        
+        
+	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
+	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		
+		//일간리스트 조회
+		function doSearch(){
+			var frm = document.frm;
+			
+			frm.action = "accounts/doSelectList.do";
+			frm.submit();
+		}
+	
+	
+	</script>
