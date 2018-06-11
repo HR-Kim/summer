@@ -30,6 +30,9 @@ public class ChartController {
 		log.debug("1. controller =====doCtgList.do=====");
 		
 		vo.setChartUserId("a");
+		vo.setYear(2018);
+		vo.setMonth(05);
+		vo.setDay(22);
 		log.debug("2. controller =====Chart vo====="+vo.toString());
 		
 		List<Chart> list = chartService.getCtgList(vo);
