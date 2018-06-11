@@ -40,12 +40,6 @@
 		 <h3>회원가입</h3>
 		<!--// Title------------------------------------------ -->
 		
-		<!-- Button-------------------------------------------- -->
-		<!--// Button------------------------------------------ -->
-
-		<!-- Test 화면 -->
-		<!--//Test 화면 -->
-
 		<!-- Input Form--------------------------------------- -->
 		<div class="container">
 			<div class="col-lg-12"></div>
@@ -100,7 +94,7 @@
 				
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="text" name="email" id="email" size="40"
+						<input type="email" name="email" id="email" size="40"
 							placeholder="이메일 ( ex) abc@abc.com )" maxlength="20" />
 					</div>
 				</div>
@@ -111,13 +105,13 @@
 					</div>
 				</div>
 				
-				<div class="form-group">
-					<div class="col-lg-8">
-						<input type="radio" id="man" name="sex" value="0" onclick="checkSex()">
-						<label id="manLb" for="man">남자</label>
-						<input type="radio" id="woman" name="sex" value="1" onclick="checkSex()">
-						<label id="womanLb" for="man">여자</label>
-					</div>
+				<div class="form-group" style="text-align : center; margin: 0 auto;">
+					<label class="btn btn-primaty active">
+						<input type="radio" name="gender" value="0" autocomplete="off" checked>남자
+					</label>
+					<label class="btn btn-primaty active">
+						<input type="radio" name="gender" value="1" autocomplete="off">여자
+					</label>
 				</div>
 			</form>
 		</div>
@@ -167,6 +161,7 @@
 			if(pwd1 != pwd2){
 				$('#passwordCheckMessage').html('비밀번호가 일치하지 않습니다.');
 			}else{
+				$("#passwordCheckMessage").css("color","#116F0C");
 				$('#passwordCheckMessage').html('비밀번호가 일치합니다');
 			}			
 		}
@@ -189,7 +184,7 @@
 						}else if(idlength < 8){
 							$('#idCheckMessage').html('8글자 이상 입력하세요');								
 						}else if(data == '0') {
-							$("#idCheckMessage").css("color","#B0F6AC");
+							$("#idCheckMessage").css("color","#116F0C");
 							$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
 						}else if(data == '1') {
 							$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');									
@@ -197,35 +192,7 @@
 					}
 				});
 			}
-//			var id = $("#id").val();
-//			if(id == "" ){
-//				$('#idCheckMessage').html('아이디를 입력하세요');
-//			}else{
-//				$('#idCheckMessage').html('사용가능합니다');
-//			}
-//			$.ajax({
-//				data : {
-//					"id" : $("#id").val()
-//				},
-//				url : "do_idCheck.do",
-//				success : function(data){
-//					if( id == "" && data =='0'){
-//						$('#idCheckMessage').html('아이디를 입력하세요.');
-//						idCheck = 0;
-//					}else if(data =='0'){
-//						$("#checkaa").css("background-color", "#B0F6AC");
-//						idCheck = 1;
-//						if(idCheck ==1){
-//							$("#do_add").prop("disabled",false);
-//							$("#do_add").css("background-color","#4CAF50");
-//							signupCheck();
-//						}
-//					}else if( id != reinputed){
-						
-//					}
-//				}
-//			});
-//		}
+
 		//Null check
 		function isEmpty(value) {
 			if (!value) {
