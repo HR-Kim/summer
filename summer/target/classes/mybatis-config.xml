@@ -15,6 +15,7 @@
   		<typeAlias type="com.summer.agecompare.domain.Agecompare" alias="Agecompare"/>
   		<typeAlias type="com.summer.chart.domain.Chart" alias="Chart"/>
   		<typeAlias type="com.summer.codes.domain.CodeVO" alias="CodeVO"/>
+  		<typeAlias type="com.summer.good.domain.Good" alias="Good" />
   	</typeAliases>
 
   </configuration>
