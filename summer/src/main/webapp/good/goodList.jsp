@@ -69,7 +69,7 @@
 	
 	<!-- button -->
 	<div class="form-inline pull-right">
-		<button class="btn btn-sm" id="goodlist">조회</button>
+		<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">조회</button>
 	</div>
 	
 	<!-- button end -->
@@ -139,6 +139,11 @@
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
+	function doSearch(){
+		var frm = document.frm;
+		frm.action = "doSelectList.do";
+		frm.submit();
+	}
 	
 	</script>
 </body>
