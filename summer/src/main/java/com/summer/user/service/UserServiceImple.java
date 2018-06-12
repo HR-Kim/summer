@@ -156,5 +156,15 @@ public class UserServiceImple implements UserService {
 	public int idCheck(User user) throws SQLException {
 		return userDao.idCheck(user);
 	}
+
+	@Override
+	public int nickCheck(User user) throws SQLException {
+		return userDao.nickCheck(user);
+	}
+
+	@Override
+	public int phoneCheck(User user) throws SQLException {
+		return userDao.phoneCheck(user);
+	}
 	
 }
