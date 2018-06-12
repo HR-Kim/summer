@@ -4,7 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.summer.accounts.mappers">
   
-  
+  <sql id="baseCondition">
+			<choose>
+				<when test="searchTrade == '10'">
+					and a.trade_id= '10'
+				</when>
+				<when test="searchTrade == '20'">
+					and a.trade_id= '20'
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+	</sql>
+
 	<select id="do_search" parameterType="SearchVO" resultType="Accounts">
 		SELECT T1.ano
       			,T1.id
@@ -26,8 +38,11 @@
 		FROM (SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.a_date desc) as rnum
 		        ,COUNT(*) OVER() as total_cnt
 		    FROM su_accounts a 
-		    WHERE a.id='a') T1
-		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) +1) AND (#{pageSize} * (#{pageNum} -1)+#{pageSize}) 
+		    WHERE a.id='a'
+		    <include refid="baseCondition"/>   
+		    ) T1
+		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) +1) AND (#{pageSize} * (#{pageNum} -1)+#{pageSize})
+
 	
 
 	</select> 

@@ -6,7 +6,31 @@ public class SearchVO extends DTO {
 	private String searchWord;	//검색어
 	private String searchDiv;	//검색구분
 	
+	private String searchTrade; //지출,수입 구분
+	private String searchCategoty; //카테고리 구분
+	
 	public SearchVO() { }
+
+	
+	public String getSearchTrade() {
+		return searchTrade;
+	}
+
+
+	public void setSearchTrade(String searchTrade) {
+		this.searchTrade = searchTrade;
+	}
+
+
+	public String getSearchCategoty() {
+		return searchCategoty;
+	}
+
+
+	public void setSearchCategoty(String searchCategoty) {
+		this.searchCategoty = searchCategoty;
+	}
+
 
 	public String getPageSize() {
 		return pageSize;
