@@ -8,6 +8,7 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
+			<org.lazyluke.version>0.2.7</org.lazyluke.version>
 			<org.hibernate.version>6.0.10.Final</org.hibernate.version>
 			<commons-dbcp.version>1.4</commons-dbcp.version>
 			<org.apache.tiles.version>3.0.7</org.apache.tiles.version>
@@ -40,6 +41,12 @@
 	</repositories>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.lazyluke/log4jdbc-remix -->
+		<dependency>
+		    <groupId>org.lazyluke</groupId>
+		    <artifactId>log4jdbc-remix</artifactId>
+		    <version>${org.lazyluke.version}</version>
+		</dependency>
 	
 	<!-- 회원가입 유효성 검사 repository -->
 	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
