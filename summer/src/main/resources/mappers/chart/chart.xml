@@ -19,4 +19,15 @@
 	 GROUP BY c.CD_SEQ, c.CD_DTL_NM
 	 ORDER BY c.CD_SEQ
 </select>
+
+<select id="doCtgChart" parameterType="Chart" resultType="Chart">
+	SELECT TO_CHAR(A_DATE, 'MM') AS month 
+      	   ,SUM(AMOUNT) AS monthTotal
+  	  FROM SU_ACCOUNTS
+ 	 WHERE ID = #{chartUserId}
+   	   AND TRADE_ID = 10
+   	   AND TO_CHAR(A_DATE, 'MM') BETWEEN '01' AND '12'
+ 	 GROUP BY TO_CHAR(A_DATE, 'MM')
+ 	 ORDER BY TO_CHAR(A_DATE, 'MM')
+</select>
 </mapper>

@@ -1,10 +1,7 @@
 <%@page import="com.summer.chart.dao.ChartDao"%>
 <%@page import="com.summer.chart.domain.Chart"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
 <%@page import="org.slf4j.Logger"%>
 <%@page import="org.slf4j.LoggerFactory"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,7 +22,7 @@
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
     	<!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    	<title>:::차트 테스트:::</title>
+    	<title>:::(일)차트 테스트:::</title>
 
     	<!-- 부트스트랩 -->
     	<link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -45,15 +42,14 @@
 			<td class="text-left">
 				<!-- Button -->
 				<div class ="form-inline pull-left">
-					<button class="btn btn-sm" onclick="javascript:doCtgList();">차트일간</button>
-					<button class="btn btn-sm" onclick="javascript:doCtgList();">차트주/월간</button>
+					<button class="btn btn-sm" onclick="javascript:doDayList();">차트일간</button>
 				</div>
 				<!-- //Button -->
 			</td>
 		</tr>
 	</table>
 	
-	<div id="piechart" style="width: 900px; height: 500px;"></div>
+	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
 
 	<!-- List -->
 	<div class="table-responsive">
@@ -90,7 +86,6 @@
 	google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
-
 		var data = google.visualization.arrayToDataTable([
 			['Task', 'Hours per Day'],
           	['식비',0],
@@ -114,12 +109,12 @@
 			title: '나의 지출 패턴'
 		};
 
-		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+		var chart = new google.visualization.PieChart(document.getElementById('dayPieChart'));
 
 		chart.draw(data, options);
 	}
 	
-	function doCtgList(){
+	function doDayList(){
 		var frm = document.frm;
 		frm.action = "doCtgList.do";
 		frm.submit();

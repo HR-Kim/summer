@@ -29,4 +29,8 @@ public class ChartService {
 	public List<Chart> getCtgList(Chart vo) throws SQLException {
 		return chartDao.getCtgList(vo);
 	}
+	
+	public List<Chart> getCtgChart(Chart vo) throws SQLException{
+		return chartDao.getCtgChart(vo);
+	}
 }

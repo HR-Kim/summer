@@ -37,12 +37,31 @@ public class ChartController {
 		
 		List<Chart> list = chartService.getCtgList(vo);
 		log.debug("3. controller =====list=====" + list);
-
+		
 		if(list.size() <= 0) {
 			log.debug("사용자의 지출 내역이 없습니다.");
 		}
 		
 		model.addAttribute("list", list);
 		return "chart/chart";
+	}
+	
+	@RequestMapping(value="/chart/doCtgChart.do",
+			method=RequestMethod.GET)
+	public String getCtgChart(Chart vo, Model model) throws SQLException{
+		log.debug("1. controller =====doCtgChart.do=====");
+
+		vo.setChartUserId("a");
+		log.debug("2. controller =====Chart vo====="+vo.toString());
+		
+		List<Chart> list = chartService.getCtgChart(vo);
+		log.debug("3. controller =====list=====" + list);
+		
+		if(list.size() <= 0) {
+			log.debug("사용자의 지출 내역이 없습니다.");
+		}
+		
+		model.addAttribute("list", list);
+		return "chart/chart2";
 	}
 }

@@ -42,6 +42,15 @@ public class ChartDao {
 	public List<Chart> getCtgList(Chart vo) throws SQLException{	//카테고리 별 리스트(파이 차트)
 		String statement = this.namespace + ".doCtglist";
 		log.debug("ID: " + vo.getChartUserId());
+		log.debug("Year: " + vo.getYear());
+		log.debug("Month: " + vo.getMonth());
+		log.debug("Day: " + vo.getDay());
+		log.debug("*******************************");
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
+	
+	public List<Chart> getCtgChart(Chart vo) throws SQLException{
+		String statement = this.namespace + ".doCtgChart";
 		log.debug("*******************************");
 		return sqlSessionTemplate.selectList(statement, vo);
 	}

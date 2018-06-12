@@ -18,6 +18,10 @@ public class Chart {
 	private int selFilter;			//xml에서 일/주/월 별 셀렉트박스를 보여주기 위한 변수
 	
 	public Chart() { }
+	
+	public Chart(String chartUserId) {
+		this.chartUserId = chartUserId;
+	}
 
 	public Chart(String chartUserId, int year, int month, int day, int weekStart, int weekEnd, String cdDtlNm,
 			int ctgTotal, double percent, int monthTotal, int selFilter) {
