@@ -19,8 +19,6 @@
 	
 	String searchWord = ""; //검색어
 	String searchDiv = ""; //검색구분
-	String pageSize = "10"; //페이지 사이즈
-	String pageNum = "1";  //현재 페이지
 	
 	SearchVO searchVO = new SearchVO();
 	if(null != request.getAttribute("searchVO")){
@@ -30,25 +28,17 @@
 	
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
+		
+	String allLine = 
+	(null == request.getAttribute("list")) ? "0":request.getAttribute("list").toString();	
 	
-	String trade = //request.getAttribute("searchVO");
-	(null == request.getAttribute("searchVO")) ? "0":request.getAttribute("searchVO").toString();
-	String tradee = trade;	
-	
-	
-	AgecompareDao dao = new AgecompareDao();
-	List<Agecompare> list = null;
-	String a = 
-			(null == request.getAttribute("list")) ? "0":request.getAttribute("list").toString();
-	
-	String allLine = "";
-	//allLine = a.substring(a.indexOf("id=")+3, a.indexOf(","));
-	//allLine += "," + a.substring(a.indexOf("aDate=")+6,
-	//		a.indexOf("aDate=")+(a.substring(a.indexOf("aDate="))).indexOf(","));
-	
-	allLine =
-			(null == request.getAttribute("dataList")) ? "0":
-			request.getAttribute("dataList").toString();
+	String allLinea = 
+	(null == request.getAttribute("dataList")) ? "0":request.getAttribute("dataList").toString();	
+	/*int size =1;
+	if(!allLinea.equals("0")){
+		size = allLinea.length()-1;
+	}
+	allLinea = allLinea.substring(1,size);*/
 %>
 
 <html lang="ko">
@@ -71,11 +61,13 @@
 											
 	</form>
 	
-	<input type="text" id="tradee" value="<%=tradee%>"/>
 	<input type="text" id="allLine" value="<%=allLine%>"/>
+	<input type="text" id="allLine" value="<%=allLinea%>"/>
 		
 	<button class="btn btn-success btn-sm" id="btn20">20대</button> 
 	<button class="btn btn-success btn-sm" id="btn30">30대</button> 
+		
+	<div id="curve_chart" style="width: 900px; height: 500px"></div>
 		
 	<table>
 	<tr>
@@ -108,8 +100,11 @@
       </c:choose>
 	</table>
 	
+	
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
@@ -130,6 +125,28 @@
 		 });
 		 
 	 });
+	 google.charts.load('current', {'packages':['corechart']});
+     google.charts.setOnLoadCallback(drawChart);
+
+     function drawChart() {
+       var data = google.visualization.arrayToDataTable();
+       data.addColumn('string', 'age');
+       data.addColumn('string', 'value');
+       data.addRows([
+       	<%=allLine%>
+	          ]);
+
+       var options = {
+         title: 'Company Performance',
+         curveType: 'function',
+         legend: { position: 'bottom' }
+       };
+
+       var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+       chart.draw(data, options);
+     }
+
     
     </script>
 </body>

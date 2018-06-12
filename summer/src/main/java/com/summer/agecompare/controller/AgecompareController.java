@@ -3,6 +3,7 @@ package com.summer.agecompare.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -35,20 +36,38 @@ public class AgecompareController {
 	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
 		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"30"));
-		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180610"));
+		//vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180610"));
 				
 		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
 		
 		int totalCnt = 0;
-					
-		List<String> dataList = null;
+			
+		List<String> dataList = new ArrayList<String>();
+		List<String> dateList = new ArrayList<String>();
+		List<String> ageList = new ArrayList<String>();
+		List<String> totalList = new ArrayList<String>();
+		
 		
 		for(int i=0; i<list.size(); i++) {
-			dataList.set(i, list.get(i).getId()+list.get(i).getaDate()
-					+list.get(i).getAmount()+list.get(i).getAccountId()
-					+list.get(i).getTradeId()+list.get(i).getAge()
-					+list.get(i).getTradeTotal());
+			if(i==0) {
+				dateList.add("'aDate'");
+				ageList.add("'age'");
+				totalList.add("'total'");
+			}else if(i==list.size()-1) {
+				dateList.add("'"+(list.get(i).getaDate()).substring(0,7)+"'");
+				ageList.add("'"+(list.get(i).getAge())+"'");
+				totalList.add("'"+(list.get(i).getTradeTotal())+"'");
+			}
+			else {
+				dateList.add("'"+(list.get(i).getaDate()).substring(0,7)+"'");
+				ageList.add("'"+(list.get(i).getAge())+"'");
+				totalList.add("'"+(list.get(i).getTradeTotal())+"'");
+			}
 		}
+		dataList.add(dateList.toString());
+		dataList.add(ageList.toString());
+		dataList.add(totalList.toString());
+				
 		model.addAttribute("searchVO", vo);
 		model.addAttribute("list",list);
 		model.addAttribute("dataList",dataList);
