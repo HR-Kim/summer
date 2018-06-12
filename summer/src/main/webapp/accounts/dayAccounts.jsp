@@ -95,23 +95,78 @@
     
     
     
-<!--    <!-- Modal --> 
+   <!--지출 Modal  --------------------------------------------------------->
 <!--     <div id="expenseModal" class="modal fade" role="dialog"> -->
 <!--     	<div class="modal-dialog"> -->
 <!--     		<div class="modal-content"> -->
-<!-- 				<div class="modal-body"> -->
-					
-    				
-<!-- 				</div> -->
-				
-<!-- 				<div class="modal-footer"> -->
-<!-- 					<button class="btn btn-sm" id="doUpsert">입력</button> -->
-<!-- 				</div> -->
+<%--     		 	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post"> --%>
+<!-- 					<div class="modal-body"> -->
+<!-- 						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" />  -->
+	 						
+<!-- 			    		<div class="form-group"> -->
+<!-- 			    			<label class="col-lg-3 control-label">날짜</label> -->
+<!-- 				    			<div class="col-lg-6"> -->
+<!-- 				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" />  -->
+<!-- 								</div>		 -->
+<!-- 			    		</div> -->
+			    		
+<!-- 			    		<div class="form-group"> -->
+<!-- 			    			<label class="col-lg-3 control-label">구분</label> -->
+<!-- 			    			<div class="col-lg-6"> -->
+<!-- 			    				<select name="account" id="account" class="form-control input-sm"> -->
+<!-- 			    					<option value="1">현금</option> -->
+<!-- 			    					<option value="2">체크카드</option> -->
+<!-- 			    					<option value="3">신용카드</option> -->
+<!-- 			    				</select> -->
+<!-- 							</div>		 -->
+<!-- 			    		</div> -->
+			    		
+<!-- 			    		<div class="form-group"> -->
+<!-- 			    			<label class="col-lg-3 control-label">카테고리</label> -->
+<!-- 			    			<div class="col-lg-6"> -->
+<!-- 			    				<select name="category" id="category" class="form-control input-sm"> -->
+<!-- 			    					<option value="1">식비</option> -->
+<!-- 			    					<option value="2">교통비</option> -->
+<!-- 			    					<option value="3">문화생활</option> -->
+<!-- 			    				</select> -->
+<!-- 							</div>		 -->
+<!-- 			    		</div> -->
+			    		
+<!-- 			    		<div class="form-group"> -->
+<!-- 			    			<label class="col-lg-3 control-label">항목</label> -->
+<!-- 			    			<div class="col-lg-6"> -->
+<!-- 			    				<input type="text" name="item" id="item" class="form-control input-sm" maxlength="50" > -->
+<!-- 							</div>		 -->
+<!-- 			    		</div> -->
+			    		
+<!-- 			    		<div class="form-group"> -->
+<!-- 			    			<label class="col-lg-3 control-label">금액</label> -->
+<!-- 			    			<div class="col-lg-6"> -->
+<!-- 			    				<input type="text" name="amount" id="amount" class="form-control input-sm" placeholder="원" maxlength="50"/> -->
+<!-- 							</div>		 -->
+<!-- 			    		</div> -->
+			    		
+<!-- 			    		<div class="form-group"> -->
+<!-- 			    			<label class="col-lg-3 control-label">메모</label> -->
+<!-- 			    			<div class="col-lg-6"> -->
+<!-- 			    				<textarea name="memo" id="memo" class="form-control input-sm" placeholder="메모"></textarea> -->
+<!-- 							</div>		 -->
+<!-- 			    		</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="modal-footer"> -->
+<!-- 						<div class="form-group"> -->
+<!-- 				    		<div class="col-lg-6"> -->
+<!-- 				    			<button class="btn btn-sm" id="doUpsert">등록</button> -->
+<!-- 				    			<button class="btn btn-sm" id="doDelete">삭제</button> -->
+<!-- 				    		</div> -->
+<!-- 			    		</div> -->
+<!-- 					</div> -->
+<%-- 				</form> --%>
 <!--     		</div> -->
 <!--     	</div> -->
-<!--     </div> -->
+<!--    	</div> -->
     
-<!--    <!-- //Modal -->
+   <!-- //Modal --------------------------------------------------------->
   
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
@@ -229,38 +284,52 @@
    <!--// Paging --------------------------------------------------------->
    </div>
    
-   <div class="container">
-   <form class="form-horizontal" name="frmEdit" id="frmEdit" method="post">
-   		
-   						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" /> 
-   						
+   
+   <!-- 폼 ----------------------------------- -->
+	<div class="container">
+	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post"> 
+					<div class="modal-body">
+						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" /> 
+	 						
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">날짜</label>
 				    			<div class="col-lg-6">
-				    			<!-- todo -->
 				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" /> 
 								</div>		
 			    		</div>
 			    		
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">구분</label>
-			    			<div class="col-lg-6">
-			    				<select name="account" id="account" class="form-control input-sm">
-			    					<option value="1">현금</option>
-			    					<option value="2">체크카드</option>
-			    					<option value="3">신용카드</option>
-			    				</select>
-							</div>		
+				    			<div class="col-lg-6">
+						    		<c:choose>
+						        		<c:when test="${list4.size()>0 }">
+								        		<select name="searchTrade" id="searchTrade" class="form-control input-sm">
+									        		<c:forEach var="code" items="${list4 }">
+									        			<option value="${code.cdDtlId }"
+									        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
+									        			>${code.cdDtlNm}</option>
+									        		</c:forEach>
+								        		</select>
+							         	</c:when>
+						         </c:choose>
+				         		</div>		
 			    		</div>
 			    		
+			    		
 			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">카테고리</label>
+			    			<label class="col-lg-3 control-label">지출일때카테고리</label>
 			    			<div class="col-lg-6">
-			    				<select name="category" id="category" class="form-control input-sm">
-			    					<option value="1">식비</option>
-			    					<option value="2">교통비</option>
-			    					<option value="3">문화생활</option>
-			    				</select>
+			    				<c:choose>
+						        		<c:when test="${list2.size()>0 }">
+								        		<select name="searchTrade" id="searchTrade" class="form-control input-sm">
+									        		<c:forEach var="code" items="${list2 }">
+									        			<option value="${code.cdDtlId }"
+									        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
+									        			>${code.cdDtlNm}</option>
+									        		</c:forEach>
+								        		</select>
+							         	</c:when>
+						         </c:choose>
 							</div>		
 			    		</div>
 			    		
@@ -284,17 +353,17 @@
 			    				<textarea name="memo" id="memo" class="form-control input-sm" placeholder="메모"></textarea>
 							</div>		
 			    		</div>
-			    		
-			    		<div class="form-group">
+					</div>
+					
+						<div class="form-group">
 				    		<div class="col-lg-6">
 				    			<button class="btn btn-sm" id="doUpsert">등록</button>
 				    			<button class="btn btn-sm" id="doDelete">삭제</button>
 				    		</div>
 			    		</div>
-			    	</form>
-   				</div>
-   
-	
+					
+				</form>
+</div>
 
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
@@ -321,6 +390,7 @@
 		$(document).ready(function(){
 		
 			
+			//todo
 			//그리드 클릭
     		$("#listTable>tbody").on("dblclick","tr",function(){
     			
@@ -328,6 +398,7 @@
     			var tds = tr.children();
     			
     			var ano = tds.eq(0).text();
+    			
     			
     			if(ano=="")return;
     			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
@@ -343,16 +414,22 @@
 		                	 console.log("data="+data); 
 		                 	//json parsing
 		                 	var parseData = $.parseJSON(data); //데이터 들어있음.
+		                 	var date = new Date(parseInt(parseData.aDate));
+		                 		
+		                 		
 		                 	console.log("parseData"+parseData);
+		                 	alert(date);
 		                 		//화면에 정보 뿌리기.
 		                 		$("#ano").val(parseData.ano);
-		                 	$("#category").val(parseData.category_id);
-								$("#aDate").val(parseData.aDate);
-								$("#item").val(parseData.item);
-								$("#account").val(parseData.account_id);
-								$("#amount").val(parseData.amount);
-								$("#memo").val(parseData.memo);
-		                 	
+		                 		$("#category").val(parseData.category_id);
+									//$("#aDate").val(parseData.aDate); todo
+									$("#aDate").text(date.toString('dd/mm/yyyy'));
+									alert($("#aDate").text(date.toString('dd/mm/yyyy')));
+									$("#item").val(parseData.item);
+									$("#account").val(parseData.account_id);
+									$("#amount").val(parseData.amount);
+									$("#memo").val(parseData.memo);
+									
 			                 },
 			                complete: function(data){//무조건 수행
 			                     

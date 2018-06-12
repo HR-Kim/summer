@@ -80,7 +80,7 @@ public class AccountsController {
 		model.addAttribute("list",list);
 		model.addAttribute("searchVO",vo);
 		
-		return "accounts/dayTest";
+		return "accounts/dayAccounts";
 	}
 	
 	@RequestMapping(value="/accounts/doSelectList.do",method=RequestMethod.POST)
