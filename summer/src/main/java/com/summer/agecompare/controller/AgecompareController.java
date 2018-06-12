@@ -33,24 +33,25 @@ public class AgecompareController {
 		
 	@RequestMapping(value="/agecompare/do_selectAgeList.do", method=RequestMethod.GET)
 	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
-		log.debug("1===doSelectList.do=======================");
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
 		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"30"));
 		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180610"));
-		
-		log.debug("2===SearchVO=="+vo.toString());
-		
+				
 		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
-		log.debug("TTTT3=list================"+list.toString());
 		
 		int totalCnt = 0;
+					
+		List<String> dataList = null;
 		
-		if(null != list && list.size()>0) {
-			log.debug("4=totalCnt======================"+totalCnt);
+		for(int i=0; i<list.size(); i++) {
+			dataList.set(i, list.get(i).getId()+list.get(i).getaDate()
+					+list.get(i).getAmount()+list.get(i).getAccountId()
+					+list.get(i).getTradeId()+list.get(i).getAge()
+					+list.get(i).getTradeTotal());
 		}
-		
 		model.addAttribute("searchVO", vo);
 		model.addAttribute("list",list);
+		model.addAttribute("dataList",dataList);
 		
 		return "agecompare/agecompare";
 	}

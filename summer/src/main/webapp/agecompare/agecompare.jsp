@@ -1,7 +1,12 @@
 <%@page import="org.slf4j.Logger"%>
 <%@page import="org.slf4j.LoggerFactory"%>
+<%@page import="java.util.List"%>
 <%@page import="com.summer.comm.StringUtil"%>
 <%@page import="com.summer.comm.SearchVO"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.summer.agecompare.dao.AgecompareDao"%>
+<%@page import="com.summer.agecompare.domain.Agecompare"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,6 +30,25 @@
 	
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
+	
+	String trade = //request.getAttribute("searchVO");
+	(null == request.getAttribute("searchVO")) ? "0":request.getAttribute("searchVO").toString();
+	String tradee = trade;	
+	
+	
+	AgecompareDao dao = new AgecompareDao();
+	List<Agecompare> list = null;
+	String a = 
+			(null == request.getAttribute("list")) ? "0":request.getAttribute("list").toString();
+	
+	String allLine = "";
+	//allLine = a.substring(a.indexOf("id=")+3, a.indexOf(","));
+	//allLine += "," + a.substring(a.indexOf("aDate=")+6,
+	//		a.indexOf("aDate=")+(a.substring(a.indexOf("aDate="))).indexOf(","));
+	
+	allLine =
+			(null == request.getAttribute("dataList")) ? "0":
+			request.getAttribute("dataList").toString();
 %>
 
 <html lang="ko">
@@ -40,13 +64,19 @@
 	<input type="button" id="btn" onclick="doSearch();" value="조회" />
 	
 	<form class="form-inline" name="frm" id="frm" method="get">
-		<input type="hidden"  name="searchDiv" id="searchDiv""/>
+		<input type="hidden"  name="searchDiv" id="searchDiv" />
 
 		<input type="text" class="form-control input-sm" name="searchWord" 
 		id="searchWord" value="${searchVO.searchWord}"/>
 											
 	</form>
 	
+	<input type="text" id="tradee" value="<%=tradee%>"/>
+	<input type="text" id="allLine" value="<%=allLine%>"/>
+		
+	<button class="btn btn-success btn-sm" id="btn20">20대</button> 
+	<button class="btn btn-success btn-sm" id="btn30">30대</button> 
+		
 	<table>
 	<tr>
 			<td>id</td>
@@ -78,7 +108,8 @@
       </c:choose>
 	</table>
 	
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
@@ -89,6 +120,16 @@
 		frm.action = "do_selectAgeList.do";
 		frm.submit();
 	}
+	
+	 $(document).ready(function(){
+		 $("#btn20").on("click",function(){
+	    		alert("20");
+		 });
+		 $("#btn30").on("click",function(){
+			 alert("30");
+		 });
+		 
+	 });
     
     </script>
 </body>
