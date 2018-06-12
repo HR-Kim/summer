@@ -47,6 +47,36 @@
 											
 	</form>
 	
+	<table>
+	<tr>
+			<td>id</td>
+			<td>date</td>
+			<td>accountid</td>
+			<td>amount</td>
+			<td>age</td>
+		</tr>
+	 <c:choose>
+		 
+         	<c:when test="${list.size()>0}">
+         		<c:forEach var="ageVO" items="${list}">
+   <!-- id,adate,accountid,tradeid,amount,age,tradetotal,idtradetotal,idtotal -->
+					<tr>
+					<td>${ageVO.id}</td>
+					<td>${ageVO.name}</td>
+					<td>${ageVO.gender}</td>
+					<td>${ageVO.total}</td>
+					<td>${ageVO.tradeId}</td>
+					</tr>
+         		</c:forEach>
+         	</c:when>
+         	
+         	<c:otherwise>
+         		<tr><td>등록된 게시글이 없습니다.</td></tr>
+         	</c:otherwise>
+      </c:choose>
+	</table>
+	
+	
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">

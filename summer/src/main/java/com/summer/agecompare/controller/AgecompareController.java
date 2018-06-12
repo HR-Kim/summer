@@ -34,10 +34,9 @@ public class AgecompareController {
 	@RequestMapping(value="/agecompare/do_selectAgeList.do", method=RequestMethod.GET)
 	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
 		log.debug("1===doSelectList.do=======================");
-		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"30"));
-		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
-		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"20"));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180510"));
 		
 		log.debug("2===SearchVO=="+vo.toString());
 		

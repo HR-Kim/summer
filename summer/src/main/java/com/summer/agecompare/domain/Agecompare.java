@@ -12,7 +12,6 @@ public class Agecompare {
 	
 	private String userId;
 	private String name;
-	private String nickname;
 	private String gender;
 	private String birth;
 	private String age;
@@ -22,16 +21,16 @@ public class Agecompare {
 	private String total;
 	private String idtradeTotal;
 	
+	private String startDate;
+	private String endDate;
 	
+
 	public Agecompare() {}
 
 	
-
-
-
 	public Agecompare(String id, String ano, String categoryId, String aDate, String item, String amount,
-			String accountId, String tradeId, String userId, String name, String nickname, String gender, String birth,
-			String age, String tradeTotal, String idTotal, String total, String idtradeTotal) {
+			String accountId, String tradeId, String userId, String name, String gender, String birth, String age,
+			String tradeTotal, String idTotal, String total, String idtradeTotal, String startDate, String endDate) {
 		super();
 		this.id = id;
 		this.ano = ano;
@@ -43,7 +42,6 @@ public class Agecompare {
 		this.tradeId = tradeId;
 		this.userId = userId;
 		this.name = name;
-		this.nickname = nickname;
 		this.gender = gender;
 		this.birth = birth;
 		this.age = age;
@@ -51,24 +49,40 @@ public class Agecompare {
 		this.idTotal = idTotal;
 		this.total = total;
 		this.idtradeTotal = idtradeTotal;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
-
-
-
-
 
 	@Override
 	public String toString() {
 		return "Agecompare [id=" + id + ", ano=" + ano + ", categoryId=" + categoryId + ", aDate=" + aDate + ", item="
 				+ item + ", amount=" + amount + ", accountId=" + accountId + ", tradeId=" + tradeId + ", userId="
-				+ userId + ", name=" + name + ", nickname=" + nickname + ", gender=" + gender + ", birth=" + birth
-				+ ", age=" + age + ", tradeTotal=" + tradeTotal + ", idTotal=" + idTotal + ", total=" + total
-				+ ", idtradeTotal=" + idtradeTotal + "]";
+				+ userId + ", name=" + name + ", gender=" + gender + ", birth=" + birth + ", age=" + age
+				+ ", tradeTotal=" + tradeTotal + ", idTotal=" + idTotal + ", total=" + total + ", idtradeTotal="
+				+ idtradeTotal + ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
 
 
 
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	public String getAmount() {
 		return amount;
@@ -166,17 +180,6 @@ public class Agecompare {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	public String getNickname() {
-		return nickname;
-	}
-
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
 
 	public String getGender() {
 		return gender;
