@@ -51,9 +51,10 @@
 	<tr>
 			<td>id</td>
 			<td>date</td>
-			<td>accountid</td>
+			<td>tradeid</td>
 			<td>amount</td>
 			<td>age</td>
+			<td>tradetotal</td>
 		</tr>
 	 <c:choose>
 		 
@@ -62,10 +63,11 @@
    <!-- id,adate,accountid,tradeid,amount,age,tradetotal,idtradetotal,idtotal -->
 					<tr>
 					<td>${ageVO.id}</td>
-					<td>${ageVO.name}</td>
-					<td>${ageVO.gender}</td>
-					<td>${ageVO.total}</td>
+					<td>${ageVO.aDate}</td>
 					<td>${ageVO.tradeId}</td>
+					<td>${ageVO.amount}</td>
+					<td>${ageVO.age}</td>
+					<td>${ageVO.tradeTotal}</td>
 					</tr>
          		</c:forEach>
          	</c:when>
