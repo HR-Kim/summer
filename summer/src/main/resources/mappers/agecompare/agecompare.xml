@@ -34,7 +34,7 @@
 			ON T1.id = T3.id
 			<include refid="baseCondition" />   
 			AND TO_DATE(T1.a_date,'YY/MM/DD') 
-			BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY('18/05/10')+1,-1),'YY/MM/DD'),'YY/MM/DD')
+			BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY('18/06/10')+1,-1),'YY/MM/DD'),'YY/MM/DD')
 			AND TO_DATE(last_day(TO_CHAR(TRUNC(SYSDATE,'MM'),'YY/MM/DD')),'YY/MM/DD')
 	</select>
 </mapper>

@@ -35,8 +35,8 @@ public class AgecompareController {
 	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
 		log.debug("1===doSelectList.do=======================");
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"20"));
-		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180510"));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"30"));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180610"));
 		
 		log.debug("2===SearchVO=="+vo.toString());
 		
