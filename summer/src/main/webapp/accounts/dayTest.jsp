@@ -1,5 +1,6 @@
 
 
+<%@page import="com.summer.accounts.domain.Accounts"%>
 <%@page import="com.summer.comm.DTO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.summer.codes.dao.CodeDao"%>
@@ -25,6 +26,9 @@
 	String searchWord = ""; //검색어
 	String searchDiv = ""; //검색구분
 	
+	String searchTrade = "";
+	String searchCategoty = "";
+	
 	int totalCnt = 0;
 	int bottomCount = 10;
 	
@@ -39,12 +43,17 @@
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
 	
+	searchTrade = StringUtil.nvl(searchVO.getSearchTrade(),"");
+	searchCategoty = StringUtil.nvl(searchVO.getSearchCategoty(),"");
+	
+	
 	int o_pageSize = Integer.parseInt(pageSize);
 	int o_pageNum = Integer.parseInt(pageNum);
 	String o_TotalCnt = 
 			(null == request.getAttribute("totalCnt"))?"0":request.getAttribute("totalCnt").toString();
 	totalCnt = Integer.parseInt(o_TotalCnt);
 	
+	log.debug("searchDiv"+searchDiv);
 	
 %>
 
@@ -58,7 +67,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::사용자 관리:::</title>
+    <title>:::일간 가계부:::</title>
 
     <!-- 부트스트랩 -->
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -104,17 +113,8 @@
     
 <!--    <!-- //Modal -->
   
-  
-  
-
-  
-  
-  
-  
-  
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
-<%-- 	<form:form commandName="frm" action="doSelectList.do" method="get"> --%>
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
 
    		<table class="table">
@@ -122,22 +122,23 @@
    				<td class="text-left">
    					<div class="form-group col-lg6 col-sm6">
    						
-   						
-   						<select name="level" id="level" class="form-control input-sm">
-   							<option value="">구분</option>
-	    					<option value="1">현금</option>
-	    					<option value="2">체크카드</option>
-	    					<option value="3">신용카드</option>
-	    				</select>
-   						
-   						<select name="level1" id="level1" class="form-control input-sm">
-	    					<option value="">카테고리</option>
-	    					<option value="1">식비</option>
-	    					<option value="2">교통비</option>
-	    					<option value="3">문화생활</option>
-    					</select>
-    					
-    					<select name="pageSize" id="pageSize" class="form-control input-sm">
+<%-- 						<jsp:include page="/accounts/codeTest.jsp" flush="true"/> --%>
+
+						<c:choose>
+			        		<c:when test="${list1.size()>0 }">
+					        		<select name="searchTrade" id="searchTrade">
+						        		<c:forEach var="code" items="${list1 }">
+						        			<option value="${code.cdDtlId }"
+						        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
+						        			>${code.cdDtlNm}</option>
+						        		</c:forEach>
+					        		</select>
+				         	</c:when>
+			         </c:choose>
+			         
+
+
+    					<select name="pageSize" id="pageSize">
    							<option value="10"
    								<c:if test="${searchVO.pageSize=='10'}">selected='selected'</c:if> 
    							>10</option>
@@ -149,14 +150,14 @@
    							>100</option>
    						</select>
     					
-    					<button class="btn btn-sm btn-success" onclick="javascript:doSearch();">조회</button>
+    					<button class="btn btn-sm btn-success" onclick="javascript:doSearch();">검색</button>
 							
    					</div>
    				
    			</tr>
    		</table>
    	</form> 
-<%-- </form:form> --%>
+
    	<!--// Search --------------------------------------------------------->
    
   
@@ -226,7 +227,7 @@
    		<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "doSelectList.do", "search_page")%>
    </div>
    <!--// Paging --------------------------------------------------------->
-   
+   </div>
    
    <div class="container">
    <form class="form-horizontal" name="frmEdit" id="frmEdit" method="post">
@@ -291,9 +292,9 @@
 				    		</div>
 			    		</div>
 			    	</form>
-   </div>
+   				</div>
    
-	</div>
+	
 
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>

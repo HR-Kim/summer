@@ -56,7 +56,7 @@
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
  
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
+    <!-- WARNING: Respond.js 는 당신이 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -69,7 +69,7 @@
 	
 	<!-- button -->
 	<div class="form-inline pull-right">
-		<button class="btn btn-sm" id="goodlist">조회</button>
+		<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">조회</button>
 	</div>
 	
 	<!-- button end -->
@@ -129,7 +129,7 @@
 	
 	<!-- paging -->
   	<div class="form-inline text-center">
-  	<%= StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCnt, "do_selectList.do", "search_page") %>
+  	<%= StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCnt, "doSelectList.do", "search_page") %>
   	</div>
   	<!--// paging -->
 	
@@ -139,6 +139,19 @@
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
+	function doSearch(){
+		var frm = document.frm;
+		frm.action = "doSelectList.do";
+		frm.submit();
+	}
+	
+	function search_page(url,pageNum){
+    	//console.log("=url="+url);
+    	var frm = document.frm;
+		frm.action = url;
+		frm.pageNum.value = pageNum;
+		frm.submit();
+    }
 	
 	</script>
 </body>

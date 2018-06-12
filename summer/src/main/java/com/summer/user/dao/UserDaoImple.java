@@ -132,5 +132,17 @@ public class UserDaoImple implements UserDao {
 		return sqlSessionTemplate.selectOne(statement, user);
 	}
 
+	@Override
+	public int nickCheck(User user) throws SQLException {
+		String statement = this.namespace+".do_nickCheck";
+		return sqlSessionTemplate.selectOne(statement, user);
+	}
+
+	@Override
+	public int phoneCheck(User user) throws SQLException {
+		String statement = this.namespace+".do_phoneCheck";
+		return sqlSessionTemplate.selectOne(statement, user);
+	}
+
 
 }

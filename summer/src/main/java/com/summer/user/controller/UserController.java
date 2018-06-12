@@ -43,6 +43,14 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value="user/do_phoneCheck.do", method= {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public  int phoneCheck(User user) throws SQLException {
+		int hi = userService.phoneCheck(user);
+		log.debug("*************************************************");
+		log.debug(Integer.toString(hi));
+		return userService.phoneCheck(user);
+	}
 	@RequestMapping(value="user/do_idCheck.do", method= {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public  int idCheck(User user) throws SQLException {
@@ -50,6 +58,14 @@ public class UserController {
 		log.debug("*************************************************");
 		log.debug(Integer.toString(hi));
 		return userService.idCheck(user);
+	}
+	@RequestMapping(value="user/do_nickCheck.do", method= {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public  int nickCheck(User user) throws SQLException {
+		int hi = userService.nickCheck(user);
+		log.debug("*************************************************");
+		log.debug(Integer.toString(hi));
+		return userService.nickCheck(user);
 	}
 	
 	

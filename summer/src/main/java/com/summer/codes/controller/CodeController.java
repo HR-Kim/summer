@@ -35,31 +35,30 @@ public class CodeController {
 	@Autowired
 	private CodeService codeService;
 	
-//	@RequestMapping("/accounts/getDetailName.do")
-//	public List<CodeVO> getDetailName(CodeVO vo,Model model) throws SQLException{
-//		
-//		List<CodeVO> list = codeService.getSelectList(vo);
-//		
-//		model.addAttribute("codeList", list);
-//		
-//		return list;
-//		//스트링 말아서
-//		//다뽑아서 화면에서 처리.. 
-//		
-//	}
-	
-	@RequestMapping(value="/accounts/do_selectList.do",method=RequestMethod.GET)
+	@RequestMapping(value="/accounts/doCodeselectList.do",method=RequestMethod.GET)
 	public String getSelectList(CodeVO vo, Model model) throws SQLException{
+		 
 		log.debug("1===doSelectList.do=======================");
 		
 		vo.setCdMstId("ACC_TRADE");
-		log.debug("2===getSelectList=="+vo.toString());
+		List<CodeVO> list1 = codeService.getSelectList(vo);
 		
-		List<CodeVO> list = codeService.getSelectList(vo);
-		log.debug("3===list=="+list.toString());
+		vo.setCdMstId("ACC_CAT_EXPENSES");
+		List<CodeVO> list2 = codeService.getSelectList(vo);
+		
+		vo.setCdMstId("ACC_CAT_INCOMES");
+		List<CodeVO> list3 = codeService.getSelectList(vo);
+		
+		vo.setCdMstId("ACC_ACCOUNT");
+		List<CodeVO> list4 = codeService.getSelectList(vo);
+		
+		log.debug("3===list=="+list1.toString());
 		
 		
-		model.addAttribute("list",list);
+		model.addAttribute("list1",list1);
+		model.addAttribute("list2",list2);
+		model.addAttribute("list3",list3);
+		model.addAttribute("list4",list4);
 		model.addAttribute("codeVO",vo);
 		
 		return "accounts/codeTest";

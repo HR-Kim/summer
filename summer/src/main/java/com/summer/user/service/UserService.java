@@ -27,6 +27,8 @@ public interface UserService {
 	 * @throws SQLException
 	 */
 	public int idCheck(User user) throws SQLException;
+	public int nickCheck(User user) throws SQLException;
+	public int phoneCheck(User user) throws SQLException;
 	
 	/**
 	 * upsert(등록/수정)

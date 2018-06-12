@@ -12,7 +12,7 @@ public class Accounts extends DTO{
 	private String tradeId;
 	private int amount;
 	private String memo;
-	
+
 	
 	public Accounts() {
 		

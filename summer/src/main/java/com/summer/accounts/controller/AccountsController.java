@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.summer.accounts.domain.Accounts;
 import com.summer.accounts.service.AccountsService;
+import com.summer.codes.domain.CodeVO;
+import com.summer.codes.service.CodeService;
 import com.summer.comm.MessageVO;
 import com.summer.comm.SearchVO;
 import com.summer.comm.StringUtil;
@@ -26,8 +28,12 @@ public class AccountsController {
 	@Autowired
 	private AccountsService accountsService;
 	
+	@Autowired
+	private CodeService codeService;
+	
+	
 	@RequestMapping(value="/accounts/doSelectList.do",method=RequestMethod.GET)
-	public String getSelectList(SearchVO vo, Model model) throws SQLException{
+	public String getSelectList(SearchVO vo,CodeVO codeVo, Model model) throws SQLException{
 		log.debug("1===doSelectList.do=======================");
 		
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
@@ -37,8 +43,32 @@ public class AccountsController {
 		
 		log.debug("2===SearchVO=="+vo.toString());
 		
+		codeVo.setCdMstId("ACC_TRADE");
+		List<CodeVO> list1 = codeService.getSelectList(codeVo);
+		
+		codeVo.setCdMstId("ACC_CAT_EXPENSES");
+		List<CodeVO> list2 = codeService.getSelectList(codeVo);
+		
+		codeVo.setCdMstId("ACC_CAT_INCOMES");
+		List<CodeVO> list3 = codeService.getSelectList(codeVo);
+		
+		codeVo.setCdMstId("ACC_ACCOUNT");
+		List<CodeVO> list4 = codeService.getSelectList(codeVo);
+		
+		log.debug("3===list=="+list1.toString());
+		
+		
+		model.addAttribute("list1",list1);
+		model.addAttribute("list2",list2);
+		model.addAttribute("list3",list3);
+		model.addAttribute("list4",list4);
+		
+		codeService.getSelectList(codeVo);
+		
 		List<Accounts> list = accountsService.getSelectList(vo);
 		log.debug("3===list=="+list.toString());
+		
+		
 		
 		int totalCnt = 0;
 		if(null!= list && list.size()>0) {

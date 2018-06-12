@@ -72,17 +72,23 @@
 				</tr>
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="text" name="name" id="name" size="40"
+						<input type="text" name="name" id="name" size="40" onkeyup="nameCheckFunction();"
 							placeholder="이름" maxlength="20" />
 					</div>
 				</div>
+				<tr>
+					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="nameCheckMessage"></h5>					
+				</tr>				
+				
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="text" name="nickname" id="nickname" size="29"
+						<input type="text" name="nickname" id="nickname" size="40" onkeyup="nickCheckFunction();"
 							placeholder="별명" maxlength="20" />
-						<button id="nickCheck" onclick="bt_nickCheck();">중복확인</button>
 					</div>
 				</div>
+				<tr>
+					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="nickCheckMessage"></h5>					
+				</tr>
 				
 				<div class="form-group">
 					<div class="col-lg-8">
@@ -94,17 +100,23 @@
 				
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="email" name="email" id="email" size="40"
+						<input type="email" name="email" id="email" size="40" onkeyup="emailCheckFunction();"
 							placeholder="이메일 ( ex) abc@abc.com )" maxlength="20" />
 					</div>
 				</div>
+				<tr>
+					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="emailCheckMessage"></h5>					
+				</tr>	
 				<div class="form-group">
 					<div class="col-lg-8">
-						<input type="text" name="phone" id="phone" size="40"
+						<input type="text" name="phone" id="phone" size="40" onkeyup = "phoneCheckFunction();"
 							placeholder="연락처 ( - 없이 번호만 입력하세요. )" maxlength="20" />
 					</div>
 				</div>
-				
+				<tr>
+					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="phoneCheckMessage"></h5>					
+				</tr>
+					
 				<div class="form-group" style="text-align : center; margin: 0 auto;">
 					<label class="btn btn-primaty active">
 						<input type="radio" name="gender" value="0" autocomplete="off" checked>남자
@@ -119,7 +131,7 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="clearfix">
-		 	<button type="submit" class="signupbtn" disable="disabled">등록</button>
+		 	<button type="submit" id="signupbtn" class="signupbtn" disabled="disabled">등록</button>
 		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/go_login.do'">취소</button>
 		 </div>
 		 
@@ -154,6 +166,83 @@
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
+		
+		function phoneCheckFunction(){
+			var phone = $('#phone').val();
+			var phonePattern = /^01(?:[0|1|6-9])([0-9]{7,8})$/;
+			var OK = phonePattern.exec(phone);
+			if(!OK){
+				$("#phoneCheckMessage").css("color","red");						
+				$('#phoneCheckMessage').html('옳바르게 입력하세요.');
+				$('#signupbtn').prop("disabled", true);
+				return;
+			}
+			$.ajax({
+				url : "do_phoneCheck.do",
+				dataType : "html",// JSON/Html
+				async : false,
+				data : {
+					phone : $('#phone').val()
+				},
+				success : function(data){
+					data = $.trim(data)
+					if(data == '1'){
+						$('#signupbtn').prop("disabled", true);
+						$("#phoneCheckMessage").css("color","red");
+						$('#phoneCheckMessage').html('중복되었습니다.');
+					}else if(data =='0'){
+						$('#signupbtn').prop("disabled", false);
+						$("#phoneCheckMessage").css("color","green");
+						$('#phoneCheckMessage').html('사용할 수 있습니다.');
+					}
+				}
+			});
+			
+		}
+		
+		
+		function emailCheckFunction(){
+			var email = $('#email').val();
+			var emailPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+			var OK = emailPattern.exec(email);
+			if(!OK){
+				$('#emailCheckMessage').css("color","red");						
+				$('#emailCheckMessage').html('옳바르게 입력하세요.');
+			}else{
+				$('#emailCheckMessage').css("color","green");						
+				$('#emailCheckMessage').html('사용할 수 있습니다.');
+				return;
+			}
+		}
+		
+		var idCheckFlag = 0;
+		var nickCheckFlag = 0;
+		var pwdCheckFlag = 0;
+		function nickCheckFunction(){
+			var nickname = $('#nickname').val();
+			$.ajax({
+				url : "do_nickCheck.do",
+				dataType : "html",// JSON/Html
+				async : false,
+				data : {
+					nickname : $('#nickname').val()
+				},
+				success : function(data){
+					data = $.trim(data)
+					console.log("data="+data)
+					console.log("nickname="+nickname)
+					if((nickname == "") || (data == '1')){
+						$('#signupbtn').prop("disabled", true);
+						$("#nickCheckMessage").css("color","red");
+						$('#nickCheckMessage').html('사용할 수 없습니다.');
+					}else if(data =='0'){
+						$('#signupbtn').prop("disabled", false);
+						$("#nickCheckMessage").css("color","green");
+						$('#nickCheckMessage').html('사용할 수 있습니다.');
+					}
+				}
+			});
+		}
 
 		function passwordCheckFunction(){
 			var pwd1 = $('#pwd1').val();
@@ -165,8 +254,33 @@
 				$('#passwordCheckMessage').html('비밀번호가 일치합니다');
 			}			
 		}
+		
+		function nameCheckFunction(){
+			var name = $('#name').val();
+			var namePattern = /^[가-힣]$/;
+			var OK = namePattern.exec(name);
+			if(!OK){
+				$('#nameCheckMessage').css("color","red");						
+				$('#nameCheckMessage').html('한글로 입력해주세요.');
+			}else{
+				$('#nameCheckMessage').css("color","green");						
+				$('#nameCheckMessage').html('사용할 수 있습니다.');
+				return;
+			}
+		}
 
 		function idCheckFunction(){
+			var id = $('#id').val();
+			console.log("id="+id)
+			var idPattern = /^[a-z]{1}[a-z0-9]{7,15}$/;
+			var OK = idPattern.exec(id);
+			console.log("OK="+OK)
+			if(OK == null){
+				$("#idCheckMessage").css("color","red");						
+				$('#idCheckMessage').html('영소문자로 시작해야 합니다.(8~16글자)');
+				$('#signupbtn').prop("disabled", true);
+				return;
+			}
 				$.ajax({
 					url : "do_idCheck.do",
 					dataType : "html",// JSON/Html
@@ -175,19 +289,16 @@
 						"id" : $('#id').val()
 					},
 					success : function(data){
-						var idlength = $('#id').val().length;
 						data = $.trim(data)
 						console.log(data)
-						console.log("idlength="+idlength)
-						if(idlength == 0 && data == '0') {						
-							$('#idCheckMessage').html('아이디를 입력하세요.');
-						}else if(idlength < 8){
-							$('#idCheckMessage').html('8글자 이상 입력하세요');								
-						}else if(data == '0') {
-							$("#idCheckMessage").css("color","#116F0C");
-							$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
+						if(data == '0') {
+							$("#idCheckMessage").css("color","green");						
+							$('#idCheckMessage').html('사용할 수 있습니다.');
+							$('#signupbtn').prop("disabled", false);
 						}else if(data == '1') {
-							$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');									
+							$("#idCheckMessage").css("color","red");
+							$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');
+							$('#signupbtn').prop("disabled", true);
 						}
 					}
 				});
