@@ -67,13 +67,6 @@
 
 	<div class="container">
 	
-	<!-- button -->
-	<div class="form-inline pull-right">
-		<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">조회</button>
-	</div>
-	
-	<!-- button end -->
-	
 	<!-- search -->
 	<form class="form-inline" name="frm" id="frm" method="get">
 		<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
@@ -82,17 +75,21 @@
 			<tr>
 				<td class="text-center">
 				<div class="form-group col-lg5 col-sm6">
-					<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}">
-					<select name="pageSize" id="pageSize" class="form-control input-sm">
+				<select name="pageSize" id="pageSize">
 						<option value="10" <c:if test="${searchVO.pageSize == '10'}">selected='selected'</c:if>>10</option>
 	  						<option value="30" <c:if test="${searchVO.pageSize == '30'}">selected='selected'</c:if>>30</option>
 	  						<option value="50" <c:if test="${searchVO.pageSize == '50'}">selected='selected'</c:if>>50</option>
 	  						<option value="100" <c:if test="${searchVO.pageSize == '100'}">selected='selected'</c:if>>100</option>
 					</select>
+					<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}">
+					<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">검색</button>
+					
+					
 				</div>
 				</td>
 			</tr>
 		</table>
+		
 	</form>
 	<!-- search end -->
 	
@@ -104,6 +101,7 @@
        		<th class="text-center">번호</th>
        		<th class="text-center">Product Name</th>
        		<th class="text-center">The lower price</th>
+       		<th class="text-center">goodID</th>
        	</thead>
        	<tbody>
        		<c:choose>
@@ -113,6 +111,7 @@
 		         			<td class="text-center">${goodVO.no}</td>
 		         			<td class="text-left">${goodVO.goodName}</td>
 		         			<td class="text-left">${goodVO.goodPrice}</td>
+		         			<td class="text-left" >${goodVO.goodId}</td>
 		         		</tr>
 	         		</c:forEach>
 	         	</c:when>
@@ -152,6 +151,24 @@
 		frm.pageNum.value = pageNum;
 		frm.submit();
     }
+	
+	$(document).ready(function(){
+		$('#idtd').hide();
+		
+		$("#listTable>tbody").on("click","tr",function(){
+			var tr = $(this);
+			var tds = tr.children();
+			
+			var ano = tds.eq(3).text();
+			
+			alert(ano);
+			
+			var frm = document.frm;
+			
+			frm.action = "";
+		
+		});
+	});
 	
 	</script>
 </body>

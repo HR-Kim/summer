@@ -49,4 +49,13 @@ public class GoodController {
 		
 		return "good/goodList";
 	}
+	
+	@RequestMapping(value="/good/doSearchOne.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	public String get(Good good) throws SQLException{
+		log.debug("1.=searchOne.do====================================");
+		
+		//Good outVO = goodService.get(good);
+		
+		return "good/goodDetail";
+	}
 }
