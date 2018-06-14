@@ -19,21 +19,33 @@
 		각각의 퍼센트, 평균은 java에서
 	-->
 	<select id="do_selectAgeList" parameterType="SearchVO" resultType="Agecompare">
-			SELECT T1.id, 
-			       T1.a_date,
-			       T1.account_id,
-			       T1.trade_id,
-			       T1.amount,
-			       T3.age,
-			       SUM(amount) OVER(PARTITION BY trade_id) AS tradeTOTAL,
-			       SUM(amount) OVER(PARTITION BY T1.id,trade_id) AS idtradeTOTAL,
-			       SUM(amount) OVER(PARTITION BY T1.id) AS idTOTAL
-			FROM su_accounts T1 INNER JOIN ( SELECT id, 
-			                                        TRUNC(FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(birth,'YYYYMMDD'))/12)+1,-1) AS age 
-			                                FROM su_users) T3
-			ON T1.id = T3.id
-            and T1.trade_id=10
-            and T1.account_id = 10
+			    SELECT DISTINCT SUM(DISTINCT T2.total) OVER(partition by to_char(T2.a_date, 'YY/MM')) AS total
+			        ,to_char(T2.a_date, 'YY/MM') as a_date
+			        ,T2.total as tradetotal
+			        ,T2.trade_id
+			         ,T2.age
+	   		 FROM su_users T1 INNER JOIN(SELECT DISTINCT SUM(amount) OVER(PARTITION BY trade_id, Ta.age,to_char(a_date, 'YY/MM')) AS total
+									                , id
+									                ,a_date
+									                ,trade_id
+									                ,amount
+									                ,Ta.age
+									        FROM ( SELECT TT.a_date
+									                    ,TT.amount
+									                    ,TT.id
+									                    ,TT.trade_id
+                                                        ,T3.age
+									                FROM su_accounts TT INNER JOIN(SELECT id 
+                                                                                        ,TRUNC(FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(birth,'YYYYMMDD'))/12)+1,-1) AS age 
+										                                            FROM su_users) T3 
+										                                 ON T3.id = TT.id
+									                                     AND to_date(TT.a_date,'YY/MM/DD')
+															                BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(#{pageNum,jdbcType=VARCHAR})+1,-1),'YYYYMMDD'),'YY/MM/DD')
+															                AND TO_DATE(last_day(TO_CHAR(LAST_DAY(#{pageSize,jdbcType=VARCHAR}),'YYYYMMDD')),'YY/MM/DD')
+									                						) Ta
+									              ) T2
+							   ON T1.id = T2.id
+                               AND T2.age = #{searchWord,jdbcType=VARCHAR}
 			<!-- <include refid="baseCondition" />   
 			AND TO_DATE(T1.a_date,'YY/MM/DD') 
 			BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY('18/05/01')+1,-1),'YY/MM/DD'),'YY/MM/DD')

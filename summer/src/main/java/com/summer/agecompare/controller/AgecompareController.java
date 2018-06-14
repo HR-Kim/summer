@@ -35,38 +35,38 @@ public class AgecompareController {
 	@RequestMapping(value="/agecompare/do_selectAgeList.do", method=RequestMethod.GET)
 	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"30"));
-		//vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180610"));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"20"));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180424"));
+		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "20180610"));
 				
 		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
 		
 		int totalCnt = 0;
 			
 		List<String> dataList = new ArrayList<String>();
-		List<String> dateList = new ArrayList<String>();
-		List<String> ageList = new ArrayList<String>();
-		List<String> totalList = new ArrayList<String>();
-		
+		List<String> tmdList = new ArrayList<String>();
 		
 		for(int i=0; i<list.size(); i++) {
-			if(i==0) {
-				dateList.add("'aDate'");
-				ageList.add("'age'");
-				totalList.add("'total'");
-			}else if(i==list.size()-1) {
-				dateList.add("'"+(list.get(i).getaDate()).substring(0,7)+"'");
-				ageList.add("'"+(list.get(i).getAge())+"'");
-				totalList.add("'"+(list.get(i).getTradeTotal())+"'");
-			}
-			else {
-				dateList.add("'"+(list.get(i).getaDate()).substring(0,7)+"'");
-				ageList.add("'"+(list.get(i).getAge())+"'");
-				totalList.add("'"+(list.get(i).getTradeTotal())+"'");
-			}
+			tmdList.clear();
+			List<String> dateList = new ArrayList<String>();
+			List<String> ageList = new ArrayList<String>();
+			List<String> tradetotalList = new ArrayList<String>();
+			List<String> tradeIdList = new ArrayList<String>();
+			List<String> totalList = new ArrayList<String>();
+			
+			dateList.add("'aDate'"+"'"+(list.get(i).getaDate())+"'");
+			ageList.add("'age'"+"'"+(list.get(i).getAge())+"'");
+			tradetotalList.add("'tradetotal'"+"'"+(list.get(i).getTradeTotal())+"'");
+			totalList.add("'total'"+"'"+(list.get(i).getTotal())+"'");
+			tradeIdList.add("'tradeId'"+"'"+(list.get(i).getTradeId())+"'");
+			
+			tmdList.add(dateList.toString());
+			tmdList.add(ageList.toString());
+			tmdList.add(tradetotalList.toString());
+			tmdList.add(totalList.toString());
+			tmdList.add(tradeIdList.toString());
+			dataList.add(tmdList.toString());
 		}
-		dataList.add(dateList.toString());
-		dataList.add(ageList.toString());
-		dataList.add(totalList.toString());
 				
 		model.addAttribute("searchVO", vo);
 		model.addAttribute("list",list);

@@ -34,11 +34,11 @@
 	
 	String allLinea = 
 	(null == request.getAttribute("dataList")) ? "0":request.getAttribute("dataList").toString();	
-	/*int size =1;
+	int size =1;
 	if(!allLinea.equals("0")){
 		size = allLinea.length()-1;
 	}
-	allLinea = allLinea.substring(1,size);*/
+	allLinea = allLinea.substring(1,size);
 %>
 
 <html lang="ko">
@@ -71,10 +71,9 @@
 		
 	<table>
 	<tr>
-			<td>id</td>
+			<td>total</td>
 			<td>date</td>
 			<td>tradeid</td>
-			<td>amount</td>
 			<td>age</td>
 			<td>tradetotal</td>
 		</tr>
@@ -84,10 +83,9 @@
          		<c:forEach var="ageVO" items="${list}">
    <!-- id,adate,accountid,tradeid,amount,age,tradetotal,idtradetotal,idtotal -->
 					<tr>
-					<td>${ageVO.id}</td>
+					<td>${ageVO.total}</td>
 					<td>${ageVO.aDate}</td>
 					<td>${ageVO.tradeId}</td>
-					<td>${ageVO.amount}</td>
 					<td>${ageVO.age}</td>
 					<td>${ageVO.tradeTotal}</td>
 					</tr>
@@ -130,10 +128,12 @@
 
      function drawChart() {
        var data = google.visualization.arrayToDataTable();
-       data.addColumn('string', 'age');
+       data.addColumn('string', 'month');
        data.addColumn('string', 'value');
+       data.addColumn('string', 'age');
        data.addRows([
-       	<%=allLine%>
+       	 		["201805","1500","1600"],
+       	 		["201806","1100","2100"]
 	          ]);
 
        var options = {
