@@ -320,8 +320,11 @@ public class UserController {
         ModelAndView mav = new ModelAndView();
         if (result == true) { // 로그인 성공
             // main.jsp로 이동
-            mav.setViewName("home");
-            mav.addObject("msg", "success");
+        	session.setAttribute("id", user.getId());
+        	session.setAttribute("pwd", user.getPwd());
+        	mav.setViewName("user/infoUser");
+        	log.debug("session id="+session.getAttribute("id"));
+        	mav.addObject("msg", "success");
         } else {    // 로그인 실패
             // login.jsp로 이동
             mav.setViewName("user/login");

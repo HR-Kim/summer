@@ -107,7 +107,7 @@
 				<tr>
 					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="emailCheckMessage"></h5>					
 				</tr>	
-				<div class="form-group">
+				<div class="form-group" style="text-align : Left;">
 					<div class="col-lg-8">
 						<input type="text" name="phone" id="phone" size="40" onkeyup = "phoneCheckFunction();"
 							placeholder="연락처 ( - 없이 번호만 입력하세요. )" maxlength="20" />
@@ -117,12 +117,12 @@
 					<td style="text-align: Left" colspan="3"><h5 style ="color : red;" id="phoneCheckMessage"></h5>					
 				</tr>
 					
-				<div class="form-group" style="text-align : center; margin: 0 auto;">
+				<div class="form-group" style="text-align : Left; margin: 0 auto;">
 					<label class="btn btn-primaty active">
-						<input type="radio" name="gender" value="0" autocomplete="off" checked>남자
+						<input type="radio" name="gender" value="남" autocomplete="off" checked>남자
 					</label>
 					<label class="btn btn-primaty active">
-						<input type="radio" name="gender" value="1" autocomplete="off">여자
+						<input type="radio" name="gender" value="여" autocomplete="off">여자
 					</label>
 				</div>
 			</form>
@@ -167,108 +167,12 @@
     <script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
 		
-		function phoneCheckFunction(){
-			var phone = $('#phone').val();
-			var phonePattern = /^01(?:[0|1|6-9])([0-9]{7,8})$/;
-			var OK = phonePattern.exec(phone);
-			if(!OK){
-				$("#phoneCheckMessage").css("color","red");						
-				$('#phoneCheckMessage').html('옳바르게 입력하세요.');
-				$('#signupbtn').prop("disabled", true);
-				return;
-			}
-			$.ajax({
-				url : "do_phoneCheck.do",
-				dataType : "html",// JSON/Html
-				async : false,
-				data : {
-					phone : $('#phone').val()
-				},
-				success : function(data){
-					data = $.trim(data)
-					if(data == '1'){
-						$('#signupbtn').prop("disabled", true);
-						$("#phoneCheckMessage").css("color","red");
-						$('#phoneCheckMessage').html('중복되었습니다.');
-					}else if(data =='0'){
-						$('#signupbtn').prop("disabled", false);
-						$("#phoneCheckMessage").css("color","green");
-						$('#phoneCheckMessage').html('사용할 수 있습니다.');
-					}
-				}
-			});
-			
-		}
-		
-		
-		function emailCheckFunction(){
-			var email = $('#email').val();
-			var emailPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-			var OK = emailPattern.exec(email);
-			if(!OK){
-				$('#emailCheckMessage').css("color","red");						
-				$('#emailCheckMessage').html('옳바르게 입력하세요.');
-			}else{
-				$('#emailCheckMessage').css("color","green");						
-				$('#emailCheckMessage').html('사용할 수 있습니다.');
-				return;
-			}
-		}
-		
 		var idCheckFlag = 0;
-		var nickCheckFlag = 0;
 		var pwdCheckFlag = 0;
-		function nickCheckFunction(){
-			var nickname = $('#nickname').val();
-			$.ajax({
-				url : "do_nickCheck.do",
-				dataType : "html",// JSON/Html
-				async : false,
-				data : {
-					nickname : $('#nickname').val()
-				},
-				success : function(data){
-					data = $.trim(data)
-					console.log("data="+data)
-					console.log("nickname="+nickname)
-					if((nickname == "") || (data == '1')){
-						$('#signupbtn').prop("disabled", true);
-						$("#nickCheckMessage").css("color","red");
-						$('#nickCheckMessage').html('사용할 수 없습니다.');
-					}else if(data =='0'){
-						$('#signupbtn').prop("disabled", false);
-						$("#nickCheckMessage").css("color","green");
-						$('#nickCheckMessage').html('사용할 수 있습니다.');
-					}
-				}
-			});
-		}
-
-		function passwordCheckFunction(){
-			var pwd1 = $('#pwd1').val();
-			var pwd2 = $('#pwd2').val();
-			if(pwd1 != pwd2){
-				$('#passwordCheckMessage').html('비밀번호가 일치하지 않습니다.');
-			}else{
-				$("#passwordCheckMessage").css("color","#116F0C");
-				$('#passwordCheckMessage').html('비밀번호가 일치합니다');
-			}			
-		}
+		var emailCheckFlag = 0;
+		var nickCheckFlag = 0;
+		var phoneCheckFlag = 0;
 		
-		function nameCheckFunction(){
-			var name = $('#name').val();
-			var namePattern = /^[가-힣]$/;
-			var OK = namePattern.exec(name);
-			if(!OK){
-				$('#nameCheckMessage').css("color","red");						
-				$('#nameCheckMessage').html('한글로 입력해주세요.');
-			}else{
-				$('#nameCheckMessage').css("color","green");						
-				$('#nameCheckMessage').html('사용할 수 있습니다.');
-				return;
-			}
-		}
-
 		function idCheckFunction(){
 			var id = $('#id').val();
 			console.log("id="+id)
@@ -294,105 +198,194 @@
 						if(data == '0') {
 							$("#idCheckMessage").css("color","green");						
 							$('#idCheckMessage').html('사용할 수 있습니다.');
-							$('#signupbtn').prop("disabled", false);
+							idCheckFlag = 1;
+							if(idCheckFlag ==1 && pwdCheckFlag ==1 && emailCheckFlag ==1 && nickCheckFlag ==1 && phoneCheckFlag == 1){
+								$('#signupbtn').prop("disabled", false);
+								$('#signupbtn').prop("background-color", "green");
+							}
 						}else if(data == '1') {
 							$("#idCheckMessage").css("color","red");
 							$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');
 							$('#signupbtn').prop("disabled", true);
+							idCheckFlag = 0;
 						}
 					}
 				});
 			}
-
-		//Null check
-		function isEmpty(value) {
-			if (!value) {
-				alert("값을 입력하세요.");
-				return true;
+		
+		function passwordCheckFunction(){
+			var pwd1 = $('#pwd1').val();
+			var pwd2 = $('#pwd2').val();
+			if(pwd1 != pwd2){
+				$("#passwordCheckMessage").css("color","red");
+				$('#passwordCheckMessage').html('비밀번호가 일치하지 않습니다.');
+				$('#signupbtn').prop("disabled", true);
+				pwdCheckFlag = 0;
+			}else{
+				$("#passwordCheckMessage").css("color","green");
+				$('#passwordCheckMessage').html('비밀번호가 일치합니다');
+				pwdCheckFlag = 1;
+				if(idCheckFlag ==1 && pwdCheckFlag ==1 && emailCheckFlag ==1 && nickCheckFlag ==1 && phoneCheckFlag == 1){
+					$('#signupbtn').prop("disabled", false);
+					$('#signupbtn').prop("background-color", "green");
+				}
+			}			
+		}
+		
+		function nameCheckFunction(){
+			var name = $('#name').val();
+			var namePattern = /^[가-힣]{1,5}$/;
+			var OK = namePattern.exec(name);
+			if(!OK){
+				$('#nameCheckMessage').css("color","red");						
+				$('#nameCheckMessage').html('한글로 입력해주세요.');
+			}else{
+				$('#nameCheckMessage').css("color","green");						
+				$('#nameCheckMessage').html('사용할 수 있습니다.');
+				return;
 			}
 		}
-//		$(document).ready(function() {
-			//중복검사
-//			$("#bt_idCheck").on("click", function(){
-//				console.log("bt_idCheck")
-//				alert("버튼을 누름.");
-//				$.ajax({
-//					type : "POST",
-//					url : "do_idCheck.do",
-//					dataType : "html",// JSON/Html
-//					async : false,
-//					data : {
-//						id : $("#id").val()
-//					},
-//					success : function(data){
-//						if(data == 1){
-//							$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
-//						}else{
-//							$('#checkMessage').html('사용할 수 없는 아이디입니다.');						
-//						}
-//					}
-//				});
-//			});
+		
+		function nickCheckFunction(){
+			var nickname = $('#nickname').val();
+			$.ajax({
+				url : "do_nickCheck.do",
+				dataType : "html",// JSON/Html
+				async : false,
+				data : {
+					nickname : $('#nickname').val()
+				},
+				success : function(data){
+					data = $.trim(data)
+					console.log("data="+data)
+					console.log("nickname="+nickname)
+					if((nickname == "") || (data == '1')){
+						$('#signupbtn').prop("disabled", true);
+						$("#nickCheckMessage").css("color","red");
+						$('#nickCheckMessage').html('사용할 수 없습니다.');
+						nickCheckFlag = 0;
+					}else if(data =='0'){
+						$("#nickCheckMessage").css("color","green");
+						$('#nickCheckMessage').html('사용할 수 있습니다.');
+						nickCheckFlag = 1;
+						if(idCheckFlag ==1 && pwdCheckFlag ==1 && emailCheckFlag ==1 && nickCheckFlag ==1 && phoneCheckFlag == 1){
+							$('#signupbtn').prop("disabled", false);
+							$('#signupbtn').prop("background-color", "green");
+						}
+					}
+				}
+			});
+		}
+		
+		function emailCheckFunction(){
+			var email = $('#email').val();
+			var emailPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+			var OK = emailPattern.exec(email);
+			if(!OK){
+				emailCheckFlag = 0;
+				$('#emailCheckMessage').css("color","red");						
+				$('#emailCheckMessage').html('옳바르게 입력하세요.');
+				console.log("emailCheckFlag="+emailCheckFlag)
+				$('#signupbtn').prop("disabled", true);
+			}else{
+				$('#emailCheckMessage').css("color","green");						
+				$('#emailCheckMessage').html('사용할 수 있습니다.');
+				emailCheckFlag = 1;
+				console.log("emailCheckFlag2="+emailCheckFlag)
+				if(idCheckFlag ==1 && pwdCheckFlag ==1 && emailCheckFlag ==1 && nickCheckFlag ==1 && phoneCheckFlag == 1){
+					$('#signupbtn').prop("disabled", false);
+					$('#signupbtn').prop("background-color", "green");
+				}
+			}
+		}
+		
+		function phoneCheckFunction(){
+			var phone = $('#phone').val();
+			var phonePattern = /^01(?:[0|1|6-9])([0-9]{7,8})$/;
+			var OK = phonePattern.exec(phone);
+			if(!OK){
+				$("#phoneCheckMessage").css("color","red");						
+				$('#phoneCheckMessage').html('옳바르게 입력하세요.');
+				$('#signupbtn').prop("disabled", true);
+				return;
+			}
+			$.ajax({
+				url : "do_phoneCheck.do",
+				dataType : "html",// JSON/Html
+				async : false,
+				data : {
+					phone : $('#phone').val()
+				},
+				success : function(data){
+					data = $.trim(data)
+					if(data == '1'){
+						$('#signupbtn').prop("disabled", true);
+						$("#phoneCheckMessage").css("color","red");
+						$('#phoneCheckMessage').html('중복되었습니다.');
+						phoneCheckFlag = 0;
+					}else if(data =='0'){
+						$('#signupbtn').prop("disabled", false);
+						$("#phoneCheckMessage").css("color","green");
+						$('#phoneCheckMessage').html('사용할 수 있습니다.');
+						phoneCheckFlag = 1;
+						if(idCheckFlag ==1 && pwdCheckFlag ==1 && emailCheckFlag ==1 && nickCheckFlag ==1 && phoneCheckFlag == 1){
+							$('#signupbtn').prop("disabled", false);
+							$('#signupbtn').prop("background-color", "green");
+						}
+					}
+				}
+			});
+		}		
+
+		$(document).ready(function() {
 			//등록
-			//$("#do_add").on("click", function() {
-//				console.log("do_add")
-
-//				if (false == confirm("등록 하시겠습니까?"))
-//					return;
+			$("#signupbtn").on("click", function() {
+				console.log("do_add")
+				if (false == confirm("등록 하시겠습니까?"))
+					return;
 				
-//				$.ajax({
-//					type : "POST",
-//					url : "do_add.do",
-//					dataType : "html",// JSON/Html
-//					async : false,
-//					data : {
-//						"id" : $("#id").val(),
-//						"pwd" : $("#pwd").val(),
-//						"name" : $("#name").val(),
-//						"nickname" : $("#nickname").val(),
-//						"gender" : $("#gender").val(),
-//						"birth" : $("#birth").val(),
-//						"email" : $("#email").val(),
-//						"phone" : $("#phone").val(),
-//						"grade" : 1
-//					},
-//					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-//						console.log("data=" + data);
-//						//json parsing
-//						var parseData = $.parseJSON(data);
-//						console.log("parseData=" + parseData);
-
-//						if (parseData.msgId == "1") {
-//							alert(parseData.message);
-//							doSearch();
-//						} else {
-//							alert(parseData.message);
-//						}
-
-//						console.log("data=" + data);
-//						//json parsing
-//						var parseData = $.parseJSON(data);
-//						console.log("parseData=" + parseData);
-//						
-//						if (parseData.msgId == "1") {
-//							alert(parseData.message);
-//							
-//							var frm = document.frm;
-//							frm.action = '${CONTEXT}'+"/user/go_login.do";
-//							frm.submit();							
-//						} else {
-//							alert(parseData.message);
-//						}
-//					},
-//					complete : function(data) {//무조건 수행
-
-//					},
-//					error : function(xhr, status, error) {
-//						console.log("do_add error: " + error);
-//					}
-//				});//--그리드 click -> ajax
-//			});//--등록
-//		});//--document.ready
+				$.ajax({
+					type : "POST",
+					url : "do_add.do",
+					dataType : "html",// JSON/Html
+					async : false,
+					data : {
+						"id" : $("#id").val(),
+						"pwd" : $("#pwd1").val(),
+						"name" : $("#name").val(),
+						"nickname" : $("#nickname").val(),
+						"gender" : $(":input:radio[name=gender]:checked").val(),
+						"birth" : $("#datepicker").val(),
+						"email" : $("#email").val(),
+						"phone" : $("#phone").val(),
+						"grade" : 1
+					},
+					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
+						console.log("data=" + data);
+						//json parsing
+						var parseData = $.parseJSON(data);
+						console.log("parseData=" + parseData);
+						console.log("data=" + data);
+						
+						if (parseData.msgId == "1") {
+							alert(parseData.message);
+							
+							var frm = document.frm;
+							console
+							frm.action = '${CONTEXT}'+"/user/go_login.do";
+							frm.submit();							
+						} else {
+							alert(parseData.message);
+						}
+					},
+					complete : function(data) {//무조건 수행
+					},
+					error : function(xhr, status, error) {
+						console.log("do_add error: " + error);
+					}
+				});//--그리드 click -> ajax
+			});//--등록
+		});//--document.ready
 	</script>
 </body>
 </html>

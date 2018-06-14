@@ -10,6 +10,19 @@
 	log.debug("===================================");
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===================================");
+	
+	
+	String id = session.getAttribute("id").toString();
+	
+	log.debug("infouserid="+id);
+	
+	
+	
+
+	if (session.getAttribute("id") == null) {
+		response.sendRedirect("user/login");
+	}
+	
 %>
 
 <%-- CONTEXT --%>
@@ -37,13 +50,14 @@
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
 		 <h3>회원정보</h3>
+		 
 		<!--// Title------------------------------------------ -->
+		<!-- Test -->
 		
-		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
-		 </div>
-		<!--// Button------------------------------------------ -->
+		<h2><%= session.getAttribute("name") %>님 환영합니다</h2>
+		
+		<!-- //Test -->
+
 
 		<!-- Input Form--------------------------------------- -->
 		<div class="container">
@@ -56,28 +70,22 @@
 					<label class="col-lg-4 control-label">아이디</label>
 					<div class="col-lg-8">
 						<input type="text" disabled="disabled" name="id" id="id"
-							class="form-control input-sm" placeholder="아이디" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("id") %>" maxlength="20" />
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-lg-4 control-label">비밀번호</label>
-					<div class="col-lg-8">
-						<input type="password" name="pwd" id="pwd"
-							class="form-control input-sm" placeholder="비밀번호" maxlength="20" />
-					</div>
-				</div>
+				
 				<div class="form-group">
 					<label class="col-lg-4 control-label">이름</label>
 					<div class="col-lg-8">
 						<input type="text" name="name" id="name"
-							class="form-control input-sm" placeholder="이름" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("name") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">별명</label>
 					<div class="col-lg-8">
 						<input type="text" name="nickname" id="nickname"
-							class="form-control input-sm" placeholder="별명" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("nickname") %>" maxlength="20" />
 					</div>
 				</div>
 				
@@ -85,14 +93,14 @@
 					<label class="col-lg-4 control-label">성별</label>
 					<div class="col-lg-8">
 						<input type="text" name="gender" id="gender"
-							class="form-control input-sm" placeholder="성별" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("gender") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">생년월일</label>
 					<div class="col-lg-8">
 						<input type="text" name="birth" id="birth"
-							class="form-control input-sm" placeholder="생년월일" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("birth") %>" maxlength="20" />
 					</div>
 				</div>
 				
@@ -100,21 +108,21 @@
 					<label class="col-lg-4 control-label">이메일</label>
 					<div class="col-lg-8">
 						<input type="text" name="email" id="email"
-							class="form-control input-sm" placeholder="이메일" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("email") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">연락처</label>
 					<div class="col-lg-8">
 						<input type="text" name="phone" id="phone"
-							class="form-control input-sm" placeholder="연락처" maxlength="20" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("phone") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">등급</label>
 					<div class="col-lg-8">
 						<input type="text" name="grade" id="grade"
-							class="form-control input-sm" placeholder="등급" maxlength="50" />
+							class="form-control input-sm" placeholder="<%= session.getAttribute("grade") %>" maxlength="50" />
 					</div>
 				</div>
 			</form>
@@ -123,10 +131,10 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
+		 	<button class="btn btn-success btn-sm" id="do_add">회원정보 수정</button>
+		 	<button class="btn btn-success btn-sm" id="do_add">비밀번호 변경</button>
 		 </div>
-		<!--// Button------------------------------------------ -->
-		
+		<!--// Button------------------------------------------ -->		
 		
 		</div>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
