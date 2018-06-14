@@ -27,7 +27,8 @@
 	String searchDiv = ""; //검색구분
 	
 	String searchTrade = "";
-	String searchCategoty = "";
+	String searchCategory = "";
+	String searchAccount = "";
 	
 	int totalCnt = 0;
 	int bottomCount = 10;
@@ -44,7 +45,8 @@
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
 	
 	searchTrade = StringUtil.nvl(searchVO.getSearchTrade(),"");
-	searchCategoty = StringUtil.nvl(searchVO.getSearchCategoty(),"");
+	searchCategory = StringUtil.nvl(searchVO.getSearchCategory(),"");
+	searchAccount =  StringUtil.nvl(searchVO.getSearchAccount(),"");
 	
 	
 	int o_pageSize = Integer.parseInt(pageSize);
@@ -54,6 +56,7 @@
 	totalCnt = Integer.parseInt(o_TotalCnt);
 	
 	log.debug("searchDiv"+searchDiv);
+	
 	
 %>
 
@@ -86,9 +89,9 @@
   <!-- Button ----------------------------------------------------------->
     
    <div class="form-inline pull-right">
-<!--    		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal">+지출</button> -->
-		<button class="btn btn-sm" id="expenses">+지출</button>
-   		<button class="btn btn-sm" onclick="">+수입</button>
+<!--    		<button class="btn btn-sm" >+지출</button> -->
+		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal" id="expenses" name="plus" value="10">+지출</button>
+   		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal" id="incomes" name="plus" value="20">+수입</button>
    		<button class="btn btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button>
    </div>
    <!--// Button --------------------------------------------------------->
@@ -96,75 +99,86 @@
     
     
    <!--지출 Modal  --------------------------------------------------------->
-<!--     <div id="expenseModal" class="modal fade" role="dialog"> -->
-<!--     	<div class="modal-dialog"> -->
-<!--     		<div class="modal-content"> -->
-<%--     		 	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post"> --%>
-<!-- 					<div class="modal-body"> -->
-<!-- 						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" />  -->
+    <div id="expenseModal" class="modal fade" role="dialog">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+    		 	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post">
+					<div class="modal-body">
+						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" />
+						<input type="hidden" name="searchTrade" id="searchTrade"/>
 	 						
-<!-- 			    		<div class="form-group"> -->
-<!-- 			    			<label class="col-lg-3 control-label">날짜</label> -->
-<!-- 				    			<div class="col-lg-6"> -->
-<!-- 				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" />  -->
-<!-- 								</div>		 -->
-<!-- 			    		</div> -->
+			    		<div class="form-group">
+			    			<label class="col-lg-3 control-label">날짜</label>
+				    			<div class="col-lg-6">
+				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" /> 
+								</div>		
+			    		</div>
 			    		
-<!-- 			    		<div class="form-group"> -->
-<!-- 			    			<label class="col-lg-3 control-label">구분</label> -->
-<!-- 			    			<div class="col-lg-6"> -->
-<!-- 			    				<select name="account" id="account" class="form-control input-sm"> -->
-<!-- 			    					<option value="1">현금</option> -->
-<!-- 			    					<option value="2">체크카드</option> -->
-<!-- 			    					<option value="3">신용카드</option> -->
-<!-- 			    				</select> -->
-<!-- 							</div>		 -->
-<!-- 			    		</div> -->
+			    		<div class="form-group">
+			    			<label class="col-lg-3 control-label">구분</label>
+				    			<div class="col-lg-6">
+						    		<c:choose>
+						        		<c:when test="${list4.size()>0 }">
+								        		<select name="searchAccount" id="searchAccount" class="form-control input-sm">
+									        		<c:forEach var="code" items="${list4 }">
+									        			<option value="${code.cdDtlId }"
+									        				<c:if test="${searchVO.searchAccount}==${code.cdDtlId }">selected='selected'</c:if>
+									        			>${code.cdDtlNm}</option>
+									        		</c:forEach>
+								        		</select>
+							         	</c:when>
+						         </c:choose>
+				         		</div>		
+			    		</div>
+			    		<div class="form-group">
+			    			<label class="col-lg-3 control-label">카테고리</label>
+			    			<div class="col-lg-6">
+			    				<c:choose>
+						        		<c:when test="${codelist2.size()>0 }">
+								        		<select name="searchCategory" id="searchCategory" class="form-control input-sm">
+									        		<c:forEach var="code" items="${codelist2 }">
+									        			<option value="${code.cdDtlId }"
+									        				<c:if test="${searchVO.searchCategory==code.cdDtlId }">selected='selected'</c:if>
+									        			>${code.cdDtlNm}</option>
+									        		</c:forEach>
+								        		</select>
+							         	</c:when>
+						         </c:choose>
+							</div>		
+			    		</div>
+			    		<div class="form-group">
+			    			<label class="col-lg-3 control-label">항목</label>
+			    			<div class="col-lg-6">
+			    				<input type="text" name="item" id="item" class="form-control input-sm" maxlength="50" >
+							</div>		
+			    		</div>
 			    		
-<!-- 			    		<div class="form-group"> -->
-<!-- 			    			<label class="col-lg-3 control-label">카테고리</label> -->
-<!-- 			    			<div class="col-lg-6"> -->
-<!-- 			    				<select name="category" id="category" class="form-control input-sm"> -->
-<!-- 			    					<option value="1">식비</option> -->
-<!-- 			    					<option value="2">교통비</option> -->
-<!-- 			    					<option value="3">문화생활</option> -->
-<!-- 			    				</select> -->
-<!-- 							</div>		 -->
-<!-- 			    		</div> -->
+			    		<div class="form-group">
+			    			<label class="col-lg-3 control-label">금액</label>
+			    			<div class="col-lg-6">
+			    				<input type="text" name="amount" id="amount" class="form-control input-sm" placeholder="원" maxlength="50"/>
+							</div>		
+			    		</div>
 			    		
-<!-- 			    		<div class="form-group"> -->
-<!-- 			    			<label class="col-lg-3 control-label">항목</label> -->
-<!-- 			    			<div class="col-lg-6"> -->
-<!-- 			    				<input type="text" name="item" id="item" class="form-control input-sm" maxlength="50" > -->
-<!-- 							</div>		 -->
-<!-- 			    		</div> -->
-			    		
-<!-- 			    		<div class="form-group"> -->
-<!-- 			    			<label class="col-lg-3 control-label">금액</label> -->
-<!-- 			    			<div class="col-lg-6"> -->
-<!-- 			    				<input type="text" name="amount" id="amount" class="form-control input-sm" placeholder="원" maxlength="50"/> -->
-<!-- 							</div>		 -->
-<!-- 			    		</div> -->
-			    		
-<!-- 			    		<div class="form-group"> -->
-<!-- 			    			<label class="col-lg-3 control-label">메모</label> -->
-<!-- 			    			<div class="col-lg-6"> -->
-<!-- 			    				<textarea name="memo" id="memo" class="form-control input-sm" placeholder="메모"></textarea> -->
-<!-- 							</div>		 -->
-<!-- 			    		</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="modal-footer"> -->
-<!-- 						<div class="form-group"> -->
-<!-- 				    		<div class="col-lg-6"> -->
-<!-- 				    			<button class="btn btn-sm" id="doUpsert">등록</button> -->
-<!-- 				    			<button class="btn btn-sm" id="doDelete">삭제</button> -->
-<!-- 				    		</div> -->
-<!-- 			    		</div> -->
-<!-- 					</div> -->
-<%-- 				</form> --%>
-<!--     		</div> -->
-<!--     	</div> -->
-<!--    	</div> -->
+			    		<div class="form-group">
+			    			<label class="col-lg-3 control-label">메모</label>
+			    			<div class="col-lg-6">
+			    				<textarea name="memo" id="memo" class="form-control input-sm" placeholder="메모"></textarea>
+							</div>		
+			    		</div>
+					</div>
+					
+						<div class="form-group">
+				    		<div class="col-lg-6">
+				    			<button class="btn btn-sm" id="doUpsert">등록</button>
+				    			<button class="btn btn-sm" id="doDelete">삭제</button>
+				    			
+				    		</div>
+			    		</div> 
+				</form>
+    		</div>
+    	</div>
+   	</div>
     
    <!-- //Modal --------------------------------------------------------->
   
@@ -176,12 +190,11 @@
    			<tr>
    				<td class="text-left">
    					<div class="form-group col-lg6 col-sm6">
-   						
-<%-- 						<jsp:include page="/accounts/codeTest.jsp" flush="true"/> --%>
 
 						<c:choose>
 			        		<c:when test="${list1.size()>0 }">
 					        		<select name="searchTrade" id="searchTrade">
+					        			<option>전체</option>
 						        		<c:forEach var="code" items="${list1 }">
 						        			<option value="${code.cdDtlId }"
 						        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
@@ -190,9 +203,6 @@
 					        		</select>
 				         	</c:when>
 			         </c:choose>
-			         
-
-
     					<select name="pageSize" id="pageSize">
    							<option value="10"
    								<c:if test="${searchVO.pageSize=='10'}">selected='selected'</c:if> 
@@ -208,7 +218,6 @@
     					<button class="btn btn-sm btn-success" onclick="javascript:doSearch();">검색</button>
 							
    					</div>
-   				
    			</tr>
    		</table>
    	</form> 
@@ -223,7 +232,7 @@
 	       <table id="listTable" class="table  table-striped table-bordered table-hover">
 	        	<thead class="bg-primary">
 	        		<tr>
-	        			<th class="text-center">번호</th>
+	        			<th class="text-center" style="display:none;">번호</th>
 		         		<th class="text-center">카테고리</th>
 		         		<th class="text-center">날짜</th>
 		         		<th class="text-center">항목</th>
@@ -238,7 +247,7 @@
 	        		<c:when test="${list.size()>0 }">
 	        			<c:forEach var="AccountsVO" items="${list }">
 			        		<tr>
-			        			<td class="text-center">${AccountsVO.ano }</td>
+			        			<td class="text-center" style="display:none;">${AccountsVO.ano }</td>
 			          		<td class="text-center"><label class="badge badge-danger" style="border: 1px solid #fd3258; background-color: #fd3258">${AccountsVO.categoryId }</label></td>
 					          <td class="text-left">${AccountsVO.aDate }</td>
 					          <td class="text-left">${AccountsVO.item }</td>
@@ -284,91 +293,9 @@
    <!--// Paging --------------------------------------------------------->
    </div>
    
-   
-   <!-- 폼 ----------------------------------- -->
-	<div class="container">
-	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post"> 
-					<div class="modal-body">
-						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" /> 
-	 						
-			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">날짜</label>
-				    			<div class="col-lg-6">
-				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" /> 
-								</div>		
-			    		</div>
-			    		
-			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">구분</label>
-				    			<div class="col-lg-6">
-						    		<c:choose>
-						        		<c:when test="${list4.size()>0 }">
-								        		<select name="searchTrade" id="searchTrade" class="form-control input-sm">
-									        		<c:forEach var="code" items="${list4 }">
-									        			<option value="${code.cdDtlId }"
-									        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
-									        			>${code.cdDtlNm}</option>
-									        		</c:forEach>
-								        		</select>
-							         	</c:when>
-						         </c:choose>
-				         		</div>		
-			    		</div>
-			    		
-			    		
-			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">지출일때카테고리</label>
-			    			<div class="col-lg-6">
-			    				<c:choose>
-						        		<c:when test="${list2.size()>0 }">
-								        		<select name="searchTrade" id="searchTrade" class="form-control input-sm">
-									        		<c:forEach var="code" items="${list2 }">
-									        			<option value="${code.cdDtlId }"
-									        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
-									        			>${code.cdDtlNm}</option>
-									        		</c:forEach>
-								        		</select>
-							         	</c:when>
-						         </c:choose>
-							</div>		
-			    		</div>
-			    		
-			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">항목</label>
-			    			<div class="col-lg-6">
-			    				<input type="text" name="item" id="item" class="form-control input-sm" maxlength="50" >
-							</div>		
-			    		</div>
-			    		
-			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">금액</label>
-			    			<div class="col-lg-6">
-			    				<input type="text" name="amount" id="amount" class="form-control input-sm" placeholder="원" maxlength="50"/>
-							</div>		
-			    		</div>
-			    		
-			    		<div class="form-group">
-			    			<label class="col-lg-3 control-label">메모</label>
-			    			<div class="col-lg-6">
-			    				<textarea name="memo" id="memo" class="form-control input-sm" placeholder="메모"></textarea>
-							</div>		
-			    		</div>
-					</div>
-					
-						<div class="form-group">
-				    		<div class="col-lg-6">
-				    			<button class="btn btn-sm" id="doUpsert">등록</button>
-				    			<button class="btn btn-sm" id="doDelete">삭제</button>
-				    		</div>
-			    		</div>
-					
-				</form>
-</div>
-
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-	
 
 		//리스트 조회
 		function doSearch(){
@@ -389,8 +316,6 @@
 		
 		$(document).ready(function(){
 		
-			
-			//todo
 			//그리드 클릭
     		$("#listTable>tbody").on("dblclick","tr",function(){
     			
@@ -402,6 +327,7 @@
     			
     			if(ano=="")return;
     			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
+    			  $("#expenseModal").modal();
     			  $.ajax({
 	    			      	 type:"GET",
 		                 url:"doSearchOne.do",   
@@ -416,23 +342,22 @@
 		                 	var parseData = $.parseJSON(data); //데이터 들어있음.
 		                 	var date = new Date(parseInt(parseData.aDate));
 		                 		
-		                 		
 		                 	console.log("parseData"+parseData);
-		                 	alert(date);
+		                 	console.log("parseData.categoryId"+parseData.categoryId);
+		             
 		                 		//화면에 정보 뿌리기.
 		                 		$("#ano").val(parseData.ano);
-		                 		$("#category").val(parseData.category_id);
+		                 		$("#searchCategory").val(parseData.categoryId);
 									//$("#aDate").val(parseData.aDate); todo
 									$("#aDate").text(date.toString('dd/mm/yyyy'));
 									alert($("#aDate").text(date.toString('dd/mm/yyyy')));
 									$("#item").val(parseData.item);
-									$("#account").val(parseData.account_id);
+									$("#account").val(parseData.accountId);
 									$("#amount").val(parseData.amount);
 									$("#memo").val(parseData.memo);
 									
 			                 },
 			                complete: function(data){//무조건 수행
-			                     
 			                 },
 			                error: function(xhr,status,error){
 			                console.log("do_checkedDelete error: "+error);
@@ -441,47 +366,84 @@
     		});
 			
 			//등록수정
-			$("#doUpsert").on("click",function(){
-    			
-    			if(false==confirm("등록 하시겠습니까?"))return;
-    			$.ajax({	
-			      	 type:"POST",
-                url:"doUpsert.do",   
-                dataType:"html",// JSON/html
-                async: false,
-                data:{ 
-                	"id": "a",
-						"categoryId"			:"10",
-						"aDate"		:$("#aDate").val(),
-						"item"		:$("#item").val(),
-						"accountId"		:"10",
-						"tradeId"	:"10",
-						"amount"		:$("#amount").val(),
-						"memo"	:$("#memo").val()
-	                 },
-                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
-               	 console.log("data="+data); 
-                	//json parsing
-                	var parseData = $.parseJSON(data); //데이터 들어있음.
-                	console.log("parseData"+parseData);
-                		
-                	if(parseData.msgId == "1"){
-                		alert(parseData.message);	
-                		doSearch();
-                	}else{
-                		alert(parseData.message);	
-                		}
-               		
-	                 },
-	                complete: function(data){//무조건 수행
-	                     
-	                 },
-	                error: function(xhr,status,error){
-	                console.log("do_checkedDelete error: "+error);
-	                 }
-		   		}); //--ajax
-    		});//--등록
-    		
+			//
+    			$("#expenses,#incomes").on("click",function(){
+    				
+    				var trade = this.value;
+    				alert(trade);
+    				
+    				searchTrade.value = trade;
+    				alert(searchTrade.value);
+    				
+    				$.ajax({	
+				      	 type:"GET",
+	                url:"doSearchTrade.do",   
+	                dataType:"html",// JSON/html
+	                async: false,
+	                data:{ 
+	                	//todo
+		                 },
+	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+	               	 console.log("data="+data); 
+	                	//json parsing
+	                	var parseData = $.parseJSON(data); //데이터 들어있음.
+	                	console.log("parseData"+parseData);
+	                		
+	                	if(parseData.msgId == "1"){
+	                		alert(parseData.message);	
+	                	}else{
+	                		alert(parseData.message);	
+	                		}
+	               		
+		                 },
+		                complete: function(data){//무조건 수행
+		                 },
+		                error: function(xhr,status,error){
+		                console.log("do_checkedDelete error: "+error);
+		                 }
+			   		}); //--ajax
+    				
+    				
+    				
+    				$("#doUpsert").on("click",function(){
+		    			if(false==confirm("등록 하시겠습니까?"))return;
+		    			$.ajax({	
+					      	 type:"POST",
+		                url:"doUpsert.do",   
+		                dataType:"html",// JSON/html
+		                async: false,
+		                data:{ 
+		                	"id": "a",
+								"categoryId"			:$("#searchCategory").val(),
+								"aDate"		:$("#aDate").val(),
+								"item"		:$("#item").val(),
+								"accountId"		:$("#searchAccount").val(),
+								"tradeId"	:trade,
+								"amount"		:$("#amount").val(),
+								"memo"	:$("#memo").val()
+			                 },
+		                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+		               	 console.log("data="+data); 
+		                	//json parsing
+		                	var parseData = $.parseJSON(data); //데이터 들어있음.
+		                	console.log("parseData"+parseData);
+		                		
+		                	if(parseData.msgId == "1"){
+		                		alert(parseData.message);	
+		                		doSearch();
+		                	}else{
+		                		alert(parseData.message);	
+		                		}
+		               		
+			                 },
+			                complete: function(data){//무조건 수행
+			                 },
+			                error: function(xhr,status,error){
+			                console.log("do_checkedDelete error: "+error);
+			                 }
+				   		}); //--ajax
+    				});//--등록
+    			});
     		
      		//삭제
 			$("#doDelete").on("click",function(){

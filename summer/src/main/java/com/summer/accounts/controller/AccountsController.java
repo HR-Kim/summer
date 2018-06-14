@@ -1,6 +1,7 @@
 package com.summer.accounts.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -31,6 +32,55 @@ public class AccountsController {
 	@Autowired
 	private CodeService codeService;
 	
+
+	
+	@RequestMapping(value="/accounts/doSearchTrade.do",method=RequestMethod.GET)
+	public Model getSearchTrade(SearchVO vo,CodeVO codeVo, Model model) throws SQLException{
+		log.debug("1===getSearchTrade.do=======================");
+		
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
+		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
+		
+		log.debug("2===SearchVO=="+vo.toString());
+		
+		List<CodeVO> codelist2 = new ArrayList<CodeVO>();
+		
+		if(vo.getSearchTrade().equals("10")) {
+			codeVo.setCdMstId("ACC_CAT_EXPENSES");
+			codelist2 = codeService.getSelectList(codeVo);
+		}else if(vo.getSearchTrade().equals("20")) {
+			codeVo.setCdMstId("ACC_CAT_INCOMES");
+			codelist2 = codeService.getSelectList(codeVo);
+		}
+		
+		codeVo.setCdMstId("ACC_ACCOUNT");
+		List<CodeVO> codelist4 = codeService.getSelectList(codeVo);
+		
+		model.addAttribute("codelist2",codelist2);
+		model.addAttribute("codelist4",codelist4);
+		
+		codeService.getSelectList(codeVo);
+		
+		List<Accounts> list = accountsService.getSelectList(vo);
+		log.debug("3===list=="+list.toString());
+		
+		log.debug("3===codelist2=="+codelist2.toString());
+		
+		int totalCnt = 0;
+		if(null!= list && list.size()>0) {
+			totalCnt = Integer.parseInt(list.get(0).getTotalCnt().toString());
+			log.debug("4===totalCnt=="+totalCnt);
+		}
+		
+		model.addAttribute("totalCnt",totalCnt);
+		model.addAttribute("list",list);
+		model.addAttribute("searchVO",vo);
+		
+		return model;
+	}
+	
 	
 	@RequestMapping(value="/accounts/doSelectList.do",method=RequestMethod.GET)
 	public String getSelectList(SearchVO vo,CodeVO codeVo, Model model) throws SQLException{
@@ -46,6 +96,7 @@ public class AccountsController {
 		codeVo.setCdMstId("ACC_TRADE");
 		List<CodeVO> list1 = codeService.getSelectList(codeVo);
 		
+
 		codeVo.setCdMstId("ACC_CAT_EXPENSES");
 		List<CodeVO> list2 = codeService.getSelectList(codeVo);
 		

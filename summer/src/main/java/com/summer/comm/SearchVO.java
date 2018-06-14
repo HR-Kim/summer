@@ -7,14 +7,17 @@ public class SearchVO extends DTO {
 	private String searchDiv;	//검색구분
 	
 	private String searchTrade; //지출,수입 구분
-	private String searchCategoty; //카테고리 구분
+	private String searchCategory; //카테고리 구분
+	private String searchAccount; //구분 
 	
 	public SearchVO() { }
 
-	
+
+
 	public String getSearchTrade() {
 		return searchTrade;
 	}
+
 
 
 	public void setSearchTrade(String searchTrade) {
@@ -22,14 +25,29 @@ public class SearchVO extends DTO {
 	}
 
 
-	public String getSearchCategoty() {
-		return searchCategoty;
+
+	public String getSearchCategory() {
+		return searchCategory;
 	}
 
 
-	public void setSearchCategoty(String searchCategoty) {
-		this.searchCategoty = searchCategoty;
+
+	public void setSearchCategory(String searchCategory) {
+		this.searchCategory = searchCategory;
 	}
+
+
+
+	public String getSearchAccount() {
+		return searchAccount;
+	}
+
+
+
+	public void setSearchAccount(String searchAccount) {
+		this.searchAccount = searchAccount;
+	}
+
 
 
 	public String getPageSize() {
@@ -72,11 +90,14 @@ public class SearchVO extends DTO {
 		this.searchDiv = searchDiv;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "SearchVO [pageSize=" + pageSize + ", pageNum=" + pageNum + ", searchWord=" + searchWord + ", searchDiv="
-				+ searchDiv + "]";
+				+ searchDiv + ", searchTrade=" + searchTrade + "]";
 	}
+
 
 	
 	

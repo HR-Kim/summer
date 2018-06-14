@@ -13,6 +13,7 @@
 					and a.trade_id= '20'
 				</when>
 				<otherwise>
+					and a.trade_id='10' or a.trade_id='20'
 				</otherwise>
 			</choose>
 	</sql>
