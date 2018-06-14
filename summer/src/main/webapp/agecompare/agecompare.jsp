@@ -39,6 +39,10 @@
 		size = allLinea.length()-1;
 	}
 	allLinea = allLinea.substring(1,size);
+	
+	/* 달력
+	http://blog.munilive.com/jquery-datepicker-%EB%8B%AC%EB%A0%A5%EC%97%90%EC%84%9C-%EB%85%84%EB%8F%84%EC%99%80-%EC%9B%94%EB%A7%8C-%EC%84%A0%ED%83%9D-%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C-%ED%95%98%EA%B8%B0/
+	*/
 %>
 
 <html lang="ko">
@@ -60,6 +64,9 @@
 		id="searchWord" value="${searchVO.searchWord}"/>
 											
 	</form>
+	
+	<input type="text" id="startmonth" />
+	<input type="text" id="endmonth" />
 	
 	<input type="text" id="allLine" value="<%=allLine%>"/>
 	<input type="text" id="allLine" value="<%=allLinea%>"/>
@@ -100,8 +107,10 @@
 	
 	
 	
+	<link rel='stylesheet' type='text/css' href='/jquery-ui.css'/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
@@ -113,7 +122,7 @@
 		frm.action = "do_selectAgeList.do";
 		frm.submit();
 	}
-	
+		
 	 $(document).ready(function(){
 		 $("#btn20").on("click",function(){
 	    		alert("20");
@@ -121,32 +130,50 @@
 		 $("#btn30").on("click",function(){
 			 alert("30");
 		 });
+		 $('.startmonth').datepicker({ 
+			 monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+		       dayNamesMin: ['일','월','화','수','목','금','토'],
+		       weekHeader: 'Wk',
+		       dateFormat: 'yymmdd', //형식(2012.03.03)
+		    changeMonth: true,
+		    changeYear: true,
+		    showButtonPanel: true,
+		    currentText: '오늘',
+		    closeText: "X"
+			 });
 		 
 	 });
-	 google.charts.load('current', {'packages':['corechart']});
+	 google.charts.load('current', {'packages':['line']});
      google.charts.setOnLoadCallback(drawChart);
 
-     function drawChart() {
-       var data = google.visualization.arrayToDataTable();
-       data.addColumn('string', 'month');
-       data.addColumn('string', 'value');
-       data.addColumn('string', 'age');
-       data.addRows([
-       	 		["201805","1500","1600"],
-       	 		["201806","1100","2100"]
-	          ]);
+   function drawChart() {
 
-       var options = {
-         title: 'Company Performance',
-         curveType: 'function',
-         legend: { position: 'bottom' }
-       };
+     var data = new google.visualization.DataTable();
+     data.addColumn('number', 'Day');
+     data.addColumn('number', '나');
+     data.addColumn('number', '20대');
+     data.addColumn('number', '30대');
 
-       var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+     data.addRows([
+       [18/04,  37.8, 80.8, 41.8],
+       [18/05,  30.9, 69.5, 32.4],
+       [18/05,  38, 69.5, 80.4],
+       [18/06,  25.4,   57, 25.7]
+     ]);
 
-       chart.draw(data, options);
+     var options = {
+       chart: {
+         title: '연령대별 차트',
+         subtitle: 'in millions of dollars (USD)'
+       },
+       width: 900,
+       height: 500
+     };
+
+     var chart = new google.charts.Line(document.getElementById('curve_chart'));
+
+     chart.draw(data, google.charts.Line.convertOptions(options));
      }
-
     
     </script>
 </body>
