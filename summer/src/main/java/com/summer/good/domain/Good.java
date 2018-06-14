@@ -15,6 +15,10 @@ public class Good extends DTO{
 	private String plusoneYn;
 	private String goodDcYn;
 	
+	private int minPrice;
+	private int avgPrice;
+	private int maxPrice;
+	
 	public Good() {
 		
 	}
@@ -107,9 +111,33 @@ public class Good extends DTO{
 		this.goodDcYn = goodDcYn;
 	}
 
+	public int getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public int getAvgPrice() {
+		return avgPrice;
+	}
+
+	public void setAvgPrice(int avgPrice) {
+		this.avgPrice = avgPrice;
+	}
+
+	public int getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+
 	public Good(String goodId, String goodName, String detailMean, String entpId, String entpName,
-			String roadAddrDetail, String xMapCoord, String yMapCoord, int goodPrice, String plusoneYn,
-			String goodDcYn) {
+			String roadAddrDetail, String xMapCoord, String yMapCoord, int goodPrice, String plusoneYn, String goodDcYn,
+			int minPrice, int avgPrice, int maxPrice) {
 		super();
 		this.goodId = goodId;
 		this.goodName = goodName;
@@ -122,6 +150,9 @@ public class Good extends DTO{
 		this.goodPrice = goodPrice;
 		this.plusoneYn = plusoneYn;
 		this.goodDcYn = goodDcYn;
+		this.minPrice = minPrice;
+		this.avgPrice = avgPrice;
+		this.maxPrice = maxPrice;
 	}
 
 	@Override
@@ -129,8 +160,10 @@ public class Good extends DTO{
 		return "Good [goodId=" + goodId + ", goodName=" + goodName + ", detailMean=" + detailMean + ", entpId=" + entpId
 				+ ", entpName=" + entpName + ", roadAddrDetail=" + roadAddrDetail + ", XMapCoord=" + XMapCoord
 				+ ", YMapCoord=" + YMapCoord + ", goodPrice=" + goodPrice + ", plusoneYn=" + plusoneYn + ", goodDcYn="
-				+ goodDcYn + "]";
+				+ goodDcYn + ", minPrice=" + minPrice + ", avgPrice=" + avgPrice + ", maxPrice=" + maxPrice + "]";
 	}
+	
+
 	
 	
 	

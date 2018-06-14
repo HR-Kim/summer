@@ -51,10 +51,14 @@ public class GoodController {
 	}
 	
 	@RequestMapping(value="/good/doSearchOne.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
-	public String get(Good good) throws SQLException{
+	public String get(Good vo, Model model) throws SQLException{
 		log.debug("1.=searchOne.do====================================");
 		
-		//Good outVO = goodService.get(good);
+		log.debug("1.===goodVo==="+vo.toString());
+		
+		Good outVO = goodService.get(vo);
+		
+		model.addAttribute("detailGood", outVO);
 		
 		return "good/goodDetail";
 	}

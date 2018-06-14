@@ -26,4 +26,9 @@ public class GoodServiceImple implements GoodService {
 		return goodDao.getSelectList(vo);
 	}
 
+	@Override
+	public Good get(Good good) throws SQLException {
+		return goodDao.get(good);
+	}
+
 }

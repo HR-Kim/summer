@@ -49,4 +49,13 @@ public class GoodDao {
 		log.debug("param:"+vo.toString());
 		return sqlSessionTemplate.selectList(statement, vo);
 	}
+	
+	public Good get(Good good) throws SQLException {
+		String statement = this.namespace+".do_selectOne";
+		
+		log.debug("param:"+good.toString());
+		return sqlSessionTemplate.selectOne(statement, good);
+		
+		
+	}
 }

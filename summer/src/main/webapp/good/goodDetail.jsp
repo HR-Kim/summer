@@ -63,12 +63,89 @@
     <![endif]-->
     
   </head>
+  <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
 <body>
+
+<div class="container">
+	
+	<!-- search -->
+	<form class="form-inline" name="frm" id="frm" method="get">
+		<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
+		<input type="hidden" name="goodId"/>
+		
+		<table class="table">
+			<tr>
+				<td class="text-center">
+				<div class="form-group col-lg5 col-sm6">
+					<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}">
+					<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">검색</button>
+					
+					
+				</div>
+				</td>
+			</tr>
+		</table>
+		
+	</form>
+	<!-- search end -->
+	
+	<h3>${detailGood.goodName}</h3>
+	<hr/>
+	
+	<!-- list -->
+	<div class="table-responsive">
+		<table class="table  table-striped table-bordered table-hover" id="listTable">
+       	<thead class="bg-primary">
+       		<th class="text-center">최저가격</th>
+       		<th class="text-center">평균가격</th>
+       		<th class="text-center">최고가격</th>
+       	</thead>
+       	<tbody>
+       		<tr>
+		         	<td class="text-center">${detailGood.minPrice}</td>
+		         	<td class="text-center">${detailGood.avgPrice}</td>
+		         	<td class="text-center">${detailGood.maxPrice}</td>
+		       </tr>
+         	</tbody>
+       </table>
+	</div>
+	<!-- list end -->
+	
+	<div id="map"></div>
+	
+	</div>
 
 
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
+	
+	function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+	
+	function doSearch(){
+		var frm = document.frm;
+		frm.action = "doSelectList.do";
+		frm.submit();
+	}
+	
 	</script>
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PFAoIYMG1sO7kx6Y2vmlm1hRp3AT9MQ&callback=initMap">
+    </script>
 </body>
 </html>

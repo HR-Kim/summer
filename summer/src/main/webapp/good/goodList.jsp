@@ -70,6 +70,7 @@
 	<!-- search -->
 	<form class="form-inline" name="frm" id="frm" method="get">
 		<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
+		<input type="hidden" name="goodId"/>
 		
 		<table class="table">
 			<tr>
@@ -153,7 +154,7 @@
     }
 	
 	$(document).ready(function(){
-		$('#idtd').hide();
+		//$('#idtd').hide();
 		
 		$("#listTable>tbody").on("click","tr",function(){
 			var tr = $(this);
@@ -164,8 +165,9 @@
 			alert(ano);
 			
 			var frm = document.frm;
-			
-			frm.action = "";
+			frm.goodId.value = ano;
+			frm.action = "doSearchOne.do";
+			frm.submit();
 		
 		});
 	});

@@ -9,4 +9,6 @@ import com.summer.good.domain.Good;
 public interface GoodService {
 	
 	public List<Good> getSelectList(SearchVO vo) throws SQLException;
+	
+	public Good get(Good good) throws SQLException;
 }

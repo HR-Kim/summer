@@ -25,5 +25,20 @@
 		                      AND sg.good_name LIKE #{searchWord} ||'%') T1
 		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) + 1) AND (#{pageSize} * (#{pageNum}-1)+#{pageSize})
   	</select>
-  
+  	<select id="do_selectOne" parameterType="Good" resultType="Good">
+  		SELECT sg.good_id as goodId
+		        ,sg.good_name as goodName
+		        ,sp.min_price as minPrice
+		        ,sp.price as avgPrice
+		        ,sp.max_price as maxPrice
+		FROM su_good sg
+		JOIN (   SELECT good_id
+		                ,min(good_price) as min_price
+		                ,round(avg(good_price),0) as price
+		                ,max(good_price) as max_price
+		        FROM su_pne
+		        GROUP BY good_id) sp 
+		ON sg.good_id = sp.good_id
+		AND sg.good_id= #{goodId}
+  	</select>
   </mapper>
