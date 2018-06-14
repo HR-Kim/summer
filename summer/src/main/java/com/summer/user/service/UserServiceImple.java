@@ -137,10 +137,11 @@ public class UserServiceImple implements UserService {
 	public boolean loginCheck(User user, HttpSession session) throws SQLException {
 		 boolean result = userDao.loginCheck(user);
 	        if (result == true) { // true일 경우 세션에 등록
-	            User vo = viewMember(user);
+	            User vo = get(user);
 	            // 세션 변수 등록
-	            session.setAttribute("userId", vo.getId());
-	            session.setAttribute("userName", vo.getName());
+	            session.setAttribute("id", vo.getId());
+	            log.debug("userservieimplt id="+session.getAttribute("id"));
+	            session.setAttribute("name", vo.getName());
 	        } 
 	        return result;
 	}

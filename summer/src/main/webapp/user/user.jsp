@@ -70,11 +70,11 @@
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
 		 	<button class="btn btn-success btn-sm" onclick="javascript:doSearch();">조회</button>
-		 	<button class="btn btn-success btn-sm" id="do_upsert">등록</button>
+		 	<!-- <button class="btn btn-success btn-sm" id="do_upsert">등록</button> -->
 		 	<!-- <button class="btn btn-success btn-sm" id="do_save">등록</button>
 		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>-->
-		 	<button class="btn btn-success btn-sm" id="do_delete">삭제</button>
-		 	<button class="btn btn-success btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button>
+		 	<!-- <button class="btn btn-success btn-sm" id="do_delete">삭제</button> -->
+		 	<!-- <button class="btn btn-success btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button> -->
 		 </div>
 		<!--// Button------------------------------------------ -->
 
@@ -136,8 +136,8 @@
 									<td class="text-left">${userVO.name}</td>
 									<td class="text-left">${userVO.nickname}</td>
 									<td class="text-left">${userVO.gender}</td>
-									<td class="text-left">${userVO.birth}</td>
-									<td class="text-right">${userVO.email}</td>
+									<td class="text-right">${userVO.birth}</td>
+									<td class="text-left">${userVO.email}</td>
 									<td class="text-right">${userVO.phone}</td>
 									<td class="text-right">${userVO.grade}</td>
 									<td class="text-center">${userVO.regdt}</td>
@@ -161,14 +161,26 @@
 		</div>
 		<!--// Paging------------------------------------------ -->
 		
+		
+		
 		<!-- Input Form--------------------------------------- -->
 		<div class="container">
 			<div class="col-lg-12"></div>
 			<div class="col-lg-12"></div>
 			<div class="panel panel-default"></div>
+			
+		<!-- Button-------------------------------------------- -->
+		 <div class="form-inline pull-right">
+		 	<!-- <button class="btn btn-success btn-sm" onclick="javascript:doSearch();">조회</button>-->
+		 	<!-- <button class="btn btn-success btn-sm" id="do_upsert">수정</button> -->
+		 	<!-- <button class="btn btn-success btn-sm" id="do_save">등록</button> -->
+		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>
+		 	<button class="btn btn-success btn-sm" id="do_delete">삭제</button>
+		 	<!-- <button class="btn btn-success btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button> -->
+		 </div>
+		<!--// Button------------------------------------------ -->
 			<form class="form-horizontal" name="frmEdit" id="frmEdit"
 				method="post">
-				<input type="reset" value="초기화" onclick="javascript:onReset();" />
 				
 				<div class="form-group">
 					<label class="col-lg-4 control-label">아이디</label>
@@ -418,24 +430,26 @@
 					$("#name").focus();
 					return;
 				}
-
-				/*	console.log("hPasswd:"+$("#hPasswd").val());
-				if(false == isEmpty($("#hPasswd").val())){
-					$("#hPasswd").focus();
+				console.log("nickname:" + $("#nickname").val());
+				if (false == isEmpty($("#nickname").val())) {
+					$("#nickname").focus();
 					return;
 				}
-				
-				console.log("hLogin:"+$("#hLogin").val());
-				if(false == isEmpty($("#hLogin").val())){
-					$("#hLogin").focus();
+				console.log("email:" + $("#email").val());
+				if (false == isEmpty($("#email").val())) {
+					$("#email").focus();
 					return;
 				}
-				
-				console.log("hRecommend:"+$("#hRecommend").val());
-				if(false == isEmpty($("#hRecommend").val())){
-					$("#hRecommend").focus();
+				console.log("phone:" + $("#phone").val());
+				if (false == isEmpty($("#phone").val())) {
+					$("#phone").focus();
 					return;
-				} */
+				}
+				console.log("grade:" + $("#grade").val());
+				if (false == isEmpty($("#grade").val())) {
+					$("#grade").focus();
+					return;
+				}
 
 				if (false == confirm("수정 하시겠습니까?"))
 					return;
@@ -447,13 +461,11 @@
 					async : false,
 					data : {
 						"id" : $("#id").val(),
-						"pwd" : $("#pwd").val(),
 						"name" : $("#name").val(),
 						"nickname" : $("#nickname").val(),
 						"email" : $("#email").val(),
 						"phone" : $("#phone").val(),
-						"grade" : $("#grade").val(),
-						"regdt" : $("#regdt").val()
+						"grade" : $("#grade").val()
 					},
 					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
 						console.log("data=" + data);

@@ -34,7 +34,7 @@
 	<select id="do_phoneCheck" parameterType="User" resultType="Integer">
 		SELECT NVL(COUNT(*),0)
 		  FROM SU_USERS
-		 WHERE phone = #{phone]}
+		 WHERE phone = #{phone}
 	</select>
 	
 	   <select id="do_viewMember" resultType="User">
@@ -107,7 +107,7 @@
 
 	<update id="do_update" parameterType="User">
 		UPDATE SU_USERS      
-  		SET PWD		= #{name, 		jdbcType=VARCHAR}
+  		SET NAME		= #{name, 		jdbcType=VARCHAR}
 		   ,NICKNAME 	= #{nickname, jdbcType=VARCHAR}
 	  	   ,EMAIL		= #{email, 	jdbcType=VARCHAR}
           ,PHONE		= #{phone, 	jdbcType=VARCHAR}
