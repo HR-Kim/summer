@@ -84,6 +84,7 @@
 				<div class="form-group col-lg5 col-sm6">
 					<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}">
 					<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">검색</button>
+					<button class="btn btn-sm" id="goodlist">지도검색</button>
 					
 					
 				</div>
@@ -118,23 +119,57 @@
 	
 	<div id="map"></div>
 	
+	
+	<div id="floating-panel">
+      <input id="address" type="textbox" value="Sydney, NSW">
+      <input id="submit" type="button" value="Geocode" onclick="javascript:initMap2();" >
+    </div>
 	</div>
 
 
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3C_iXo7Xb-jkSbAqAQBHNcHRMP7HyWp0&callback=initMap">
+    </script>
 	<script type="text/javascript">
 	
+	$(document).ready(function(){
+
+	});
+	
 	function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 17
         });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('현재위치');
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
       }
 	
 	function doSearch(){
@@ -143,9 +178,33 @@
 		frm.submit();
 	}
 	
+	// Geocoding *****************************************************
+    function initMap2() {
+        var geocoder = new google.maps.Geocoder();
+        
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder);
+        });
+      }
+
+      function geocodeAddress(geocoder) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            var marker = new google.maps.Marker({
+              position: results[0].geometry.location
+            });
+            
+            alert(results[0].geometry.location);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    // Geocoding // *****************************************************
+	
 	</script>
-	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PFAoIYMG1sO7kx6Y2vmlm1hRp3AT9MQ&callback=initMap">
-    </script>
+	
 </body>
 </html>

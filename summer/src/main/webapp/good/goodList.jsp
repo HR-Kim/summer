@@ -102,7 +102,7 @@
        		<th class="text-center">번호</th>
        		<th class="text-center">Product Name</th>
        		<th class="text-center">The lower price</th>
-       		<th class="text-center">goodID</th>
+       		<th class="text-center" style="display:none;">goodID</th>
        	</thead>
        	<tbody>
        		<c:choose>
@@ -112,7 +112,7 @@
 		         			<td class="text-center">${goodVO.no}</td>
 		         			<td class="text-left">${goodVO.goodName}</td>
 		         			<td class="text-left">${goodVO.goodPrice}</td>
-		         			<td class="text-left" >${goodVO.goodId}</td>
+		         			<td class="text-left" style="display:none;">${goodVO.goodId}</td>
 		         		</tr>
 	         		</c:forEach>
 	         	</c:when>
@@ -156,6 +156,8 @@
 	$(document).ready(function(){
 		//$('#idtd').hide();
 		
+		
+		
 		$("#listTable>tbody").on("click","tr",function(){
 			var tr = $(this);
 			var tds = tr.children();
@@ -171,6 +173,8 @@
 		
 		});
 	});
+	
+	
 	
 	</script>
 </body>
