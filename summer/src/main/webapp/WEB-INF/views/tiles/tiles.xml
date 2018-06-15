@@ -22,6 +22,31 @@
 		<put-attribute name  = "title"  value = "HSB>hello" />
 		<put-attribute name  = "body"   value = "/home.jsp" />
 	</definition>
+	
+		<!--  FinRec-Saving -->
+	<definition name = "finrec/savingSearchList"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "적금목록" />
+		<put-attribute name  = "body"   value = "/finrec/savingSearchList.jsp" />
+	</definition>
+	
+		<!--  FinRec-HouseLoan -->
+	<definition name = "finrec/houseLoanSearchList"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "전세대출목록" />
+		<put-attribute name  = "body"   value = "/finrec/houseLoanSearchList.jsp" />
+	</definition>
+	
+		<!--  FinRec-Saving -->
+	<definition name = "finrec/savingDetailView"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "적금상세" />
+		<put-attribute name  = "body"   value = "/finrec/savingDetailView.jsp" />
+	</definition>
+	
+		<!--  FinRec-HouseLoan -->
+	<definition name = "finrec/houseLoanDetailView"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "전세대출상세" />
+		<put-attribute name  = "body"   value = "/finrec/houseLoanDetailView.jsp" />
+	</definition>
+	
 
 </tiles-definitions>
 
