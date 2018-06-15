@@ -20,14 +20,15 @@
 	 ORDER BY c.CD_SEQ
 </select>
 
-<select id="doCtgChart" parameterType="Chart" resultType="Chart">
-	SELECT TO_CHAR(A_DATE, 'MM') AS month 
-      	   ,SUM(AMOUNT) AS monthTotal
-  	  FROM SU_ACCOUNTS
- 	 WHERE ID = #{chartUserId}
-   	   AND TRADE_ID = 10
-   	   AND TO_CHAR(A_DATE, 'MM') BETWEEN '01' AND '12'
- 	 GROUP BY TO_CHAR(A_DATE, 'MM')
- 	 ORDER BY TO_CHAR(A_DATE, 'MM')
+<select id="doCtgBarChart" parameterType="Chart" resultType="Chart">
+	SELECT c.CD_DTL_NM AS month
+		   ,NVL(SUM(a.AMOUNT), 0) AS monthTotal
+	  FROM SU_CODES c left outer join SU_ACCOUNTS a
+		ON TO_CHAR(a.A_DATE, 'MM') = c.CD_DTL_ID
+	   AND a.ID = #{chartUserId}
+	   AND a.TRADE_ID = 10
+	 WHERE c.CD_MST_ID = 'CHART_MONTH'
+ 	 GROUP BY c.CD_DTL_NM, c.CD_SEQ
+ 	 ORDER BY c.CD_SEQ
 </select>
 </mapper>

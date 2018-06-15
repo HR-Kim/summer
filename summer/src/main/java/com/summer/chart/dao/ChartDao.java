@@ -50,7 +50,7 @@ public class ChartDao {
 	}
 	
 	public List<Chart> getCtgChart(Chart vo) throws SQLException{
-		String statement = this.namespace + ".doCtgChart";
+		String statement = this.namespace + ".doCtgBarChart";
 		log.debug("*******************************");
 		return sqlSessionTemplate.selectList(statement, vo);
 	}

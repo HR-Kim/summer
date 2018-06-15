@@ -49,14 +49,17 @@
 			</tr>
 		</table>
 	
-		<div id="top_x_div" style="width: 800px; height: 600px;"></div>
+		
+		<div id="weekMonthPieChart" style="width: 900px; height: 500px;"></div>
+	
+		<div id="monthBarChart" style="width: 800px; height: 600px;"></div>
 	
 		<!-- List -->
 		<div class="table-responsive">
 			<form name="frmEdit" id="frmEdit" method="get">
 				<input type="hidden"  name="chartUserId"  id="chartUserId" />
 			
-				<table id="listTable" class="table table-striped table-bordered table-hover">
+				<table style="display:none" id="listTable" class="table table-striped table-bordered table-hover">
 					<thead class="bg-primary">
 						<th class="text-center">월</th>
 						<th class="text-center">총액</th>
@@ -69,7 +72,7 @@
 							<c:forEach var="Chart" items="${list}">
 								<tr>
 									<td class="text-center">${Chart.month}</td>
-									<td class="text-right">${Chart.monthTotal}%</td>
+									<td class="text-right">${Chart.monthTotal}</td>
 								</tr>
 							</c:forEach>
 						</c:when>
@@ -83,17 +86,54 @@
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 	
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Month', 'Total per Month'],
+          	['${list.get(0).month}', ${list.get(0).monthTotal}],
+          	['${list.get(1).month}', ${list.get(1).monthTotal}],
+          	['${list.get(2).month}', ${list.get(2).monthTotal}],
+          	['${list.get(3).month}', ${list.get(3).monthTotal}],
+          	['${list.get(4).month}', ${list.get(4).monthTotal}],
+			['${list.get(5).month}', ${list.get(5).monthTotal}],
+			['${list.get(6).month}', ${list.get(6).monthTotal}],
+			['${list.get(7).month}', ${list.get(7).monthTotal}],
+			['${list.get(8).month}', ${list.get(8).monthTotal}],
+			['${list.get(9).month}', ${list.get(9).monthTotal}],
+			['${list.get(10).month}', ${list.get(10).monthTotal}],
+			['${list.get(11).month}', ${list.get(11).monthTotal}]
+		]);
+
+		var options = {
+			title: '나의 지출 패턴'
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('weekMonthPieChart'));
+
+		chart.draw(data, options);
+	};
+	
+	
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawStuff);
 
 	function drawStuff() {
 		var data = new google.visualization.arrayToDataTable([
-			['', 'Percentage'],
-        	["1월", 44],
-        	["2월", 31],
-        	["3월", 12],
-        	["4월", 10],
-        	['5월', 3]
+			['Month', 'Total per Month'],
+          	['${list.get(0).month}', ${list.get(0).monthTotal}],
+          	['${list.get(1).month}', ${list.get(1).monthTotal}],
+          	['${list.get(2).month}', ${list.get(2).monthTotal}],
+          	['${list.get(3).month}', ${list.get(3).monthTotal}],
+          	['${list.get(4).month}', ${list.get(4).monthTotal}],
+			['${list.get(5).month}', ${list.get(5).monthTotal}],
+			['${list.get(6).month}', ${list.get(6).monthTotal}],
+			['${list.get(7).month}', ${list.get(7).monthTotal}],
+			['${list.get(8).month}', ${list.get(8).monthTotal}],
+			['${list.get(9).month}', ${list.get(9).monthTotal}],
+			['${list.get(10).month}', ${list.get(10).monthTotal}],
+			['${list.get(11).month}', ${list.get(11).monthTotal}]
       ]);
 
       var options = {
@@ -110,7 +150,7 @@
         bar: { groupWidth: "90%" }
       };
 
-      var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+      var chart = new google.charts.Bar(document.getElementById('monthBarChart'));
       // Convert the Classic options to Material options.
       chart.draw(data, google.charts.Bar.convertOptions(options));
     };

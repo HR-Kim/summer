@@ -31,8 +31,8 @@ public class ChartController {
 		
 		vo.setChartUserId("a");
 		vo.setYear(2018);
-		vo.setMonth(05);
-		vo.setDay(22);
+		vo.setMonth(06);
+		vo.setDay(15);
 		log.debug("2. controller =====Chart vo====="+vo.toString());
 		
 		List<Chart> list = chartService.getCtgList(vo);
@@ -51,7 +51,7 @@ public class ChartController {
 	public String getCtgChart(Chart vo, Model model) throws SQLException{
 		log.debug("1. controller =====doCtgChart.do=====");
 
-		vo.setChartUserId("a");
+		vo.setChartUserId("c");
 		log.debug("2. controller =====Chart vo====="+vo.toString());
 		
 		List<Chart> list = chartService.getCtgChart(vo);

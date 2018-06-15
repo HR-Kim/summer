@@ -35,6 +35,10 @@
     	<![endif]-->
 	</head>
 <body>
+	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
+	<script src="${CONTEXT}/resources/js/jquery-dropdate.js"></script>
+	<script src="${CONTEXT}/resources/js/date.format.js"></script>
+	
 	<h3>**Chart 리스트 테스트**</h3>
 	
 	<table class="table">
@@ -48,6 +52,16 @@
 			</td>
 		</tr>
 	</table>
+
+	<input type="text" name="birthday" value="" class="dropdate">
+	
+	<script>
+	$(document).ready(function(){
+		$('.dropdate').dropdate({
+			dateFormat:'mm/dd/yyyy'
+		});
+	});
+	</script>
 	
 	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
 
@@ -87,22 +101,22 @@
 
 	function drawChart() {
 		var data = google.visualization.arrayToDataTable([
-			['Task', 'Hours per Day'],
-          	['식비',0],
-          	['교통비',0],
-          	['문화생활',0],
-          	['생필품',3000],
-          	['의류',28000],
-			['미용',0],
-			['의료/건강',0],
-			['교육',0],
-			['통신비',0],
-			['회비',0],
-			['경조사',0],
-			['저축',0],
-			['가전',0],
-			['공과금',0],
-			['기타',0]
+			['Category_Nm', 'Total per category'],
+          	['${list.get(0).cdDtlNm}', ${list.get(0).ctgTotal}],
+          	['${list.get(1).cdDtlNm}', ${list.get(1).ctgTotal}],
+          	['${list.get(2).cdDtlNm}', ${list.get(2).ctgTotal}],
+          	['${list.get(3).cdDtlNm}', ${list.get(3).ctgTotal}],
+          	['${list.get(4).cdDtlNm}', ${list.get(4).ctgTotal}],
+			['${list.get(5).cdDtlNm}', ${list.get(5).ctgTotal}],
+			['${list.get(6).cdDtlNm}', ${list.get(6).ctgTotal}],
+			['${list.get(7).cdDtlNm}', ${list.get(7).ctgTotal}],
+			['${list.get(8).cdDtlNm}', ${list.get(8).ctgTotal}],
+			['${list.get(9).cdDtlNm}', ${list.get(9).ctgTotal}],
+			['${list.get(10).cdDtlNm}', ${list.get(10).ctgTotal}],
+			['${list.get(11).cdDtlNm}', ${list.get(11).ctgTotal}],
+			['${list.get(12).cdDtlNm}', ${list.get(12).ctgTotal}],
+			['${list.get(13).cdDtlNm}', ${list.get(13).ctgTotal}],
+			['${list.get(14).cdDtlNm}', ${list.get(14).ctgTotal}]
 		]);
 
 		var options = {
@@ -112,7 +126,7 @@
 		var chart = new google.visualization.PieChart(document.getElementById('dayPieChart'));
 
 		chart.draw(data, options);
-	}
+	};
 	
 	function doDayList(){
 		var frm = document.frm;
