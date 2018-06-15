@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.summer.accounts.domain.Accounts;
 import com.summer.accounts.service.AccountsService;
 import com.summer.codes.domain.CodeVO;
@@ -45,20 +46,35 @@ public class AccountsController {
 		
 		log.debug("2===SearchVO=="+vo.toString());
 		
-		List<CodeVO> codelist2 = new ArrayList<CodeVO>();
+		List<CodeVO> listCode = new ArrayList<CodeVO>();
 		
 		if(vo.getSearchTrade().equals("10")) {
 			codeVo.setCdMstId("ACC_CAT_EXPENSES");
-			codelist2 = codeService.getSelectList(codeVo);
+			listCode = codeService.getSelectList(codeVo);
 		}else if(vo.getSearchTrade().equals("20")) {
 			codeVo.setCdMstId("ACC_CAT_INCOMES");
-			codelist2 = codeService.getSelectList(codeVo);
+			listCode = codeService.getSelectList(codeVo);
 		}
 
 		Gson gson = new Gson();
 		
-		String jsonStr = gson.toJson(codeVo);
-		log.debug("=jsonStr="+jsonStr);
+		
+		
+		//
+		JsonArray carray = new JsonArray();
+		
+		for(int i=0;i<listCode.size();i++){
+			JsonArray sarray = new JsonArray();
+			sarray.add(listCode.get(i).getCdDtlId());
+			sarray.add(listCode.get(i).getCdDtlNm());
+			
+			carray.add(sarray);
+		}
+		//
+		
+		
+		String jsonStr = gson.toJson(carray);
+		log.debug("=carray="+carray.toString());
 		
 		return jsonStr;
 		
@@ -76,24 +92,24 @@ public class AccountsController {
 //		
 //		log.debug("2===SearchVO=="+vo.toString());
 //		
-//		List<CodeVO> codelist2 = new ArrayList<CodeVO>();
+//		List<CodeVO> listCode = new ArrayList<CodeVO>();
 //		
 //		if(vo.getSearchTrade().equals("10")) {
 //			codeVo.setCdMstId("ACC_CAT_EXPENSES");
-//			codelist2 = codeService.getSelectList(codeVo);
+//			listCode = codeService.getSelectList(codeVo);
 //		}else if(vo.getSearchTrade().equals("20")) {
 //			codeVo.setCdMstId("ACC_CAT_INCOMES");
-//			codelist2 = codeService.getSelectList(codeVo);
+//			listCode = codeService.getSelectList(codeVo);
 //		}
 //		
 //		codeVo.setCdMstId("ACC_ACCOUNT");
 //		List<CodeVO> codelist4 = codeService.getSelectList(codeVo);
 //		
-//		model.addAttribute("codelist2",codelist2);
+//		model.addAttribute("listCode",listCode);
 //		model.addAttribute("codelist4",codelist4);
 //		
 //		codeService.getSelectList(codeVo);
-//		log.debug("3===codelist2=="+codelist2.toString());
+//		log.debug("3===listCodelistCode=="+listCode.toString());
 //		
 //		model.addAttribute("searchVO",vo);
 //		

@@ -107,8 +107,7 @@
     		 	
 					<div class="modal-body">
 						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" />
-						   		<input type="hidden" name="searchTrade" id="searchTrade"/>
-	 						
+	 					
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">날짜</label>
 				    			<div class="col-lg-6">
@@ -132,23 +131,16 @@
 						         </c:choose>
 				         		</div>		
 			    		</div>
+
 			    		<div class="form-group">
-			    		${codelist2}
 			    			<label class="col-lg-3 control-label">카테고리</label>
-			    			<div class="col-lg-6">
-			    				<c:choose>
-						        		<c:when test="${listCode.size()>0 }">
-								        		<select name="searchCategory" id="searchCategory" class="form-control input-sm">
-									        		<c:forEach var="code" items="${listCode }">
-									        			<option value="${code.cdDtlId }"
-									        				<c:if test="${searchVO.searchCategory==code.cdDtlId }">selected='selected'</c:if>
-									        			>${code.cdDtlNm}</option>
-									        		</c:forEach>
-								        		</select>
-							         	</c:when>
-						         </c:choose>
-							</div>		
+			    				<div class="col-lg-6">
+					  				<select name="searchCategory" id="searchCategory" class="form-control input-sm">
+                                    <option value=""> -- Select Category -- </option>
+									</select>
+								</div>		
 			    		</div>
+			    		
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">항목</label>
 			    			<div class="col-lg-6">
@@ -170,6 +162,10 @@
 							</div>		
 			    		</div>
 					</div>
+					
+					
+
+					
 					
 						<div class="form-group">
 				    		<div class="col-lg-6">
@@ -301,7 +297,6 @@
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
-
 		//리스트 조회
 		function doSearch(){
 			var frm = document.frm;
@@ -373,33 +368,37 @@
 			//등록수정
 			//
     			$("#expenses,#incomes").on("click",function(){
-    				
     				var trade = this.value;
-    				
-    				searchTrade.value = trade;
     				
     				$.ajax({	
 				      	type:"GET",
-	                url:"doSelectList.do",   
+	                url:"doSearchTrade.do",   
 	                dataType:"html",// JSON/html
 	                async: false,
 	                data:{ 
 	                	 "searchTrade" :trade
 		                 },
-	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
-	               	 console.log("data="+data); 
+	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수	
+	                
+	                	
+	               	console.log("data="+data); 
 	                	//json parsing
 	                	var parseData = $.parseJSON(data); //데이터 들어있음.
 	                	console.log("parseData"+parseData);
-	                	
-	                	if(parseData.msgId == "1"){
-	                		alert(parseData.message);	
-	                	}else{
-	                		alert(parseData.message);	
-	                		}
+	              
+	                	$('#searchCategory > option').remove();
+	               
+	                	$.each(parseData , function(idx, val) {
+	                		 $('#searchCategory').append($('<option>', { 
+	                             value: val[0],
+	                             text : val[1],
+	                         }));
+	                	});
 	               		
 		                 },
 		                complete: function(data){//무조건 수행
+		                	 $("#expenseModal").modal();
+		 					
 		                 },
 		                error: function(xhr,status,error){
 		                console.log("do_checkedDelete error: "+error);
@@ -407,8 +406,7 @@
 			   		}); //--ajax
     				
     				
-			   	 $("#expenseModal").modal();
-			   		
+			      	   		
     				$("#doUpsert").on("click",function(){
 		    			if(false==confirm("등록 하시겠습니까?"))return;
 		    			$.ajax({	
