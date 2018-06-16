@@ -57,6 +57,11 @@
 		<h2><%= session.getAttribute("name") %>님 환영합니다</h2>
 		
 		<!-- //Test -->
+		<!-- Button-------------------------------------------- -->
+		 <div class="form-inline pull-right">
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/do_logout.do'">로그아웃</button>
+		 	</div>
+		<!--// Button------------------------------------------ -->	
 
 
 		<!-- Input Form--------------------------------------- -->
@@ -70,7 +75,7 @@
 					<label class="col-lg-4 control-label">아이디</label>
 					<div class="col-lg-8">
 						<input type="text" disabled="disabled" name="id" id="id"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("id") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("id") %>" maxlength="20" />
 					</div>
 				</div>
 				
@@ -78,14 +83,14 @@
 					<label class="col-lg-4 control-label">이름</label>
 					<div class="col-lg-8">
 						<input type="text" name="name" id="name"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("name") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("name") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">별명</label>
 					<div class="col-lg-8">
 						<input type="text" name="nickname" id="nickname"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("nickname") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("nickname") %>" maxlength="20" />
 					</div>
 				</div>
 				
@@ -93,14 +98,14 @@
 					<label class="col-lg-4 control-label">성별</label>
 					<div class="col-lg-8">
 						<input type="text" name="gender" id="gender"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("gender") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("gender") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">생년월일</label>
 					<div class="col-lg-8">
 						<input type="text" name="birth" id="birth"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("birth") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("birth") %>" maxlength="20" />
 					</div>
 				</div>
 				
@@ -108,21 +113,21 @@
 					<label class="col-lg-4 control-label">이메일</label>
 					<div class="col-lg-8">
 						<input type="text" name="email" id="email"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("email") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("email") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">연락처</label>
 					<div class="col-lg-8">
 						<input type="text" name="phone" id="phone"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("phone") %>" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("phone") %>" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">등급</label>
 					<div class="col-lg-8">
 						<input type="text" name="grade" id="grade"
-							class="form-control input-sm" placeholder="<%= session.getAttribute("grade") %>" maxlength="50" />
+							class="form-control input-sm" value="<%= session.getAttribute("grade") %>" maxlength="50" />
 					</div>
 				</div>
 			</form>
@@ -131,8 +136,8 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">회원정보 수정</button>
-		 	<button class="btn btn-success btn-sm" id="do_add">비밀번호 변경</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/updateUser.jsp'">회원정보 수정</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/updatePwd.jsp'">비밀번호 변경</button>
 		 </div>
 		<!--// Button------------------------------------------ -->		
 		

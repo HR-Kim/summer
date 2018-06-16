@@ -3,6 +3,7 @@ package com.summer.user.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
@@ -119,13 +120,6 @@ public class UserDaoImple implements UserDao {
         return (name == null) ? false : true;
 	}
 
-    // 01_02. 회원 로그인 정보
-    @Override
-    public User viewMember(User user) {
-    	String statement = this.namespace+".do_viewMember";
-    	return sqlSessionTemplate.selectOne(statement, user);
-    }
-
 	@Override
 	public int idCheck(User user) throws SQLException {
 		String statement = this.namespace+".do_idCheck";
@@ -142,6 +136,11 @@ public class UserDaoImple implements UserDao {
 	public int phoneCheck(User user) throws SQLException {
 		String statement = this.namespace+".do_phoneCheck";
 		return sqlSessionTemplate.selectOne(statement, user);
+	}
+
+	@Override
+	public void logout(HttpSession session) throws SQLException {
+		
 	}
 
 

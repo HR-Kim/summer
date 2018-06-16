@@ -3,6 +3,8 @@ package com.summer.user.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.summer.comm.SearchVO;
 import com.summer.user.domain.User;
 
@@ -29,11 +31,11 @@ public interface UserDao {
 	public User get(User user) throws SQLException;
 	
 	public boolean loginCheck(User user) throws SQLException;
-    // 01_02. 회원 로그인 정보
-    public User viewMember(User user) throws SQLException;
-	
+    public void logout(HttpSession session) throws SQLException;
 
 	public int idCheck(User user) throws SQLException;
 	public int nickCheck(User user) throws SQLException;
 	public int phoneCheck(User user) throws SQLException;
+	
+	
 }

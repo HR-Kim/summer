@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.summer.board.mappers">
+	<!-- SQL -->
+	<sql id="baseCondition">
+		<where>
+			<choose>
+				<when test="searchDiv == '10'">
+					su.id like #{searchWord} ||'%'
+				</when>
+				<when test="searchDiv == '20'">
+					su.name like #{searchWord} ||'%'
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+	</sql>
+	
+	<insert id="do_add" parameterType="Board">
+		INSERT INTO SU_BOARD(
+					NUM
+                    ,CATEGORY
+                    ,TITLE
+                    ,ID
+                    ,CONTENT
+                    ,DATE_REG
+                    ,CLICK_CNT
+                    ,LIKE_CNT
+		)VALUES(
+		 				SEQ_NUM.nextval
+		 			   ,#{category, 		jdbcType=VARCHAR}
+		 			   ,#{title, 		jdbcType=VARCHAR}
+		 			   ,#{id, 	jdbcType=VARCHAR}
+		 			   ,#{content, 	jdbcType=VARCHAR}
+		 			   ,SYSDATE
+		 			   ,0
+		 			   ,0
+		)
+	</insert>
+</mapper>

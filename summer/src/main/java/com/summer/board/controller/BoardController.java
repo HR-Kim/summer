@@ -1,0 +1,84 @@
+package com.summer.board.controller;
+
+import java.io.File;
+import javax.validation.Valid;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+
+import com.google.gson.Gson;
+import com.summer.board.domain.Board;
+import com.summer.board.service.BoardService;
+import com.summer.comm.MessageVO;
+import com.summer.comm.SearchVO;
+import com.summer.comm.StringUtil;
+import com.summer.user.domain.User;
+import com.summer.user.service.UserService;
+
+@Controller
+public class BoardController {
+	
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	private BoardService boardService;
+	
+	
+	/**
+	 * 회원가입(등록)
+	 * @param user
+	 * @return json
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/user/do_add.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String add(@Valid Board board, BindingResult bindingResult) throws Exception{
+		log.debug("1=add.do======================");
+		Gson gson = new Gson();
+		MessageVO messageVO = new MessageVO();
+		
+		if(bindingResult.hasErrors()) {
+			return "board/boardWrite";
+		}
+		
+		int flag = 0;
+		log.debug("2=user="+board.toString());		
+		
+		flag = boardService.add(board);
+		log.debug("3=flag="+flag);
+		
+		if(flag > 0) {
+			messageVO.setMsgId("1");
+			messageVO.setMessage("등록 되었습니다.");
+		}else {
+			messageVO.setMsgId("0");
+			messageVO.setMessage("등록 실패!");
+		}
+		
+		String json = gson.toJson(messageVO);
+		log.debug("4=json="+json);		
+       return json;	
+	}
+}

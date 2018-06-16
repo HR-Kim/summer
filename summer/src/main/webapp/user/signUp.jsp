@@ -132,7 +132,7 @@
 		<!-- Button-------------------------------------------- -->
 		 <div class="clearfix">
 		 	<button type="submit" id="signupbtn" class="signupbtn" disabled="disabled">등록</button>
-		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/go_login.do'">취소</button>
+		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/login.jsp'">취소</button>
 		 </div>
 		 
 		 
@@ -371,8 +371,7 @@
 							alert(parseData.message);
 							
 							var frm = document.frm;
-							console
-							frm.action = '${CONTEXT}'+"/user/go_login.do";
+							frm.action = '${CONTEXT}'+"/user/login.jsp";
 							frm.submit();							
 						} else {
 							alert(parseData.message);

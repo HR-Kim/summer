@@ -38,12 +38,7 @@
 		<!-- Title-------------------------------------------- -->
 		 <h3>회원가입</h3>
 		<!--// Title------------------------------------------ -->
-		
-		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
-		 </div>
-		<!--// Button------------------------------------------ -->
+
 
 		<!-- Input Form--------------------------------------- -->
 		<div class="container">
@@ -123,7 +118,8 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
+		 	<button class="btn btn-success btn-sm" id="do_add">변경</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/infoUser.jsp'">취소</button>
 		 </div>
 		<!--// Button------------------------------------------ -->
 		

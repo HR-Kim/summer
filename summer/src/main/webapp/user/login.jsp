@@ -40,7 +40,7 @@
 		<!--// Title------------------------------------------ -->
 		<!-- Button-------------------------------------------- -->
 		<div class="form-inline pull-right">
-			<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/go_signUp.do'">회원가입</button>
+			<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/signUp.jsp'">회원가입</button>
 		</div>
 		<!--// Button------------------------------------------ -->
 		<!-- Input Form--------------------------------------- -->

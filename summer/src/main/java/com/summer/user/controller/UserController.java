@@ -97,7 +97,7 @@ public class UserController {
 		model.addAttribute("list",list);
 		model.addAttribute("searchVO",vo);
 		
-		return "user/user";
+		return "user/adminUser";//수정필
 	}
 	
 	/**
@@ -304,21 +304,15 @@ public class UserController {
 		return json;
 	}
 	
-	@RequestMapping(value= "/user/go_login.do")
-	public String goLogin() {
-		return "/user/login";
-	}
-	@RequestMapping(value= "/user/go_signUp.do")
-	public String goSignUp() {
-		return "/user/signUp";
-	}
-	
 	// 02. 로그인 처리
     @RequestMapping(value="/user/do_loginCheck.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
     public ModelAndView loginCheck(@ModelAttribute User user, HttpSession session) throws SQLException{
         boolean result = userService.loginCheck(user, session);
         ModelAndView mav = new ModelAndView();
-        if (result == true) { // 로그인 성공
+        if(session.getAttribute("grade").equals(9)) {
+        	mav.setViewName("user/adminMain");
+        	mav.addObject("msg","success");
+        }else if (result == true) { // 로그인 성공
             // main.jsp로 이동
         	session.setAttribute("id", user.getId());
         	session.setAttribute("pwd", user.getPwd());
@@ -331,6 +325,14 @@ public class UserController {
             mav.addObject("msg", "failure");
         }
         return mav;
+    }
+    @RequestMapping(value="/user/do_logout.do")
+    public ModelAndView logout(HttpSession session) throws SQLException {
+    	userService.logout(session);
+    	ModelAndView mav = new ModelAndView();
+    	mav.setViewName("user/login");
+    	mav.addObject("msg","logout");
+    	return mav;
     }
 	
 	

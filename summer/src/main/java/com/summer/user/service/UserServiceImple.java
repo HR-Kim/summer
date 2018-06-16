@@ -140,17 +140,17 @@ public class UserServiceImple implements UserService {
 	            User vo = get(user);
 	            // 세션 변수 등록
 	            session.setAttribute("id", vo.getId());
-	            log.debug("userservieimplt id="+session.getAttribute("id"));
 	            session.setAttribute("name", vo.getName());
+	            session.setAttribute("nickname", vo.getNickname());
+	            session.setAttribute("gender", vo.getGender());
+	            session.setAttribute("birth", vo.getBirth());
+	            session.setAttribute("email", vo.getEmail());
+	            session.setAttribute("phone", vo.getPhone());
+	            session.setAttribute("grade", vo.getGrade());
 	        } 
 	        return result;
 	}
 
-    // 01_02. 회원 로그인 정보
-    @Override
-    public User viewMember(User user) throws SQLException {
-        return userDao.viewMember(user);
-    }
     
 
 	@Override
@@ -166,6 +166,18 @@ public class UserServiceImple implements UserService {
 	@Override
 	public int phoneCheck(User user) throws SQLException {
 		return userDao.phoneCheck(user);
+	}
+
+	@Override
+	public void logout(HttpSession session) throws SQLException {
+		session.invalidate();
+		
+	}
+
+	@Override
+	public User viewMember(User user) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

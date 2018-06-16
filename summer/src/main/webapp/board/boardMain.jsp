@@ -49,7 +49,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::사용자 관리:::</title>
+    <title>:::자유게시판:::</title>
 
     <!-- 부트스트랩 -->
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -64,20 +64,56 @@
   <body>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
-		 <h3>회원관리</h3>
+		 <h3>자유게시판</h3>
 		<!--// Title------------------------------------------ -->
 		
-		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" onclick="javascript:doSearch();">조회</button>
-		 	<!-- <button class="btn btn-success btn-sm" id="do_upsert">등록</button> -->
-		 	<!-- <button class="btn btn-success btn-sm" id="do_save">등록</button>
-		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>-->
-		 	<!-- <button class="btn btn-success btn-sm" id="do_delete">삭제</button> -->
-		 	<!-- <button class="btn btn-success btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button> -->
-		 </div>
-		<!--// Button------------------------------------------ -->
-
+		
+		<!-- List--------------------------------------------  -->
+		<div class="table-responsive">
+			<table id="listTable" class="table  table-striped table-bordered table-hover">
+				<thead class="bg-primary">
+					<tr>
+						<th class="text-center">글번호</th>
+						<th class="text-center">구분</th>
+						<th class="text-center">제목</th>
+						<th class="text-center">작성자</th>
+						<th class="text-center">등록일</th>
+						<th class="text-center">조회수</th>
+						<th class="text-center">좋아용</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${list.size()>0 }">
+							<c:forEach var="userVO" items="${list}">
+								<tr>
+									<td class="text-center">${userVO.id}</td>
+									<td class="text-left">${userVO.name}</td>
+									<td class="text-left">${userVO.nickname}</td>
+									<td class="text-left">${userVO.gender}</td>
+									<td class="text-right">${userVO.birth}</td>
+									<td class="text-left">${userVO.email}</td>
+									<td class="text-right">${userVO.phone}</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="99" class="text-center">등록된 게시글이 없습니다.</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+		</div>
+		<!--// List------------------------------------------  -->
+		
+		<!-- Paging-------------------------------------------- -->
+		<div class="form-inline text-center">
+			<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "do_selectList.do", "search_page")%>
+		</div>
+		<!--// Paging------------------------------------------ -->
+		
 		<!-- Search------------------------------------------- -->
 		<form class="form-inline" name="frm" id="frm" method="get">
 			<input type="hidden" name="pageNum" id="pageNum"
@@ -104,6 +140,8 @@
 								<option value="100"
 									<c:if test="${searchVO.pageSize == '100'}">selected='selected'</c:if>>100</option>
 							</select>
+		 	<button class="btn btn-success btn-sm" id="do_search">검색</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardWrite.jsp'">글쓰기</button>
 						</div>
 					</td>
 				</tr>
@@ -111,162 +149,12 @@
 		</form>
 		<!--// Search----------------------------------------- -->
 
-		<!-- List--------------------------------------------  -->
-		<div class="table-responsive">
-			<table id="listTable" class="table  table-striped table-bordered table-hover">
-				<thead class="bg-primary">
-					<tr>
-						<th class="text-center">ID</th>
-						<th class="text-center">이름</th>
-						<th class="text-center">별명</th>
-						<th class="text-center">성별</th>
-						<th class="text-center">생년월일</th>
-						<th class="text-center">이메일</th>
-						<th class="text-center">연락처</th>
-						<th class="text-center">등급</th>
-						<th class="text-center">등록일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${list.size()>0 }">
-							<c:forEach var="userVO" items="${list}">
-								<tr>
-									<td class="text-center">${userVO.id}</td>
-									<td class="text-left">${userVO.name}</td>
-									<td class="text-left">${userVO.nickname}</td>
-									<td class="text-left">${userVO.gender}</td>
-									<td class="text-right">${userVO.birth}</td>
-									<td class="text-left">${userVO.email}</td>
-									<td class="text-right">${userVO.phone}</td>
-									<td class="text-right">${userVO.grade}</td>
-									<td class="text-center">${userVO.regdt}</td>
-								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td colspan="99" class="text-center">등록된 게시글이 없습니다.</td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
-		</div>
-		<!--// List------------------------------------------  -->
-		
-		<!-- Paging-------------------------------------------- -->
-		<div class="form-inline text-center">
-			<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "do_selectList.do", "search_page")%>
-		</div>
-		<!--// Paging------------------------------------------ -->
-		
-		
-		
-		<!-- Input Form--------------------------------------- -->
-		<div class="container">
-			<div class="col-lg-12"></div>
-			<div class="col-lg-12"></div>
-			<div class="panel panel-default"></div>
-			
-		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<!-- <button class="btn btn-success btn-sm" onclick="javascript:doSearch();">조회</button>-->
-		 	<!-- <button class="btn btn-success btn-sm" id="do_upsert">수정</button> -->
-		 	<!-- <button class="btn btn-success btn-sm" id="do_save">등록</button> -->
-		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>
-		 	<button class="btn btn-success btn-sm" id="do_delete">삭제</button>
-		 	<!-- <button class="btn btn-success btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button> -->
-		 </div>
-		<!--// Button------------------------------------------ -->
-			<form class="form-horizontal" name="frmEdit" id="frmEdit"
-				method="post">
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">아이디</label>
-					<div class="col-lg-8">
-						<input type="text" disabled="disabled" name="id" id="id"
-							class="form-control input-sm" placeholder="아이디" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">등록일</label>
-					<div class="col-lg-8">
-						<input type="text" disabled="disabled" name="regdt" id="regdt"
-							class="form-control input-sm" placeholder="등록일" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">이름</label>
-					<div class="col-lg-8">
-						<input type="text" name="name" id="name"
-							class="form-control input-sm" placeholder="이름" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">별명</label>
-					<div class="col-lg-8">
-						<input type="text" name="nickname" id="nickname"
-							class="form-control input-sm" placeholder="별명" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">이메일</label>
-					<div class="col-lg-8">
-						<input type="text" name="email" id="email"
-							class="form-control input-sm" placeholder="이메일" maxlength="200" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">연락처</label>
-					<div class="col-lg-8">
-						<input type="text" name="phone" id="phone"
-							class="form-control input-sm" placeholder="연락처" maxlength="50" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-4 control-label">등급</label>
-					<div class="col-lg-8">
-						<input type="text" name="grade" id="grade"
-							class="form-control input-sm" placeholder="등급" maxlength="50" />
-					</div>
-				</div>
-			</form>
-		</div>
-		<!--// Input Form------------------------------------- -->
-		</div>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		
-		//초기화
-		function onReset(){
-			$("#id").prop("disabled",false);
-		}
-	
-		//Null check
-		function isEmpty(value) {
-			if (!value) {
-				alert("값을 입력하세요.");
-				return true;
-			}
-		}
-		
-		//엑셀 다운
-		function doExcelDown(){
-			var frm = document.frm;
-			frm.action = "do_excelDownload.do";
-			frm.submit();
-		}
-
 		//조회
 		function doSearch() {
 			var frm = document.frm;
