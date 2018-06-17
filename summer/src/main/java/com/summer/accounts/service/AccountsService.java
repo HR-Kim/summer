@@ -22,6 +22,10 @@ public class AccountsService {
 	@Autowired
 	private AccountsDao accountsDao;
 	
+	public List<Accounts> getSelectListMonth(SearchVO vo) throws SQLException {
+		return accountsDao.getSelectListMonth(vo);
+	}
+	
 	public List<Accounts> getSelectList(SearchVO vo) throws SQLException {
 		return accountsDao.getSelectList(vo);
 	}

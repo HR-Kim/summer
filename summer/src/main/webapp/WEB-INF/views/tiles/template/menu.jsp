@@ -10,7 +10,7 @@
               <span class="nav-link">내 가계부</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="javascript:doSearch();">
+              <a class="nav-link" href="#" onclick="javascript:doSelectList();">
                 <span class="menu-title">일간</span>
                 <i class="icon-speedometer menu-icon"></i>
               </a>
@@ -22,7 +22,7 @@
               </a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="pages/widgets.html">
+              <a class="nav-link" href="#" onclick="javascript:doSelectListMonth();">
                 <span class="menu-title">월간</span>
                 <i class="icon-wrench menu-icon"></i>
               </a>
@@ -100,10 +100,19 @@
 	<script type="text/javascript">
 		
 		//일간리스트 조회
-		function doSearch(){
+		function doSelectList(){
 			var frm = document.frm;
 			
 			frm.action = "accounts/doSelectList.do";
+			frm.submit();
+		}
+		
+		//월간리스트 조회
+		function doSelectListMonth(){
+			var frm = document.frm;
+			
+			frm.action = "accounts/doSelectListMonth.do";
+			
 			frm.submit();
 		}
 	

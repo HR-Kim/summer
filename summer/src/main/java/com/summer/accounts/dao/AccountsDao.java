@@ -44,14 +44,29 @@ static Logger log = Logger.getLogger(AccountsDao.class);
 	}
 	
 	/**
-	 * 리스트 조회
+	 * 월간 리스트 조회
+	 * @param vo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Accounts> getSelectListMonth(SearchVO vo) throws SQLException{
+		
+		String statement = this.namespace+".do_selectListMonth";
+		
+		log.debug("param:"+vo.toString());
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
+	
+	
+	/**
+	 * 일간 리스트 조회
 	 * @param vo
 	 * @return
 	 * @throws SQLException
 	 */
 	public List<Accounts> getSelectList(SearchVO vo) throws SQLException{
 		
-		String statement = this.namespace+".do_search";
+		String statement = this.namespace+".do_selectList";
 		
 		log.debug("param:"+vo.toString());
 		return sqlSessionTemplate.selectList(statement, vo);

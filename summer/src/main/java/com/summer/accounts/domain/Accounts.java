@@ -12,10 +12,41 @@ public class Accounts extends DTO{
 	private String tradeId;
 	private int amount;
 	private String memo;
-
+	
+	//월간 지출합 수입합 총합
+	private int sumExp;
+	private int sumInc;
+	private int sumTotal;
+	
 	
 	public Accounts() {
 		
+	}
+
+
+
+	public int getSumExp() {
+		return sumExp;
+	}
+
+	public void setSumExp(int sumExp) {
+		this.sumExp = sumExp;
+	}
+
+	public int getSumInc() {
+		return sumInc;
+	}
+	
+	public void setSumInc(int sumInc) {
+		this.sumInc = sumInc;
+	}
+
+	public int getSumTotal() {
+		return sumTotal;
+	}
+
+	public void setSumTotal(int sumTotal) {
+		this.sumTotal = sumTotal;
 	}
 
 
@@ -92,12 +123,15 @@ public class Accounts extends DTO{
 		this.memo = memo;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "AccountsVO [ano=" + ano + ", id=" + id + ", categoryId=" + categoryId + ", aDate=" + aDate + ", item="
+		return "Accounts [ano=" + ano + ", id=" + id + ", categoryId=" + categoryId + ", aDate=" + aDate + ", item="
 				+ item + ", accountId=" + accountId + ", tradeId=" + tradeId + ", amount=" + amount + ", memo=" + memo
-				+ "]";
+				+ ", sumExp=" + sumExp + ", sumInc=" + sumInc + ", sumTotal=" + sumTotal + "]";
 	}
-	
+
+
 	
 }

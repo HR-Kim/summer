@@ -33,6 +33,7 @@ public class AccountsController {
 	@Autowired
 	private CodeService codeService;
 	
+	//공통코드 조회
 	@RequestMapping(value="/accounts/doSearchTrade.do",method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getSearchTrade(SearchVO vo,CodeVO codeVo) throws SQLException{
@@ -57,10 +58,6 @@ public class AccountsController {
 		}
 
 		Gson gson = new Gson();
-		
-		
-		
-		//
 		JsonArray carray = new JsonArray();
 		
 		for(int i=0;i<listCode.size();i++){
@@ -70,8 +67,6 @@ public class AccountsController {
 			
 			carray.add(sarray);
 		}
-		//
-		
 		
 		String jsonStr = gson.toJson(carray);
 		log.debug("=carray="+carray.toString());
@@ -80,42 +75,25 @@ public class AccountsController {
 		
 	}
 	
-//	@RequestMapping(value="/accounts/doSearchTrade.do",method=RequestMethod.GET)
-//	public Model getSearchTrade(SearchVO vo,CodeVO codeVo, Model model) throws SQLException{
-//		log.debug("1===getSearchTrade.do=======================");
-//		
-//		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
-//		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
-//		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
-//		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
-//		vo.	setSearchTrade(StringUtil.nvl(vo.getSearchTrade(),""));
-//		
-//		log.debug("2===SearchVO=="+vo.toString());
-//		
-//		List<CodeVO> listCode = new ArrayList<CodeVO>();
-//		
-//		if(vo.getSearchTrade().equals("10")) {
-//			codeVo.setCdMstId("ACC_CAT_EXPENSES");
-//			listCode = codeService.getSelectList(codeVo);
-//		}else if(vo.getSearchTrade().equals("20")) {
-//			codeVo.setCdMstId("ACC_CAT_INCOMES");
-//			listCode = codeService.getSelectList(codeVo);
-//		}
-//		
-//		codeVo.setCdMstId("ACC_ACCOUNT");
-//		List<CodeVO> codelist4 = codeService.getSelectList(codeVo);
-//		
-//		model.addAttribute("listCode",listCode);
-//		model.addAttribute("codelist4",codelist4);
-//		
-//		codeService.getSelectList(codeVo);
-//		log.debug("3===listCodelistCode=="+listCode.toString());
-//		
-//		model.addAttribute("searchVO",vo);
-//		
-//		return model;
-//	}
+	@RequestMapping(value="/accounts/doSelectListMonth.do",method=RequestMethod.GET)
+	public String getSelectListMonth(SearchVO vo, Model model) throws SQLException{
+		log.debug("1===doSelectList.do=======================");
+		
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
+		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
+		
+		log.debug("2===SearchVO=="+vo.toString());
 	
+		List<Accounts> list = accountsService.getSelectListMonth(vo);
+		log.debug("3===list=="+list.toString());
+		
+		model.addAttribute("list",list);
+		model.addAttribute("searchVO",vo);
+		
+		return "accounts/monthAccounts";
+	}
 	
 	@RequestMapping(value="/accounts/doSelectList.do",method=RequestMethod.GET)
 	public String getSelectList(SearchVO vo,CodeVO codeVo, Model model) throws SQLException{

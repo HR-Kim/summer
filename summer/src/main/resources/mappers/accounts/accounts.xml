@@ -17,8 +17,23 @@
 				</otherwise>
 			</choose>
 	</sql>
+	
+	
+	<select id="do_selectListMonth" parameterType="SearchVO" resultType="Accounts">
+		select substr(T1.a_date,4,2) as a_date, T1.sumExp, T2.sumInc, (T2.sumInc - T1.sumExp) as sumTotal
+		from (select substr(a_date,1,5) as a_date ,sum(amount) sumExp
+		        from su_accounts
+		        where id='b' and trade_id='10'
+		        group by substr(a_date,1,5),trade_id) T1
+		    , (select substr(a_date,1,5) as a_date,sum(amount) sumInc
+		        from su_accounts
+		        where id='b' and trade_id='20'
+		        group by substr(a_date,1,5),trade_id) T2
+		where T1.a_date = T2.a_date
+		    and substr(T1.a_date,1,2) = '18'
+	</select>
 
-	<select id="do_search" parameterType="SearchVO" resultType="Accounts">
+	<select id="do_selectList" parameterType="SearchVO" resultType="Accounts">
 		SELECT T1.ano
       			,T1.id
       			,(select cd_dtl_nm 

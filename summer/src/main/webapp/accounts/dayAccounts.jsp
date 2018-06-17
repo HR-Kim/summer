@@ -215,7 +215,7 @@
    							>100</option>
    						</select>
     					
-    					<button class="btn btn-sm btn-success" onclick="javascript:doSearch();">검색</button>
+    					<button class="btn btn-sm btn-success" onclick="javascript:doSelectList();">검색</button>
 							
    					</div>
    			</tr>
@@ -298,7 +298,7 @@
 	<script type="text/javascript">
 
 		//리스트 조회
-		function doSearch(){
+		function doSelectList(){
 			var frm = document.frm;
 			
 			frm.action = "doSelectList.do";
