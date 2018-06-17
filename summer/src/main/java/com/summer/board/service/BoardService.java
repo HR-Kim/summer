@@ -27,5 +27,7 @@ public interface BoardService {
 	 * @throws SQLException
 	 */
 	public int add(Board board) throws SQLException;
+	public List<Board> getSelectList(SearchVO vo) throws SQLException;
+	public Board getSelectOne(Board board) throws SQLException;
 		
 }

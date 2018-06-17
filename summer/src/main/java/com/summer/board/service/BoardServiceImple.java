@@ -1,10 +1,7 @@
 package com.summer.board.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -60,6 +57,21 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public int add(Board board) throws SQLException {
 		return boardDao.add(board);
+	}
+
+
+
+	@Override
+	public List<Board> getSelectList(SearchVO vo) throws SQLException{
+		
+		return boardDao.getSelectList(vo);
+	}
+
+
+
+	@Override
+	public Board getSelectOne(Board board) throws SQLException {
+		return boardDao.getSelectOne(board);
 	}
 	
 }

@@ -39,4 +39,46 @@
 		 			   ,0
 		)
 	</insert>
+	
+	<select id="do_search" parameterType="SearchVO" resultType="Board">
+	<![CDATA[
+		SELECT T1.TOTAL_CNT
+                ,T1.NUM
+                ,T1.CATEGORY
+                ,T1.TITLE                     
+                ,T1.ID                             
+                ,T1.CLICK_CNT   AS CLICKCNT                      
+                ,T1.LIKE_CNT    AS LIKECNT
+                ,case when TO_CHAR(T1.date_reg,'YYYY/MM/DD') = TO_CHAR(sysdate,'YYYY/MM/DD')
+                        then TO_CHAR(T1.date_reg,'HH24:MI')
+                 else      TO_CHAR(T1.date_reg,'YYYY/MM/DD') END AS DATEREG
+                ,T1.RNUM AS NO
+        FROM(
+                SELECT SB.*
+                        ,ROW_NUMBER() OVER (ORDER BY ID) as RNUM
+                        ,COUNT(*) OVER() as TOTAL_CNT
+                  FROM SU_BOARD SB
+                    ]]>
+        <include refid="baseCondition" />
+        <![CDATA[
+        )T1 
+		WHERE (#{pageSize} * (#{pageNum} -1)+1) <= rnum
+		  AND rnum <= (#{pageSize} * (#{pageNum} -1)+#{pageSize})
+		]]>
+	</select>
+	
+	<select id="do_selectOne" parameterType="Board" resultType="Board">
+		SELECT NUM
+		      ,CATEGORY
+		      ,TITLE
+		      ,CONTENT
+		      ,ID
+		      ,DATE_REG
+		      ,LIKE_CNT
+		      ,CLICK_CNT
+  		FROM  SU_BOARD
+ 		WHERE NUM 	= #{num,	jdbcType=VARCHAR}
+	</select>
+	
+	
 </mapper>

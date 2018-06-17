@@ -60,4 +60,16 @@ public class BoardDaoImple implements BoardDao {
 		log.debug("Param:"+board.toString());
 		return sqlSessionTemplate.insert(statement, board);
 	}
+	public List<Board> getSelectList(SearchVO vo) throws SQLException {
+		String statement = this.namespace+".do_search";
+		log.debug("Param:"+vo.toString());
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
+
+	@Override
+	public Board getSelectOne(Board board) throws SQLException {
+		String statement = this.namespace+".do_selectOne";
+		log.debug("Param:"+board.toString());
+		return sqlSessionTemplate.selectOne(statement, board);
+	}
 }

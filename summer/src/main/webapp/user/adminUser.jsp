@@ -526,18 +526,6 @@
 						$("#phone").val(parseData.phone);
 						$("#grade").val(parseData.grade);
 						$("#regdt").val(parseData.regdt);
-						
-//						var levelINtVal = 1;
-//						//level
-//						if (parseData.level == "BASIC") {
-//							levelIntVal = 1;
-//						} else if (parseData.level == "SILVER") {
-//							levelIntVal = 2;
-//						} else if (parseData.level == "GOLD") {
-//							levelIntVal = 3;
-//						}
-
-//						$("#level").val(levelIntVal);
 					},
 					complete : function(data) {//무조건 수행
 

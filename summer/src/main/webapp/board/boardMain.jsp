@@ -85,15 +85,15 @@
 				<tbody>
 					<c:choose>
 						<c:when test="${list.size()>0 }">
-							<c:forEach var="userVO" items="${list}">
+							<c:forEach var="board" items="${list}">
 								<tr>
-									<td class="text-center">${userVO.id}</td>
-									<td class="text-left">${userVO.name}</td>
-									<td class="text-left">${userVO.nickname}</td>
-									<td class="text-left">${userVO.gender}</td>
-									<td class="text-right">${userVO.birth}</td>
-									<td class="text-left">${userVO.email}</td>
-									<td class="text-right">${userVO.phone}</td>
+									<td class="text-center">${board.num}</td>
+									<td class="text-left">${board.category}</td>
+									<td class="text-left">${board.title}</td>
+									<td class="text-left">${board.id}</td>
+									<td class="text-right">${board.dateReg}</td>
+									<td class="text-left">${board.clickCnt}</td>
+									<td class="text-right">${board.likeCnt}</td>
 								</tr>
 							</c:forEach>
 						</c:when>
@@ -130,18 +130,8 @@
 									<c:if test="${searchVO.searchDiv == '20'}">selected='selected'</c:if>>이름</option>
 							</select> 
 							<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}" />
-							<select name="pageSize" id="pageSize" class="form-control input-sm">
-								<option value="10"
-									<c:if test="${searchVO.pageSize == '10'}">selected='selected'</c:if>>10</option>
-								<option value="30"
-									<c:if test="${searchVO.pageSize == '30'}">selected='selected'</c:if>>30</option>
-								<option value="50"
-									<c:if test="${searchVO.pageSize == '50'}">selected='selected'</c:if>>50</option>
-								<option value="100"
-									<c:if test="${searchVO.pageSize == '100'}">selected='selected'</c:if>>100</option>
-							</select>
-		 	<button class="btn btn-success btn-sm" id="do_search">검색</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardWrite.jsp'">글쓰기</button>
+						 	<button class="btn btn-success btn-sm" id="do_search" onclick="doSearch();">검색</button>
+		 					<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardWrite.jsp'">글쓰기</button>
 						</div>
 					</td>
 				</tr>
@@ -173,213 +163,6 @@
 
 		
 		$(document).ready(function() {
-			
-			//등록
-			$("#do_upsert").on("click", function() {
-				console.log("do_upsert")
-
-				if (false == confirm("등록 하시겠습니까?"))
-					return;
-
-				$.ajax({
-					type : "POST",
-					url : "do_upsert.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"hId" : $("#hId").val(),
-						"hName" : $("#hName").val(),
-						"hPasswd" : $("#hPasswd").val(),
-						"hLogin" : $("#hLogin").val(),
-						"hRecommend" : $("#hRecommend").val(),
-						"hEmail" : $("#hEmail").val(),
-						"levelInt" : $("#level").val()
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							doSearch();
-						} else {
-							alert(parseData.message);
-						}
-
-					},
-					complete : function(data) {//무조건 수행
-
-					},
-					error : function(xhr, status, error) {
-						console.log("do_save error: " + error);
-					}
-
-				});//--그리드 click -> ajax
-
-			});//--등록
-
-			//삭제
-			$("#do_delete").on("click", function() {
-				console.log("do_delete")
-
-				if (false == confirm("삭제 하시겠습니까?"))
-					return;
-
-				$.ajax({
-					type : "POST",
-					url : "do_delete.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"id" : $("#id").val(),
-					
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							doSearch();
-						} else {
-							alert(parseData.message);
-						}
-
-					},
-					complete : function(data) {//무조건 수행
-
-					},
-					error : function(xhr, status, error) {
-						console.log("do_delete error: " + error);
-					}
-
-				});//--그리드 click -> ajax
-			});//--삭제
-
-			//등록
-			$("#do_save").on("click", function() {
-				console.log("do_save")
-
-				if (false == confirm("등록 하시겠습니까?"))
-					return;
-
-				$.ajax({
-					type : "POST",
-					url : "do_save.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"hId" : $("#id").val(),
-						"hName" : $("#name").val(),
-						"hPasswd" : $("#pwd").val(),
-						"hEmail" : $("#email").val()
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							doSearch();
-						} else {
-							alert(parseData.message);
-						}
-
-					},
-					complete : function(data) {//무조건 수행
-
-					},
-					error : function(xhr, status, error) {
-						console.log("do_save error: " + error);
-					}
-
-				});//--그리드 click -> ajax
-
-			});//--등록
-
-			//수정
-			$("#do_update").on("click", function() {
-				console.log("do_update")
-
-				console.log($("#id").val());
-				if (false == isEmpty($("#id").val())) {
-					$("#id").focus();
-					return;
-				}
-
-				console.log("name:" + $("#name").val());
-				if (false == isEmpty($("#name").val())) {
-					$("#name").focus();
-					return;
-				}
-				console.log("nickname:" + $("#nickname").val());
-				if (false == isEmpty($("#nickname").val())) {
-					$("#nickname").focus();
-					return;
-				}
-				console.log("email:" + $("#email").val());
-				if (false == isEmpty($("#email").val())) {
-					$("#email").focus();
-					return;
-				}
-				console.log("phone:" + $("#phone").val());
-				if (false == isEmpty($("#phone").val())) {
-					$("#phone").focus();
-					return;
-				}
-				console.log("grade:" + $("#grade").val());
-				if (false == isEmpty($("#grade").val())) {
-					$("#grade").focus();
-					return;
-				}
-
-				if (false == confirm("수정 하시겠습니까?"))
-					return;
-
-				$.ajax({
-					type : "POST",
-					url : "do_update.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"id" : $("#id").val(),
-						"name" : $("#name").val(),
-						"nickname" : $("#nickname").val(),
-						"email" : $("#email").val(),
-						"phone" : $("#phone").val(),
-						"grade" : $("#grade").val()
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							doSearch();
-						} else {
-							alert(parseData.message);
-						}
-
-					},
-					complete : function(data) {//무조건 수행
-
-					},
-					error : function(xhr, status, error) {
-						console.log("do_searchOne error: " + error);
-					}
-
-				});//--그리드 click -> ajax
-
-			});//--수정
-
 			//그리드 click
 			$("#listTable>tbody").on("dblclick", "tr", function() {
 				//console.log("listTable")
@@ -387,49 +170,40 @@
 				var tr = $(this);
 				var tds = tr.children();
 
-				var id = tds.eq(0).text();
-
+				var num = tds.eq(0).text();
+				var title = tds.eq(2).text();
 				//console.log("listTable id=" + id);
-				if (id == "")
+				if (num == "")
 					return;
-				if (false == confirm("(" + id + ")조회 하시겠습니까?"))
+				if (false == confirm("(" + title + ")조회 하시겠습니까?"))
 					return;
 
 				$.ajax({
 					type : "GET",
-					url : "do_searchOne.do",
+					url : "do_selectOne.do",
 					dataType : "html",// JSON/Html
 					async : false,
 					data : {
-						"id" : id
+						"num" : num
 					},
 					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
+						/* console.log("data=" + data);
 						//json parsing
 						var parseData = $.parseJSON(data);
 						console.log("parseData=" + parseData);
+						$("#num").val(parseData.num);
+						$("#categroy").val(parseData.category);
+						$("#title").val(parseData.title);
+						$("#content").val(parseData.id);
 						$("#id").val(parseData.id);
-						$("#pwd").val(parseData.pwd);
-						$("#name").val(parseData.name);
-						$("#nickname").val(parseData.nickname);
-						$("#gender").val(parseData.gender);
-						$("#birth").val(parseData.birth);
-						$("#email").val(parseData.email);
-						$("#phone").val(parseData.phone);
-						$("#grade").val(parseData.grade);
-						$("#regdt").val(parseData.regdt);
-						
-//						var levelINtVal = 1;
-//						//level
-//						if (parseData.level == "BASIC") {
-//							levelIntVal = 1;
-//						} else if (parseData.level == "SILVER") {
-//							levelIntVal = 2;
-//						} else if (parseData.level == "GOLD") {
-//							levelIntVal = 3;
-//						}
-
-//						$("#level").val(levelIntVal);
+						$("#clickCnt").val(parseData.clickCnt);
+						$("#likeCnt").val(parseData.likeCnt);
+						$("#dateReg").val(parseData.dateReg);
+						log.debug("data="+data);
+						 */
+						var frm = document.frm;
+						frm.action = '${CONTEXT}'+"/board/boardUpdate.jsp";
+						frm.submit();	
 					},
 					complete : function(data) {//무조건 수행
 

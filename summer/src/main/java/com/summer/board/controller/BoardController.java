@@ -52,8 +52,7 @@ public class BoardController {
 	 * @return json
 	 * @throws SQLException
 	 */
-	@RequestMapping(value="/user/do_add.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
-	@ResponseBody
+	@RequestMapping(value="/board/do_add.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
 	public String add(@Valid Board board, BindingResult bindingResult) throws Exception{
 		log.debug("1=add.do======================");
 		Gson gson = new Gson();
@@ -81,4 +80,56 @@ public class BoardController {
 		log.debug("4=json="+json);		
        return json;	
 	}
+	@RequestMapping(value="/board/do_selectList.do", method=RequestMethod.GET)
+	public String getSelectList(SearchVO vo,Model model) throws SQLException{
+		log.debug("1=do_selectList.do======================");
+		
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),""));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(),"1"));
+		vo.setPageSize(StringUtil.nvl(vo.getPageSize(),"10"));
+		
+		log.debug("2=SearchVO==============="+vo.toString());
+		List<Board> list = boardService.getSelectList(vo);
+		log.debug("3=list==================="+vo.toString());
+		int totalCnt = 0;
+		if(null != list && list.size() > 0) {
+			totalCnt = Integer.parseInt(list.get(0).getTotalCnt().toString());
+			log.debug("4=totalCnt================="+totalCnt);
+		}
+		
+		model.addAttribute("totalCnt",totalCnt);
+		model.addAttribute("list",list);
+		model.addAttribute("searchVO",vo);
+		
+		return "board/boardMain";//수정필
+	}
+	
+	/**
+	 * 단건 조회
+	 * @param board
+	 * @return json
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/board/do_selectOne.do", method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	public String getSelectOne(Board board) throws SQLException {
+		log.debug("1=do_selectOne.do======================");
+		
+		if(0 == board.getNum()) {
+			board.setNum(0);
+		}
+		
+		Board outVO = boardService.getSelectOne(board);
+		log.debug("3=do_selectOne.do=outVO="+outVO.toString());
+		log.debug("========================");
+		
+		Gson gson = new Gson();
+		
+		String jsonStr = gson.toJson(outVO);
+		
+		log.debug("jsonStr:"+jsonStr);
+		
+		return jsonStr;
+	}
+	
 }

@@ -23,7 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::글쓰기:::</title>
+    <title>:::글수정:::</title>
 
     <!-- 부트스트랩 -->
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -38,7 +38,7 @@
   <body>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
-		 <h3>글쓰기</h3>
+		 <h3>글수정</h3>
 		<!--// Title------------------------------------------ -->
 
 
@@ -62,7 +62,7 @@
 					<label class="col-lg-4 control-label">제목</label>
 					<div class="col-lg-8">
 						<input type="text" name="title" id="title"
-							class="form-control input-sm" placeholder="제목" maxlength="20" />
+							class="form-control input-sm value="제목" maxlength="20" />
 					</div>
 				</div>
 				
