@@ -31,15 +31,10 @@
 		
 	String allLine = 
 	(null == request.getAttribute("list")) ? "0":request.getAttribute("list").toString();	
-	
 	String allLinea = 
 	(null == request.getAttribute("dataList")) ? "0":request.getAttribute("dataList").toString();	
-	int size =1;
-	if(!allLinea.equals("0")){
-		size = allLinea.length()-1;
-	}
-	allLinea = allLinea.substring(1,size);
-	
+	String listsize = 
+	(null == request.getAttribute("listsize")) ? "0":request.getAttribute("listsize").toString();	
 	/* 달력
 	http://blog.munilive.com/jquery-datepicker-%EB%8B%AC%EB%A0%A5%EC%97%90%EC%84%9C-%EB%85%84%EB%8F%84%EC%99%80-%EC%9B%94%EB%A7%8C-%EC%84%A0%ED%83%9D-%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C-%ED%95%98%EA%B8%B0/
 	*/
@@ -50,7 +45,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+	<title>:::연령대별 차트:::</title>
 	<!-- 부트스트랩 -->
 	<link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -60,13 +55,13 @@
 	<form class="form-inline" name="frm" id="frm" method="get">
 		<input type="hidden"  name="searchDiv" id="searchDiv" />
 
-		<input type="text" class="form-control input-sm" name="searchWord" 
+		연령대 입력: <input type="text" class="form-control input-sm" name="searchWord" 
 		id="searchWord" value="${searchVO.searchWord}"/>
 											
 	</form>
 	
-	<input type="text" id="startmonth" />
-	<input type="text" id="endmonth" />
+	시작날짜: <input type="text" id="startmonth" />
+	끝날짜: <input type="text" id="endmonth" /><br/>
 	
 	<input type="text" id="allLine" value="<%=allLine%>"/>
 	<input type="text" id="allLine" value="<%=allLinea%>"/>
@@ -86,7 +81,7 @@
 		</tr>
 	 <c:choose>
 		 
-         	<c:when test="${list.size()>0}">
+         	<c:when test="${listsize>0}">
          		<c:forEach var="ageVO" items="${list}">
    <!-- id,adate,accountid,tradeid,amount,age,tradetotal,idtradetotal,idtotal -->
 					<tr>
@@ -130,35 +125,15 @@
 		 $("#btn30").on("click",function(){
 			 alert("30");
 		 });
-		 $('.startmonth').datepicker({ 
-			 monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-		       dayNamesMin: ['일','월','화','수','목','금','토'],
-		       weekHeader: 'Wk',
-		       dateFormat: 'yymmdd', //형식(2012.03.03)
-		    changeMonth: true,
-		    changeYear: true,
-		    showButtonPanel: true,
-		    currentText: '오늘',
-		    closeText: "X"
-			 });
-		 
 	 });
+	 
 	 google.charts.load('current', {'packages':['line']});
      google.charts.setOnLoadCallback(drawChart);
 
    function drawChart() {
 
-     var data = new google.visualization.DataTable();
-     data.addColumn('number', 'Day');
-     data.addColumn('number', '나');
-     data.addColumn('number', '20대');
-     data.addColumn('number', '30대');
-
-     data.addRows([
-       [18/04,  37.8, 80.8, 41.8],
-       [18/05,  30.9, 69.5, 32.4],
-       [18/05,  38, 69.5, 80.4],
-       [18/06,  25.4,   57, 25.7]
+     var data = new google.visualization.arrayToDataTable([
+    	 <%=allLinea%>
      ]);
 
      var options = {
