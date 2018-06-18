@@ -55,7 +55,13 @@ public class GoodDao {
 		
 		log.debug("param:"+good.toString());
 		return sqlSessionTemplate.selectOne(statement, good);
+
+	}
+	
+	public List<Good> getEntp(Good good) throws SQLException {
+		String statement = this.namespace+".do_entpList";
 		
-		
+		log.debug("param:"+good.toString());
+		return sqlSessionTemplate.selectList(statement, good);
 	}
 }

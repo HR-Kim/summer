@@ -157,7 +157,7 @@ public class Good extends DTO{
 
 	@Override
 	public String toString() {
-		return "Good [goodId=" + goodId + ", goodName=" + goodName + ", detailMean=" + detailMean + ", entpId=" + entpId
+		return "['goodId':" + goodId + ", goodName=" + goodName + ", detailMean=" + detailMean + ", entpId=" + entpId
 				+ ", entpName=" + entpName + ", roadAddrDetail=" + roadAddrDetail + ", XMapCoord=" + XMapCoord
 				+ ", YMapCoord=" + YMapCoord + ", goodPrice=" + goodPrice + ", plusoneYn=" + plusoneYn + ", goodDcYn="
 				+ goodDcYn + ", minPrice=" + minPrice + ", avgPrice=" + avgPrice + ", maxPrice=" + maxPrice + "]";

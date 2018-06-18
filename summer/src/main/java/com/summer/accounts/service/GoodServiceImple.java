@@ -31,4 +31,9 @@ public class GoodServiceImple implements GoodService {
 		return goodDao.get(good);
 	}
 
+	@Override
+	public List<Good> getEntp(Good good) throws SQLException {
+		return goodDao.getEntp(good);
+	}
+
 }

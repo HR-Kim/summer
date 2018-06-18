@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.summer.comm.SearchVO;
 import com.summer.comm.StringUtil;
 import com.summer.good.domain.Good;
@@ -58,7 +60,14 @@ public class GoodController {
 		
 		Good outVO = goodService.get(vo);
 		
+		//System.out.println("vo="+vo);
+		List<Good> list = goodService.getEntp(vo);
+		
+		System.out.println("list="+list);
+
+		
 		model.addAttribute("detailGood", outVO);
+		model.addAttribute("entpList", list);
 		
 		return "good/goodDetail";
 	}

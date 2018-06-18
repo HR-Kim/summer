@@ -118,12 +118,6 @@
 	<!-- list end -->
 	
 	<div id="map"></div>
-	
-	
-	<div id="floating-panel">
-      <input id="address" type="textbox" value="Sydney, NSW">
-      <input id="submit" type="button" value="Geocode" onclick="javascript:initMap2();" >
-    </div>
 	</div>
 
 
@@ -134,15 +128,63 @@
     </script>
 	<script type="text/javascript">
 	
-	$(document).ready(function(){
+	var length = ${entpList.size()};
+	var list = new Array();
+	 var arr = {};
 
+	<c:forEach var="location" items="${entpList}" varStatus="status">
+		arr["entpName"]="${location.entpName}";
+		arr["x"]=${location.XMapCoord};
+		arr["y"]=${location.YMapCoord};
+		list.push(arr);
+	</c:forEach>
+	
+	
+	$(document).ready(function(){
+		//alert(length);
+		var data = list[0];
+		console.log(data.x);
+		console.log(data.y);
+		console.log(data.entpName);
+		//addMarker();
+		//alert(${entpList.get(1).getXMapCoord()});
 	});
+	
+	
+	
+	
+	
+	function initialize(){
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 17,
+			center: new google.maps.LatLng(-33.92, 151.25),
+		});
+		
+		var infowindow = new google.maps.InfoWindow();
+		
+		var marker, i;
+		
+		for(i=0;i<locations.length;i++){
+			marker = new google.maps.Marker({
+				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+				map: map
+			});
+			
+			google.maps.event.addListerner(marker, 'click', (function(marker, i){
+				return function(){
+					infowindow.setContent(locations[i][0]);
+					infowindow.open(map, marker);
+				}
+			})(marker, i));
+		}
+	}
 	
 	function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 17
         });
+        
         var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
@@ -177,32 +219,6 @@
 		frm.action = "doSelectList.do";
 		frm.submit();
 	}
-	
-	// Geocoding *****************************************************
-    function initMap2() {
-        var geocoder = new google.maps.Geocoder();
-        
-
-        document.getElementById('submit').addEventListener('click', function() {
-          geocodeAddress(geocoder);
-        });
-      }
-
-      function geocodeAddress(geocoder) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            var marker = new google.maps.Marker({
-              position: results[0].geometry.location
-            });
-            
-            alert(results[0].geometry.location);
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-    // Geocoding // *****************************************************
 	
 	</script>
 	

@@ -3,6 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.summer.good.mappers">
+  <select id="do_entpList" parameterType="Good" resultType="Good">
+  		SELECT entp_name, x_map_coord, y_map_coord
+		FROM su_entp
+		WHERE entp_id IN (
+		        SELECT entp_id
+		        FROM su_pne
+		        WHERE good_id = #{goodId}            
+		    )
+  </select>
   	<select id="do_selectList" parameterType="SearchVO" resultType="Good">
 		SELECT 
 		  			T1.rnum as no
