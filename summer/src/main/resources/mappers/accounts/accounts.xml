@@ -20,17 +20,15 @@
 	
 	
 	<select id="do_selectListMonth" parameterType="SearchVO" resultType="Accounts">
-		select substr(T1.a_date,4,2) as a_date, T1.sumExp, T2.sumInc, (T2.sumInc - T1.sumExp) as sumTotal
-		from (select substr(a_date,1,5) as a_date ,sum(amount) sumExp
-		        from su_accounts
-		        where id='b' and trade_id='10'
-		        group by substr(a_date,1,5),trade_id) T1
-		    , (select substr(a_date,1,5) as a_date,sum(amount) sumInc
-		        from su_accounts
-		        where id='b' and trade_id='20'
-		        group by substr(a_date,1,5),trade_id) T2
-		where T1.a_date = T2.a_date
-		    and substr(T1.a_date,1,2) = '18'
+		select substr(yearMonth,6,2) as a_date ,sumExp,sumInc,(NVL(sumInc,0) - NVL(sumExp,0)) as sumTotal
+		from(
+				select substr(TO_CHAR(a_date, 'YYYY/MM/DD'),1,7) as yearMonth
+				    ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
+				    , sum(case when trade_id='10' then amount else 0 end) AS sumInc
+				from su_accounts
+				where id='a'
+				group by substr(TO_CHAR(a_date, 'YYYY/MM/DD'),1,7))
+		where substr(yearMonth,1,4) = #{searchDiv}
 	</select>
 
 	<select id="do_selectList" parameterType="SearchVO" resultType="Accounts">

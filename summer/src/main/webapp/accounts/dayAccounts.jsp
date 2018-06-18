@@ -167,7 +167,7 @@
 
 					
 					
-						<div class="form-group">
+						<div class="form-group" id="submitBtn">
 				    		<div class="col-lg-6">
 				    			<button class="btn btn-sm" id="doUpsert">등록</button>
 				    			<button class="btn btn-sm" id="doDelete">삭제</button>
@@ -233,6 +233,7 @@
 	        	<thead class="bg-primary">
 	        		<tr>
 	        			<th class="text-center" style="display:none;">번호</th>
+	        			<th class="text-center" style="display:none;">거래구분</th>
 		         		<th class="text-center">카테고리</th>
 		         		<th class="text-center">날짜</th>
 		         		<th class="text-center">항목</th>
@@ -248,6 +249,7 @@
 	        			<c:forEach var="AccountsVO" items="${list }">
 			        		<tr>
 			        			<td class="text-center" style="display:none;">${AccountsVO.ano }</td>
+			        			<td class="text-center" style="display:none;">${AccountsVO.tradeId }</td>
 			          		<td class="text-center"><label class="badge badge-danger" style="border: 1px solid #fd3258; background-color: #fd3258">${AccountsVO.categoryId }</label></td>
 					          <td class="text-left">${AccountsVO.aDate }</td>
 					          <td class="text-left">${AccountsVO.item }</td>
@@ -313,7 +315,7 @@
 			frm.pageNum.value = pageNum;
 			frm.submit();
 		}
-		
+
 		$(document).ready(function(){
 		
 			//그리드 클릭
@@ -323,51 +325,79 @@
     			var tds = tr.children();
     			
     			var ano = tds.eq(0).text();
-    			
-    			
     			if(ano=="")return;
-    			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
-    			  $("#expenseModal").modal();
-    			  $.ajax({
-	    			      	 type:"GET",
-		                 url:"doSearchOne.do",   
-		                 dataType:"html",// JSON/html
-		                 async: false,
-		                 data:{
-		                    "ano" :ano
-			                 },
-		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
-		                	 console.log("data="+data); 
-		                 	//json parsing
-		                 	var parseData = $.parseJSON(data); //데이터 들어있음.
-		                 	var date = new Date(parseInt(parseData.aDate));
-		                 		
-		                 	console.log("parseData"+parseData);
-		                 	console.log("parseData.categoryId"+parseData.categoryId);
-		             
-		                 		//화면에 정보 뿌리기.
-		                 		$("#ano").val(parseData.ano);
-		                 		$("#searchCategory").val(parseData.categoryId);
-									//$("#aDate").val(parseData.aDate); todo
-									$("#aDate").text(date.toString('dd/mm/yyyy'));
-									alert($("#aDate").text(date.toString('dd/mm/yyyy')));
-									$("#item").val(parseData.item);
-									$("#account").val(parseData.accountId);
-									$("#amount").val(parseData.amount);
-									$("#memo").val(parseData.memo);
-									
-			                 },
-			                complete: function(data){//무조건 수행
-			                 },
-			                error: function(xhr,status,error){
-			                console.log("do_checkedDelete error: "+error);
-			                 }
-    			   }); //--그리드 클릭> ajax
+    			
+    			var trade = tds.eq(1).text();
+    			
+    			$.get( "doSearchTrade.do", {"searchTrade" : trade},function(categoryList) {
+    			}, 'json' /* xml, text, script, html */)
+    			.done(function(categoryList) {
+    				$('#searchCategory > option').remove();
+    				
+    				$.each(categoryList , function(idx, val) {
+               		$('#searchCategory').append($('<option >', {
+                            value: val[1],
+                            text : val[1],
+                            
+                       }));
+               		});
+    				
+    				
+      			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
+      			  $("#expenseModal").modal();
+      			  $.ajax({
+  	    			      	 type:"GET",
+  		                 url:"doSearchOne.do",   
+  		                 dataType:"html",// JSON/html
+  		                 async: false,
+  		                 data:{
+  		                    "ano" :ano
+  			                 },
+  		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+  		                	 console.log("data="+data); 
+  		                 	//json parsing
+  		                 	var parseData = $.parseJSON(data); //데이터 들어있음.
+  		                 	var date = new Date(parseInt(parseData.aDate));
+  		                 		
+  		                 	console.log("parseData"+parseData);
+  		                 	console.log("parseData.categoryId"+parseData.categoryId);
+  		             			
+  		                 		//화면에 정보 뿌리기.
+  		                 		$("#ano").val(parseData.ano);
+  		                 		
+  		                 		$("#account").val(parseData.accountId);
+  		                 		//$("#searchCategory").val(parseData.categoryId);
+  		                 		//$("#searchCategory").append('<option value=' + parseData.categoryId + '>' + parseData.categoryId + '</option>');
+  		                 		
+    							$("#searchCategory").val(parseData.categoryId).attr("selected", "selected");
+    							
+  								$("#aDate").text(date.toString('dd/mm/yyyy'));
+  								
+  								$("#item").val(parseData.item);
+  								$("#amount").val(parseData.amount);
+  								$("#memo").val(parseData.memo);
+  								
+  			                 },
+  			                complete: function(data){//무조건 수행
+  			                 },
+  			                error: function(xhr,status,error){
+  			                console.log("do_checkedDelete error: "+error);
+  			                 }
+      			   }); //--그리드 클릭> ajax
+    			})
+    			.fail(function(categoryList) {
+    			    alert( "error" );
+    			})
+    			.always(function(categoryList) {
+    			});
+
+
+    			
     		});
 			
 			//등록수정
-			//
     			$("#expenses,#incomes").on("click",function(){
+    				
     				var trade = this.value;
     				
     				$.ajax({	
@@ -379,8 +409,6 @@
 	                	 "searchTrade" :trade
 		                 },
 	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수	
-	                
-	                	
 	               	console.log("data="+data); 
 	                	//json parsing
 	                	var parseData = $.parseJSON(data); //데이터 들어있음.

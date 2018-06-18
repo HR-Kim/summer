@@ -39,10 +39,8 @@
 	}
 	log.debug("=searchVO="+searchVO.toString());
 	
-	pageSize = StringUtil.nvl(searchVO.getPageSize(),"10");
-	pageNum = StringUtil.nvl(searchVO.getPageNum(),"1");		
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
-	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
+	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"2018");
 	
 	searchTrade = StringUtil.nvl(searchVO.getSearchTrade(),"");
 	searchCategory = StringUtil.nvl(searchVO.getSearchCategory(),"");
@@ -86,18 +84,7 @@
   <body>
   
   <div class="container">
-  <!-- Button ----------------------------------------------------------->
-    
-   <div class="form-inline pull-right">
-<!--    		<button class="btn btn-sm" >+지출</button> -->
-		<button class="btn btn-sm" id="expenses" name="plus" value="10">+지출</button>
-   		<button class="btn btn-sm" id="incomes" name="plus" value="20">+수입</button>
-<!--    		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal" id="expenses" name="plus" value="10">+지출</button> -->
-<!--    		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal" id="incomes" name="plus" value="20">+수입</button> -->
-   		<button class="btn btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button>
-   </div>
-   <!--// Button --------------------------------------------------------->
-
+ 
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
@@ -107,19 +94,16 @@
    			<tr>
    				<td class="text-left">
    					<div class="form-group col-lg6 col-sm6">
+						<select id="searchDiv" name="searchDiv">
+				          <c:set var="now" value="<%=new java.util.Date()%>" />
+				          <fmt:formatDate value="${now}" pattern="yyyy" var="yearStart"/> 
+				          <c:forEach begin="0" end="10" var="result" step="1">
+				           <option value="<c:out value="${yearStart - result}" />" 
+				           	<c:if test="${(yearStart - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${yearStart - result}" />
+				           </option>
+				          </c:forEach>                          
+				        </select>
 
-    					<select name="pageSize" id="pageSize">
-   							<option value="10"
-   								<c:if test="${searchVO.pageSize=='10'}">selected='selected'</c:if> 
-   							>10</option>
-   							<option value="30"
-   								<c:if test="${searchVO.pageSize=='30'}">selected='selected'</c:if> 
-   							>30</option>
-   							<option value="100"
-   								<c:if test="${searchVO.pageSize=='100'}">selected='selected'</c:if> 
-   							>100</option>
-   						</select>
-    					
     					<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
 							
    					</div>

@@ -49,10 +49,10 @@ public class AccountsController {
 		
 		List<CodeVO> listCode = new ArrayList<CodeVO>();
 		
-		if(vo.getSearchTrade().equals("10")) {
+		if(vo.getSearchTrade().equals("10")||vo.getSearchTrade().equals("지출")) {
 			codeVo.setCdMstId("ACC_CAT_EXPENSES");
 			listCode = codeService.getSelectList(codeVo);
-		}else if(vo.getSearchTrade().equals("20")) {
+		}else if(vo.getSearchTrade().equals("20")||vo.getSearchTrade().equals("수입")) {
 			codeVo.setCdMstId("ACC_CAT_INCOMES");
 			listCode = codeService.getSelectList(codeVo);
 		}

@@ -23,6 +23,7 @@
             </li>
               <li class="nav-item">
               <a class="nav-link" href="#" onclick="javascript:doSelectListMonth();">
+              	<input type="hidden" id="searchDiv" name="searchDiv"/>
                 <span class="menu-title">월간</span>
                 <i class="icon-wrench menu-icon"></i>
               </a>
@@ -110,6 +111,8 @@
 		//월간리스트 조회
 		function doSelectListMonth(){
 			var frm = document.frm;
+			
+			frm.searchDiv.value = "2018";
 			
 			frm.action = "accounts/doSelectListMonth.do";
 			
