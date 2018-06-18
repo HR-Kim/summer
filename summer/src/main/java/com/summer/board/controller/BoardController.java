@@ -53,7 +53,8 @@ public class BoardController {
 	 * @throws SQLException
 	 */
 	@RequestMapping(value="/board/do_add.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
-	public String add(@Valid Board board, BindingResult bindingResult) throws Exception{
+	@ResponseBody
+	public String add(Board board, BindingResult bindingResult) throws Exception{
 		log.debug("1=add.do======================");
 		Gson gson = new Gson();
 		MessageVO messageVO = new MessageVO();
@@ -80,6 +81,7 @@ public class BoardController {
 		log.debug("4=json="+json);		
        return json;	
 	}
+	
 	@RequestMapping(value="/board/do_selectList.do", method=RequestMethod.GET)
 	public String getSelectList(SearchVO vo,Model model) throws SQLException{
 		log.debug("1=do_selectList.do======================");
@@ -111,8 +113,8 @@ public class BoardController {
 	 * @return json
 	 * @throws SQLException
 	 */
-	@RequestMapping(value="/board/do_selectOne.do", method=RequestMethod.GET,produces="application/json;charset=UTF-8")
-	public String getSelectOne(Board board) throws SQLException {
+	@RequestMapping(value="/board/do_selectOne.do", method=RequestMethod.GET)
+	public String getSelectOne(Board board, Model model) throws SQLException {
 		log.debug("1=do_selectOne.do======================");
 		
 		if(0 == board.getNum()) {
@@ -123,13 +125,17 @@ public class BoardController {
 		log.debug("3=do_selectOne.do=outVO="+outVO.toString());
 		log.debug("========================");
 		
-		Gson gson = new Gson();
+		model.addAttribute("Board",outVO);
+		log.debug("model"+model);
 		
-		String jsonStr = gson.toJson(outVO);
 		
-		log.debug("jsonStr:"+jsonStr);
+		return "board/boardView";
 		
-		return jsonStr;
+		
+//		Gson gson = new Gson();
+//		String json = gson.toJson(outVO);
+//		log.debug("json:"+json);
+//		return json;
 	}
 	
 }

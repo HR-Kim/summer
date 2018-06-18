@@ -55,7 +55,7 @@
                 ,T1.RNUM AS NO
         FROM(
                 SELECT SB.*
-                        ,ROW_NUMBER() OVER (ORDER BY ID) as RNUM
+                        ,ROW_NUMBER() OVER (ORDER BY NUM DESC) as RNUM
                         ,COUNT(*) OVER() as TOTAL_CNT
                   FROM SU_BOARD SB
                     ]]>

@@ -66,8 +66,10 @@
 		<!-- Title-------------------------------------------- -->
 		 <h3>자유게시판</h3>
 		<!--// Title------------------------------------------ -->
-		
-		
+		<div class="clearfix pull-rigth">
+		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/board/boardWrite.jsp'">글쓰기</button>
+		</div>
+		 
 		<!-- List--------------------------------------------  -->
 		<div class="table-responsive">
 			<table id="listTable" class="table  table-striped table-bordered table-hover">
@@ -131,7 +133,6 @@
 							</select> 
 							<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}" />
 						 	<button class="btn btn-success btn-sm" id="do_search" onclick="doSearch();">검색</button>
-		 					<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardWrite.jsp'">글쓰기</button>
 						</div>
 					</td>
 				</tr>
@@ -169,7 +170,8 @@
 
 				var tr = $(this);
 				var tds = tr.children();
-
+				
+				var sessionId = "<%= session.getAttribute("id") %>";
 				var num = tds.eq(0).text();
 				var title = tds.eq(2).text();
 				//console.log("listTable id=" + id);
@@ -177,8 +179,12 @@
 					return;
 				if (false == confirm("(" + title + ")조회 하시겠습니까?"))
 					return;
+				
+				location.href="/summer/board/do_selectOne.do?num="+num+"&id="+sessionId;
+			});
+		});
 
-				$.ajax({
+/* 				$.ajax({
 					type : "GET",
 					url : "do_selectOne.do",
 					dataType : "html",// JSON/Html
@@ -187,22 +193,16 @@
 						"num" : num
 					},
 					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						/* console.log("data=" + data);
+						console.log("data=" + data);
 						//json parsing
 						var parseData = $.parseJSON(data);
 						console.log("parseData=" + parseData);
-						$("#num").val(parseData.num);
-						$("#categroy").val(parseData.category);
-						$("#title").val(parseData.title);
-						$("#content").val(parseData.id);
-						$("#id").val(parseData.id);
-						$("#clickCnt").val(parseData.clickCnt);
-						$("#likeCnt").val(parseData.likeCnt);
-						$("#dateReg").val(parseData.dateReg);
-						log.debug("data="+data);
-						 */
+						
 						var frm = document.frm;
-						frm.action = '${CONTEXT}'+"/board/boardUpdate.jsp";
+						frm.category.value = category;
+						frm.title.value = title;
+						frm.content.value = content;
+						frm.action = '${CONTEXT}'+"/board/boardView.jsp";						
 						frm.submit();	
 					},
 					complete : function(data) {//무조건 수행
@@ -216,7 +216,7 @@
 
 			});//--#listTable>tbody
 
-		});//--document.ready
+		});//--document.ready */
 	</script>
 </body>
 </html>

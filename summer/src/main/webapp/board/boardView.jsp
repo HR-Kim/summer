@@ -1,3 +1,4 @@
+<%@page import="com.summer.board.domain.Board"%>
 <%@page import="com.summer.comm.StringUtil"%>
 <%@page import="com.summer.comm.SearchVO"%>
 <%@page import="org.slf4j.Logger"%>
@@ -12,6 +13,8 @@
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===================================");
 	
+	String sessionId = (String)session.getAttribute("id");	
+	
 %>
 
 <%-- CONTEXT --%>
@@ -23,7 +26,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::글쓰기:::</title>
+    <title>:::글수정:::</title>
 
     <!-- 부트스트랩 -->
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -38,7 +41,7 @@
   <body>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
-		 <h3>글쓰기</h3>
+		 <h3>글수정</h3>
 		<!--// Title------------------------------------------ -->
 
 
@@ -54,7 +57,7 @@
 					<label class="col-lg-4 control-label">구분</label>
 					<div class="col-lg-8">
 						<input type="text"  name="category" id="category"
-							class="form-control input-sm" placeholder="구분" maxlength="20" />
+							class="form-control input-sm" value="${Board.category}" maxlength="20" />
 					</div>
 				</div>
 				
@@ -62,22 +65,22 @@
 					<label class="col-lg-4 control-label">제목</label>
 					<div class="col-lg-8">
 						<input type="text" name="title" id="title"
-							class="form-control input-sm" placeholder="제목" maxlength="20" />
+							class="form-control input-sm" value="<%= session.getAttribute("name") %>" maxlength="20" />
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-lg-4 control-label">작성자</label>
 					<div class="col-lg-8">
-						<input type="text" name="name" id="name" disabled="disabled"
-							class="form-control input-sm" value="<%= session.getAttribute("name") %>" maxlength="200" />
+						<input type="text" name="id" id="id" disabled="disabled"
+							class="form-control input-sm" value="${Board.id}" maxlength="200" />
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-lg-4 control-label">글내용</label>
 					<div class="col-lg-8">
-						<textarea class="form-control" id="content" name="content" rows="15"></textarea>
+						<textarea class="form-control" id="content" name="content"  rows="15" >${Board.content}</textarea>
 					</div>
 				</div>
 			</form>
@@ -86,10 +89,15 @@
 		
 				
 		<!-- Button-------------------------------------------- -->
+
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add" >완료</button>
 		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardMain.jsp'" >취소</button>
+		 <c:if test="${Board.id == sessionScope.id}">
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardUpdate.jsp'">수정</button>
+		 	<button class="btn btn-success btn-sm" id="do_delete" >삭제</button>
+		 </c:if>		
 		 </div>
+		 
 		<!--// Button------------------------------------------ -->
 		</div>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
@@ -101,7 +109,7 @@
 
 		
 		$(document).ready(function() {
-			var sessionId = "<%= session.getAttribute("id") %>"
+
 			//등록
 			$("#do_add").on("click", function() {
 				console.log("do_add")
@@ -116,11 +124,11 @@
 					data : {
 						"category" : $("#category").val(),
 						"title" : $("#title").val(),
-						"id" : sessionId,
+						"id" : $("#id").val(),
 						"content" : $("#content").val()
 					},
 					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						 console.log("data=" + data);
+						console.log("data=" + data);
 						//json parsing
 						var parseData = $.parseJSON(data);
 						console.log("parseData=" + parseData);
@@ -130,7 +138,7 @@
 							
 							var frm = document.frm;
 							frm.action = '${CONTEXT}'+"/board/boardMain.jsp";
-							frm.submit();		
+							frm.submit();	
 						} else {
 							alert(parseData.message);
 						}
@@ -140,10 +148,7 @@
 
 					},
 					error : function(xhr, status, error) {
-						/* console.log("data=" + data);
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData); */
-						console.log("do_add error: " + error);
+						console.log("do_save error: " + error);
 					}
 
 				});//--그리드 click -> ajax
