@@ -16,6 +16,7 @@
   		<typeAlias type="com.summer.chart.domain.Chart" alias="Chart"/>
   		<typeAlias type="com.summer.codes.domain.CodeVO" alias="CodeVO"/>
   		<typeAlias type="com.summer.good.domain.Good" alias="Good" />
+  		<typeAlias type="com.summer.board.domain.Board" alias="Board" />
   	</typeAliases>
 
   </configuration>
