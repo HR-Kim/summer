@@ -33,11 +33,13 @@
 						<b>최고우대금리</b>
 						<input type = "text" class = "form-control"  name = "intr_rate_max" maxlength="5" />
 						<p>
-						<button type="submit" class="btn btn-success mr-2">검색</button>
+						<button id = "search" type="submit" class="btn btn-success mr-2">검색</button>
 						</div>
 					</div>
 		</div>
 	</div>
+	
+	${list}
 	
  <div class="col-md-7 grid-margin stretch-card" style="margin-right:none;">
               <div class="card">
@@ -85,5 +87,15 @@
 	</div>
 	
 </div>
+
+<script type ="text/javascript">
+$(document).ready(function(){
+	alert("ready?");
+	
+});
+
+
+</script>
+
 </body>
 </html>

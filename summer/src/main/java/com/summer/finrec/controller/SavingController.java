@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.summer.comm.StringUtil;
 import com.summer.finrec.comm.FinSavingSearchVO;
+import com.summer.finrec.domain.FinSavingVO;
+import com.summer.finrec.service.SavingService;
+import com.summer.finrec.service.SavingServiceImple;
 
 @Controller
 public class SavingController {
 	Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	public SavingService service = new SavingServiceImple();
 	
 	//finrec/saving/doSelectList.do
 	@RequestMapping(value="/finrec/saving/doSelectList.do",
@@ -27,8 +32,8 @@ public class SavingController {
 		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
 		
 		log.debug("2.FinSavingSearchVO="+vo.toString());
-		//service.getSelectList(vo);
-		List<String> list = new ArrayList<String>();
+		List<FinSavingVO> list = service.getSelectList(vo);
+//		List<String> list = new ArrayList<String>();
 		
 		log.debug("3.list = ");
 		
