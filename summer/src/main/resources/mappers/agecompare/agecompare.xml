@@ -45,7 +45,7 @@
 									                						) Ta
 									              ) T2
 							   ON T1.id = T2.id
-                               AND T2.age = #{searchWord,jdbcType=VARCHAR}
+                           AND T2.age = #{searchWord,jdbcType=VARCHAR}
 			<!-- <include refid="baseCondition" />   
 			AND TO_DATE(T1.a_date,'YY/MM/DD') 
 			BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY('18/05/01')+1,-1),'YY/MM/DD'),'YY/MM/DD')

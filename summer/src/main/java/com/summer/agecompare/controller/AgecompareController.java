@@ -42,33 +42,20 @@ public class AgecompareController {
 		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
 		
 		int totalCnt = 0;
+		String listsize = list.size()+"";
 			
-		List<String> dataList = new ArrayList<String>();
-		List<String> tmdList = new ArrayList<String>();
-		
+		String dataList = "";
+		dataList +="['asd','as','bsd'],";
 		for(int i=0; i<list.size(); i++) {
-			tmdList.clear();
-			List<String> dateList = new ArrayList<String>();
-			List<String> ageList = new ArrayList<String>();
-			List<String> tradetotalList = new ArrayList<String>();
-			List<String> tradeIdList = new ArrayList<String>();
-			List<String> totalList = new ArrayList<String>();
-			
-			dateList.add("'aDate'"+"'"+(list.get(i).getaDate())+"'");
-			ageList.add("'age'"+"'"+(list.get(i).getAge())+"'");
-			tradetotalList.add("'tradetotal'"+"'"+(list.get(i).getTradeTotal())+"'");
-			totalList.add("'total'"+"'"+(list.get(i).getTotal())+"'");
-			tradeIdList.add("'tradeId'"+"'"+(list.get(i).getTradeId())+"'");
-			
-			tmdList.add(dateList.toString());
-			tmdList.add(ageList.toString());
-			tmdList.add(tradetotalList.toString());
-			tmdList.add(totalList.toString());
-			tmdList.add(tradeIdList.toString());
-			dataList.add(tmdList.toString());
+			dataList += "['"+list.get(i).getaDate()+"',"+list.get(i).getTradeTotal()+","
+							+list.get(i).getTotal()+"]";
+			if(i != list.size()-1){
+				dataList += ",";
+			}			
 		}
-				
+
 		model.addAttribute("searchVO", vo);
+		model.addAttribute("listsize",listsize);
 		model.addAttribute("list",list);
 		model.addAttribute("dataList",dataList);
 		
