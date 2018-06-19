@@ -88,11 +88,8 @@
   <!-- Button ----------------------------------------------------------->
     
    <div class="form-inline pull-right">
-<!--    		<button class="btn btn-sm" >+지출</button> -->
 		<button class="btn btn-sm" id="expenses" name="plus" value="10">+지출</button>
    		<button class="btn btn-sm" id="incomes" name="plus" value="20">+수입</button>
-<!--    		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal" id="expenses" name="plus" value="10">+지출</button> -->
-<!--    		<button class="btn btn-sm" data-toggle="modal" data-target="#expenseModal" id="incomes" name="plus" value="20">+수입</button> -->
    		<button class="btn btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button>
    </div>
    <!--// Button --------------------------------------------------------->
@@ -102,7 +99,7 @@
    <!--지출 Modal  --------------------------------------------------------->
     <div id="expenseModal" class="modal fade" role="dialog">
     	<div class="modal-dialog">
-    		<div class="modal-content">
+    		<div class="modal-content col-lg-10">
     		 	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post">
     		 	
 					<div class="modal-body">
@@ -110,14 +107,14 @@
 	 					
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">날짜</label>
-				    			<div class="col-lg-6">
-				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" /> 
+				    			<div class="col-lg-7">
+				    				<input type="date" name="aDate" id="aDate" class="form-control input-sm" maxlength="20" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/> 
 								</div>		
 			    		</div>
 			    		
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">구분</label>
-				    			<div class="col-lg-6">
+				    			<div class="col-lg-7">
 						    		<c:choose>
 						        		<c:when test="${list4.size()>0 }">
 								        		<select name="searchAccount" id="searchAccount" class="form-control input-sm">
@@ -134,7 +131,7 @@
 
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">카테고리</label>
-			    				<div class="col-lg-6">
+			    				<div class="col-lg-7">
 					  				<select name="searchCategory" id="searchCategory" class="form-control input-sm">
                                     <option value=""> -- Select Category -- </option>
 									</select>
@@ -143,32 +140,28 @@
 			    		
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">항목</label>
-			    			<div class="col-lg-6">
+			    			<div class="col-lg-7">
 			    				<input type="text" name="item" id="item" class="form-control input-sm" maxlength="50" >
 							</div>		
 			    		</div>
 			    		
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">금액</label>
-			    			<div class="col-lg-6">
+			    			<div class="col-lg-7">
 			    				<input type="text" name="amount" id="amount" class="form-control input-sm" placeholder="원" maxlength="50"/>
 							</div>		
 			    		</div>
 			    		
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">메모</label>
-			    			<div class="col-lg-6">
+			    			<div class="col-lg-7">
 			    				<textarea name="memo" id="memo" class="form-control input-sm" placeholder="메모"></textarea>
 							</div>		
 			    		</div>
 					</div>
 					
-					
-
-					
-					
-						<div class="form-group" id="submitBtn">
-				    		<div class="col-lg-6">
+						<div class="form-group" id="submitBtn" align="right">
+				    		<div class="col-lg-10">
 				    			<button class="btn btn-sm" id="doUpsert">등록</button>
 				    			<button class="btn btn-sm" id="doDelete">삭제</button>
 				    			
@@ -366,12 +359,10 @@
   		                 		$("#ano").val(parseData.ano);
   		                 		
   		                 		$("#account").val(parseData.accountId);
-  		                 		//$("#searchCategory").val(parseData.categoryId);
-  		                 		//$("#searchCategory").append('<option value=' + parseData.categoryId + '>' + parseData.categoryId + '</option>');
   		                 		
     							$("#searchCategory").val(parseData.categoryId).attr("selected", "selected");
     							
-  								$("#aDate").text(date.toString('dd/mm/yyyy'));
+  								$("#aDate").val(parseData.aDate);
   								
   								$("#item").val(parseData.item);
   								$("#amount").val(parseData.amount);

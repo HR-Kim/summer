@@ -108,45 +108,14 @@ public class AccountsController {
 		
 		codeVo.setCdMstId("ACC_TRADE");
 		List<CodeVO> list1 = codeService.getSelectList(codeVo);
-		
-		codeVo.setCdMstId("ACC_CAT_EXPENSES");
-		List<CodeVO> list2 = codeService.getSelectList(codeVo);
-		
-		codeVo.setCdMstId("ACC_CAT_INCOMES");
-		List<CodeVO> list3 = codeService.getSelectList(codeVo);
-		
-		codeVo.setCdMstId("ACC_ACCOUNT");
-		List<CodeVO> list4 = codeService.getSelectList(codeVo);
-		
 		log.debug("3===list=="+list1.toString());
 		
-		List<CodeVO> listCode = new ArrayList<CodeVO>();
-		if(null != vo.getSearchTrade()) {
-			
-			if(vo.getSearchTrade().equals("10")) {
-			codeVo.setCdMstId("ACC_CAT_EXPENSES");
-			listCode = codeService.getSelectList(codeVo);
-			}else if(vo.getSearchTrade().equals("20")) {
-				codeVo.setCdMstId("ACC_CAT_INCOMES");
-				listCode = codeService.getSelectList(codeVo);
-			}
-			
-		}
-		
 		model.addAttribute("list1",list1);
-		model.addAttribute("list2",list2);
-		model.addAttribute("list3",list3);
-		model.addAttribute("list4",list4);
-		
-		model.addAttribute("listCode",listCode);
 		
 		codeService.getSelectList(codeVo);
 		
 		List<Accounts> list = accountsService.getSelectList(vo);
 		log.debug("3===list=="+list.toString());
-		log.debug("3===listCode=="+listCode.toString());
-		
-		
 		
 		int totalCnt = 0;
 		if(null!= list && list.size()>0) {
