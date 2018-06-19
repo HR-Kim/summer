@@ -76,7 +76,9 @@
 	<!-- search -->
 	<form class="form-inline" name="frm" id="frm" method="get">
 		<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
-		<input type="hidden" name="goodId"/>
+		<input type="text" name="goodId" value="${detailGood.goodId}"/>
+		<input type="text" id="x"/>
+		<input type="text" id="y"/>
 		
 		<table class="table">
 			<tr>
@@ -127,6 +129,9 @@
 	
 	var length = ${entpList.size()};
 	var list = new Array();
+	
+	var x;
+	var y;
 
 
 	<c:forEach var="location" items="${entpList}" varStatus="status">
@@ -139,13 +144,7 @@
 	
 	
 	$(document).ready(function(){
-		//alert(length);
-		var data = list[0];
-		console.log(list[0].x);
-		console.log(list[1].x);
-		console.log(data.entpName);
-		//addMarker();
-		//alert(${entpList.get(1).getXMapCoord()});
+		//doEntpSearch();
 	});
 
 	
@@ -154,21 +153,29 @@
           center: {lat: -34.397, lng: 150.644},
           zoom: 17
         });
-        var infoWindow = new google.maps.InfoWindow({map: map});
+       
+        var infoWindow = new google.maps.InfoWindow({
+        	map: map
+        });
         
         var locs = new Array();
-        
         for(var i=0;i<length;i++){
-        	locs[i] = new google.maps.LatLng(list[i].x,list[i].y);  
-	        
+        	locs[i] = {position: new google.maps.LatLng(list[i].x,list[i].y), title:list[i].entpName};  
         }
+        
+        //console.log(locs[0].title);
 
           // Create markers.
         locs.forEach(function(loc) {
             var marker = new google.maps.Marker({
-              position: loc,
+              position: loc.position,
+              title: loc.title,
               map: map
             });
+           marker.addListener('click', function() {
+        	   	infoWindow.open(map, marker);
+        	   	infoWindow.setContent(loc.title);
+             });
           });
         
         
@@ -180,9 +187,35 @@
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
+            x = pos.lat;
+            y = pos.lng
+            
+            console.log(x);
+            console.log(y);
+            
+            $("#x").val(x);
+            $("#y").val(y);
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('현재위치');
+            doEntpSearch();
+            
+            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                icon: image
+              });
+            
+            
+            
+            marker.addListener('click', function() {
+        	   	infoWindow.open(map, marker);
+        	   	infoWindow.setContent('현재위치');
+             });
+            
+            //infoWindow.setPosition(pos);
+            //infoWindow.setContent('현재위치');
+              
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -191,6 +224,7 @@
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
+        
       }
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -199,6 +233,42 @@
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
       }
+      
+   function doEntpSearch(){
+	   alert($("#x").val());
+	   alert($("#y").val());
+	   
+	   $.ajax({
+	      	 type:"GET",
+       url:"dosearchEntp.do",   
+       dataType:"html",// JSON/html
+       async: false,
+       data:{
+    	   "goodId":${detailGood.goodId},
+    	   "XMapCoord":$("#x").val(),
+    	   "YMapCoord":$("#y").val()
+           },
+       success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+      	 console.log("data="+data); 
+/*        
+       	//json parsing
+       	var parseData = $.parseJSON(data); //데이터 들어있음.
+       
+       	$('#listTable > tbody > tr').remove();
+       	
+       	$.each(parseData , function(idx, val) {
+       		 $('#listTable > tbody').append("<tr><td>" + val[0] + "</td><td class='text-right' style='color: red;'>" + numberWithCommas(val[1]) + "</td><td class='text-right' style='color: blue;'>" + numberWithCommas(val[2])+ "</td><td class='text-right'>"+ numberWithCommas(val[3]) + "</td></tr>");
+       		
+       		}); */
+       		
+           },
+          complete: function(data){//무조건 수행
+           },
+          error: function(xhr,status,error){
+          console.log("dosearchEntp error: "+error);
+           }
+		}); //--그리드 클릭> ajax
+   }
 	
 	function doSearch(){
 		var frm = document.frm;

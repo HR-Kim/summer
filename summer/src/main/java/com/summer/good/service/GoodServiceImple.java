@@ -35,4 +35,10 @@ public class GoodServiceImple implements GoodService {
 		return goodDao.getEntp(good);
 	}
 
+	@Override
+	public List<Good> searchEntp(Good good) throws SQLException {
+		// TODO Auto-generated method stub
+		return goodDao.searchEntp(good);
+	}
+
 }

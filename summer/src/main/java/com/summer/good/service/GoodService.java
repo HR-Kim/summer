@@ -13,4 +13,6 @@ public interface GoodService {
 	public Good get(Good good) throws SQLException;
 	
 	public List<Good> getEntp(Good good) throws SQLException;
+	
+	public List<Good> searchEntp(Good good) throws SQLException;
 }

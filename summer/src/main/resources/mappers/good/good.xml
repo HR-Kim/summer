@@ -50,4 +50,28 @@
 		ON sg.good_id = sp.good_id
 		AND sg.good_id= #{goodId}
   	</select>
+  	<select id="do_selectEntp" parameterType="Good" resultType="Good">
+  	<![CDATA[ 
+  		SELECT  T3.rnum as no, T3.eid as entp_id, T3.ename as entp_name, T3.good_price as good_price
+		FROM (  
+		        SELECT rownum as rnum, T1.eid, t1.ename, T1.distance, T2.good_price
+		        FROM (
+		                SELECT  DIS.entp_id as eid, DIS.entp_name as ename, DIS.distance
+		                FROM (
+		                    SELECT  entp_id, entp_name, ( 6371 * acos( cos( RADIANS(37.566535) ) * cos( RADIANS(  x_map_coord ) )
+		                            * cos( RADIANS( y_map_coord) - RADIANS(126.97796919999999) )
+		                            + sin( RADIANS(37.566535) ) * sin( RADIANS( x_map_coord) ) ) ) AS distance
+		                    FROM SU_ENTP
+		                ORDER BY distance
+		                ) DIS ) T1
+		                ,(
+		                    SELECT *
+		                    FROM SU_PNE
+		                    WHERE good_id = #{goodId}       
+		                ) t2
+		        WHERE t1.eid = t2.entp_id
+		) T3
+		WHERE T3.rnum <= 10
+		]]> 
+  	</select>
   </mapper>

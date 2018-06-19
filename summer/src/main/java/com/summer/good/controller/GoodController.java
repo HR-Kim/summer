@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -70,5 +71,32 @@ public class GoodController {
 		model.addAttribute("entpList", list);
 		
 		return "good/goodDetail";
+	}
+	
+	@RequestMapping(value="/good/dosearchEntp.do",method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchEntp(Good vo) throws SQLException{
+		log.debug("1.=dosearchEntp.do====================================");
+		
+		log.debug("2.==good=="+vo.toString());
+		
+		List<Good> list = goodService.searchEntp(vo);
+		log.debug("3===list=="+list.toString());
+		
+		Gson gson = new Gson();
+		JsonArray carray = new JsonArray();
+		
+		for(int i=0;i<list.size();i++) {
+			JsonArray sarray = new JsonArray();
+			sarray.add(list.get(i).getEntpName());
+			sarray.add(list.get(i).getGoodPrice());
+			
+			carray.add(sarray);
+		}
+		
+		String jsonStr = gson.toJson(carray);
+		log.debug("=carray="+carray.toString());
+		
+		return jsonStr;
 	}
 }

@@ -64,4 +64,9 @@ public class GoodDao {
 		log.debug("param:"+good.toString());
 		return sqlSessionTemplate.selectList(statement, good);
 	}
+	
+	public List<Good> searchEntp(Good good) throws SQLException {
+		String statement = this.namespace+".do_selectEntp";
+		return sqlSessionTemplate.selectList(statement, good);
+	}
 }

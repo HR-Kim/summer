@@ -153,11 +153,7 @@
 		frm.submit();
     }
 	
-	$(document).ready(function(){
-		//$('#idtd').hide();
-		
-		
-		
+	$(document).ready(function(){		
 		$("#listTable>tbody").on("click","tr",function(){
 			var tr = $(this);
 			var tds = tr.children();
