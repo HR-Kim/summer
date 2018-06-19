@@ -121,14 +121,8 @@
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
     	  
-	//조회
-	/*function doSearch(){
-		var frm = document.frm;
-		frm.action = "do_selectAgeList.do";
-		frm.submit();
-	}*/
-		
 	 $(document).ready(function(){
+		 //------------------- 기 간 ---------------------------//
 		 $.datepicker.regional['ko'] = {
 			        closeText: '닫기',
 			        prevText: '이전달',
@@ -227,8 +221,9 @@
 		            $(this).val($.datepicker.formatDate('yy/MM', new Date(year, month, 1)));
 		        }
 		 });
+		 //------------------- 기 간 ---------------------------//
 		 
-		 //전체 체크 해제
+		//전체 체크 해제
 		 $("#btnUnchk").on("click",function(){
 			 for(var i=1; i<=9; i++){
 			 	$("#chk_age"+i).prop('checked', false);
@@ -249,20 +244,23 @@
 				 alert("기간을 입력해주세요.");
 			 }else{
 				 alert("count: "+count);
-
+				 var searchList = count;
 				 
 				 for(var j=1; j<=9; j++){
 					 $('#chk_age'+j+':checked').each(function() { 
-					        alert($(this).val());
+						 searchList += "," + $(this).val().substring(0,2);
 					 });
 				 }
+
+				 alert(searchList);
+				 
 				 $.ajax({
 						type:"GET",
 						url:"do_selectAgeList1.do",
 						dataType:"html",
 						async:false,
 						data:{
-							"searchWord":$("#searchWord").val(),
+							"searchWord":searchList,
 							"searchDiv":$("#searchDiv").val(),
 							"pageNum":$("#startmonth").val(),
 							"pageSize":$("#endmonth").val()

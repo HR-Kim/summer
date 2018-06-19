@@ -66,15 +66,19 @@ public class AgecompareController {
 	@ResponseBody
 	public String get(SearchVO vo) throws SQLException {
 		
-		
 		log.debug("1=do_selectAgeList1.do===============");
 		
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"20"));
 		vo.setPageNum(vo.getPageNum()+"20");
 		vo.setPageSize(vo.getPageSize()+"20");
 		
-		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
+		String[] agelist = vo.getSearchWord().split(",");
+		
+		List<Agecompare> list = new ArrayList<Agecompare>();
+		for(int i=1; i<=Integer.parseInt(agelist[0]); i++) {
+			vo.setSearchWord(agelist[i]);
+			list = agecompareService.getSelectAgeList(vo);
+		}		
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(list.get(0));
