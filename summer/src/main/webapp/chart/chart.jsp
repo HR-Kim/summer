@@ -1,3 +1,4 @@
+<!-- 일 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 -->
 <%@page import="com.summer.chart.dao.ChartDao"%>
 <%@page import="com.summer.chart.domain.Chart"%>
 <%@page import="org.slf4j.Logger"%>
@@ -33,106 +34,95 @@
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
+    	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
+    	
 	</head>
 <body>
-	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
-	<script src="${CONTEXT}/resources/js/jquery-dropdate.js"></script>
-	<script src="${CONTEXT}/resources/js/date.format.js"></script>
-	
-	<h3>**Chart 리스트 테스트**</h3>
-	
+	<h3>**일 별 화면**</h3>
+		
 	<table class="table">
 		<tr>
 			<td class="text-left">
 				<!-- Button -->
 				<div class ="form-inline pull-left">
-					<button class="btn btn-sm" onclick="javascript:doDayList();">차트일간</button>
+					<button class="btn btn-sm" onclick="javascript:doDay();">차트일간</button>
 				</div>
 				<!-- //Button -->
 			</td>
 		</tr>
 	</table>
-
-	<input type="text" name="birthday" value="" class="dropdate">
-	
-	<script>
-	$(document).ready(function(){
-		$('.dropdate').dropdate({
-			dateFormat:'mm/dd/yyyy'
-		});
-	});
-	</script>
 	
 	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
 
-	<!-- List -->
+	<!-- dayList -->
 	<div class="table-responsive">
 		<form name="frm" id="frm" method="get">
 			<input type="hidden"  name="chartUserId"  id="chartUserId" />
-		<table id="listTable" class="table table-striped table-bordered table-hover">
-			<thead class="bg-primary">
-				<th class="text-center">분류</th>
-				<th class="text-center">총액</th>
-				<th class="text-center">퍼센트</th>
-			</thead>
-			<tbody>
-				<c:choose>
-					<c:when test="${list.size()>0}">
-						<c:forEach var="Chart" items="${list}">
-							<tr>
-								<td class="text-left">${Chart.cdDtlNm}</td>
-								<td class="text-center">${Chart.ctgTotal}</td>
-								<td class="text-right">${Chart.percent}%</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-				</c:choose>
-			</tbody>
-		</table>
+		
+			<table id="dayListTable" class="table table-striped table-bordered table-hover">
+				<thead class="bg-primary">
+					<th class="text-center">분류</th>
+					<th class="text-center">총액</th>
+					<th class="text-center">퍼센트</th>
+				</thead>
+			
+				<tbody>
+					<c:choose>
+						<c:when test="${dayList.size()>0}">
+							<c:forEach var="Chart" items="${dayList}">
+								<tr>
+									<td class="text-left">${Chart.cdDtlNm}</td>
+									<td class="text-center">${Chart.ctgTotal}</td>
+									<td class="text-right">${Chart.percent}%</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+					</c:choose>
+				</tbody>
+			</table>
 		</form>
 	</div>
-	<!-- //List -->
+	<!-- //dayList -->
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
-	
-	google.charts.load('current', {'packages':['corechart']});
+	google.charts.load("current", {packages:["corechart"]});
 	google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
+        var data = google.visualization.arrayToDataTable([
 			['Category_Nm', 'Total per category'],
-          	['${list.get(0).cdDtlNm}', ${list.get(0).ctgTotal}],
-          	['${list.get(1).cdDtlNm}', ${list.get(1).ctgTotal}],
-          	['${list.get(2).cdDtlNm}', ${list.get(2).ctgTotal}],
-          	['${list.get(3).cdDtlNm}', ${list.get(3).ctgTotal}],
-          	['${list.get(4).cdDtlNm}', ${list.get(4).ctgTotal}],
-			['${list.get(5).cdDtlNm}', ${list.get(5).ctgTotal}],
-			['${list.get(6).cdDtlNm}', ${list.get(6).ctgTotal}],
-			['${list.get(7).cdDtlNm}', ${list.get(7).ctgTotal}],
-			['${list.get(8).cdDtlNm}', ${list.get(8).ctgTotal}],
-			['${list.get(9).cdDtlNm}', ${list.get(9).ctgTotal}],
-			['${list.get(10).cdDtlNm}', ${list.get(10).ctgTotal}],
-			['${list.get(11).cdDtlNm}', ${list.get(11).ctgTotal}],
-			['${list.get(12).cdDtlNm}', ${list.get(12).ctgTotal}],
-			['${list.get(13).cdDtlNm}', ${list.get(13).ctgTotal}],
-			['${list.get(14).cdDtlNm}', ${list.get(14).ctgTotal}]
-		]);
+          	['${dayList.get(0).cdDtlNm}', ${dayList.get(0).ctgTotal}],
+          	['${dayList.get(1).cdDtlNm}', ${dayList.get(1).ctgTotal}],
+          	['${dayList.get(2).cdDtlNm}', ${dayList.get(2).ctgTotal}],
+          	['${dayList.get(3).cdDtlNm}', ${dayList.get(3).ctgTotal}],
+          	['${dayList.get(4).cdDtlNm}', ${dayList.get(4).ctgTotal}],
+			['${dayList.get(5).cdDtlNm}', ${dayList.get(5).ctgTotal}],
+			['${dayList.get(6).cdDtlNm}', ${dayList.get(6).ctgTotal}],
+			['${dayList.get(7).cdDtlNm}', ${dayList.get(7).ctgTotal}],
+			['${dayList.get(8).cdDtlNm}', ${dayList.get(8).ctgTotal}],
+			['${dayList.get(9).cdDtlNm}', ${dayList.get(9).ctgTotal}],
+			['${dayList.get(10).cdDtlNm}', ${dayList.get(10).ctgTotal}],
+			['${dayList.get(11).cdDtlNm}', ${dayList.get(11).ctgTotal}],
+			['${dayList.get(12).cdDtlNm}', ${dayList.get(12).ctgTotal}],
+			['${dayList.get(13).cdDtlNm}', ${dayList.get(13).ctgTotal}],
+			['${dayList.get(14).cdDtlNm}', ${dayList.get(14).ctgTotal}]
+        ]);
 
 		var options = {
-			title: '나의 지출 패턴'
+			title: '나의 일 별 지출 패턴',
+			is3D: true,
 		};
 
 		var chart = new google.visualization.PieChart(document.getElementById('dayPieChart'));
-
 		chart.draw(data, options);
-	};
-	
-	function doDayList(){
-		var frm = document.frm;
-		frm.action = "doCtgList.do";
-		frm.submit();
 	}
+	
+	function doDay(){
+		var frm = document.frm;
+		frm.action = "doDay.do";
+		frm.submit();
+	} 
 	</script>
 </body>
 </html>

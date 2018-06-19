@@ -39,18 +39,24 @@ public class ChartDao {
 	
 	public ChartDao() { }
 	
-	public List<Chart> getCtgList(Chart vo) throws SQLException{	//카테고리 별 리스트(파이 차트)
-		String statement = this.namespace + ".doCtglist";
-		log.debug("ID: " + vo.getChartUserId());
-		log.debug("Year: " + vo.getYear());
-		log.debug("Month: " + vo.getMonth());
-		log.debug("Day: " + vo.getDay());
+	public List<Chart> getDay(Chart vo) throws SQLException{	//카테고리 별 리스트(파이 차트)
+		String statement = this.namespace + ".doDay";
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
+	
+	public List<Chart> getWeek(Chart vo) throws SQLException{	//카테고리 별 리스트(파이 차트)
+		String statement = this.namespace + ".doWeek";
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
+	
+	public List<Chart> getMonthPie(Chart vo) throws SQLException{
+		String statement = this.namespace + ".doMonthPie";
 		log.debug("*******************************");
 		return sqlSessionTemplate.selectList(statement, vo);
 	}
 	
-	public List<Chart> getCtgChart(Chart vo) throws SQLException{
-		String statement = this.namespace + ".doCtgBarChart";
+	public List<Chart> getMonthBar(Chart vo) throws SQLException{
+		String statement = this.namespace + ".doMonthBar";
 		log.debug("*******************************");
 		return sqlSessionTemplate.selectList(statement, vo);
 	}

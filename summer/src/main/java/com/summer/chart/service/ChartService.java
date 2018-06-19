@@ -26,11 +26,19 @@ public class ChartService {
 	 * @throws SQLException 
 	 */
 	
-	public List<Chart> getCtgList(Chart vo) throws SQLException {
-		return chartDao.getCtgList(vo);
+	public List<Chart> getDay(Chart vo) throws SQLException {
+		return chartDao.getDay(vo);
 	}
 	
-	public List<Chart> getCtgChart(Chart vo) throws SQLException{
-		return chartDao.getCtgChart(vo);
+	public List<Chart> getWeek(Chart vo) throws SQLException {
+		return chartDao.getWeek(vo);
+	}
+	
+	public List<Chart> getMonthPie(Chart vo) throws SQLException{
+		return chartDao.getMonthPie(vo);
+	}
+	
+	public List<Chart> getMonthBar(Chart vo) throws SQLException{
+		return chartDao.getMonthBar(vo);
 	}
 }

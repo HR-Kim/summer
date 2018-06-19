@@ -1,3 +1,4 @@
+<!-- 주 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 -->
 <%@page import="com.summer.chart.dao.ChartDao"%>
 <%@page import="com.summer.chart.domain.Chart"%>
 <%@page import="org.slf4j.Logger"%>
@@ -22,7 +23,7 @@
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
     	<!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    	<title>:::(주/월)차트 테스트:::</title>
+    	<title>:::(주)차트 테스트:::</title>
 
     	<!-- 부트스트랩 -->
     	<link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -34,132 +35,93 @@
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
 	</head>
+	
 	<body>
-		<h3>**Chart 테스트**</h3>
+		<h3>**주 별 화면**</h3>
 
 		<table class="table">
 			<tr>
 				<td class="text-left">
 					<!-- Button -->
 					<div class ="form-inline pull-left">
-						<button class="btn btn-sm" onclick="javascript:doWeekMonthChart();">차트주/월간</button>
+						<button class="btn btn-sm" onclick="javascript:doWeek();">차트주간</button>
 					</div>
 					<!-- //Button -->
 				</td>
 			</tr>
 		</table>
-	
 		
-		<div id="weekMonthPieChart" style="width: 900px; height: 500px;"></div>
-	
-		<div id="monthBarChart" style="width: 800px; height: 600px;"></div>
+		<div id="weekPieChart" style="width: 900px; height: 500px;"></div>
 	
 		<!-- List -->
 		<div class="table-responsive">
 			<form name="frmEdit" id="frmEdit" method="get">
 				<input type="hidden"  name="chartUserId"  id="chartUserId" />
 			
-				<table style="display:none" id="listTable" class="table table-striped table-bordered table-hover">
-					<thead class="bg-primary">
-						<th class="text-center">월</th>
-						<th class="text-center">총액</th>
-					</thead>
-					
-					<tbody>
-						<c:choose>
-							<c:when test="${list.size()>0}">
-							
-							<c:forEach var="Chart" items="${list}">
+				<table id="listTable" class="table table-striped table-bordered table-hover">
+				<thead class="bg-primary">
+					<th class="text-center">분류</th>
+					<th class="text-center">총액</th>
+					<th class="text-center">퍼센트</th>
+				</thead>
+			
+				<tbody>
+					<c:choose>
+						<c:when test="${weekList.size()>0}">
+							<c:forEach var="Chart" items="${weekList}">
 								<tr>
-									<td class="text-center">${Chart.month}</td>
-									<td class="text-right">${Chart.monthTotal}</td>
+									<td class="text-left">${Chart.cdDtlNm}</td>
+									<td class="text-center">${Chart.ctgTotal}</td>
+									<td class="text-right">${Chart.percent}%</td>
 								</tr>
 							</c:forEach>
 						</c:when>
 					</c:choose>
 				</tbody>
-			</table>
-		</form>
-	</div>
-	<!-- //List -->
+				</table>
+			</form>
+		</div>
+		<!-- //List -->
 
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
-	
-	google.charts.load('current', {'packages':['corechart']});
+	google.charts.load("current", {packages:["corechart"]});
 	google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['Month', 'Total per Month'],
-          	['${list.get(0).month}', ${list.get(0).monthTotal}],
-          	['${list.get(1).month}', ${list.get(1).monthTotal}],
-          	['${list.get(2).month}', ${list.get(2).monthTotal}],
-          	['${list.get(3).month}', ${list.get(3).monthTotal}],
-          	['${list.get(4).month}', ${list.get(4).monthTotal}],
-			['${list.get(5).month}', ${list.get(5).monthTotal}],
-			['${list.get(6).month}', ${list.get(6).monthTotal}],
-			['${list.get(7).month}', ${list.get(7).monthTotal}],
-			['${list.get(8).month}', ${list.get(8).monthTotal}],
-			['${list.get(9).month}', ${list.get(9).monthTotal}],
-			['${list.get(10).month}', ${list.get(10).monthTotal}],
-			['${list.get(11).month}', ${list.get(11).monthTotal}]
+        var data = google.visualization.arrayToDataTable([
+			['Category_Nm', 'Total per category'],
+          	['${weekList.get(0).cdDtlNm}', ${weekList.get(0).ctgTotal}],
+          	['${weekList.get(1).cdDtlNm}', ${weekList.get(1).ctgTotal}],
+          	['${weekList.get(2).cdDtlNm}', ${weekList.get(2).ctgTotal}],
+          	['${weekList.get(3).cdDtlNm}', ${weekList.get(3).ctgTotal}],
+          	['${weekList.get(4).cdDtlNm}', ${weekList.get(4).ctgTotal}],
+			['${weekList.get(5).cdDtlNm}', ${weekList.get(5).ctgTotal}],
+			['${weekList.get(6).cdDtlNm}', ${weekList.get(6).ctgTotal}],
+			['${weekList.get(7).cdDtlNm}', ${weekList.get(7).ctgTotal}],
+			['${weekList.get(8).cdDtlNm}', ${weekList.get(8).ctgTotal}],
+			['${weekList.get(9).cdDtlNm}', ${weekList.get(9).ctgTotal}],
+			['${weekList.get(10).cdDtlNm}', ${weekList.get(10).ctgTotal}],
+			['${weekList.get(11).cdDtlNm}', ${weekList.get(11).ctgTotal}],
+			['${weekList.get(12).cdDtlNm}', ${weekList.get(12).ctgTotal}],
+			['${weekList.get(13).cdDtlNm}', ${weekList.get(13).ctgTotal}],
+			['${weekList.get(14).cdDtlNm}', ${weekList.get(14).ctgTotal}]
 		]);
-
+        
 		var options = {
-			title: '나의 지출 패턴'
-		};
+			title: '나의 주간 지출 패턴',
+			is3D: true,
+        };
 
-		var chart = new google.visualization.PieChart(document.getElementById('weekMonthPieChart'));
-
+		var chart = new google.visualization.PieChart(document.getElementById('weekPieChart'));
 		chart.draw(data, options);
-	};
-	
-	
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawStuff);
-
-	function drawStuff() {
-		var data = new google.visualization.arrayToDataTable([
-			['Month', 'Total per Month'],
-          	['${list.get(0).month}', ${list.get(0).monthTotal}],
-          	['${list.get(1).month}', ${list.get(1).monthTotal}],
-          	['${list.get(2).month}', ${list.get(2).monthTotal}],
-          	['${list.get(3).month}', ${list.get(3).monthTotal}],
-          	['${list.get(4).month}', ${list.get(4).monthTotal}],
-			['${list.get(5).month}', ${list.get(5).monthTotal}],
-			['${list.get(6).month}', ${list.get(6).monthTotal}],
-			['${list.get(7).month}', ${list.get(7).monthTotal}],
-			['${list.get(8).month}', ${list.get(8).monthTotal}],
-			['${list.get(9).month}', ${list.get(9).monthTotal}],
-			['${list.get(10).month}', ${list.get(10).monthTotal}],
-			['${list.get(11).month}', ${list.get(11).monthTotal}]
-      ]);
-
-      var options = {
-        width: 800,
-        legend: { position: 'none' },
-        chart: {
-          title: '',
-          subtitle: '' },
-        axes: {
-          x: {
-            0: { side: 'top'} // Top x-axis.
-          }
-        },
-        bar: { groupWidth: "90%" }
-      };
-
-      var chart = new google.charts.Bar(document.getElementById('monthBarChart'));
-      // Convert the Classic options to Material options.
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-    };
+	}
     
-	function doWeekMonthChart(){
+	function doWeek(){
 		var frmEdit = document.frmEdit;
-		frmEdit.action = "doCtgChart.do";
+		frmEdit.action = "doWeek.do";
 		frmEdit.submit();
 	}
-  </script>
+	</script>
 </body>
 </html>
