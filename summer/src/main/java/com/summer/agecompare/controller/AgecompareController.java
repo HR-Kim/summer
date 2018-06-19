@@ -64,32 +64,17 @@ public class AgecompareController {
 	
 	@RequestMapping(value="/agecompare/do_selectAgeList1.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String get(SearchVO vo, Model model) throws SQLException {
+	public String get(SearchVO vo) throws SQLException {
 		
 		
-		log.debug("1=do_searchOne.do===============");
+		log.debug("1=do_selectAgeList1.do===============");
 		
-		/*if(null == user.gethId()) {
-			user.sethId("Un knwon Id");
-		}
-		
-		User outVO = userService.get(user);
-		log.debug("=3=do_searchOne.do=outVO="+outVO.toString());
-		log.debug("============================");*/
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
 		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"20"));
-		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180424"));
-		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "20180610"));
+		vo.setPageNum(vo.getPageNum()+"20");
+		vo.setPageSize(vo.getPageSize()+"20");
+		
 		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
-		/*String dataList = "";
-		dataList +="['asd','as','bsd'],";
-		for(int i=0; i<list.size(); i++) {
-			dataList += "['"+list.get(i).getaDate()+"',"+list.get(i).getTradeTotal()+","
-							+list.get(i).getTotal()+"]";
-			if(i != list.size()-1){
-				dataList += ",";
-			}			
-		}*/
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(list.get(0));

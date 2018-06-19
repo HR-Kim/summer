@@ -50,24 +50,36 @@
 	<link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<input type="button" id="btn" onclick="doSearch();" value="조회" />
 	
-	<form class="form-inline" name="frm" id="frm" method="get">
-		<input type="hidden"  name="searchDiv" id="searchDiv" />
+	<input type="hidden"  name="searchDiv" id="searchDiv" />
 
-		연령대 입력: <input type="text" class="form-control input-sm" name="searchWord" 
-		id="searchWord" value="${searchVO.searchWord}"/>
-											
-	</form>
+	연령대 선택 <br>
+	<input type="checkbox" id="chk_age1" name="chk_age" value="10대">10대
+	<input type="checkbox" id="chk_age2" name="chk_age" value="20대">20대
+	<input type="checkbox" id="chk_age3" name="chk_age" value="30대">30대
+	<input type="checkbox" id="chk_age4" name="chk_age" value="40대">40대
+	<input type="checkbox" id="chk_age5" name="chk_age" value="50대">50대
+	<input type="checkbox" id="chk_age6" name="chk_age" value="60대">60대
+	<input type="checkbox" id="chk_age7" name="chk_age" value="70대">70대
+	<input type="checkbox" id="chk_age8" name="chk_age" value="80대">80대
+	<input type="checkbox" id="chk_age9" name="chk_age" value="90대">90대
+	<input type="button" id="btnUnchk" value="전체 체크 해제" /><br/>
 	
-	시작날짜: <input type="text" id="startmonth" />
-	끝날짜: <input type="text" id="endmonth" /><br/>
+	기간: <input type="text" id="startmonth" value="" />
+	~ <input type="text" id="endmonth"  value="${pageSize}"/>
+	<!-- id=testDatepicker -->
+	<input type="button" id="btnSearch" onclick="doSearch();" value="조회" /><br><br>
+	
+	<input type="text" class="form-control input-sm" name="searchWord" 
+		id="searchWord" value="30"/>
+			
+	
 	
 	<input type="text" id="allLine" value="<%=allLine%>"/>
 	<input type="text" id="allLine" value="<%=allLinea%>"/>
 		
-	<button class="btn btn-success btn-sm" id="btn20">20대</button> 
-	<button class="btn btn-success btn-sm" id="btn30">30대</button> 
+	<!-- <button class="btn btn-success btn-sm" id="btn20">20대</button> 
+	<button class="btn btn-success btn-sm" id="btn30">30대</button>  -->
 		
 	<div id="curve_chart" style="width: 900px; height: 500px"></div>
 		
@@ -110,67 +122,191 @@
 	<script type="text/javascript">
     	  
 	//조회
-	function doSearch(){
+	/*function doSearch(){
 		var frm = document.frm;
 		frm.action = "do_selectAgeList.do";
 		frm.submit();
-	}
+	}*/
 		
 	 $(document).ready(function(){
-		 $("#btn20").on("click",function(){
-	    		alert("20");
-	    		
+		 $.datepicker.regional['ko'] = {
+			        closeText: '닫기',
+			        prevText: '이전달',
+			        nextText: '다음달',
+			        currentText: '오늘',
+			        monthNames: ['01','02','03','04','05','06','07','08','09','10','11','12'],
+			        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+			        '7월','8월','9월','10월','11월','12월'],
+			        dayNames: ['일','월','화','수','목','금','토'],
+			        dayNamesShort: ['일','월','화','수','목','금','토'],
+			        dayNamesMin: ['일','월','화','수','목','금','토'],
+			        weekHeader: 'Wk',
+			        dateFormat: 'yy-mm-dd',
+			        firstDay: 0,
+			        isRTL: false,
+			        showMonthAfterYear: true,
+			        yearSuffix: '',
+			        showOn: 'both',
+			        buttonText: "달력",
+			        changeMonth: true,
+			        changeYear: true,
+			        showButtonPanel: true,
+			        yearRange: 'c-99:c+99'
+			    };
+			    $.datepicker.setDefaults($.datepicker.regional['ko']);
+			 
+			    var datepicker_default = {
+			        showOn: 'both',
+			        buttonText: "달력",
+			        currentText: "이번달",
+			        changeMonth: true,
+			        changeYear: true,
+			        showButtonPanel: true,
+			        yearRange: 'c-99:c+99',
+			        showOtherMonths: true,
+			        selectOtherMonths: true
+			    }
+			 
+			    datepicker_default.closeText = "선택";
+			    datepicker_default.dateFormat = "yy-mm";
+			    datepicker_default.onClose = function (dateText, inst) {
+			        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+			        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+			        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+			        $(this).datepicker('setDate', new Date(year, month, 1));
+			    }
+			 
+			    datepicker_default.beforeShow = function () {
+			        var selectDate = $("#sdate").val().split("-");
+			        var year = Number(selectDate[0]);
+			        var month = Number(selectDate[1]) - 1;
+			        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+			    }
+			 
+			    $("#sdate").datepicker(datepicker_default);
+
+		 //시작 날짜
+		    $("#startmonth").focus(function () {
+		        $(".ui-datepicker-calendar").hide();
+		        $("#ui-datepicker-div").position({
+		            my: "center top",
+		            at: "center bottom",
+		            of: $(this)
+		        });
+		    });
+		    $("#startmonth").datepicker({
+		        dateFormat: 'MM yy',
+		        changeMonth: true,
+		        changeYear: true,
+		        showButtonPanel: true,
+
+		        onClose: function(dateText, inst) {
+		            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+		            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+		            $(this).val($.datepicker.formatDate('yy/MM', new Date(year, month, 1)));
+		        }
+		    });
+		 //끝 날짜
+		 $("#endmonth").focus(function () {
+		        $(".ui-datepicker-calendar").hide();
+		        $("#ui-datepicker-div").position({
+		            my: "center top",
+		            at: "center bottom",
+		            of: $(this)
+		        });
+		    });
+		 $( "#endmonth" ).datepicker({
+			 dateFormat: 'MM yy',
+		        changeMonth: true,
+		        changeYear: true,
+		        showButtonPanel: true,
+
+		        onClose: function(dateText, inst) {
+		            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+		            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+		            $(this).val($.datepicker.formatDate('yy/MM', new Date(year, month, 1)));
+		        }
 		 });
-		 $("#btn30").on("click",function(){
-			 alert("30");
-			 //if(false == confirm("조회 하시겠습니까?")) return;
-			 $.ajax({
-				type:"GET",
-				url:"do_selectAgeList1.do",
-				dataType:"html",
-				async:false,
-				data:{
-					"searchWord":$("searchWord").val(),
-					"searchDiv":$("searchDiv").val()
-				},
-				error:function(){
-					alert("30e");
-				},
-				complete:function(data){
-					alert("30c");
-				},
-				success:function(data){
-					alert("suc: "+data);
-					
-					var parseData = $.parseJSON(data);
-					
-				}
-			 });
+		 
+		 //전체 체크 해제
+		 $("#btnUnchk").on("click",function(){
+			 for(var i=1; i<=9; i++){
+			 	$("#chk_age"+i).prop('checked', false);
+			 } 
+		});
+		 
+		 //체크해서 조회
+		 $("#btnSearch").on("click",function(){			 
+			 var count=0;
+			 for(var i=1; i<=9; i++){
+				 if($("#chk_age"+i).is(":checked")==true){
+					 count++;
+				 }
+			 }
+			 if(count==0){
+				 alert("연령대를 체크해주세요.");
+			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null){
+				 alert("기간을 입력해주세요.");
+			 }else{
+				 alert("count: "+count);
+
+				 
+				 for(var j=1; j<=9; j++){
+					 $('#chk_age'+j+':checked').each(function() { 
+					        alert($(this).val());
+					 });
+				 }
+				 $.ajax({
+						type:"GET",
+						url:"do_selectAgeList1.do",
+						dataType:"html",
+						async:false,
+						data:{
+							"searchWord":$("#searchWord").val(),
+							"searchDiv":$("#searchDiv").val(),
+							"pageNum":$("#startmonth").val(),
+							"pageSize":$("#endmonth").val()
+						},
+						error:function(){
+							alert("do_selectAgeList1.do error error");
+						},
+						complete:function(data){
+							//alert($("#startmonth").val());
+						},
+						success:function(data){
+							alert("success: "+data);
+							
+							var parseData = $.parseJSON(data);
+							
+						}
+					 });
+			 }
 		 });
 	 });
 	 
+	
+	 // 구글 차트
 	 google.charts.load('current', {'packages':['line']});
      google.charts.setOnLoadCallback(drawChart);
 
-   function drawChart() {
-
-     var data = new google.visualization.arrayToDataTable([
-    	 <%=allLinea%>
-     ]);
-
-     var options = {
-       chart: {
-         title: '연령대별 차트',
-         subtitle: 'in millions of dollars (USD)'
-       },
-       width: 900,
-       height: 500
-     };
-
-     var chart = new google.charts.Line(document.getElementById('curve_chart'));
-
-     chart.draw(data, google.charts.Line.convertOptions(options));
-     }
+	function drawChart() {
+	   var data = new google.visualization.arrayToDataTable([
+	  	 <%=allLinea%>
+	   ]);
+	
+	   var options = {
+	     chart: {
+	       title: '연령대별 차트',
+	       subtitle: 'in millions of dollars (USD)'
+	     },
+	     width: 900,
+	     height: 500
+	   };
+	
+	   var chart = new google.charts.Line(document.getElementById('curve_chart'));
+	
+	   chart.draw(data, google.charts.Line.convertOptions(options));
+	  }
     
     </script>
 </body>
