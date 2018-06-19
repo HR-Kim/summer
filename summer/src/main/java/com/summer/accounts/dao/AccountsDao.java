@@ -44,6 +44,21 @@ static Logger log = Logger.getLogger(AccountsDao.class);
 	}
 	
 	/**
+	 *  주간리스트 조회
+	 * @param vo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Accounts> getSelectListWeek(SearchVO vo) throws SQLException{
+		
+		String statement = this.namespace+".do_selectListWeek";
+		
+		log.debug("param:"+vo.toString());
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
+	
+	
+	/**
 	 * 월간 리스트 조회
 	 * @param vo
 	 * @return
