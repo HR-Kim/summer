@@ -19,7 +19,7 @@
 		각각의 퍼센트, 평균은 java에서
 	-->
 	<select id="do_selectAgeList" parameterType="SearchVO" resultType="Agecompare">
-			    SELECT DISTINCT SUM(DISTINCT T2.total) OVER(partition by to_char(T2.a_date, 'YY/MM')) AS total
+			    SELECT DISTINCT SUM(DISTINCT T2.total) OVER(partition by to_char(T2.a_date, 'YY/MM'),T2.age) AS total
 			        ,to_char(T2.a_date, 'YY/MM') as a_date
 			        ,T2.total as tradetotal
 			        ,T2.trade_id

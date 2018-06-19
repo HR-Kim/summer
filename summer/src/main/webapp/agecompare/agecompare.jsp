@@ -100,12 +100,10 @@
       </c:choose>
 	</table>
 	
-	
-	
 	<link rel='stylesheet' type='text/css' href='/jquery-ui.css'/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script> 
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
@@ -121,9 +119,33 @@
 	 $(document).ready(function(){
 		 $("#btn20").on("click",function(){
 	    		alert("20");
+	    		
 		 });
 		 $("#btn30").on("click",function(){
 			 alert("30");
+			 //if(false == confirm("조회 하시겠습니까?")) return;
+			 $.ajax({
+				type:"GET",
+				url:"do_selectAgeList1.do",
+				dataType:"html",
+				async:false,
+				data:{
+					"searchWord":$("searchWord").val(),
+					"searchDiv":$("searchDiv").val()
+				},
+				error:function(){
+					alert("30e");
+				},
+				complete:function(data){
+					alert("30c");
+				},
+				success:function(data){
+					alert("suc: "+data);
+					
+					var parseData = $.parseJSON(data);
+					
+				}
+			 });
 		 });
 	 });
 	 
