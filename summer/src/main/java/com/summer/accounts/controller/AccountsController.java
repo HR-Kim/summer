@@ -75,24 +75,35 @@ public class AccountsController {
 		
 	}
 	
-	@RequestMapping(value="/accounts/doSelectListWeek.do",method=RequestMethod.GET)
+	@RequestMapping(value="/accounts/doSelectListWeek.do",method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
 	public String getSelectListWeek(SearchVO vo, Model model) throws SQLException{
 		log.debug("1===doSelectList.do=======================");
 		
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
-		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
-		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
 		
 		log.debug("2===SearchVO=="+vo.toString());
 	
 		List<Accounts> list = accountsService.getSelectListWeek(vo);
 		log.debug("3===list=="+list.toString());
 		
-		model.addAttribute("list",list);
-		model.addAttribute("searchVO",vo);
+		Gson gson = new Gson();
+		JsonArray carray = new JsonArray();
 		
-		return "accounts/weekAccounts";
+		for(int i=0;i<list.size();i++){
+			JsonArray sarray = new JsonArray();
+			sarray.add(list.get(i).getaDate());
+			sarray.add(list.get(i).getSumExp());
+			sarray.add(list.get(i).getSumInc());
+			sarray.add(list.get(i).getSumTotal());
+			
+			carray.add(sarray);
+		}
+		
+		String jsonStr = gson.toJson(carray);
+		log.debug("=carray="+carray.toString());
+		
+		return jsonStr;
 	}
 	
 	@RequestMapping(value="/accounts/doSelectListMonth.do",method=RequestMethod.GET)

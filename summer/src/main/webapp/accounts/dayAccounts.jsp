@@ -295,9 +295,7 @@
 		//리스트 조회
 		function doSelectList(){
 			var frm = document.frm;
-			
 			frm.action = "doSelectList.do";
-			
 			frm.submit();
 		}
 		

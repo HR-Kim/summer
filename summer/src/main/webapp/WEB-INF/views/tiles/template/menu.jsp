@@ -118,7 +118,7 @@
 		//주간리스트 조회
 		function doSelectListWeek(){
 			var frm = document.frm;
-			frm.searchDiv.value="2018/06/11";
+			//frm.searchDiv.value="2018/06";
 			frm.action = "accounts/doSelectListWeek.do";
 			frm.submit();
 		}

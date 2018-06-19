@@ -19,7 +19,7 @@
 	</sql>
 	
 	<select id="do_selectListWeek" parameterType="SearchVO" resultType="Accounts">
-		select T1.*,(NVL(T1.sumInc,0) - NVL(T1.sumExp,0)) as sumTotal
+		select T1.*, T1.sumExp, T1.sumInc, (NVL(T1.sumInc,0) - NVL(T1.sumExp,0)) as sumTotal
 		from(
 		    select TRUNC(a_date,'iw') as a_date
 		        ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
@@ -28,7 +28,8 @@
 		    where id='a'
 		    group by TRUNC(a_date,'iw')
 		    order by TRUNC(a_date,'iw')) T1
-		where a_date = #{searchDiv}
+		where to_char(a_date,'yyyy/mm') = #{searchDiv} or to_char(a_date,'yyyy') = #{searchDiv}
+<!-- 			where to_char(a_date,'yyyy') = #{searchDiv} -->
 	
 	</select>
 	
