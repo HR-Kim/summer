@@ -84,9 +84,6 @@
 				<div class="form-group col-lg5 col-sm6">
 					<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}">
 					<button class="btn btn-sm" id="goodlist" onclick="javascript:doSearch();">검색</button>
-					<button class="btn btn-sm" id="goodlist">지도검색</button>
-					
-					
 				</div>
 				</td>
 			</tr>
@@ -130,9 +127,10 @@
 	
 	var length = ${entpList.size()};
 	var list = new Array();
-	 var arr = {};
+
 
 	<c:forEach var="location" items="${entpList}" varStatus="status">
+	 	var arr = {};
 		arr["entpName"]="${location.entpName}";
 		arr["x"]=${location.XMapCoord};
 		arr["y"]=${location.YMapCoord};
@@ -143,50 +141,38 @@
 	$(document).ready(function(){
 		//alert(length);
 		var data = list[0];
-		console.log(data.x);
-		console.log(data.y);
+		console.log(list[0].x);
+		console.log(list[1].x);
 		console.log(data.entpName);
 		//addMarker();
 		//alert(${entpList.get(1).getXMapCoord()});
 	});
-	
-	
-	
-	
-	
-	function initialize(){
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 17,
-			center: new google.maps.LatLng(-33.92, 151.25),
-		});
-		
-		var infowindow = new google.maps.InfoWindow();
-		
-		var marker, i;
-		
-		for(i=0;i<locations.length;i++){
-			marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-				map: map
-			});
-			
-			google.maps.event.addListerner(marker, 'click', (function(marker, i){
-				return function(){
-					infowindow.setContent(locations[i][0]);
-					infowindow.open(map, marker);
-				}
-			})(marker, i));
-		}
-	}
+
 	
 	function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 17
         });
-        
         var infoWindow = new google.maps.InfoWindow({map: map});
+        
+        var locs = new Array();
+        
+        for(var i=0;i<length;i++){
+        	locs[i] = new google.maps.LatLng(list[i].x,list[i].y);  
+	        
+        }
 
+          // Create markers.
+        locs.forEach(function(loc) {
+            var marker = new google.maps.Marker({
+              position: loc,
+              map: map
+            });
+          });
+        
+        
+        
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {

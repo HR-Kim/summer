@@ -1,4 +1,4 @@
-package com.summer.accounts.service;
+package com.summer.good.service;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,7 +10,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.summer.comm.SearchVO;
 import com.summer.good.dao.GoodDao;
 import com.summer.good.domain.Good;
-import com.summer.good.service.GoodService;
 
 @Service
 public class GoodServiceImple implements GoodService {
