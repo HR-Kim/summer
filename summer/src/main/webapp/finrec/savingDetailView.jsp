@@ -7,6 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>적금상세</h2>
+
+ <div class="col-md-7 grid-margin stretch-card" style="margin-right:none;">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title">적금 상세</h2>
+                  <div class="table-responsive" id = "searchResult"></div>
+                    적금상세정보내용
+                    </div>
+                    </div>
+                    </div>
+	
 </body>
 </html>

@@ -4,8 +4,8 @@ import com.summer.comm.DTO;
 
 public class FinSavingSearchVO extends DTO {
 
-	private String pageSize;		//페이지 사이즈
-	private String pageNum;		//현재 페이지
+	private int pageSize = 5;		//페이지 사이즈
+	private int pageNum = 1;		//현재 페이지
 	
 	//saving
 	private String intr_rate_type;
@@ -15,8 +15,10 @@ public class FinSavingSearchVO extends DTO {
 	
 	public FinSavingSearchVO() {}
 
-	public FinSavingSearchVO(String pageSize, String pageNum, String intr_rate_type, String rsrv_type,
-			int intr_rate_min, int intr_rate_max) {
+
+
+	public FinSavingSearchVO(int pageSize, int pageNum, String intr_rate_type, String rsrv_type, int intr_rate_min,
+			int intr_rate_max) {
 		super();
 		this.pageSize = pageSize;
 		this.pageNum = pageNum;
@@ -26,6 +28,8 @@ public class FinSavingSearchVO extends DTO {
 		this.intr_rate_max = intr_rate_max;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "FinSavingSearchVO [pageSize=" + pageSize + ", pageNum=" + pageNum + ", intr_rate_type=" + intr_rate_type
@@ -33,21 +37,31 @@ public class FinSavingSearchVO extends DTO {
 				+ "]";
 	}
 
-	public String getPageSize() {
+	
+
+	public int getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(String pageSize) {
+
+
+	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
 
-	public String getPageNum() {
+
+
+	public int getPageNum() {
 		return pageNum;
 	}
 
-	public void setPageNum(String pageNum) {
+
+
+	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 	}
+
+
 
 	public String getIntr_rate_type() {
 		return intr_rate_type;

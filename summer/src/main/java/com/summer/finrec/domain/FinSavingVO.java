@@ -2,32 +2,68 @@ package com.summer.finrec.domain;
 
 public class FinSavingVO {
 	
+	//baseList
 	private String finCoNo;
 	private String finPrdtCd;
-	
+
 	private String korCoNm;
 	private String finPrdtNm;
-	private int intrRateMin;
-	private int intrRateMax;
-	private String intrRateType;
-	private String rsrvType;
-	
+
 	private String joinWay;
 	private String mtrtInt;
 	private String spclCnd;
 	private String etcNote;
 	private int maxLimit;
+
+
+	//optionList
+	private float intrRateMin;
+	private float intrRateMax;
+	private String intrRateType;
+	private String rsrvType;
 	
-	
+	private String intrRateTypeNm;
+	private String rsrvTypeNm;
 	
 
+
+	
 
 	@Override
 	public String toString() {
 		return "FinSavingVO [finCoNo=" + finCoNo + ", finPrdtCd=" + finPrdtCd + ", korCoNm=" + korCoNm + ", finPrdtNm="
-				+ finPrdtNm + ", intrRateMin=" + intrRateMin + ", intrRateMax=" + intrRateMax + ", intrRateType="
-				+ intrRateType + ", rsrvType=" + rsrvType + ", joinWay=" + joinWay + ", mtrtInt=" + mtrtInt
-				+ ", spclCnd=" + spclCnd + ", etcNote=" + etcNote + ", maxLimit=" + maxLimit + "]";
+				+ finPrdtNm + ", joinWay=" + joinWay + ", mtrtInt=" + mtrtInt + ", spclCnd=" + spclCnd + ", etcNote="
+				+ etcNote + ", maxLimit=" + maxLimit + ", intrRateMin=" + intrRateMin + ", intrRateMax=" + intrRateMax
+				+ ", intrRateType=" + intrRateType + ", rsrvType=" + rsrvType + ", intrRateTypeNm=" + intrRateTypeNm
+				+ ", rsrvTypeNm=" + rsrvTypeNm + "]";
+	}
+
+
+
+
+	public String getIntrRateTypeNm() {
+		return intrRateTypeNm;
+	}
+
+
+
+
+	public void setIntrRateTypeNm(String intrRateTypeNm) {
+		this.intrRateTypeNm = intrRateTypeNm;
+	}
+
+
+
+
+	public String getRsrvTypeNm() {
+		return rsrvTypeNm;
+	}
+
+
+
+
+	public void setRsrvTypeNm(String rsrvTypeNm) {
+		this.rsrvTypeNm = rsrvTypeNm;
 	}
 
 
@@ -89,28 +125,28 @@ public class FinSavingVO {
 
 
 
-	public int getIntrRateMin() {
+	public float getIntrRateMin() {
 		return intrRateMin;
 	}
 
 
 
 
-	public void setIntrRateMin(int intrRateMin) {
+	public void setIntrRateMin(float intrRateMin) {
 		this.intrRateMin = intrRateMin;
 	}
 
 
 
 
-	public int getIntrRateMax() {
+	public float getIntrRateMax() {
 		return intrRateMax;
 	}
 
 
 
 
-	public void setIntrRateMax(int intrRateMax) {
+	public void setIntrRateMax(float intrRateMax) {
 		this.intrRateMax = intrRateMax;
 	}
 
