@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.summer.accounts.domain.Accounts;
-import com.summer.accounts.service.AccountsService;
+import com.summer.accounts.service.AccountsServiceImple;
 import com.summer.codes.domain.CodeVO;
 import com.summer.codes.service.CodeService;
 import com.summer.comm.MessageVO;
@@ -28,7 +28,7 @@ public class AccountsController {
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private AccountsService accountsService;
+	private AccountsServiceImple accountsService;
 	
 	@Autowired
 	private CodeService codeService;
@@ -73,6 +73,26 @@ public class AccountsController {
 		
 		return jsonStr;
 		
+	}
+	
+	@RequestMapping(value="/accounts/doSelectListWeek.do",method=RequestMethod.GET)
+	public String getSelectListWeek(SearchVO vo, Model model) throws SQLException{
+		log.debug("1===doSelectList.do=======================");
+		
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
+		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
+		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
+		
+		log.debug("2===SearchVO=="+vo.toString());
+	
+		List<Accounts> list = accountsService.getSelectListWeek(vo);
+		log.debug("3===list=="+list.toString());
+		
+		model.addAttribute("list",list);
+		model.addAttribute("searchVO",vo);
+		
+		return "accounts/weekAccounts";
 	}
 	
 	@RequestMapping(value="/accounts/doSelectListMonth.do",method=RequestMethod.GET)

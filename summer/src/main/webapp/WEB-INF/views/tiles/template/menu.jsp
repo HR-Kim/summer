@@ -16,7 +16,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/widgets.html">
+              <a class="nav-link" href="#" onclick="javascript:doSelectListWeek();">
                 <span class="menu-title">주간</span>
                 <i class="icon-wrench menu-icon"></i>
               </a>
@@ -103,7 +103,6 @@
 		//일간리스트 조회
 		function doSelectList(){
 			var frm = document.frm;
-			
 			frm.action = "accounts/doSelectList.do";
 			frm.submit();
 		}
@@ -111,11 +110,16 @@
 		//월간리스트 조회
 		function doSelectListMonth(){
 			var frm = document.frm;
-			
 			frm.searchDiv.value = "2018";
-			
 			frm.action = "accounts/doSelectListMonth.do";
-			
+			frm.submit();
+		}
+		
+		//주간리스트 조회
+		function doSelectListWeek(){
+			var frm = document.frm;
+			frm.searchDiv.value="2018/06/11";
+			frm.action = "accounts/doSelectListWeek.do";
 			frm.submit();
 		}
 	

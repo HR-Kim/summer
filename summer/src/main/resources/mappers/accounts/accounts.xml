@@ -18,6 +18,19 @@
 			</choose>
 	</sql>
 	
+	<select id="do_selectListWeek" parameterType="SearchVO" resultType="Accounts">
+		select T1.*,(NVL(T1.sumInc,0) - NVL(T1.sumExp,0)) as sumTotal
+		from(
+		    select TRUNC(a_date,'iw') as a_date
+		        ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
+		        , sum(case when trade_id='10' then amount else 0 end) AS sumInc
+		    from su_accounts
+		    where id='a'
+		    group by TRUNC(a_date,'iw')
+		    order by TRUNC(a_date,'iw')) T1
+		where a_date = #{searchDiv}
+	
+	</select>
 	
 	<select id="do_selectListMonth" parameterType="SearchVO" resultType="Accounts">
 		select substr(yearMonth,6,2) as a_date ,sumExp,sumInc,(NVL(sumInc,0) - NVL(sumExp,0)) as sumTotal
