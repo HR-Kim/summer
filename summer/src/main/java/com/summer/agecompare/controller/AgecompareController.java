@@ -31,38 +31,8 @@ public class AgecompareController {
 	
 	@Autowired
 	private AgecompareService agecompareService;
-		
-	@RequestMapping(value="/agecompare/do_selectAgeList.do", method=RequestMethod.GET)
-	public String getSelectAgeList(SearchVO vo, Model model) throws SQLException {
-		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),"20"));
-		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "20180424"));
-		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "20180610"));
-				
-		List<Agecompare> list = agecompareService.getSelectAgeList(vo);
-		
-		int totalCnt = 0;
-		String listsize = list.size()+"";
-			
-		String dataList = "";
-		dataList +="['asd','as','bsd'],";
-		for(int i=0; i<list.size(); i++) {
-			dataList += "['"+list.get(i).getaDate()+"',"+list.get(i).getTradeTotal()+","
-							+list.get(i).getTotal()+"]";
-			if(i != list.size()-1){
-				dataList += ",";
-			}			
-		}
-
-		model.addAttribute("searchVO", vo);
-		model.addAttribute("listsize",listsize);
-		model.addAttribute("list",list);
-		model.addAttribute("dataList",dataList);
-		
-		return "agecompare/agecompare";
-	}
 	
-	@RequestMapping(value="/agecompare/do_selectAgeList1.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/agecompare/do_selectAgeList.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String get(SearchVO vo) throws SQLException {
 		

@@ -66,33 +66,28 @@
 	<input type="button" id="btnUnchk" value="전체 체크 해제" /><br/>
 	
 	기간: <input type="text" id="startmonth" value="" />
-	~ <input type="text" id="endmonth"  value="${pageSize}"/>
+	~ <input type="text" id="endmonth"  value=""/>
 	<!-- id=testDatepicker -->
-	<input type="button" id="btnSearch" onclick="doSearch();" value="조회" /><br><br>
+	<input type="button" id="btnSearch" value="조회" /><br><br>
+		
 	
-	<input type="text" class="form-control input-sm" name="searchWord" 
-		id="searchWord" value="30"/>
-			
-	
-	
-	<input type="text" id="allLine" value="<%=allLine%>"/>
+	<!--<input type="text" id="allLine" value="<%=allLine%>"/>
 	<input type="text" id="allLine" value="<%=allLinea%>"/>
 		
-	<!-- <button class="btn btn-success btn-sm" id="btn20">20대</button> 
+	<button class="btn btn-success btn-sm" id="btn20">20대</button> 
 	<button class="btn btn-success btn-sm" id="btn30">30대</button>  -->
 		
 	<div id="curve_chart" style="width: 900px; height: 500px"></div>
 		
 	<table>
-	<tr>
-			<td>total</td>
-			<td>date</td>
-			<td>tradeid</td>
-			<td>age</td>
-			<td>tradetotal</td>
-		</tr>
-	 <c:choose>
-		 
+		<tr>
+				<td>total</td>
+				<td>date</td>
+				<td>tradeid</td>
+				<td>age</td>
+				<td>tradetotal</td>
+			</tr>
+		 <c:choose>	 
          	<c:when test="${listsize>0}">
          		<c:forEach var="ageVO" items="${list}">
    <!-- id,adate,accountid,tradeid,amount,age,tradetotal,idtradetotal,idtotal -->
@@ -256,7 +251,7 @@
 				 
 				 $.ajax({
 						type:"GET",
-						url:"do_selectAgeList1.do",
+						url:"do_selectAgeList.do",
 						dataType:"html",
 						async:false,
 						data:{
@@ -266,7 +261,7 @@
 							"pageSize":$("#endmonth").val()
 						},
 						error:function(){
-							alert("do_selectAgeList1.do error error");
+							alert("do_selectAgeList.do error error");
 						},
 						complete:function(data){
 							//alert($("#startmonth").val());
