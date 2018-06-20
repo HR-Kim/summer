@@ -33,7 +33,7 @@ public class AccountsController {
 	@Autowired
 	private CodeService codeService;
 	
-	//공통코드 조회
+	//공통코드 카테고리 조회
 	@RequestMapping(value="/accounts/doSearchTrade.do",method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getSearchTrade(SearchVO vo,CodeVO codeVo) throws SQLException{
@@ -74,6 +74,49 @@ public class AccountsController {
 		return jsonStr;
 		
 	}
+	
+	//공통코드 조회
+		@RequestMapping(value="/accounts/doSearchTrade2.do",method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+		@ResponseBody
+		public String getSearchTrade2(SearchVO vo,CodeVO codeVo) throws SQLException{
+			log.debug("1===getSearchTrade.do=======================");
+			
+			vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+			vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
+			vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
+			vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
+			vo.	setSearchTrade(StringUtil.nvl(vo.getSearchTrade(),""));
+			
+			log.debug("2===SearchVO=="+vo.toString());
+			
+			List<CodeVO> listCode = new ArrayList<CodeVO>();
+			
+			if(vo.getSearchTrade().equals("10")||vo.getSearchTrade().equals("지출")) {
+				codeVo.setCdMstId("ACC_ACCOUNT_EXPENSES");
+				listCode = codeService.getSelectList(codeVo);
+			}else if(vo.getSearchTrade().equals("20")||vo.getSearchTrade().equals("수입")) {
+				codeVo.setCdMstId("ACC_ACCOUNT_INCOMES");
+				listCode = codeService.getSelectList(codeVo);
+			}
+	
+			Gson gson = new Gson();
+			JsonArray carray = new JsonArray();
+			
+			for(int i=0;i<listCode.size();i++){
+				JsonArray sarray = new JsonArray();
+				sarray.add(listCode.get(i).getCdDtlId());
+				sarray.add(listCode.get(i).getCdDtlNm());
+				
+				carray.add(sarray);
+			}
+			
+			String jsonStr = gson.toJson(carray);
+			log.debug("=carray="+carray.toString());
+			
+			return jsonStr;
+			
+		}
+	
 	
 	@RequestMapping(value="/accounts/doSelectListWeek.do",method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody

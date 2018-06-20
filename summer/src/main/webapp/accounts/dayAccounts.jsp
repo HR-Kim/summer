@@ -116,18 +116,10 @@
 			    		<div class="form-group">
 			    			<label class="col-lg-3 control-label">구분</label>
 				    			<div class="col-lg-7">
-						    		<c:choose>
-						        		<c:when test="${list4.size()>0 }">
-								        		<select name="searchAccount" id="searchAccount" class="form-control input-sm">
-									        		<c:forEach var="code" items="${list4 }">
-									        			<option value="${code.cdDtlId }"
-									        				<c:if test="${searchVO.searchAccount}==${code.cdDtlId }">selected='selected'</c:if>
-									        			>${code.cdDtlNm}</option>
-									        		</c:forEach>
-								        		</select>
-							         	</c:when>
-						         </c:choose>
-				         		</div>		
+					  				<select name="searchAccount" id="searchAccount" class="form-control input-sm">
+                                    <option value=""> -- Select Account -- </option>
+									</select>
+								</div>	
 			    		</div>
 
 			    		<div class="form-group">
@@ -176,7 +168,7 @@
    <!-- //Modal --------------------------------------------------------->
   
    <!-- Search ----------------------------------------------------------->
-   	<form class="form-inline" name="frmSearch" id="frmSearch" method="get">
+   	<form class="form-inline" name="frm" id="frm" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
 
 
@@ -293,9 +285,9 @@
    
    
    <!-- chart ----------------------------------------------------------->
-   <div class="col-md-6">
-   		<jsp:include page="/chart/chart.jsp"></jsp:include>
-   </div>
+<!--    <div class="col-md-6"> -->
+<%--    		<jsp:include page="/chart/chart.jsp"></jsp:include> --%>
+<!--    </div> -->
    <!-- chart ----------------------------------------------------------->
    
    
@@ -331,74 +323,89 @@
     			
     			var trade = tds.eq(1).text();
     			
-    			$.get( "doSearchTrade.do", {"searchTrade" : trade},function(categoryList) {
-    			}, 'json' /* xml, text, script, html */)
-    			.done(function(categoryList) {
-    				$('#searchCategory > option').remove();
-    				
-    				$.each(categoryList , function(idx, val) {
-               		$('#searchCategory').append($('<option >', {
-                            value: val[1],
-                            text : val[1],
-                            
-                       }));
-               		});
-    				
-    				
-      			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
-      			  $("#expenseModal").modal();
-      			  $.ajax({
-  	    			      	 type:"GET",
-  		                 url:"doSearchOne.do",   
-  		                 dataType:"html",// JSON/html
-  		                 async: false,
-  		                 data:{
-  		                    "ano" :ano
-  			                 },
-  		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
-  		                	 console.log("data="+data); 
-  		                 	//json parsing
-  		                 	var parseData = $.parseJSON(data); //데이터 들어있음.
-  		                 	var date = new Date(parseInt(parseData.aDate));
-  		                 		
-  		                 	console.log("parseData"+parseData);
-  		                 	console.log("parseData.categoryId"+parseData.categoryId);
-  		             			
-  		                 		//화면에 정보 뿌리기.
-  		                 		$("#ano").val(parseData.ano);
-  		                 		
-  		                 		$("#account").val(parseData.accountId);
-  		                 		
-    							$("#searchCategory").val(parseData.categoryId).attr("selected", "selected");
-    							
-  								$("#aDate").val(parseData.aDate);
-  								
-  								$("#item").val(parseData.item);
-  								$("#amount").val(parseData.amount);
-  								$("#memo").val(parseData.memo);
-  								
-  			                 },
-  			                complete: function(data){//무조건 수행
-  			                 },
-  			                error: function(xhr,status,error){
-  			                console.log("do_checkedDelete error: "+error);
-  			                 }
-      			   }); //--그리드 클릭> ajax
-    			})
-    			.fail(function(categoryList) {
-    			    alert( "error" );
-    			})
-    			.always(function(categoryList) {
-    			});
 
-
+ 				//account selectBox
+ 				$.get( "doSearchTrade2.do", {"searchTrade" : trade},function(accountList) {
+	    			}, 'json' /* xml, text, script, html */)
+	    			.done(function(accountList) {
+	    				
+	    				$('#searchAccount > option').remove();
+	    				
+	       				$.each(accountList , function(idx, val) {
+	                  		$('#searchAccount').append($('<option >', {
+	                               value: val[1],
+	                               text : val[1],
+	                               
+	                          }));
+	                  	});
+	    				
+	    				//category selectBoxs
+	    				$.get( "doSearchTrade.do", {"searchTrade" : trade},function(categoryList) {
+	        			}, 'json' /* xml, text, script, html */)
+	        			.done(function(categoryList) {
+	        				$('#searchCategory > option').remove();
+	        				
+	        				$.each(categoryList , function(idx, val) {
+	                   		$('#searchCategory').append($('<option >', {
+	                                value: val[1],
+	                                text : val[1],
+	                                
+	                           }));
+	                   		});
+	        				
+	          			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
+	          			  $("#expenseModal").modal();
+	          			  $.ajax({
+	      	    			      	 type:"GET",
+	      		                 url:"doSearchOne.do",   
+	      		                 dataType:"html",// JSON/html
+	      		                 async: false,
+	      		                 data:{
+	      		                    "ano" :ano
+	      			                 },
+	      		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+	      		                	 console.log("data="+data); 
+	      		                 	//json parsing
+	      		                 	var parseData = $.parseJSON(data); //데이터 들어있음.
+	      		                 	var date = new Date(parseInt(parseData.aDate));
+	      		                 		
+	      		                 	console.log("parseData"+parseData);
+	      		                 	console.log("parseData.categoryId"+parseData.categoryId);
+	      		                 	console.log("parseData.accountId"+parseData.accountId);
+	      		                 		//화면에 정보 뿌리기.
+	      		                 		$("#ano").val(parseData.ano);
+	      		                 		$("#searchAccount").val(parseData.accountId).attr("selected", "selected");
+	        							$("#searchCategory").val(parseData.categoryId).attr("selected", "selected");
+	      								$("#aDate").val(parseData.aDate);
+	      								$("#item").val(parseData.item);
+	      								$("#amount").val(parseData.amount);
+	      								$("#memo").val(parseData.memo);
+	      								
+	      			                 },
+	      			                complete: function(data){//무조건 수행
+	      			                 },
+	      			                error: function(xhr,status,error){
+	      			                console.log("do_checkedDelete error: "+error);
+	      			                 }
+	          			   }); //--그리드 클릭> ajax
+	        			})
+	        			.fail(function(categoryList) {
+	        			    alert( "error" );
+	        			})
+	        			.always(function(categoryList) {
+	        			});
+	    			}).always(function(accountList) {
+	    			
     			
+    			});
+ 
     		});
 			
 			//등록수정
     			$("#expenses,#incomes").on("click",function(){
     				
     				var trade = this.value;
+    				
     				
     				$.ajax({	
 				      	type:"GET",
@@ -409,6 +416,23 @@
 	                	 "searchTrade" :trade
 		                 },
 	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수	
+	                	
+	                	$.get( "doSearchTrade2.do", {"searchTrade" : trade},function(accountList) {
+		    			}, 'json' /* xml, text, script, html */)
+		    			.done(function(accountList) {
+		    				
+		    				$('#searchAccount > option').remove();
+		    				
+		       				$.each(accountList , function(idx, val) {
+		                  		$('#searchAccount').append($('<option >', {
+		                               value: val[0],
+		                               text : val[1],
+		                               
+		                          }));
+		                  	});	
+		    			
+	                	
+	                	
 	               	console.log("data="+data); 
 	                	//json parsing
 	                	var parseData = $.parseJSON(data); //데이터 들어있음.
@@ -422,7 +446,7 @@
 	                             text : val[1],
 	                         }));
 	                	});
-	               		
+		    			});
 		                 },
 		                complete: function(data){//무조건 수행
 		                	 $("#expenseModal").modal();
@@ -436,6 +460,7 @@
     				
 			      	   		
     				$("#doUpsert").on("click",function(){
+    					
 		    			if(false==confirm("등록 하시겠습니까?"))return;
 		    			$.ajax({	
 					      	 type:"POST",
@@ -443,7 +468,7 @@
 		                dataType:"html",// JSON/html
 		                async: false,
 		                data:{ 
-		                	"id": "a",
+		                		"id": "a",
 								"categoryId"			:$("#searchCategory").val(),
 								"aDate"		:$("#aDate").val(),
 								"item"		:$("#item").val(),
@@ -460,7 +485,8 @@
 		                		
 		                	if(parseData.msgId == "1"){
 		                		alert(parseData.message);	
-		                		doSearch();
+
+		                		doSelectList();
 		                	}else{
 		                		alert(parseData.message);	
 		                		}
@@ -498,14 +524,14 @@
                 		
                 	if(parseData.msgId == "1"){
                 		alert(parseData.message);	
-                		doSearch();
+
+                		doSelectList();
                 	}else{
                 		alert(parseData.message);	
                 		}
                		
 	                 },
 	                complete: function(data){//무조건 수행
-	                     
 	                 },
 	                error: function(xhr,status,error){
 	                console.log("do_checkedDelete error: "+error);
