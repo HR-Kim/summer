@@ -34,6 +34,7 @@
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
+    	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	</head>
 	
 	<body>
@@ -44,7 +45,7 @@
 				<td class="text-left">
 					<!-- Button -->
 					<div class ="form-inline pull-left">
-						<button class="btn btn-sm" onclick="javascript:doWeek();">차트주간</button>
+						<button class="btn btn-sm" id="doWeek">차트주간</button>
 					</div>
 					<!-- //Button -->
 				</td>
@@ -58,70 +59,86 @@
 			<form name="frmEdit" id="frmEdit" method="get">
 				<input type="hidden"  name="chartUserId"  id="chartUserId" />
 			
-				<table id="listTable" class="table table-striped table-bordered table-hover">
-				<thead class="bg-primary">
-					<th class="text-center">분류</th>
-					<th class="text-center">총액</th>
-					<th class="text-center">퍼센트</th>
-				</thead>
-			
-				<tbody>
-					<c:choose>
-						<c:when test="${weekList.size()>0}">
-							<c:forEach var="Chart" items="${weekList}">
-								<tr>
-									<td class="text-left">${Chart.cdDtlNm}</td>
-									<td class="text-center">${Chart.ctgTotal}</td>
-									<td class="text-right">${Chart.percent}%</td>
-								</tr>
-							</c:forEach>
-						</c:when>
-					</c:choose>
-				</tbody>
-				</table>
+			<table id="weekListTable" class="table table-striped table-bordered table-hover">
+				<thead>
+    				<tr class = " danger">
+    					<th>분류</th>
+    					<th>총액</th>
+    					<th>퍼센트</th>
+    				</tr>
+    			</thead>
+    			
+				<tbody id = "weekChart">
+			</table>
 			</form>
 		</div>
 		<!-- //List -->
 
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
+	
 	google.charts.load("current", {packages:["corechart"]});
 	google.charts.setOnLoadCallback(drawChart);
 
+	var weekData;
+	
 	function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-			['Category_Nm', 'Total per category'],
-          	['${weekList.get(0).cdDtlNm}', ${weekList.get(0).ctgTotal}],
-          	['${weekList.get(1).cdDtlNm}', ${weekList.get(1).ctgTotal}],
-          	['${weekList.get(2).cdDtlNm}', ${weekList.get(2).ctgTotal}],
-          	['${weekList.get(3).cdDtlNm}', ${weekList.get(3).ctgTotal}],
-          	['${weekList.get(4).cdDtlNm}', ${weekList.get(4).ctgTotal}],
-			['${weekList.get(5).cdDtlNm}', ${weekList.get(5).ctgTotal}],
-			['${weekList.get(6).cdDtlNm}', ${weekList.get(6).ctgTotal}],
-			['${weekList.get(7).cdDtlNm}', ${weekList.get(7).ctgTotal}],
-			['${weekList.get(8).cdDtlNm}', ${weekList.get(8).ctgTotal}],
-			['${weekList.get(9).cdDtlNm}', ${weekList.get(9).ctgTotal}],
-			['${weekList.get(10).cdDtlNm}', ${weekList.get(10).ctgTotal}],
-			['${weekList.get(11).cdDtlNm}', ${weekList.get(11).ctgTotal}],
-			['${weekList.get(12).cdDtlNm}', ${weekList.get(12).ctgTotal}],
-			['${weekList.get(13).cdDtlNm}', ${weekList.get(13).ctgTotal}],
-			['${weekList.get(14).cdDtlNm}', ${weekList.get(14).ctgTotal}]
+		var data = google.visualization.arrayToDataTable([
+			['Category_Nm', 'Total per category'],	
+			['식비', 10000]
 		]);
-        
+
 		var options = {
-			title: '나의 주간 지출 패턴',
+			title: '나의 주 간 지출 패턴',
 			is3D: true,
-        };
+		};
 
 		var chart = new google.visualization.PieChart(document.getElementById('weekPieChart'));
 		chart.draw(data, options);
 	}
-    
-	function doWeek(){
-		var frmEdit = document.frmEdit;
-		frmEdit.action = "doWeek.do";
-		frmEdit.submit();
-	}
+	
+	$(document).ready(function(){
+		$("#doWeek").on("click",function(){
+			$.ajax({	
+				type:"GET",
+            	url:"doWeek.do",   
+            	dataType:"html",// JSON/html
+            	async: false,
+            	data:{ 
+            		"chartUserId":'a',
+					"weekStart":20180605,
+					"weekEnd":20180615
+            	},
+            	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
+            		//json parsing
+            		weekData = $.parseJSON(data);
+	            	var weekDataLen = weekData.length;
+					
+	            	console.log("weekData=" + weekData);
+	            	console.log("weekDataLen=" + weekDataLen);
+					
+	            	if(weekDataLen == 0){
+	            		alert("데이터가 없습니다");
+	            	}else{
+	            		$.each(weekData,function(key,value){
+	            			$("#weekChart").append(
+									 "<tr>"
+									 +"<td>"+value.cdDtlNm+"</td>"
+									 +"<td>"+value.ctgTotal+"</td>"
+									 +"<td>"+value.percent+"%"+"</td>"
+									 +"</tr>"
+	            			);//append
+	            		});//each
+	            	}//ifelse
+				},
+				complete: function(data){//무조건 수행
+				},
+				error: function(xhr,status,error){
+					console.log("doWeek error: "+error);
+				}
+			}); //--ajax
+		});
+	});
 	</script>
 </body>
 </html>

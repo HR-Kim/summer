@@ -29,12 +29,7 @@
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"");
 		
-	String allLine = 
-	(null == request.getAttribute("list")) ? "0":request.getAttribute("list").toString();	
-	String allLinea = 
-	(null == request.getAttribute("dataList")) ? "0":request.getAttribute("dataList").toString();	
-	String listsize = 
-	(null == request.getAttribute("listsize")) ? "0":request.getAttribute("listsize").toString();	
+	String allLinea = "";	
 	/* 달력
 	http://blog.munilive.com/jquery-datepicker-%EB%8B%AC%EB%A0%A5%EC%97%90%EC%84%9C-%EB%85%84%EB%8F%84%EC%99%80-%EC%9B%94%EB%A7%8C-%EC%84%A0%ED%83%9D-%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C-%ED%95%98%EA%B8%B0/
 	*/
@@ -70,11 +65,9 @@
 	<!-- id=testDatepicker -->
 	<input type="button" id="btnSearch" value="조회" /><br><br>
 		
-	
-	<!--<input type="text" id="allLine" value="<%=allLine%>"/>
-	<input type="text" id="allLine" value="<%=allLinea%>"/>
+	<input type="text" id="allLinea" value="<%=allLinea%>"/>
 		
-	<button class="btn btn-success btn-sm" id="btn20">20대</button> 
+	<!--<button class="btn btn-success btn-sm" id="btn20">20대</button> 
 	<button class="btn btn-success btn-sm" id="btn30">30대</button>  -->
 		
 	<div id="curve_chart" style="width: 900px; height: 500px"></div>
@@ -267,8 +260,11 @@
 							//alert($("#startmonth").val());
 						},
 						success:function(data){
-							alert("success: "+data);
-							
+							var aa = data.replace(/Z/g,"'");
+							aa = aa.substring(1,aa.length-1);
+							alert(aa);
+							$("#allLinea").val(aa);
+							alert($("#allLinea").val());
 							var parseData = $.parseJSON(data);
 							
 						}
@@ -283,8 +279,12 @@
      google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
+		
+		
 	   var data = new google.visualization.arrayToDataTable([
-	  	 <%=allLinea%>
+		   //['Date','20대','30대'],['18/04',376642,129411],['18/05',408000,1647]
+		   $("#allLinea").val()
+		   //allLinea
 	   ]);
 	
 	   var options = {
