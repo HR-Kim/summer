@@ -83,8 +83,9 @@
     
   </head>
   <body>
-  
-  <div class="container">
+  <div class="col-md-6">
+<!--   <div class="container"> -->
+<div>
   <!-- Button ----------------------------------------------------------->
     
    <div class="form-inline pull-right">
@@ -175,7 +176,7 @@
    <!-- //Modal --------------------------------------------------------->
   
    <!-- Search ----------------------------------------------------------->
-   	<form class="form-inline" name="frm" id="frm" method="get">
+   	<form class="form-inline" name="frmSearch" id="frmSearch" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
 
 
@@ -286,7 +287,17 @@
    		<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "doSelectList.do", "search_page")%>
    </div>
    <!--// Paging --------------------------------------------------------->
+
    </div>
+   </div>
+   
+   
+   <!-- chart ----------------------------------------------------------->
+   <div class="col-md-6">
+   		<jsp:include page="/chart/chart.jsp"></jsp:include>
+   </div>
+   <!-- chart ----------------------------------------------------------->
+   
    
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
@@ -504,7 +515,6 @@
     		
 		});
 		
-	
 		
 	</script>
 	
