@@ -26,7 +26,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::글수정:::</title>
+    <title>:::자유게시판:::</title>
 
     <!-- 부트스트랩 -->
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -41,9 +41,19 @@
   <body>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
-		 <h3>글수정</h3>
+		 <h3>자유게시판</h3>
 		<!--// Title------------------------------------------ -->
 
+		<!-- Button-------------------------------------------- -->
+		 <div class="form-inline pull-right">
+		 <c:if test="${Board.id == sessionScope.id}">
+		 	<button class="btn btn-success btn-sm" id="do_selectOne">수정</button> 
+		 											<!-- onclick="location.href='${CONTEXT}/board/boardUpdate.jsp'" -->
+		 	<button class="btn btn-success btn-sm" id="do_delete" >삭제</button>
+		 </c:if>		
+		 </div>
+		 
+		<!--// Button------------------------------------------ -->
 
 		
 		<!-- Input Form--------------------------------------- -->
@@ -65,7 +75,7 @@
 					<label class="col-lg-4 control-label">제목</label>
 					<div class="col-lg-8">
 						<input type="text" name="title" id="title"
-							class="form-control input-sm" value="<%= session.getAttribute("name") %>" maxlength="20" />
+							class="form-control input-sm" value="${Board.title}" maxlength="20" />
 					</div>
 				</div>
 				
@@ -91,15 +101,39 @@
 		<!-- Button-------------------------------------------- -->
 
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardMain.jsp'" >취소</button>
-		 <c:if test="${Board.id == sessionScope.id}">
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardUpdate.jsp'">수정</button>
-		 	<button class="btn btn-success btn-sm" id="do_delete" >삭제</button>
-		 </c:if>		
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardMain.jsp'" >취소</button>	
 		 </div>
 		 
 		<!--// Button------------------------------------------ -->
-		</div>
+	</div>
+<div class="table-responsive container-fluid text-left">
+<!-- 댓글 리스트 -->
+<table  id="CommlistTable" class="table  table-striped table-bordered table-hover table-condensed">
+    			<c:choose>
+    			    <c:when test="${list2.size()>0}">
+    					<c:forEach  var="CommentVO"  items="${list2}" varStatus="theCount">
+    						<tr>
+    							<td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commNum}"/></td>     						    
+    						    <td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commRegId}"/></td>   						    
+    							<td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commRegDate}"/></td>
+    							<td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commContents}"/></td>
+    							<c:if test="${param.regId == CommentVO.commRegId}">
+    							<td class="text-center col-md-1 col-xs-12"><input type="button" class="btn btn-default btn-sm" title="<c:out value="${CommentVO.commNum}"/>" value="수정" id="update_comm_btn${theCount.count}" />  	
+									<input type="button" class="btn btn-default btn-sm"  title="<c:out value="${CommentVO.commNum}"/>" value="삭제" id="del_comm_btn${theCount.count}" />
+								</td>
+								</c:if>	
+    						</tr>
+    					</c:forEach>  
+    				</c:when>
+    				<c:otherwise>
+    					<tr>
+    						<td class="text-center col-md-1 col-xs-12" colspan="99">등록된 댓글이 없습니다.</td>
+    					</tr>
+    				</c:otherwise>
+    			</c:choose>
+    	</table> 
+<!--// 댓글 리스트 -->
+</div> 
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
@@ -153,6 +187,64 @@
 
 				});//--그리드 click -> ajax
 			});//--등록
+			
+			//삭제
+			$("#do_delete").on("click", function() {
+				console.log("do_delete")
+				var boardViewNum = ${Board.num};
+
+				if (false == confirm("삭제 하시겠습니까?"))
+					return;
+
+				$.ajax({
+					type : "POST",
+					url : "do_delete.do",
+					dataType : "html",// JSON/Html
+					async : false,
+					data : {
+						"num" : boardViewNum,					
+					},
+					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
+						console.log("data=" + data);
+						//json parsing
+						var parseData = $.parseJSON(data);
+						console.log("parseData=" + parseData);
+
+						if (parseData.msgId == "1") {
+							alert(parseData.message);
+							
+							var frm = document.frm;
+							frm.action = '${CONTEXT}'+"/board/boardMain.jsp";
+							frm.submit();	
+							
+						} else {
+							alert(parseData.message);
+						}
+
+					},
+					complete : function(data) {//무조건 수행
+
+					},
+					error : function(xhr, status, error) {
+						console.log("do_delete error: " + error);
+					}
+
+				});//--그리드 click -> ajax
+			});//--삭제
+			
+			//수정
+			$("#do_selectOne").on("click", function() {
+				console.log("do_selectOne_update")
+				
+				if (false == confirm("수정 하시겠습니까?"))
+					return;
+				
+				var num = ${Board.num};
+				//location.href="/summer/board/do_selectOne.do?num="+num+"&id="+sessionId;
+				location.href="/summer/board/do_selectUpdate.do?num="+num;
+			});
+			
+			
 		});//--document.ready
 	</script>
 </body>

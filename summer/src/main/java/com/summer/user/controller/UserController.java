@@ -42,6 +42,8 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+
+
 	
 	@RequestMapping(value="user/do_phoneCheck.do", method= {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
@@ -159,15 +161,6 @@ public class UserController {
 		int flag = 0;
 		log.debug("2=user="+user.toString());
 		
-		//화면 Input validation
-		if(false == StringUtil.isAlphabetDigit(user.getId())) {
-			messageVO.setMsgId("0");
-			messageVO.setMessage("ID는 알파벳,숫자만 입력하세요(Java)");
-			messageVO.setuId("id");
-			log.debug("2.1=user="+gson.toJson(messageVO));
-			return gson.toJson(messageVO);			
-		}
-		
 		flag = userService.update(user);
 		log.debug("3=flag="+flag);
 		
@@ -184,7 +177,38 @@ public class UserController {
 		
 		return json;
 	}
-	
+	/**
+	 * 비밀번호 수정
+	 * @param user
+	 * @return int
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/user/do_updatePwd.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String updatePwd(User user) throws Exception{
+		log.debug("1=do_updatePwd.do======================");
+		Gson gson = new Gson();
+		MessageVO messageVO = new MessageVO();
+		
+		int flag = 0;
+		log.debug("2=user="+user.toString());
+		
+		flag = userService.updatePwd(user);
+		log.debug("3=flag="+flag);
+		
+		if(flag > 0) {
+			messageVO.setMsgId("1");
+			messageVO.setMessage("수정 되었습니다.");
+		}else {
+			messageVO.setMsgId("0");
+			messageVO.setMessage("수정 실패!");
+		}
+		
+		String json = gson.toJson(messageVO);
+		log.debug("4=json="+json);
+		
+		return json;
+	}
 
 	
 	/**
@@ -309,21 +333,39 @@ public class UserController {
     public ModelAndView loginCheck(@ModelAttribute User user, HttpSession session) throws SQLException{
         boolean result = userService.loginCheck(user, session);
         ModelAndView mav = new ModelAndView();
-        if(session.getAttribute("grade").equals(9)) {
+
+        if(result == false ) {    // 로그인 실패
+            // login.jsp로 이동
+            mav.setViewName("user/login");
+            mav.addObject("msg", "failure");
+        }else if(session.getAttribute("grade").equals(9)) {
         	mav.setViewName("user/adminMain");
         	mav.addObject("msg","success");
-        }else if (result == true) { // 로그인 성공
+        }else if(result ==true) { // 로그인 성공
             // main.jsp로 이동
         	session.setAttribute("id", user.getId());
         	session.setAttribute("pwd", user.getPwd());
         	mav.setViewName("user/infoUser");
         	log.debug("session id="+session.getAttribute("id"));
         	mav.addObject("msg", "success");
-        } else {    // 로그인 실패
-            // login.jsp로 이동
-            mav.setViewName("user/login");
-            mav.addObject("msg", "failure");
+        	
         }
+//        
+//        if(session.getAttribute("grade").equals(9) && result == true) {
+//        	mav.setViewName("user/adminMain");
+//        	mav.addObject("msg","success");
+//        }else if (result == true) { // 로그인 성공
+//            // main.jsp로 이동
+//        	session.setAttribute("id", user.getId());
+//        	session.setAttribute("pwd", user.getPwd());
+//        	mav.setViewName("user/infoUser");
+//        	log.debug("session id="+session.getAttribute("id"));
+//        	mav.addObject("msg", "success");
+//        } else {    // 로그인 실패
+//            // login.jsp로 이동
+//            mav.setViewName("user/login");
+//            mav.addObject("msg", "failure");
+//        }
         return mav;
     }
     @RequestMapping(value="/user/do_logout.do")
@@ -335,7 +377,88 @@ public class UserController {
     	return mav;
     }
 	
+	/**
+	 * 아이디 찾기
+	 * @param user
+	 * @return json
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/user/do_findId.do", method=RequestMethod.GET)
+	public String findId(User user, Model model) throws SQLException {
+		log.debug("1=do_findId.do======================");
+		
+		User outVO = userService.findId(user);
+
+		//log.debug("3=do_findId.do=outVO="+outVO.toString());
+		//log.debug("========================");
+		
+		model.addAttribute("User",outVO);
+		log.debug("model"+model);
+		
+		
+		return "user/findIdAfter";
+	}
+	/**
+	 * 비밀번호 찾기
+	 * @param user
+	 * @return json
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/user/do_findPw.do", method=RequestMethod.GET)
+	public String findPw(User user, Model model) throws SQLException {
+		
+		log.debug("1=do_findPw.do======================");
+		
+		User outVO = userService.findPw(user);
+
+		//log.debug("3=do_findId.do=outVO="+outVO.toString());
+		//log.debug("========================");
+		
+		model.addAttribute("User",outVO);
+		log.debug("model"+model);
+		
+		
+		return "user/findPwAfter";
+	}
 	
-	
-	
+	/**
+	 * 단건 조회(업데이트 정보)
+	 * @param user
+	 * @return 
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/user/do_getUpdateUser.do", method=RequestMethod.GET)
+	public String getUpdateInfo(User user, Model model) throws SQLException {
+		log.debug("1=do_getUpdateUser.do======================");
+		
+		User outVO = userService.get(user);
+		log.debug("3=do_searchOne.do=outVO="+outVO.toString());
+		log.debug("========================");
+		
+		model.addAttribute("User",outVO);
+		log.debug("model"+model);
+		
+		
+		return "user/updateUser";
+	}
+	/**
+	 * 단건 조회(업데이트 비번)
+	 * @param user
+	 * @return 
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/user/do_getUpdatePwd.do", method=RequestMethod.GET)
+	public String getUpdatePwd(User user, Model model) throws SQLException {
+		log.debug("1=do_getUpdateInfo.do======================");
+		
+		User outVO = userService.get(user);
+		log.debug("3=do_searchOne.do=outVO="+outVO.toString());
+		log.debug("========================");
+		
+		model.addAttribute("User",outVO);
+		log.debug("model"+model);
+		
+		
+		return "user/updatePwd";
+	}
 }

@@ -80,5 +80,18 @@
  		WHERE NUM 	= #{num,	jdbcType=VARCHAR}
 	</select>
 	
+	<delete id="do_delete" parameterType="Board">
+		DELETE FROM SU_BOARD  
+		      WHERE NUM = #{num}
+	</delete>
+	
+	<update id="do_update" parameterType="Board">
+		UPDATE SU_BOARD     
+  		   SET CATEGORY = #{category,jdbcType=VARCHAR}
+		      ,TITLE 	  = #{title,	 jdbcType=VARCHAR}
+	  	      ,CONTENT  = #{content, jdbcType=VARCHAR}
+ 		WHERE NUM 		  = #{num}
+	</update>
+	
 	
 </mapper>

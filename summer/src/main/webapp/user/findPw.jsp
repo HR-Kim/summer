@@ -21,7 +21,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::회원정보수정:::</title>
+    <title>:::비밀번호기찾기:::</title>
 
     <!-- 부트스트랩 -->
     <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -36,70 +36,49 @@
   <body>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
-		 <h3>회원정보수정</h3>
+		 <h3>비밀번호 찾기</h3>
+		 
 		<!--// Title------------------------------------------ -->
 		
-		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
-		 </div>
-		<!--// Button------------------------------------------ -->
+
 
 		<!-- Input Form--------------------------------------- -->
 		<div class="container">
 			<div class="col-lg-12"></div>
 			<div class="col-lg-12"></div>
 			<div class="panel panel-default"></div>
-			<form class="form-horizontal" name="frm" id="frm"
+			<form class="form-horizontal" name="frmEdit" id="frmEdit"
 				method="post">				
 				<div class="form-group">
-					<label class="col-lg-4 control-label">아이디</label>
 					<div class="col-lg-8">
-						<input type="text" disabled="disabled" name="id" id="id"
-							class="form-control input-sm" value="${User.id}" maxlength="20" />
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-lg-4 control-label">이름</label>
-					<div class="col-lg-8">
-						<input type="text" name="name" id="name"
-							class="form-control input-sm" value="${User.name}" maxlength="20" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-4 control-label">별명</label>
-					<div class="col-lg-8">
-						<input type="text" name="nickname" id="nickname"
-							class="form-control input-sm" value="${User.nickname}" maxlength="20" />
+						<input type="text"  name="id" id="id"
+							class="form-control input-sm" placeholder="아이디" maxlength="20" />
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="col-lg-4 control-label">이메일</label>
 					<div class="col-lg-8">
-						<input type="text" name="email" id="email"
-							class="form-control input-sm" value="${User.email}" maxlength="20" />
+						<input type="text" name="phone" id="phone"
+							class="form-control input-sm" placeholder="연락처" maxlength="20" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-4 control-label">연락처</label>
 					<div class="col-lg-8">
-						<input type="text" name="phone" id="phone"
-							class="form-control input-sm" value="${User.phone}" maxlength="20" />
+						<input type="text" name="email" id="email"
+							class="form-control input-sm" placeholder="이메일" maxlength="20" />
 					</div>
 				</div>
+				
 			</form>
 		</div>
 		<!--// Input Form------------------------------------- -->
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/infoUser.jsp'">취소</button>
+		 	<button class="btn btn-success btn-sm" id="do_findPw">확인</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/login.jsp'">취소</button>
 		 </div>
-		<!--// Button------------------------------------------ -->
-		
+		<!--// Button------------------------------------------ -->		
 		
 		</div>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
@@ -117,48 +96,15 @@
 		}
 
 		$(document).ready(function() {			
-			//수정
-			$("#do_update").on("click", function() {
-				console.log("do_update")
+			//비밀번호 찾기
+			$("#do_findPw").on("click", function() {
+				console.log("do_findPw")
+				var id = $("#id").val();
+				var phone = $("#phone").val();
+				var email = $("#email").val();
 
-				if (false == confirm("수정 하시겠습니까?"))
-					return;
-				
-				$.ajax({
-					type : "POST",
-					url : "do_update.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"id" : $("#id").val(),
-						"name" : $("#name").val(),
-						"nickname" : $("#nickname").val(),
-						"email" : $("#email").val(),
-						"phone" : $("#phone").val(),
-						"grade" : ${User.grade}
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-						
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							var frm = document.frm;
-							frm.action = '${CONTEXT}'+"/user/infoUser.jsp";
-							frm.submit();
-						} else {
-							alert(parseData.message);
-						}
-					},
-					complete : function(data) {//무조건 수행
-					},
-					error : function(xhr, status, error) {
-						console.log("do_update error: " + error);
-					}
-				});//--그리드 click -> ajax
-			});//--등록
+				location.href="/summer/user/do_findPw.do?id="+id+"&phone="+phone+"&email="+email;						
+			});//--그리드 click -> ajax
 		});//--document.ready
 	</script>
 </body>

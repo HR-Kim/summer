@@ -90,8 +90,10 @@ public interface UserService {
 	 */
 	public boolean loginCheck(User user, HttpSession session) throws SQLException;
 	
-    // 01_02. 회원 로그인 정보
-    public User viewMember(User user) throws SQLException;
+
     public void logout(HttpSession sesseion) throws SQLException;
+    public User findId(User user) throws SQLException;
+    public User findPw(User user) throws SQLException;
+    public int updatePwd(User user) throws SQLException;
 	
 }

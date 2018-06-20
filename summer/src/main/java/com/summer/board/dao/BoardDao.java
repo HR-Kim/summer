@@ -14,5 +14,7 @@ public interface BoardDao {
 	public int add(Board board) throws SQLException;
 	public List<Board> getSelectList(SearchVO vo) throws SQLException;
 	public Board getSelectOne(Board board) throws SQLException;
+	public int delete(Board board) throws SQLException;
+	public int update(Board board) throws SQLException;
 	
 }

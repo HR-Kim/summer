@@ -54,7 +54,7 @@
 					<label class="col-lg-4 control-label">구분</label>
 					<div class="col-lg-8">
 						<input type="text"  name="category" id="category"
-							class="form-control input-sm" placeholder="구분" maxlength="20" />
+							class="form-control input-sm" value="${Board.category}" maxlength="20" />
 					</div>
 				</div>
 				
@@ -62,7 +62,7 @@
 					<label class="col-lg-4 control-label">제목</label>
 					<div class="col-lg-8">
 						<input type="text" name="title" id="title"
-							class="form-control input-sm value="제목" maxlength="20" />
+							class="form-control input-sm" value="${Board.title}" maxlength="20" />
 					</div>
 				</div>
 				
@@ -70,14 +70,14 @@
 					<label class="col-lg-4 control-label">작성자</label>
 					<div class="col-lg-8">
 						<input type="text" name="id" id="id" disabled="disabled"
-							class="form-control input-sm" value="<%= session.getAttribute("grade") %>" maxlength="200" />
+							class="form-control input-sm" value="<%= session.getAttribute("id") %>" maxlength="200" />
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-lg-4 control-label">글내용</label>
 					<div class="col-lg-8">
-						<textarea class="form-control" id="content" name="content" rows="15"></textarea>
+						<textarea class="form-control" id="content" name="content" rows="15">${Board.content}</textarea>
 					</div>
 				</div>
 			</form>
@@ -87,8 +87,8 @@
 				
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add" >완료</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/board/boardMain.jsp'" >취소</button>
+		 	<button class="btn btn-success btn-sm" id="do_update" >완료</button>
+		 	<button class="btn btn-success btn-sm" id="do_selectOne" >취소</button>
 		 </div>
 		<!--// Button------------------------------------------ -->
 		</div>
@@ -103,21 +103,24 @@
 		$(document).ready(function() {
 
 			//등록
-			$("#do_add").on("click", function() {
-				console.log("do_add")
-				if (false == confirm("등록 하시겠습니까?"))
+			$("#do_update").on("click", function() {
+				console.log("do_update")
+				
+				var boardNum = ${Board.num};
+				
+				if (false == confirm("수정 하시겠습니까?"))
 					return;
 
 				$.ajax({
 					type : "POST",
-					url : "do_add.do",
+					url : "do_update.do",
 					dataType : "html",// JSON/Html
 					async : false,
 					data : {
 						"category" : $("#category").val(),
 						"title" : $("#title").val(),
-						"id" : $("#id").val(),
-						"content" : $("#content").val()
+						"content" : $("#content").val(),
+						"num"	: boardNum
 					},
 					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
 						console.log("data=" + data);
@@ -140,11 +143,22 @@
 
 					},
 					error : function(xhr, status, error) {
-						console.log("do_save error: " + error);
+						console.log("do_update error: " + error);
 					}
-
 				});//--그리드 click -> ajax
-			});//--등록
+			});//--수정
+			
+			//취소(뒤로가기)
+			$("#do_selectOne").on("click", function() {
+				console.log("do_selectOne_cancel")
+				
+				if (false == confirm("취소하시겠습니까?"))
+					return;
+				
+				var num = ${Board.num};
+				location.href="/summer/board/do_selectOne.do?num="+num;
+			});
+			
 		});//--document.ready
 	</script>
 </body>

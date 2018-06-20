@@ -136,8 +136,8 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/updateUser.jsp'">회원정보 수정</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/updatePwd.jsp'">비밀번호 변경</button>
+		 	<button class="btn btn-success btn-sm" id="do_getUpdateUser">회원정보 수정</button>
+		 	<button class="btn btn-success btn-sm" id="do_getUpdatePwd">비밀번호 변경</button>
 		 </div>
 		<!--// Button------------------------------------------ -->		
 		
@@ -157,51 +157,20 @@
 		}
 
 		$(document).ready(function() {			
-			//등록
-			$("#do_add").on("click", function() {
-				console.log("do_add")
+			//회원정보 수정
+			$("#do_getUpdateUser").on("click", function() {
+				console.log("do_getUpdateUser")
+				var id = $("#id").val();
 
-				if (false == confirm("등록 하시겠습니까?"))
-					return;
-				
-				$.ajax({
-					type : "POST",
-					url : "do_add.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"id" : $("#id").val(),
-						"pwd" : $("#pwd").val(),
-						"name" : $("#name").val(),
-						"nickname" : $("#nickname").val(),
-						"gender" : $("#gender").val(),
-						"birth" : $("#birth").val(),
-						"email" : $("#email").val(),
-						"phone" : $("#phone").val(),
-						"grade" : $("#grade").val()
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-						
-						if (parseData.msgId == "1") {
-							alert(parseData.message);
-							doSearch();
-						} else {
-							alert(parseData.message);
-						}
+				location.href="/summer/user/do_getUpdateUser.do?id="+id;						
+			});//--그리드 click -> ajax
+			//비밀번호 수정
+			$("#do_getUpdatePwd").on("click", function() {
+				console.log("do_getUpdatePwd")
+				var id = $("#id").val();
 
-					},
-					complete : function(data) {//무조건 수행
-
-					},
-					error : function(xhr, status, error) {
-						console.log("do_add error: " + error);
-					}
-				});//--그리드 click -> ajax
-			});//--등록
+				location.href="/summer/user/do_getUpdatePwd.do?id="+id;						
+			});//--그리드 click -> ajax
 		});//--document.ready
 	</script>
 </body>

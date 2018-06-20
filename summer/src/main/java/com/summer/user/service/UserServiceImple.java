@@ -175,9 +175,20 @@ public class UserServiceImple implements UserService {
 	}
 
 	@Override
-	public User viewMember(User user) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public User findId(User user) throws SQLException {
+		return userDao.findId(user);
 	}
+
+	@Override
+	public User findPw(User user) throws SQLException {
+		return userDao.findPw(user);
+	}
+
+	@Override
+	public int updatePwd(User user) throws SQLException {
+		return userDao.updatePwd(user);
+	}
+
+
 	
 }

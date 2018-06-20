@@ -140,7 +140,27 @@ public class UserDaoImple implements UserDao {
 
 	@Override
 	public void logout(HttpSession session) throws SQLException {
-		
+	}
+
+	@Override
+	public User findId(User user) throws SQLException {
+		String statement = this.namespace+".do_findId";
+		log.debug("Param:"+user.toString());
+		return sqlSessionTemplate.selectOne(statement, user);		
+	}
+
+	@Override
+	public User findPw(User user) throws SQLException {
+		String statement = this.namespace+".do_findPw";
+		log.debug("Param:"+user.toString());
+		return sqlSessionTemplate.selectOne(statement, user);	
+	}
+
+	@Override
+	public int updatePwd(User user) throws SQLException {
+		String statement = this.namespace+".do_updatePwd";
+		log.debug("Param:"+user.toString());
+		return sqlSessionTemplate.update(statement, user);
 	}
 
 

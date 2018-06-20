@@ -138,4 +138,106 @@ public class BoardController {
 //		return json;
 	}
 	
+	/**
+	 * 단건 조회
+	 * @param board
+	 * @return json
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/board/do_selectUpdate.do", method=RequestMethod.GET)
+	public String getSelectUpdate(Board board, Model model) throws SQLException {
+		log.debug("1=do_selectOne.do======================");
+		
+		if(0 == board.getNum()) {
+			board.setNum(0);
+		}
+		
+		Board outVO = boardService.getSelectOne(board);
+		log.debug("3=do_selectOne.do=outVO="+outVO.toString());
+		log.debug("========================");
+		
+		model.addAttribute("Board",outVO);
+		log.debug("model"+model);
+		
+		
+		return "board/boardUpdate";
+		
+		
+//		Gson gson = new Gson();
+//		String json = gson.toJson(outVO);
+//		log.debug("json:"+json);
+//		return json;
+	}
+	
+	
+	/**
+	 * 단건 삭제
+	 * @param board
+	 * @return int
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/board/do_delete.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteAll(Board board) throws Exception{
+		log.debug("1=delete.do======================");
+		Gson gson = new Gson();
+		MessageVO messageVO = new MessageVO();
+		
+		int flag = 0;
+		log.debug("2=board="+board.toString());
+		
+		flag = boardService.delete(board);
+		log.debug("3=flag=="+flag);
+		
+		if(flag > 0) {
+			messageVO.setMsgId("1");
+			messageVO.setMessage("삭제 되었습니다.");
+		}else {
+			messageVO.setMsgId("0");
+			messageVO.setMessage("삭제 실패");
+		}
+		
+		String json = gson.toJson(messageVO);
+		log.debug("4=json="+json);
+		return json;
+		//화면 Input validation
+
+	}
+	/**
+	 * 수정
+	 * @param board
+	 * @return int
+	 * @throws SQLException
+	 */
+	@RequestMapping(value="/board/do_update.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String update(Board board) throws Exception{
+		log.debug("1=update.do======================");
+		Gson gson = new Gson();
+		MessageVO messageVO = new MessageVO();
+		
+		int flag = 0;
+		log.debug("2=user="+board.toString());
+		
+		
+		flag = boardService.update(board);
+		log.debug("3=flag="+flag);
+		
+		if(flag > 0) {
+			messageVO.setMsgId("1");
+			messageVO.setMessage("수정 되었습니다.");
+		}else {
+			messageVO.setMsgId("0");
+			messageVO.setMessage("수정 실패!");
+		}
+		
+		String json = gson.toJson(messageVO);
+		log.debug("4=json="+json);
+		
+		return json;
+	}
+	
+	
+	
+	
 }

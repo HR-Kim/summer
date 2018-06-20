@@ -53,25 +53,26 @@ public class BoardServiceImple implements BoardService {
 	private BoardDao boardDao;
 	
 	
-	
 	@Override
 	public int add(Board board) throws SQLException {
 		return boardDao.add(board);
 	}
-
-
-
 	@Override
 	public List<Board> getSelectList(SearchVO vo) throws SQLException{
 		
 		return boardDao.getSelectList(vo);
 	}
-
-
-
 	@Override
 	public Board getSelectOne(Board board) throws SQLException {
 		return boardDao.getSelectOne(board);
+	}
+	@Override
+	public int delete(Board board) throws SQLException {
+		return boardDao.delete(board);
+	}
+	@Override
+	public int update(Board board) throws SQLException {
+		return boardDao.update(board);
 	}
 	
 }

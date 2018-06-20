@@ -36,6 +36,9 @@ public interface UserDao {
 	public int idCheck(User user) throws SQLException;
 	public int nickCheck(User user) throws SQLException;
 	public int phoneCheck(User user) throws SQLException;
+	public User findId(User user) throws SQLException;
+	public User findPw(User user) throws SQLException;
+	public int updatePwd(User user) throws SQLException;
 	
 	
 }

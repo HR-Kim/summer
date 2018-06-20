@@ -114,6 +114,12 @@
 		   ,GRADE		= #{grade,		jdbcType=VARCHAR}
  		WHERE ID  		= #{id, 		jdbcType=VARCHAR}
 	</update>
+	
+	<update id="do_updatePwd" parameterType="User">
+		UPDATE SU_USERS      
+  	      SET PWD		= #{pwd,	jdbcType=VARCHAR}
+ 		 WHERE ID  	= #{id, 		jdbcType=VARCHAR}
+	</update>
 
 	<insert id="do_add" parameterType="User">
 		INSERT INTO SU_USERS(
@@ -141,6 +147,20 @@
 		)
 	</insert>
 	
+	<select id="do_findId" parameterType="User" resultType="User">
+		SELECT ID
+  		FROM  SU_USERS
+ 		WHERE PHONE	= #{phone,jdbcType=VARCHAR}
+ 		  AND NAME		= #{name ,jdbcType=VARCHAR}	
+	</select>
+	
+	<select id="do_findPw" parameterType="User" resultType="User">
+		SELECT PWD
+  		FROM  SU_USERS
+ 		WHERE ID		= #{id,jdbcType=VARCHAR}
+ 		  AND PHONE	= #{phone ,jdbcType=VARCHAR}	
+ 		  AND EMAIL	= #{email ,jdbcType=VARCHAR}
+	</select>
 	
 	
 	

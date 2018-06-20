@@ -181,42 +181,11 @@
 					return;
 				
 				location.href="/summer/board/do_selectOne.do?num="+num+"&id="+sessionId;
-			});
-		});
+			});//--그리드 click
+			
+		});//--document
 
-/* 				$.ajax({
-					type : "GET",
-					url : "do_selectOne.do",
-					dataType : "html",// JSON/Html
-					async : false,
-					data : {
-						"num" : num
-					},
-					success : function(data) {//통신이 성공적으로 이루어 졌을때 받을 함수
-						console.log("data=" + data);
-						//json parsing
-						var parseData = $.parseJSON(data);
-						console.log("parseData=" + parseData);
-						
-						var frm = document.frm;
-						frm.category.value = category;
-						frm.title.value = title;
-						frm.content.value = content;
-						frm.action = '${CONTEXT}'+"/board/boardView.jsp";						
-						frm.submit();	
-					},
-					complete : function(data) {//무조건 수행
 
-					},
-					error : function(xhr, status, error) {
-						console.log("do_searchOne error: " + error);
-					}
-
-				});//--그리드 click -> ajax
-
-			});//--#listTable>tbody
-
-		});//--document.ready */
 	</script>
 </body>
 </html>
