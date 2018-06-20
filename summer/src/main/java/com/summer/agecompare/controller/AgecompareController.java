@@ -36,22 +36,46 @@ public class AgecompareController {
 	@ResponseBody
 	public String get(SearchVO vo) throws SQLException {
 		
-		log.debug("1=do_selectAgeList1.do===============");
+		log.debug("1=do_selectAgeList.do===============");
 		
-		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"10"));
+		int monthc = Integer.parseInt(vo.getPageSize().substring(5))
+		- Integer.parseInt(vo.getPageNum().substring(5));
+		
 		vo.setPageNum(vo.getPageNum()+"20");
 		vo.setPageSize(vo.getPageSize()+"20");
+
 		
 		String[] agelist = vo.getSearchWord().split(",");
-		
+				
 		List<Agecompare> list = new ArrayList<Agecompare>();
-		for(int i=1; i<=Integer.parseInt(agelist[0]); i++) {
-			vo.setSearchWord(agelist[i]);
-			list = agecompareService.getSelectAgeList(vo);
+		list = agecompareService.getSelectAgeList(vo);
+		
+		//monthc *= Integer.parseInt(agelist[0]);
+
+		String tmp = "";
+		String tmpList = "[ZDateZ";
+		for(int i=1; i <= Integer.parseInt(agelist[0]); i++) {
+			tmpList += ",Z" + agelist[i]+"대Z";
+		}
+		tmpList += "]";
+		
+		
+		for(int i=0; i<monthc*Integer.parseInt(agelist[0]); i+=Integer.parseInt(agelist[0])) {
+			tmpList += ",[Z"+list.get(i).getaDate().toString()+"Z";
+			
+			for(int j=i; j<i+Integer.parseInt(agelist[0]); j++) {
+				tmpList += ","+ Integer.parseInt(list.get(j).getTotal())/Integer.parseInt(list.get(j).getAgeTotal());
+			}
+			tmpList += "]";
+			/*
+			tmp += "adate:"+list.get(i).getaDate();
+			tmp += "total:"+list.get(i).getTotal();
+			tmp += "agetotla:"+list.get(i).getAgeTotal();
+			tmp += "age:"+list.get(i).getAge();*/
 		}		
 		
 		Gson gson = new Gson();
-		String jsonStr = gson.toJson(list.get(0));
+		String jsonStr = gson.toJson(tmpList);
 		
 		log.debug("=jsonStr="+jsonStr);
 		
