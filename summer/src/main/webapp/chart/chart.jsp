@@ -37,7 +37,7 @@
     	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
     	
 	</head>
-<body>
+	<body>
 	<h3>**일 별 화면**</h3>
 		
 	<table class="table">
@@ -45,7 +45,7 @@
 			<td class="text-left">
 				<!-- Button -->
 				<div class ="form-inline pull-left">
-					<button class="btn btn-sm" onclick="javascript:doDay();">차트일간</button>
+					<button class="btn btn-sm" id="doDay">차트일간</button>
 				</div>
 				<!-- //Button -->
 			</td>
@@ -60,25 +60,15 @@
 			<input type="hidden"  name="chartUserId"  id="chartUserId" />
 		
 			<table id="dayListTable" class="table table-striped table-bordered table-hover">
-				<thead class="bg-primary">
-					<th class="text-center">분류</th>
-					<th class="text-center">총액</th>
-					<th class="text-center">퍼센트</th>
-				</thead>
-			
-				<tbody>
-					<c:choose>
-						<c:when test="${dayList.size()>0}">
-							<c:forEach var="Chart" items="${dayList}">
-								<tr>
-									<td class="text-left">${Chart.cdDtlNm}</td>
-									<td class="text-center">${Chart.ctgTotal}</td>
-									<td class="text-right">${Chart.percent}%</td>
-								</tr>
-							</c:forEach>
-						</c:when>
-					</c:choose>
-				</tbody>
+				<thead>
+    				<tr class = " danger">
+    					<th>분류</th>
+    					<th>총액</th>
+    					<th>퍼센트</th>
+    				</tr>
+    			</thead>
+    			
+				<tbody id = "dayChart">
 			</table>
 		</form>
 	</div>
@@ -89,25 +79,13 @@
 	google.charts.load("current", {packages:["corechart"]});
 	google.charts.setOnLoadCallback(drawChart);
 
+	var dayData;
+	
 	function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-			['Category_Nm', 'Total per category'],
-          	['${dayList.get(0).cdDtlNm}', ${dayList.get(0).ctgTotal}],
-          	['${dayList.get(1).cdDtlNm}', ${dayList.get(1).ctgTotal}],
-          	['${dayList.get(2).cdDtlNm}', ${dayList.get(2).ctgTotal}],
-          	['${dayList.get(3).cdDtlNm}', ${dayList.get(3).ctgTotal}],
-          	['${dayList.get(4).cdDtlNm}', ${dayList.get(4).ctgTotal}],
-			['${dayList.get(5).cdDtlNm}', ${dayList.get(5).ctgTotal}],
-			['${dayList.get(6).cdDtlNm}', ${dayList.get(6).ctgTotal}],
-			['${dayList.get(7).cdDtlNm}', ${dayList.get(7).ctgTotal}],
-			['${dayList.get(8).cdDtlNm}', ${dayList.get(8).ctgTotal}],
-			['${dayList.get(9).cdDtlNm}', ${dayList.get(9).ctgTotal}],
-			['${dayList.get(10).cdDtlNm}', ${dayList.get(10).ctgTotal}],
-			['${dayList.get(11).cdDtlNm}', ${dayList.get(11).ctgTotal}],
-			['${dayList.get(12).cdDtlNm}', ${dayList.get(12).ctgTotal}],
-			['${dayList.get(13).cdDtlNm}', ${dayList.get(13).ctgTotal}],
-			['${dayList.get(14).cdDtlNm}', ${dayList.get(14).ctgTotal}]
-        ]);
+		var data = google.visualization.arrayToDataTable([
+			['Category_Nm', 'Total per category'],	
+			['식비', 10000]
+		]);
 
 		var options = {
 			title: '나의 일 별 지출 패턴',
@@ -118,11 +96,49 @@
 		chart.draw(data, options);
 	}
 	
-	function doDay(){
-		var frm = document.frm;
-		frm.action = "doDay.do";
-		frm.submit();
-	} 
+	$(document).ready(function(){
+		$("#doDay").on("click",function(){
+			$.ajax({	
+				type:"GET",
+            	url:"doDay.do",   
+            	dataType:"html",// JSON/html
+            	async: false,
+            	data:{ 
+            		"chartUserId":'a',
+					"year":2018,
+					"month":6,
+					"day":15           
+            	},
+            	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
+            		//json parsing
+            		dayData = $.parseJSON(data);
+	            	var dayDataLen = dayData.length;
+					
+	            	console.log("dayData=" + dayData);
+	            	console.log("dayDataLen=" + dayDataLen);
+					
+	            	if(dayDataLen == 0){
+	            		alert("데이터가 없습니다");
+	            	}else{
+	            		$.each(dayData,function(key,value){
+	            			$("#dayChart").append(
+									 "<tr>"
+									 +"<td>"+value.cdDtlNm+"</td>"
+									 +"<td>"+value.ctgTotal+"</td>"
+									 +"<td>"+value.percent+"%"+"</td>"
+									 +"</tr>"
+	            			);//append
+	            		});//each
+	            	}//ifelse
+				},
+				complete: function(data){//무조건 수행
+				},
+				error: function(xhr,status,error){
+					console.log("doDay error: "+error);
+				}
+			}); //--ajax
+		});
+	});
 	</script>
 </body>
 </html>

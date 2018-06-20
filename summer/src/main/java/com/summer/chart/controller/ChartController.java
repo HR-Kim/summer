@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.summer.chart.domain.Chart;
 import com.summer.chart.service.ChartService;
 
@@ -25,81 +27,69 @@ public class ChartController {
 	 * 일간 화면 => 카테고리 별 지출 리스트 출력  + 파이 차트
 	 */
 	@RequestMapping(value="/chart/doDay.do", 
-				method=RequestMethod.GET)
-	public String getDay(Chart vo, Model model) throws SQLException{
-		log.debug("1. controller =====doDay.do=====");
-		
-		vo.setChartUserId("a");
-		vo.setYear(2018);
-		vo.setMonth(06);
-		vo.setDay(15);
-		log.debug("2. controller =====Chart vo====="+vo.toString());
-		
+				method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getDay(Chart vo) throws SQLException{		
 		List<Chart> dayList = chartService.getDay(vo);
-		log.debug("3. controller =====list=====" + dayList);
+
+		Gson dayGson = new Gson();
+		String dayJsonStr = dayGson.toJson(dayList);
 		
-		if(dayList.size() <= 0) {
-			log.debug("사용자의 지출 내역이 없습니다.");
-		}
+		log.debug("=dayJsonStr=" + dayJsonStr);
 		
-		model.addAttribute("dayList", dayList);
-		return "chart/chart";
+		return dayJsonStr;
 	}
 	
 	/**
 	 * 주간 화면 => 카테고리 별 지출 리스트 출력 + 파이 차트
 	 */
 	@RequestMapping(value="/chart/doWeek.do", 
-			method=RequestMethod.GET)
-	public String getWeek(Chart vo, Model model) throws SQLException{
-		log.debug("1. controller =====doWeek.do=====");
-		
-		vo.setChartUserId("a");
-		vo.setWeekStart(20180605);
-		vo.setWeekEnd(20180615);
-		log.debug("2. controller =====Chart vo====="+vo.toString());
-		
+			method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getWeek(Chart vo) throws SQLException{		
 		List<Chart> weekList = chartService.getWeek(vo);
-		log.debug("3. controller =====list=====" + weekList);
 		
-		if(weekList.size() <= 0) {
-			log.debug("사용자의 지출 내역이 없습니다.");
-		}
+		Gson weekGson = new Gson();
+		String weekJsonStr = weekGson.toJson(weekList);
 		
-		model.addAttribute("weekList", weekList);
-		return "chart/chart2";
+		log.debug("=weekJsonStr=" + weekJsonStr);
+		
+		return weekJsonStr;
 	}
 	
 	
 	/**
 	 * 월간 화면 => 카테고리 별 지출 리스트 출력 + 월 별 바 차트
 	 */
-	@RequestMapping(value="/chart/doMonth.do",
-			method=RequestMethod.GET)
-	public String getMonth(Chart vo, Model model) throws SQLException{
-		log.debug("1. controller =====doCtgChart.do=====");
-
-		vo.setChartUserId("a");
+	@RequestMapping(value="/chart/doMonthPie.do", 
+			method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getMonthPie(Chart vo) throws SQLException{
+		/*vo.setChartUserId("a");
 		vo.setYear(2018);
-		vo.setMonth(6);
-		log.debug("2. controller =====Chart vo====="+vo.toString());
-		
+		vo.setMonth(6);*/
+
 		List<Chart> pieList = chartService.getMonthPie(vo);
+		
+		Gson monthPieGson = new Gson();
+		String monthPieJsonStr = monthPieGson.toJson(pieList);
+		
+		log.debug("=monthPieJsonStr=" + monthPieJsonStr);
+		
+		return monthPieJsonStr;
+	}
+	
+	@RequestMapping(value="/chart/doMonthBar.do", 
+			method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getMonthBar(Chart vo) throws SQLException{
 		List<Chart> barList = chartService.getMonthBar(vo);
-		log.debug("3-1. controller =====pieList=====" + pieList);
-		log.debug("3-2. controller =====barList=====" + barList);
 		
-		if(pieList.size() <= 0) {
-			log.debug("pieList.size() <= 0");
-		}
+		Gson monthBarGson = new Gson();
+		String monthBarJsonStr = monthBarGson.toJson(barList);
 		
-		if(barList.size() <= 0) {
-			log.debug("barList.size() <= 0");
-		}
+		log.debug("=monthBarJsonStr=" + monthBarJsonStr);
 		
-		model.addAttribute("pieList", pieList);
-		model.addAttribute("barList", barList);
-		
-		return "chart/chart3";
+		return monthBarJsonStr;
 	}
 }
