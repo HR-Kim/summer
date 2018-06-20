@@ -47,6 +47,18 @@
 		<put-attribute name  = "body"   value = "/finrec/houseLoanDetailView.jsp" />
 	</definition>
 	
+	<!-- good/goodList -->
+	<definition name = "good/goodList"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "최저가검색" />
+		<put-attribute name  = "body"   value = "/good/goodList.jsp" />
+	</definition>
+	
+	<!-- good/goodDetail -->
+	<definition name = "good/goodDetail"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "최저가검색상세" />
+		<put-attribute name  = "body"   value = "/good/goodDetail.jsp" />
+	</definition>
+	
 
 </tiles-definitions>
 

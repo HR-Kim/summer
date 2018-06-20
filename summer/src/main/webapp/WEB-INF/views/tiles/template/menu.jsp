@@ -4,7 +4,6 @@
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-	<form class="form-inline" name="frm" id="frm" method="get">
           <ul class="nav">
             <li class="nav-item nav-category">
               <span class="nav-link">내 가계부</span>
@@ -53,7 +52,7 @@
               <span class="nav-link">최저가 검색</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
+              <a class="nav-link" href="${CONTEXT}/good/doSelectList.do">
                 <span class="menu-title">검색하기</span>
                 <i class="icon-flag menu-icon"></i>
               </a>
@@ -92,36 +91,4 @@
               </div>
             </li>
           </ul>
-	</form>
         </nav>
-        
-        
-	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
-	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		
-		//일간리스트 조회
-		function doSelectList(){
-			var frm = document.frm;
-			frm.action = "accounts/doSelectList.do";
-			frm.submit();
-		}
-		
-		//월간리스트 조회
-		function doSelectListMonth(){
-			var frm = document.frm;
-			frm.searchDiv.value = "2018";
-			frm.action = "accounts/doSelectListMonth.do";
-			frm.submit();
-		}
-		
-		//주간리스트 조회
-		function doSelectListWeek(){
-			var frm = document.frm;
-			//frm.searchDiv.value="2018/06";
-			frm.action = "accounts/doSelectListWeek.do";
-			frm.submit();
-		}
-	
-	
-	</script>
