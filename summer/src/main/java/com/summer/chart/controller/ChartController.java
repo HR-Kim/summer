@@ -31,7 +31,7 @@ public class ChartController {
 		
 		vo.setChartUserId("a");
 		vo.setYear(2018);
-		vo.setMonth(05);
+		vo.setMonth(06);
 		vo.setDay(15);
 		log.debug("2. controller =====Chart vo====="+vo.toString());
 		
@@ -55,8 +55,8 @@ public class ChartController {
 		log.debug("1. controller =====doWeek.do=====");
 		
 		vo.setChartUserId("a");
-		vo.setWeekStart(20180505);
-		vo.setWeekEnd(20180515);
+		vo.setWeekStart(20180605);
+		vo.setWeekEnd(20180615);
 		log.debug("2. controller =====Chart vo====="+vo.toString());
 		
 		List<Chart> weekList = chartService.getWeek(vo);
@@ -81,7 +81,7 @@ public class ChartController {
 
 		vo.setChartUserId("a");
 		vo.setYear(2018);
-		vo.setMonth(5);
+		vo.setMonth(6);
 		log.debug("2. controller =====Chart vo====="+vo.toString());
 		
 		List<Chart> pieList = chartService.getMonthPie(vo);
