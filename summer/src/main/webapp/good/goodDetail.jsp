@@ -76,9 +76,9 @@
 	<!-- search -->
 	<form class="form-inline" name="frm" id="frm" method="get">
 		<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
-		<input type="text" name="goodId" value="${detailGood.goodId}"/>
-		<input type="text" id="x"/>
-		<input type="text" id="y"/>
+		<input type="hidden" name="goodId" value="${detailGood.goodId}"/>
+		<input type="hidden" id="x"/>
+		<input type="hidden" id="y"/>
 		
 		<table class="table">
 			<tr>
@@ -99,7 +99,7 @@
 	
 	<!-- list -->
 	<div class="table-responsive">
-		<table class="table  table-striped table-bordered table-hover" id="listTable">
+		<table class="table table-striped table-bordered table-hover" id="listTable">
        	<thead class="bg-primary">
        		<th class="text-center">최저가격</th>
        		<th class="text-center">평균가격</th>
@@ -107,9 +107,9 @@
        	</thead>
        	<tbody>
        		<tr>
-		         	<td class="text-center">${detailGood.minPrice}</td>
-		         	<td class="text-center">${detailGood.avgPrice}</td>
-		         	<td class="text-center">${detailGood.maxPrice}</td>
+		         	<td class="text-center">${detailGood.minPrice} 원</td>
+		         	<td class="text-center">${detailGood.avgPrice} 원</td>
+		         	<td class="text-center">${detailGood.maxPrice} 원</td>
 		       </tr>
          	</tbody>
        </table>
@@ -117,7 +117,29 @@
 	<!-- list end -->
 	
 	<div id="map"></div>
-	</div>
+	
+	<!-- List ------------------------------------------------------------->
+  
+  <h4>가까운 매장</h4>
+  <hr/>
+  
+     	<table id="entpTable" class="table table-striped table-bordered table-hover">
+        	<thead class="bg-primary">
+        		<tr>
+        			<th class="text-center">매장명</th>
+	         		<th class="text-center">가격</th>
+         		</tr>
+         	</thead>
+        	<tbody>
+        		<tr>
+	         		<td colspan="99" class="text-center">no data</td>
+	         	</tr>		
+        	</tbody>
+        </table>
+      </div>
+	    
+
+   <!--// List ----------------------------------------------------------->
 
 
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
@@ -144,7 +166,6 @@
 	
 	
 	$(document).ready(function(){
-		//doEntpSearch();
 	});
 
 	
@@ -190,8 +211,8 @@
             x = pos.lat;
             y = pos.lng
             
-            console.log(x);
-            console.log(y);
+            //console.log(x);
+            //console.log(y);
             
             $("#x").val(x);
             $("#y").val(y);
@@ -235,8 +256,8 @@
       }
       
    function doEntpSearch(){
-	   alert($("#x").val());
-	   alert($("#y").val());
+	   //alert($("#x").val());
+	   //alert($("#y").val());
 	   
 	   $.ajax({
 	      	 type:"GET",
@@ -247,19 +268,24 @@
     	   "goodId":${detailGood.goodId},
     	   "XMapCoord":$("#x").val(),
     	   "YMapCoord":$("#y").val()
-           },
+        },
        success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
-      	 console.log("data="+data); 
-/*        
+      	 //console.log("data="+data); 
+        
        	//json parsing
        	var parseData = $.parseJSON(data); //데이터 들어있음.
        
-       	$('#listTable > tbody > tr').remove();
+       	$('#entpTable > tbody > tr > td').remove();
        	
        	$.each(parseData , function(idx, val) {
-       		 $('#listTable > tbody').append("<tr><td>" + val[0] + "</td><td class='text-right' style='color: red;'>" + numberWithCommas(val[1]) + "</td><td class='text-right' style='color: blue;'>" + numberWithCommas(val[2])+ "</td><td class='text-right'>"+ numberWithCommas(val[3]) + "</td></tr>");
+       		 $('#entpTable > tbody').append(
+       				 "<tr>"
+       				 +"<td>" + val[0] + "</td>"
+       				 +"<td class='text-right'>" + numberWithCommas(val[1]) + " 원</td>"
+       				 +"</tr>"
+       				 );
        		
-       		}); */
+       		}); 
        		
            },
           complete: function(data){//무조건 수행
@@ -267,8 +293,13 @@
           error: function(xhr,status,error){
           console.log("dosearchEntp error: "+error);
            }
-		}); //--그리드 클릭> ajax
+		}); //그리드 클릭> ajax
    }
+   
+ //천단위 콤마
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	
 	function doSearch(){
 		var frm = document.frm;
