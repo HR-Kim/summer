@@ -1,5 +1,3 @@
-
-
 <%@page import="com.summer.accounts.domain.Accounts"%>
 <%@page import="com.summer.comm.DTO"%>
 <%@page import="java.util.List"%>
@@ -21,10 +19,10 @@
 	log.debug("=this.getClass()="+this.getClass());
 	log.debug("===============================");
 
-	String pageSize = "10"; //페이지 사이즈
-	String pageNum = "1";  //현재 페이지
-	String searchWord = ""; //검색어
-	String searchDiv = ""; //검색구분
+	String pageSize = "10";	//페이지 사이즈
+	String pageNum = "1";	//현재 페이지
+	String searchWord = ""; 	//검색어
+	String searchDiv = ""; 	//검색구분
 	
 	String searchTrade = "";
 	String searchCategory = "";
@@ -83,89 +81,78 @@
   </head>
   <body>
   
-  <div class="container">
- 
-   <!-- Search ----------------------------------------------------------->
-   	<form class="form-inline" name="frm" id="frm" method="get">
-   		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
-
-
-   		<table class="table">
-   			<tr>
-   				<td class="text-left">
-   					<div class="form-group col-lg6 col-sm6">
-						<select id="searchDiv" name="searchDiv">
-				          <c:forEach begin="0" end="10" var="result" step="1">
-				           <option value="${2018 - result}"
-				           	<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
-				           </option>
-				          </c:forEach>                          
-				        </select>
-
-    					<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
-							
-   					</div>
-   			</tr>
-   		</table>
-   	</form> 
-
-   	<!--// Search --------------------------------------------------------->
-   
-  
-   <!-- List ------------------------------------------------------------->
-  
-	     <div class="table-responsive">
-	     	
-	       <table id="listTable" class="table  table-striped table-bordered table-hover">
-	        	<thead class="bg-primary">
-	        		<tr>
-	        			<th class="text-center">달</th>
-		         		<th class="text-center">지출</th>
-		         		<th class="text-center">수입</th>
-		         		<th class="text-center">총합</th>
-	         		</tr>
-	        	</thead>
-	        	<tbody>
-	        		
-	        	<c:choose>
-	        		<c:when test="${list.size()>0 }">
-	        			<c:forEach var="AccountsVO" items="${list }">
+	<div class="container">
+		<!-- Search ----------------------------------------------------------->
+		<form class="form-inline" name="frm" id="frm" method="get">
+	   		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
+	
+	
+	   		<table class="table">
+	   			<tr>
+	   				<td class="text-left">
+	   					<div class="form-group col-lg6 col-sm6">
+							<select id="searchDiv" name="searchDiv">
+					          <c:forEach begin="0" end="10" var="result" step="1">
+					           <option value="${2018 - result}"
+					           	<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
+					           </option>
+					          </c:forEach>                          
+					        </select>
+	    						<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
+	   					</div>
+	   			</tr>
+	   		</table>
+	   	</form> 
+		<!--// Search --------------------------------------------------------->
+		
+			<!-- List ------------------------------------------------------------->
+			     <div class="table-responsive">
+			       <table id="listTable" class="table  table-striped table-bordered table-hover">
+			        	<thead class="bg-primary">
 			        		<tr>
-			        		<td class="text-center">${AccountsVO.aDate }</td>
-			        		 <td class="text-right" style="color: red;">
-						          <fmt:formatNumber value="${AccountsVO.sumExp}" pattern="#,###"/>원
-						    </td>
-			        		<td class="text-right" style="color: blue;">
-								<fmt:formatNumber value="${AccountsVO.sumInc}" pattern="#,###"/>원
-							</td>
-			        		<td class="text-right">
-								<fmt:formatNumber value="${AccountsVO.sumTotal}" pattern="#,###"/>원
-							</td>
+			        			<th class="text-center">달</th>
+				         		<th class="text-center">지출</th>
+				         		<th class="text-center">수입</th>
+				         		<th class="text-center">총합</th>
 			         		</tr>
-		         		</c:forEach>
-	         		</c:when>
-	         		<c:otherwise>
-	         			<tr>
-		          		<td colspan="99" class="text-center">데이터가 없습니다.</td>
-		         		</tr>
-	         		</c:otherwise>
-	         	</c:choose>
-	         	
-	         	
-	        	</tbody>
-	        </table>
-	        
-	      </div>
-	    
-
-   <!--// List ----------------------------------------------------------->
+			        	</thead>
+			        	<tbody>
+			        		
+			        	<c:choose>
+			        		<c:when test="${list.size()>0 }">
+			        			<c:forEach var="AccountsVO" items="${list }">
+					        		<tr>
+					        		<td class="text-center">${AccountsVO.aDate }</td>
+					        		 <td class="text-right" style="color: red;">
+								          <fmt:formatNumber value="${AccountsVO.sumExp}" pattern="#,###"/>원
+								    </td>
+					        		<td class="text-right" style="color: blue;">
+										<fmt:formatNumber value="${AccountsVO.sumInc}" pattern="#,###"/>원
+									</td>
+					        		<td class="text-right">
+										<fmt:formatNumber value="${AccountsVO.sumTotal}" pattern="#,###"/>원
+									</td>
+					         		</tr>
+				         		</c:forEach>
+			         		</c:when>
+			         		<c:otherwise>
+			         			<tr>
+				          		<td colspan="99" class="text-center">데이터가 없습니다.</td>
+				         		</tr>
+			         		</c:otherwise>
+			         	</c:choose>
+			        	</tbody>
+			        </table>
+			      </div>
+			<!--// List ----------------------------------------------------------->
+		   
+			<!-- Paging ----------------------------------------------------------->
+			<div class="form-inline text-center">
+		   		<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "doSelectList.do", "search_page")%>
+			</div>
+			<!--// Paging --------------------------------------------------------->
+	</div>
    
-   <!-- Paging ----------------------------------------------------------->
-   <div class="form-inline text-center">
-   		<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "doSelectList.do", "search_page")%>
-   </div>
-   <!--// Paging --------------------------------------------------------->
-   </div>
    
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
@@ -174,14 +161,9 @@
 	//리스트 조회
 	function doSelectListMonth(){
 		var frm = document.frm;
-		
-		frm.action = "doSelectListMonth.do";
-		
+		frm.action = "${CONTEXT}/accounts/doSelectListMonth.do";
 		frm.submit();
 	}
-	
-		
 	</script>
-	
   </body>
 </html>
