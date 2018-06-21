@@ -94,15 +94,12 @@
 	   			<tr>
 	   				<td class="text-left">
 	   					<div class="form-group col-lg6 col-sm6">
-							<select id="searchYear" name="searchYear" onchange="makeWeekSelectOptions();">
-					          <c:set var="now" value="<%=new java.util.Date()%>" />
-					          <fmt:formatDate value="${now}" pattern="yyyy" var="yearStart"/> 
+							<select id="searchDiv" name="searchDiv">
 					          <c:forEach begin="0" end="10" var="result" step="1">
-					           <option value="<c:out value="${yearStart - result}" />" 
-					           	<c:if test="${(yearStart - result) == searchYear}"> selected="selected"</c:if>><c:out value="${yearStart - result}" />
+					           <option value="${2018 - result}"
+					           	<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
 					           </option>
-					          </c:forEach>  
-					          	                        
+					          </c:forEach>                          
 					        </select>
 					        
 					        <select id="searchMonth" name="searchMonth" onchange="makeWeekSelectOptions();">
