@@ -157,12 +157,11 @@
 			    		</div>
 					</div>
 					
-						<div class="form-group" id="submitBtn" align="right">
-				    		<div class="col-lg-10">
+						<div class="col-lg-10 form-group" id="submitBtn" align="right">
+				    		
 				    			<button class="btn btn-sm" id="doUpsert">등록</button>
-				    			<button class="btn btn-sm" id="doDelete">삭제</button>
+<!-- 				    			<button class="btn btn-sm" id="doDelete">삭제</button> -->
 				    			
-				    		</div>
 			    		</div> 
 				</form>
     		</div>
@@ -223,12 +222,12 @@
 	        		<tr>
 	        			<th class="text-center" style="display:none;">번호</th>
 	        			<th class="text-center" style="display:none;">거래구분</th>
-		         		<th class="text-center">카테고리</th>
-		         		<th class="text-center">날짜</th>
-		         		<th class="text-center">항목</th>
-		         		<th class="text-center">구분</th>
-		         		<th class="text-center">금액</th>
-		         		<th class="text-center">메모</th>
+		         		<th class="text-center" width="150">카테고리</th>
+		         		<th class="text-center" width="150">날짜</th>
+		         		<th class="text-center" width="200">항목</th>
+		         		<th class="text-center" width="150">구분</th>
+		         		<th class="text-center" width="200">금액</th>
+		         		<th class="text-center" width="200">메모</th>
 	         		</tr>
 	        	</thead>
 	        	<tbody>
@@ -239,7 +238,10 @@
 			        		<tr>
 			        			<td class="text-center" style="display:none;">${AccountsVO.ano }</td>
 			        			<td class="text-center" style="display:none;">${AccountsVO.tradeId }</td>
-			          		<td class="text-center"><label class="badge badge-danger" style="border: 1px solid #fd3258; background-color: #fd3258">${AccountsVO.categoryId }</label></td>
+			          		<td class="text-center">
+				          		<label class="badge" style="border: 1px solid #fd3258; background-color: #fd3211">
+				          		${AccountsVO.categoryId }</label>
+			          		</td>
 					          <td class="text-left">${AccountsVO.aDate }</td>
 					          <td class="text-left">${AccountsVO.item }</td>
 					          <td class="text-left">${AccountsVO.accountId }</td>
@@ -360,6 +362,10 @@
 	                   		
 	                   		});
 	        				
+	        				$('#submitBtn > #doDelete').remove();
+	        				$('#submitBtn').append('<button class="btn btn-sm" id="doDelete">삭제</button>');
+	        				
+	        				
 	          			  if(false==confirm("조회 하시겠습니까?"))return;
 	          			  $("#expenseModal").modal();
 	          			  $.ajax({
@@ -388,8 +394,9 @@
 	      								$("#memo").val(parseData.memo);
 	      								
 	      			                 },
-	      			                complete: function(data){//무조건 수행
+	      			                complete: function(data){
 	      			                	
+	      			                		//수정
 	      			                	$("#doUpsert").on("click",function(){
 	      			                		
 	      					    			if(false==confirm("수정 하시겠습니까?"))return;
@@ -431,7 +438,44 @@
 	      						                console.log("do_checkedDelete error: "+error);
 	      						                 }
 	      							   		}); //--ajax
-	      			    				});//--등록
+	      			    				});//--수정
+	      			    				
+	      			    			//삭제
+	      			    				$("#doDelete").on("click",function(){
+	      			    	    			console.log($("#ano").val());
+	      			    	    			
+	      			    					
+	      			    	    			if(false==confirm("삭제 하시겠습니까?"))return;
+	      			    	    			$.ajax({	
+	      			    				      	 type:"POST",
+	      			    	                url:"doDelete.do",   
+	      			    	                dataType:"html",// JSON/html
+	      			    	                async: false,
+	      			    	                data:{ 
+	      			    							"ano"	:$("#ano").val()
+	      			    		                 },
+	      			    	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+	      			    	               	 console.log("data="+data); 
+	      			    	                	//json parsing
+	      			    	                	var parseData = $.parseJSON(data); //데이터 들어있음.
+	      			    	                	console.log("parseData"+parseData);
+	      			    	                		
+	      			    	                	if(parseData.msgId == "1"){
+	      			    	                		alert(parseData.message);	
+
+	      			    	                		doSelectList();
+	      			    	                	}else{
+	      			    	                		alert(parseData.message);	
+	      			    	                		}
+	      			    	               		
+	      			    		                 },
+	      			    		                complete: function(data){//무조건 수행
+	      			    		                 },
+	      			    		                error: function(xhr,status,error){
+	      			    		                console.log("do_checkedDelete error: "+error);
+	      			    		                 }
+	      			    			   		}); //--ajax
+	      			    	    		});//--삭제
 	      			    				
 	      			                 },
 	      			                error: function(xhr,status,error){
@@ -451,12 +495,12 @@
  
     		});// --클릭끝
 			
-			//등록수정
+			//등록
     			$("#expenses,#incomes").on("click",function(){
     				
     				var trade = this.value;
     				
-    				
+    				$('#submitBtn > #doDelete').remove();
     				$.ajax({	
 				      	type:"GET",
 	                url:"doSearchTrade.do",   
@@ -553,42 +597,11 @@
     			});
     		
 			
-     		//삭제
-			$("#doDelete").on("click",function(){
-    			console.log($("#ano").val());
-    			
-				
-    			if(false==confirm("삭제 하시겠습니까?"))return;
-    			$.ajax({	
-			      	 type:"POST",
-                url:"doDelete.do",   
-                dataType:"html",// JSON/html
-                async: false,
-                data:{ 
-						"ano"	:$("#ano").val()
-	                 },
-                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
-               	 console.log("data="+data); 
-                	//json parsing
-                	var parseData = $.parseJSON(data); //데이터 들어있음.
-                	console.log("parseData"+parseData);
-                		
-                	if(parseData.msgId == "1"){
-                		alert(parseData.message);	
+    			//모달 값 초기화.
+    			$('.modal').on('hidden.bs.modal', function (e) {
+    			    $(this).find('form')[0].reset()
+    			});
 
-                		doSelectList();
-                	}else{
-                		alert(parseData.message);	
-                		}
-               		
-	                 },
-	                complete: function(data){//무조건 수행
-	                 },
-	                error: function(xhr,status,error){
-	                console.log("do_checkedDelete error: "+error);
-	                 }
-		   		}); //--ajax
-    		});//--삭제
     		
 		});
 		
