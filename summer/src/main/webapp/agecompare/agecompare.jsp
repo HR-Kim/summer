@@ -108,7 +108,37 @@
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-    	  
+	
+
+	 
+	 google.charts.load('current', {'packages':['line']});
+    google.charts.setOnLoadCallback(drawChart);
+    
+	 function drawChart(arr){
+		//arr = "["+arr+"]";
+		alert("나중에 시작해야할 것"+arr);
+		var data = new google.visualization.arrayToDataTable(arr);
+		 /*var data = new google.visualization.arrayToDataTable([
+			 arr  
+			//['Date','20대','30대'],['18/04',376642,129411],['18/05',408000,1647]
+			   //$("#allLinea").val()
+		   ]);*/
+		alert(data);
+		var options = {
+		     chart: {
+		       title: '연령대별 차트',
+		       subtitle: 'in millions of dollars (USD)'
+		     },
+		     width: 900,
+		     height: 500
+		   };
+		
+		   var chart = new google.charts.Line(document.getElementById('curve_chart'));
+		
+		   chart.draw(data, google.charts.Line.convertOptions(options));
+	}
+	
+	
 	 $(document).ready(function(){
 		 //------------------- 기 간 ---------------------------//
 		 $.datepicker.regional['ko'] = {
@@ -218,6 +248,9 @@
 			 } 
 		});
 		 
+		 var ajaxObject="";
+		 var ajaxObjectLen="";
+		 
 		 //체크해서 조회
 		 $("#btnSearch").on("click",function(){			 
 			 var count=0;
@@ -262,32 +295,38 @@
 						success:function(data){
 							var aa = data.replace(/Z/g,"'");
 							aa = aa.substring(1,aa.length-1);
-							alert(aa);
+							alert("Data= "+aa);
 							$("#allLinea").val(aa);
-							alert($("#allLinea").val());
-							var parseData = $.parseJSON(data);
 							
+							//var aaSplit = aa.split('-');
+							//alert(aaSplit);
+							drawChart(aa);
 						}
 					 });
 			 }
 		 });
 	 });
-	 
 	
 	 // 구글 차트
-	 google.charts.load('current', {'packages':['line']});
+	/* google.charts.load('current', {'packages':['line']});
      google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
 		
-		
-	   var data = new google.visualization.arrayToDataTable([
+		var data = new googl.visualization.DataTable();
+		for(var i=0; i<ajaxObject.length; i++){
+			if(i==0){
+				data.addColumn(ajaxObject[i]);
+			}else{
+				data.addRows(ajaxObject[i]);
+			}
+		}
+	   /*var data = new google.visualization.arrayToDataTable([
 		   //['Date','20대','30대'],['18/04',376642,129411],['18/05',408000,1647]
 		   $("#allLinea").val()
-		   //allLinea
-	   ]);
+	   ]);*/
 	
-	   var options = {
+	  /* var options = {
 	     chart: {
 	       title: '연령대별 차트',
 	       subtitle: 'in millions of dollars (USD)'
@@ -299,7 +338,7 @@
 	   var chart = new google.charts.Line(document.getElementById('curve_chart'));
 	
 	   chart.draw(data, google.charts.Line.convertOptions(options));
-	  }
+	  }*/
     
     </script>
 </body>

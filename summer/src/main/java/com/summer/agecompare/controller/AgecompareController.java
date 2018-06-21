@@ -67,11 +67,6 @@ public class AgecompareController {
 				tmpList += ","+ Integer.parseInt(list.get(j).getTotal())/Integer.parseInt(list.get(j).getAgeTotal());
 			}
 			tmpList += "]";
-			/*
-			tmp += "adate:"+list.get(i).getaDate();
-			tmp += "total:"+list.get(i).getTotal();
-			tmp += "agetotla:"+list.get(i).getAgeTotal();
-			tmp += "age:"+list.get(i).getAge();*/
 		}		
 		
 		Gson gson = new Gson();
