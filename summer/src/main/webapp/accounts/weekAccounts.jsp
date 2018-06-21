@@ -158,7 +158,13 @@
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-
+	
+	function doSearch(){
+		var frm = document.frm;
+		frm.action = "doSelectListWeek.do";
+		frm.submit();
+	}
+	
 	function makeWeekSelectOptions() {
 	    var year =  document.getElementById("searchYear").value;
 	    var month =  document.getElementById("searchMonth").value;
@@ -224,8 +230,9 @@
 	
 	$(document).ready(function(){
 				
+			
 
-		$("#doSelectWeek").on("click",function(){
+
 			$.ajax({
 	    			      	 type:"GET",
 		                 url:"doSelectListWeek.do",   
@@ -254,7 +261,7 @@
 			                console.log("do_checkedDelete error: "+error);
 			                 }
   			   }); //--그리드 클릭> ajax
-			})
+			
 			
 	});
 			

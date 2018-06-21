@@ -64,6 +64,12 @@
 		<put-attribute name  = "title"  value = "일간 가계부" />
 		<put-attribute name  = "body"   value = "/accounts/dayAccounts.jsp" />
 	</definition>
+
+	<!-- accounts/weekAccounts -->
+	<definition name = "accounts/weekAccounts"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "주간 가계부" />
+		<put-attribute name  = "body"   value = "/accounts/weekAccounts.jsp" />
+	</definition>
 	
 	<!-- accounts/monthAccounts -->
 	<definition name = "accounts/monthAccounts"  extends = "base-definition">
