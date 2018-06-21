@@ -8,8 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
-
+<!--  css -->
   <link rel="stylesheet" href="${CONTEXT}/resources/theme/css/style.css">
+  <!--  jQuery -->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  
 <title>***<tiles:getAsString name="title"/>***</title>
 </head>
 <body>

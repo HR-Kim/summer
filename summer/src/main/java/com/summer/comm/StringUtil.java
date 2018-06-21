@@ -47,18 +47,18 @@ public class StringUtil {
 
 		   html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">   \n");
 		   html.append("<tr>                       \n");
-		   html.append("<td class=\"list_num\">                                                                    \n");
-		   html.append("<ul class=\"pagination pagination-sm\">                                                  \n");
+		   html.append("<td>                                                                    \n");
+		   html.append("<ul class=\"pagination rounded-separated pagination-info mt-3\">                                                  \n");
 		   // <<
 		   if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-		    html.append("<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  \n");
+		    html.append("<li class = \"page-item active\"><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  \n");
 		    html.append("&laquo;   \n");
 		    html.append("</a></li>      \n");
 		   }
 
 		   // <
 		   if (startPageNo > bottomCount) {
-		    html.append("<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> \n");
+		    html.append("<li class = \"page-item\"><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> \n");
 		    html.append("<        \n");
 		    html.append("</a></li>     \n");
 		   }
@@ -69,26 +69,27 @@ public class StringUtil {
 		   for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
 		    
 		    if (inx == currPageNo) {
-		     html.append("<li class='active'><a href='#'>" + inx + "</a></li>");
+		     html.append("<li class=\"page-item\"><a href='#'>" + inx + "</a></li>");
 		    } else {
-		     html.append("<li><a href=\"javascript:" + scriptName + "('" + url + "'," + inx+ ");\" class=\"num_text\">" + inx + "</a></li> \n");
+		     html.append("<li class = \"page-item\"><a href=\"javascript:" + scriptName + "('" + url + "'," + inx+ ");\" >" + inx + "</a></li> \n");
 		    }
 		   }
 		   
 		   // >
 		   if (maxPageNo >= inx) {
-		    html.append("<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> \n");
+		    html.append("<li class=\"page-item\"><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> \n");
 		    html.append(">                       \n");
 		    html.append("</a></li>              \n");
 		   }
 
 		   // >>
 		   if (maxPageNo >= inx) {
-		    html.append("<li><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      \n");
+		    html.append("<li class=\"page-item\"><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      \n");
 		    html.append("&raquo;     \n");
 		    html.append("</a></li>    \n");
 		   }
 		   html.append("</ul>  \n");
+
 		   html.append("</td>   \n");
 		   html.append("</tr>   \n");
 		   html.append("</table>   \n");
