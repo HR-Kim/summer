@@ -65,6 +65,12 @@
 		<put-attribute name  = "body"   value = "/accounts/monthAccounts.jsp" />
 	</definition>
 	
+			<!--  FinRec-Saving -->
+	<definition name = "board/boardMain"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "적금목록" />
+		<put-attribute name  = "body"   value = "/board/boardMain.jsp" />
+	</definition>
+	
 
 </tiles-definitions>
 

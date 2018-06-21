@@ -76,7 +76,7 @@
               <span class="nav-link">커뮤니티</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <a class="nav-link" data-toggle="collapse" href="${CONTEXT}/board/do_selectList.do">
                 <span class="menu-title">자유게시판</span>
                 <i class="icon-bubbles menu-icon"></i>
               </a>

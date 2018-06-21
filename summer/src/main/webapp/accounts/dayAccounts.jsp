@@ -160,7 +160,6 @@
 						<div class="col-lg-10 form-group" id="submitBtn" align="right">
 				    		
 				    			<button class="btn btn-sm" id="doUpsert">등록</button>
-<!-- 				    			<button class="btn btn-sm" id="doDelete">삭제</button> -->
 				    			
 			    		</div> 
 				</form>
@@ -239,7 +238,7 @@
 			        			<td class="text-center" style="display:none;">${AccountsVO.ano }</td>
 			        			<td class="text-center" style="display:none;">${AccountsVO.tradeId }</td>
 			          		<td class="text-center">
-				          		<label class="badge" style="border: 1px solid #fd3258; background-color: #fd3211">
+				          		<label class="badge" style="border: 1px solid #fd3258; background-color:#fd3258;">
 				          		${AccountsVO.categoryId }</label>
 			          		</td>
 					          <td class="text-left">${AccountsVO.aDate }</td>
@@ -260,6 +259,7 @@
 
 					         	</c:choose>
 					          <td class="text-left">${AccountsVO.memo }</td>
+
 			         		</tr>
 		         		</c:forEach>
 	         		</c:when>
@@ -290,16 +290,38 @@
    
    
    <!-- chart ----------------------------------------------------------->
-<!--    <div class="col-md-6"> -->
-<%--    		<jsp:include page="/chart/chart.jsp"></jsp:include> --%>
-<!--    </div> -->
+   <div class="col-md-6">
+   		<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
+
+	<!-- dayList -->
+	<div class="table-responsive">
+		<form name="frm" id="frm" method="get">
+			<input type="hidden"  name="chartUserId"  id="chartUserId" />
+		
+			<table id="dayListTable" class="table table-striped table-bordered table-hover">
+				<thead>
+    				<tr class = " danger">
+    					<th>분류</th>
+    					<th>총액</th>
+    					<th>퍼센트</th>
+    				</tr>
+    			</thead>
+    			
+				<tbody id = "dayChart">
+			</table>
+		</form>
+	</div>
+	<!-- //dayList -->
+   </div>
    <!-- chart ----------------------------------------------------------->
    
    
 	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
 	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
+	
 	<script type="text/javascript">
 
+	
 		//리스트 조회
 		function doSelectList(){
 			var frm = document.frmSearch;
@@ -316,6 +338,7 @@
 		}
 
 		$(document).ready(function(){
+			
 		
 			//그리드 클릭
     		$("#listTable>tbody").on("dblclick","tr",function(){
@@ -594,7 +617,7 @@
 			                 }
 				   		}); //--ajax
     				});//--등록
-    			});
+  				});
     		
 			
     			//모달 값 초기화.
