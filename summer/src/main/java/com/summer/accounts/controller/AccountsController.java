@@ -178,6 +178,8 @@ public class AccountsController {
 		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
 		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
 		
+		vo.setSearchTrade(StringUtil.nvl(vo.getSearchTrade(), ""));
+		
 		log.debug("2===SearchVO=="+vo.toString());
 		
 		codeVo.setCdMstId("ACC_TRADE");

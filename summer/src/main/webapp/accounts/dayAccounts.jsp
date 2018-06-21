@@ -102,6 +102,10 @@
     	<div class="modal-dialog">
     		<div class="modal-content col-lg-10">
     		 	<form class="form-horizontal" name="frmEdit" id="frmEdit" method="post">
+    		 		<div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+			        	<br/>
+			        </div>
     		 	
 					<div class="modal-body">
 						<input type="hidden" name="ano" id="ano" class="form-control input-sm" maxlength="20" />
@@ -176,14 +180,13 @@
    			<tr>
    				<td class="text-left">
    					<div class="form-group col-lg6 col-sm6">
-
 						<c:choose>
 			        		<c:when test="${list1.size()>0 }">
 					        		<select name="searchTrade" id="searchTrade">
 					        			<option>전체</option>
 						        		<c:forEach var="code" items="${list1 }">
 						        			<option value="${code.cdDtlId }"
-						        				<c:if test="${searchVO.searchTrade}==${code.cdDtlId }">selected='selected'</c:if>
+						        				<c:if test="${searchVO.searchTrade==code.cdDtlId}">selected='selected'</c:if>
 						        			>${code.cdDtlNm}</option>
 						        		</c:forEach>
 					        		</select>
