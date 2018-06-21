@@ -10,7 +10,7 @@
 <link type="text/css" rel="stylesheet" href="/summer/finrec/paging/simplePagination.css"/>
 <script type="text/javascript" src="/summer/finrec/paging/jquery.simplePagination.js"></script>
 
- <div class="content-wrapper">
+
  
  
 	 <div class="col-md-3 d-flex align-items-stretch">

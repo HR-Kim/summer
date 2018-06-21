@@ -18,8 +18,14 @@
 <div class="container-fluid page-body-wrapper">
       <div class="row row-offcanvas row-offcanvas-right">
 		      <tiles:insertAttribute name = "menu" />
+		      
+		       <div class="content-wrapper">
         	<tiles:insertAttribute name = "body" />
-
+				</div>
+		</div> <!--  row row-offcanvas ends -->
+		</div> <!--  container-fluid page-body-wrapper ends -->
+		</div> <!--  container-scroller ends -->
+						
 		      
 </body>
 </html>
