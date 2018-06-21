@@ -29,6 +29,7 @@
 									                						) Ta
 									              ) T2
 							   ON T1.id = T2.id
+							   AND T2.age=#{searchWord,jdbcType=VARCHAR}
 							   ORDER BY a_date
 	</select>
 	

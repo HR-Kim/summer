@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -44,33 +46,20 @@ public class AgecompareController {
 		vo.setPageNum(vo.getPageNum()+"20");
 		vo.setPageSize(vo.getPageSize()+"20");
 
-		
+		//나이대 2,20,30
 		String[] agelist = vo.getSearchWord().split(",");
-				
-		List<Agecompare> list = new ArrayList<Agecompare>();
-		list = agecompareService.getSelectAgeList(vo);
-		
-		//monthc *= Integer.parseInt(agelist[0]);
-
-		String tmp = "";
-		String tmpList = "[ZDateZ";
-		for(int i=1; i <= Integer.parseInt(agelist[0]); i++) {
-			tmpList += ",Z" + agelist[i]+"대Z";
+		List<Agecompare> list =new ArrayList<Agecompare>();
+		List<List<Agecompare>> a =new ArrayList<List<Agecompare>>();
+		for(int i=0; i<Integer.parseInt(agelist[0]); i++) {
+			vo.setSearchWord(agelist[i+1]);
+			list = agecompareService.getSelectAgeList(vo);	
+			a.add(i, list);
 		}
-		tmpList += "]";
-		
-		
-		for(int i=0; i<monthc*Integer.parseInt(agelist[0]); i+=Integer.parseInt(agelist[0])) {
-			tmpList += ",[Z"+list.get(i).getaDate().toString()+"Z";
-			
-			for(int j=i; j<i+Integer.parseInt(agelist[0]); j++) {
-				tmpList += ","+ Integer.parseInt(list.get(j).getTotal())/Integer.parseInt(list.get(j).getAgeTotal());
-			}
-			tmpList += "]";
-		}		
+
+		//monthc *= Integer.parseInt(agelist[0]);
 		
 		Gson gson = new Gson();
-		String jsonStr = gson.toJson(tmpList);
+		String jsonStr = gson.toJson(a);
 		
 		log.debug("=jsonStr="+jsonStr);
 		
