@@ -4,17 +4,58 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.summer.finrec.saving.mappers">
 
+<sql id = "searchCondition">
+<where>   
+		h.intr_rate_type = #{intrRateType}
+		AND h.rsrv_type = #{rsrv_type}
+		<if test = "intrRateMin != null">
+		AND h.intr_rate_min &gt;= #{intrRateMin} 
+		</if>
+		<if test = "intrRateMax != null">
+		AND h.intr_rate_max &gt;= #{intrRateMax}
+		</if>
+</where>
+</sql>
 
 <!-- 목록 보여주기 -->
-<select id="selectList" parameterType="FinSavingSearch" resultType="FinSaving">
+<select id="doSearch" parameterType="FinSavingSearch" resultType="FinSaving">
+SELECT
+    t1.fin_prdt_cd,
+    t1.fin_co_no,
+    t1.kor_co_nm,
+    t1.fin_prdt_nm,
+    t1.join_way,
+    t1.mtrt_int,
+    t1.spcl_cnd,
+    t1.etc_note,
+    t1.intr_rate_min,
+    t1.intr_rate_max,
+    t1.intr_rate_type,
+    t1.rsrv_type,
+    t1.rsrv_type_nm,
+    t1.intr_rate_type_nm
+    t1.total_cnt,
+    t1.rnum as no
+FROM
+(                                                           						
+        SELECT h.*,                                               						
+               ROW_NUMBER() OVER(ORDER BY h.fin_prdt_cd) as rnum, 						
+               COUNT(*) OVER() as total_cnt                       						
+        FROM SU_SAVING h                                           						
 
+<include refid="searchCondition"/>
 
+       )t1    
 
+<![CDATA[
+WHERE t1.rnum >= (#{pageSize}*(#{pageNum}-1)+1) 
+ 						AND t1.rnum <= (#{pageSize}*(#{pageNum}-1)+#{pageSize})       
+]]>
 
 </select>
 
 <!-- 개별 항목 조회 -->
-<select id="selectOne" parameterType="FinSaving" resultType="FinSaving">
+<select id="doSelectOne" parameterType="FinSaving" resultType="FinSaving">
 SELECT
     fin_prdt_cd,
     fin_co_no,

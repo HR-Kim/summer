@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 
 <link type="text/css" rel="stylesheet" href="/summer/finrec/paging/simplePagination.css"/>
 <script type="text/javascript" src="/summer/finrec/paging/jquery.simplePagination.js"></script>
-
 
  
  
@@ -23,10 +26,12 @@
 						<b>금리유형</b>
 						<input type = "radio" name = "intrRateType" value = "S" />단리
 						<input type = "radio" name = "intrRateType" value = "M" />복리
+						<input type = "radio" name = "intrRateType" />모두
 						<p>
 						<b>적립유형</b>
-						<input type = "radio" name = "rsrvType" value = "S" />정액적립식
-						<input type = "radio" name = "rsrvType" value = "F" />자유적립식
+						<input type = "radio"  name = "rsrvType" value = "S" />정액적립식
+						<input type = "radio"name = "rsrvType" value = "F" />자유적립식
+						<input type = "radio" name = "rsrvType" />모두
 						<p>
 						<b>최소금리</b>
 						<input type = "text" class = "form-control" name = "intrRateMin" maxlength="5" />
@@ -129,11 +134,17 @@ function paging(){
 
 }//--paging
 
+function radioUncheck(radio){
+	var radio = radio;
+	$("#radioTest").removeAttr("checked") ;
+
+}
 
 $(document).ready(function(){
 	alert("ready?");
 	paging();
-	
+   
+   
 });
 
 
