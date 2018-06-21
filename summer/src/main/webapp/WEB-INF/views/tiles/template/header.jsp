@@ -1,4 +1,5 @@
 <%--CONTEXT --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -10,7 +11,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MoneyMade</a>
+          <a class="navbar-brand" href="${CONTEXT}/hello.do">MoneyMade</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
