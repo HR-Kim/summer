@@ -39,7 +39,37 @@
 	</head>
 	<body>
 	<h3>**일 별 화면**</h3>
-			<button class="btn btn-sm" id="doDay">차트일간</button>
+	
+	<div class ="form-inline pull-left">
+			<select id="year" name="year">
+				<c:forEach begin="0" end="10" var="result" step="1">
+					<option value="${2018 - result}"
+					<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
+					</option>
+				</c:forEach>                          
+			</select>
+			
+			 
+			<select id="month" name="month">
+				<c:forEach begin="1" end="12" var="result" step="1">
+					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
+					<c:if test="${result == searchMonth}"> selected="selected"</c:if>>
+					<fmt:formatNumber value="${result}" pattern="00"/>
+					</option>
+				</c:forEach>  
+			</select>
+			
+			<select id="day" name="day">
+				<c:forEach begin="1" end="31" var="result" step="1">
+					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
+					<c:if test="${result == searchMonth}"> selected="selected"</c:if>>
+					<fmt:formatNumber value="${result}" pattern="00"/>
+					</option>
+				</c:forEach>  
+			</select>
+		
+			<button class="btn btn-sm" id="doDay">차트월간</button>
+		</div>
 	
 	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
 
@@ -91,9 +121,9 @@
             	async: false,
             	data:{ 
             		"chartUserId":'a',
-					"year":2018,
-					"month":5,
-					"day":22          
+					"year":$("#year").val(),
+					"month":$("#month").val(),
+					"day":$("#day").val()    
             	},
             	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
             		//json parsing

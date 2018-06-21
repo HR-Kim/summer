@@ -232,7 +232,11 @@
 
 	function changeWeekSelectOptions() {
 		var sValue = document.getElementById("sh_week").value;
-		alert(sValue);
+		var dValue = sValue.replace(/\-/g,'');
+		var startValue = dValue.substring(0,8);
+		var endValue = dValue.substring(9,17);
+		alert(startValue);
+		alert(endValue);
 	};
   </script>
 </body>

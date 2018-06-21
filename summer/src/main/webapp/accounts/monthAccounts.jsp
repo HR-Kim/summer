@@ -69,8 +69,8 @@
     <title>:::월간 가계부:::</title>
 
     <!-- 부트스트랩 -->
-    <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
- 
+    <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet"> 
+
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
     <!--[if lt IE 9]>
@@ -99,6 +99,7 @@
 					          </c:forEach>                          
 					        </select>
 	    						<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
+	    						<input type="button" value="차트보기" onclick="showPopup();"/>
 	   					</div>
 	   			</tr>
 	   		</table>
@@ -164,6 +165,8 @@
 		frm.action = "${CONTEXT}/accounts/doSelectListMonth.do";
 		frm.submit();
 	}
+	
+	 function showPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "a", "width=400, height=300, left=100, top=50"); }
 	</script>
   </body>
 </html>

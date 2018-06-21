@@ -1,4 +1,4 @@
-<!-- 일 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 -->
+<!-- 월 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 -->
 <%@page import="com.summer.chart.dao.ChartDao"%>
 <%@page import="com.summer.chart.domain.Chart"%>
 <%@page import="org.slf4j.Logger"%>
@@ -38,22 +38,37 @@
     	
 	</head>
 	<body>
+		<form name="frmEd" id="frmEd" method="get">
+			<input type="hidden"  name="chartUserId"  id="chartUserId" />
+		</form>
+	
 		<div class ="form-inline pull-left">
+			<select id="year" name="year">
+				<c:forEach begin="0" end="10" var="result" step="1">
+					<option value="${2018 - result}"
+					<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
+					</option>
+				</c:forEach>                          
+			</select>
+			
+			 
+			<select id="month" name="month">
+				<c:forEach begin="1" end="12" var="result" step="1">
+					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
+					<c:if test="${result == searchMonth}"> selected="selected"</c:if>>
+					<fmt:formatNumber value="${result}" pattern="00"/>
+					</option>
+				</c:forEach>  
+			</select>
+		
 			<button class="btn btn-sm" id="doMonth">차트월간</button>
 		</div>
 
 		
-		<div id="monthPieChart" style="width: 900px; height: 500px;"></div>
+		<div id="monthPieChart" style="width: 600px; height: 400px;"></div>
 		
-		<div id="monthBarChart" style="width: 900px; height: 500px;"></div>
+		<div id="monthBarChart" style="width: 600px; height: 400px;"></div>
 	
-		<!-- barList -->
-		<div class="table-responsive">
-			<form name="frmEd" id="frmEd" method="get">
-				<input type="hidden"  name="chartUserId"  id="chartUserId" />
-			</form>
-		</div>
-		<!-- //barList -->
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
@@ -105,13 +120,13 @@
 		$("#doMonth").on("click",function(){
 			$.ajax({	
 				type:"GET",
-	          	url:"doMonthPie.do",   
+	          	url:"${CONTEXT}/chart/doMonthPie.do",   
 	          	dataType:"html",// JSON/html
 	          	async: false,
 	          	data:{ 
             		"chartUserId":'a',
-					"year":2018,
-					"month":6
+					"year":$("#year").val(),
+					"month":$("#month").val()
 	           	},
 	          	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
 	           		monthPieData = $.parseJSON(data);
@@ -135,12 +150,12 @@
 	            	
 	            	$.ajax({	
 	        			type:"GET",
-	            		url:"doMonthBar.do",   
+	            		url:"${CONTEXT}/chart/doMonthBar.do",   
 	            		dataType:"html",// JSON/html
 	            		async: false,
 	            		data:{ 
 	            			"chartUserId":'a',
-	        				"year":2018         
+	        				"year":$("#year").val()
 	            		},
 	            		success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
 	            			//json parsing
