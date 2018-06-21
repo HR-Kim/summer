@@ -81,7 +81,7 @@
 	<select id="do_selectOne" parameterType="Accounts" resultType="Accounts">
 			SELECT a.ano          
 					,a.id           
-					,(select cd_dtl_nm 
+					,(select cd_dtl_id
                   from su_codes 
                   where cd_mst_id=
                         case when a.trade_id='10' then 'ACC_CAT_EXPENSES'
@@ -90,10 +90,10 @@
                   and cd_dtl_id=a.category_id) as category_id
 					,a.a_date       
 					,a.item             
-					,(select cd_dtl_nm from su_codes where cd_mst_id=case when a.trade_id='10' then 'ACC_ACCOUNT_EXPENSES'
+					,(select cd_dtl_id from su_codes where cd_mst_id=case when a.trade_id='10' then 'ACC_ACCOUNT_EXPENSES'
                             when a.trade_id='20' then 'ACC_ACCOUNT_INCOMES'
                         END  and cd_dtl_id=a.account_id) as account_id   
-					,(select cd_dtl_nm from su_codes where cd_mst_id='ACC_TRADE' and cd_dtl_id=a.trade_id) as trade_id         
+					,(select cd_dtl_id from su_codes where cd_mst_id='ACC_TRADE' and cd_dtl_id=a.trade_id) as trade_id         
 					,a.amount       
 					,a.memo             
 			FROM su_accounts a

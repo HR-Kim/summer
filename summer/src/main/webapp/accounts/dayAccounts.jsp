@@ -285,9 +285,9 @@
    
    
    <!-- chart ----------------------------------------------------------->
-   <div class="col-md-6">
-   		<jsp:include page="/chart/chart.jsp"></jsp:include>
-   </div>
+<!--    <div class="col-md-6"> -->
+<%--    		<jsp:include page="/chart/chart.jsp"></jsp:include> --%>
+<!--    </div> -->
    <!-- chart ----------------------------------------------------------->
    
    
@@ -323,6 +323,10 @@
     			
     			var trade = tds.eq(1).text();
     			
+    			var tradeid;
+    			if(trade=='지출') tradeid='10'
+        		else if(trade == '수입') tradeid='20';
+    			
 
  				//account selectBox
  				$.get( "doSearchTrade2.do", {"searchTrade" : trade},function(accountList) {
@@ -333,7 +337,7 @@
 	    				
 	       				$.each(accountList , function(idx, val) {
 	                  		$('#searchAccount').append($('<option >', {
-	                               value: val[1],
+	                               value: val[0],
 	                               text : val[1],
 	                               
 	                          }));
@@ -344,16 +348,16 @@
 	        			}, 'json' /* xml, text, script, html */)
 	        			.done(function(categoryList) {
 	        				$('#searchCategory > option').remove();
-	        				
 	        				$.each(categoryList , function(idx, val) {
 	                   		$('#searchCategory').append($('<option >', {
-	                                value: val[1],
+	                                value: val[0],
 	                                text : val[1],
 	                                
 	                           }));
+	                   		
 	                   		});
 	        				
-	          			  if(false==confirm("("+ano+")"+"조회 하시겠습니까?"))return;
+	          			  if(false==confirm("조회 하시겠습니까?"))return;
 	          			  $("#expenseModal").modal();
 	          			  $.ajax({
 	      	    			      	 type:"GET",
@@ -370,11 +374,10 @@
 	      		                 	var date = new Date(parseInt(parseData.aDate));
 	      		                 		
 	      		                 	console.log("parseData"+parseData);
-	      		                 	console.log("parseData.categoryId"+parseData.categoryId);
-	      		                 	console.log("parseData.accountId"+parseData.accountId);
+	      		                 	
 	      		                 		//화면에 정보 뿌리기.
-	      		                 		$("#ano").val(parseData.ano);
-	      		                 		$("#searchAccount").val(parseData.accountId).attr("selected", "selected");
+	      		                 	$("#ano").val(parseData.ano);
+	      		                 	$("#searchAccount").val(parseData.accountId).attr("selected", "selected");
 	        							$("#searchCategory").val(parseData.categoryId).attr("selected", "selected");
 	      								$("#aDate").val(parseData.aDate);
 	      								$("#item").val(parseData.item);
@@ -383,6 +386,50 @@
 	      								
 	      			                 },
 	      			                complete: function(data){//무조건 수행
+	      			                	
+	      			                	$("#doUpsert").on("click",function(){
+	      			                		
+	      					    			if(false==confirm("수정 하시겠습니까?"))return;
+	      					    			
+	      					    			$.ajax({	
+	      								      	 type:"POST",
+	      					                url:"doUpsert.do",   
+	      					                dataType:"html",// JSON/html
+	      					                async: false,
+	      					                data:{ 
+	      					                		"id": "a",
+	      					                		"ano" : ano,
+	      											"categoryId"			:$("#searchCategory option:selected").val(),
+	      											"aDate"		:$("#aDate").val(),
+	      											"item"		:$("#item").val(),
+	      											"accountId"		:$("#searchAccount option:selected").val(),
+	      											"tradeId"	:tradeid,
+	      											"amount"		:$("#amount").val(),
+	      											"memo"	:$("#memo").val()
+	      						                 },
+	      					                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+	      					               	 console.log("data="+data); 
+	      					                	//json parsing
+	      					                	var parseData = $.parseJSON(data); //데이터 들어있음.
+	      					                	console.log("parseData"+parseData);
+	      					                		
+	      					                	if(parseData.msgId == "1"){
+	      					                		alert(parseData.message);	
+
+	      					                		doSelectList();
+	      					                	}else{
+	      					                		alert(parseData.message);	
+	      					                		}
+	      					               		
+	      						                 },
+	      						                complete: function(data){//무조건 수행
+	      						                 },
+	      						                error: function(xhr,status,error){
+	      						                console.log("do_checkedDelete error: "+error);
+	      						                 }
+	      							   		}); //--ajax
+	      			    				});//--등록
+	      			    				
 	      			                 },
 	      			                error: function(xhr,status,error){
 	      			                console.log("do_checkedDelete error: "+error);
@@ -399,7 +446,7 @@
     			
     			});
  
-    		});
+    		});// --클릭끝
 			
 			//등록수정
     			$("#expenses,#incomes").on("click",function(){
@@ -462,6 +509,7 @@
     				$("#doUpsert").on("click",function(){
     					
 		    			if(false==confirm("등록 하시겠습니까?"))return;
+		    			console.log($("#ano").val());
 		    			$.ajax({	
 					      	 type:"POST",
 		                url:"doUpsert.do",   
