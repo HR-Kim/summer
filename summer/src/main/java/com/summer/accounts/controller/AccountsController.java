@@ -135,7 +135,7 @@ public class AccountsController {
 		
 		for(int i=0;i<list.size();i++){
 			JsonArray sarray = new JsonArray();
-			sarray.add(list.get(i).getaDate());
+			sarray.add((list.get(i).getaDate()).substring(0, 10)+"~"+(list.get(i).getEndDate()).substring(0, 10));
 			sarray.add(list.get(i).getSumExp());
 			sarray.add(list.get(i).getSumInc());
 			sarray.add(list.get(i).getSumTotal());

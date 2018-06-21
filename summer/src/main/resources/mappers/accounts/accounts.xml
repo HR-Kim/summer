@@ -22,6 +22,7 @@
 		select T1.*, T1.sumExp, T1.sumInc, (NVL(T1.sumInc,0) - NVL(T1.sumExp,0)) as sumTotal
 		from(
 		    select TRUNC(a_date,'iw') as a_date
+		    	, TRUNC(a_date,'iw') + 6 as endDate
 		        ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
 		        , sum(case when trade_id='10' then amount else 0 end) AS sumInc
 		    from su_accounts
