@@ -5,7 +5,7 @@
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="${CONTEXT}/accounts/doSelectList.do">일간 <span class="sr-only">(current)</span></a></li>
+            <li><a href="${CONTEXT}/accounts/doSelectList.do">일간 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">주간</a></li>
             <li><a href="${CONTEXT}/accounts/doSelectListMonth.do">
             	<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
