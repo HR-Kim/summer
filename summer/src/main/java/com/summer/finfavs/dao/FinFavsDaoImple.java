@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.summer.comm.SearchVO;
-import com.summer.finfavs.domain.FinFavs;
+import com.summer.finfavs.domain.FinFavsVO;
 
 @Repository
 public class FinFavsDaoImple implements FinFavsDao {
@@ -24,7 +24,7 @@ public class FinFavsDaoImple implements FinFavsDao {
 	 * 삭제
 	 */
 	@Override
-	public int delete(FinFavs finFavs) throws SQLException {
+	public int delete(FinFavsVO finFavs) throws SQLException {
 		String statement = this.nameSpace + ".do_delete";
 		log.debug("param=" + finFavs.toString());
 		return sqlSessionTemplate.delete(statement, finFavs);
@@ -34,7 +34,7 @@ public class FinFavsDaoImple implements FinFavsDao {
 	 * 단건 등록
 	 */
 	@Override
-	public int add(FinFavs finFavs) throws SQLException {
+	public int add(FinFavsVO finFavs) throws SQLException {
 		String statement = this.nameSpace + ".do_add";
 		log.debug("param=" + finFavs.toString());
 		return sqlSessionTemplate.insert(statement, finFavs);
@@ -44,7 +44,7 @@ public class FinFavsDaoImple implements FinFavsDao {
 	 * 다건 조회
 	 */
 	@Override
-	public List<FinFavs> selectList(SearchVO searchVO) throws SQLException {
+	public List<FinFavsVO> selectList(SearchVO searchVO) throws SQLException {
 		String statement = this.nameSpace + ".do_selectList";
 		log.debug("param=" + searchVO.toString());
 		return sqlSessionTemplate.selectList(statement, searchVO);

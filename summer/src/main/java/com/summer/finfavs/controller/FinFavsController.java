@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.summer.comm.MessageVO;
-import com.summer.finfavs.domain.FinFavs;
+import com.summer.finfavs.domain.FinFavsVO;
 import com.summer.finfavs.service.FinFavsService;
 
 //@Controller
@@ -31,7 +31,7 @@ public class FinFavsController {
 //											   ,method=RequestMethod.POST
 //											   ,produces="application/json;charset=UTF-8")
 //	@ResponseBody
-	public String add(FinFavs finFavs) throws Exception {
+	public String add(FinFavsVO finFavs) throws Exception {
 		log.debug("1. add==============");
 		Gson gson = new Gson();
 		

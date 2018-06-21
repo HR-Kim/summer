@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 <link type="text/css" rel="stylesheet" href="/summer/finrec/paging/simplePagination.css"/>
 <script type="text/javascript" src="/summer/finrec/paging/jquery.simplePagination.js"></script>
 
@@ -19,22 +14,26 @@
                 <div class="card-body">
                                 	<h2 class="card-title">적금 검색</h2>
                 	
+                	     <!-- 
 						<input type = "radio"  name = "fin_recommend_type" value="consume" />소비데이터로 추천받기
 						<input type = "radio" name = "fin_recommend_type" value = "direct" checked="checked" />직접 입력하여 추천받기
 						<p>
+						 -->
+						 <form name="searchFrm" id="searchFrm" method="get">
 						<b>금리유형</b>
-						<input type = "radio" name = "intr_rate_type" value = "S" />단리
-						<input type = "radio" name = "intr_rate_type" value = "M" />복리
+						<input type = "radio" name = "intrRateType" value = "S" />단리
+						<input type = "radio" name = "intrRateType" value = "M" />복리
 						<p>
 						<b>적립유형</b>
-						<input type = "radio" name = "rsrv_type" value = "S" />정액적립식
-						<input type = "radio" name = "rsrv_type" value = "F" />자유적립식
+						<input type = "radio" name = "rsrvType" value = "S" />정액적립식
+						<input type = "radio" name = "rsrvType" value = "F" />자유적립식
 						<p>
-						<b>저축금리</b>
-						<input type = "text" class = "form-control" name = "intr_rate" maxlength="5" />
+						<b>최소금리</b>
+						<input type = "text" class = "form-control" name = "intrRateMin" maxlength="5" />
 						<p>
 						<b>최고우대금리</b>
-						<input type = "text" class = "form-control"  name = "intr_rate_max" maxlength="5" />
+						<input type = "text" class = "form-control"  name = "intrRateMax" maxlength="5" />
+						</form>
 						<p>
 						<button id = "search" type="submit" class="btn btn-success mr-2" onclick="javascript:savingList(1);">검색</button>
 						</div>
@@ -61,13 +60,17 @@
 <script type ="text/javascript">
 
 function savingList(pageNum){
+	
 	$("#loadingImage").show();
+	
+	var dataToSend = $("form[name=searchFrm]").serialize();
+	
 	$.ajax({
 		type:"GET",
 		async: false,
 		url:"/summer/finrec/saving/doSelectList.do",
 		dataType:"html",
-		data:null,
+		data:dataToSend,
 		success:function(data){//성공
 			
 			console.log('data='+data);
@@ -119,6 +122,7 @@ function paging(){
         currentPage : pageNum,
 	    cssStyle: 'light-theme',
         onPageClick: function(pageNum){
+        	savingList(pageNum);
         	console.log('onPageClick:pageNum='+pageNum);
         }
     });
@@ -134,6 +138,3 @@ $(document).ready(function(){
 
 
 </script>
-
-</body>
-</html>
