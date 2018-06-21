@@ -45,4 +45,10 @@ public class AgecompareDao {
 		log.debug("Param:" + vo.toString());
 		return sqlSessionTemplate.selectList(statement, vo);
 	}
+	
+	public List<Agecompare> getSelectMeList(SearchVO vo) throws SQLException {
+		String statement = this.namespace + ".do_selectMeList";
+		log.debug("Param:" + vo.toString());
+		return sqlSessionTemplate.selectList(statement, vo);
+	}
 }

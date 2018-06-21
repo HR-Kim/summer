@@ -243,6 +243,39 @@
 
 				 alert(searchList);
 				 
+				 var id = "b";
+				 
+				 $.ajax({
+						type:"GET",
+						url:"do_selectMeList.do",
+						dataType:"html",
+						async:false,
+						data:{
+							"searchDiv":id,
+							"pageNum":$("#startmonth").val(),
+							"pageSize":$("#endmonth").val()
+						},
+						error:function(){
+							alert("do_selectMeList.do error error");
+						},
+						complete:function(data){
+							alert(id);
+						},
+						success:function(medata){
+							alert("Medata="+medata);
+
+							var idtotal;
+							var idData = $.parseJSON(medata);
+							$.each(idData,function(key,value){
+								if(key!=0){
+									idtotal +=",";
+								}
+								idtotal += value.idTotal;
+							});
+							idtotal = idtotal.substring(9);
+						    
+						}
+				 });
 				 $.ajax({
 						type:"GET",
 						url:"do_selectAgeList.do",
@@ -264,18 +297,46 @@
 							data = data.substring(1,data.length-1);
 							
 							count = (data.match(/aDate/g) || []).length - count;
+							//밑에꺼 바꾸는 중
+							/*var oobj = new Array();
+							for(var i=0; i<count; i++){
+								var obj = new Array();
+								var obj1 = new Array();
+								if(i==0){
+									var tt = data.substring(0,data.length/count+1);
+									var dataSub = $.parseJSON(tt);
+									$.each(dataSub,function(key,value){
+										if(key==0){
+											obj[0] = value.aDate;
+											obj[1] = (value.total/value.ageTotal).toFixed(2);
+										}else if(key==1){
+											obj1[2] = (value.total/value.ageTotal).toFixed(2);
+										}
+									});
+								}else{
+									var tt = data.substring(data.length/2+2,data.length);
+									var dataSub = $.parseJSON(tt);
+									$.each(dataSub,function(key,value){
+										if(key==0){
+											obj1[0] = value.aDate;
+											obj1[1] = (value.total/value.ageTotal).toFixed(2);
+										}else if(key==1){
+											obj[2] = (value.total/value.ageTotal).toFixed(2);
+										}
+									});
+								}
+							}
+							alert("test1:"+obj.toString());
+							alert("test2:"+obj1.toString());
+							oobj[0] = obj;
+							oobj[1] = obj1;
+							alert("test:"+oobj.toString());
 							
+							*/
 							var dataSub = data.substring(0,data.length/2+1);
 							var dataSub2 = data.substring(data.length/2+2,data.length);
-							alert(dataSub);
-							alert(dataSub2);
-
-							/*
-							[{"aDate":"18/04","age":"20","total":"5273000","ageTotal":"14"}
-							,{"aDate":"18/05","age":"20","total":"5712000","ageTotal":"14"}]
-							,[{"aDate":"18/04","age":"30","total":"2200000","ageTotal":"17"}
-							,{"aDate":"18/05","age":"30","total":"28000","ageTotal":"17"}]
-							*/
+							//alert(dataSub);
+							//alert(dataSub2);
 							
 							var dayDataSub = $.parseJSON(dataSub);
 							var dayDataSub2 = $.parseJSON(dataSub2);
@@ -292,31 +353,42 @@
 		            		});
 							$.each(dayDataSub2,function(key,value){
 								if(key==0){
-									aa1 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"}]";
+									aa1 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
 								}else{
-									aa2 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"}]";
+									aa2 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
 								}
 		            		});
+							aa1 += ",\"idTotal\":\""+2200000+"\"}]";
+							aa2 += ",\"idTotal\":\""+28000+"\"}]";
+									
 							aa1 = aa1.substring(9,aa1.length-1);
 							aa2 = aa2.substring(10);
+							alert(aa1);			
+							alert(aa2);			
 							aa1 += ","+aa2;
 							alert(aa1);							
 							
 							var daytotalData = $.parseJSON(aa1);
-							//var dayData = $.parseJSON(data);
-	            		// 데이터 개수만큼 반복
-	            		var arrList = [['date','20','30']];
-	            		//arrList.push(['18/04',1234,5555]);
-	            		//arrList.push(['18/05',9994,3245]);
-	            		alert("1");
-	            		$.each(daytotalData,function(key,value){
-	            			alert("2");
-	            			arrList.push([value.aDate,value.ageTotal*1,1*value.total]);
-	            			alert("3");
-	            		});
-						drawChart(arrList);
+							var tmpArray = new Array();
+							var i = 0;
+							tmpArray[i] = "Date";
+							for(var j=1; j<=9; j++){
+								 $('#chk_age'+j+':checked').each(function() { 
+									i++;
+									tmpArray[i] = $(this).val().substring(0,2) + "대";
+								 });
+							 }
+							tmpArray[++i] = "나";
+							var arrList = [tmpArray];
+	            		    
+	            		    $.each(daytotalData,function(key,value){
+	            			    arrList.push([value.aDate,value.ageTotal*1,1*value.total,1*value.idTotal]);
+	            		    });
+						    drawChart(arrList);
 						}
 					 });
+				 
+				
 			 }
 		 });
 	 });
@@ -346,3 +418,151 @@
     </script>
 </body>
 </html>
+<!-- 
+체크 부분
+//체크해서 조회
+		 $("#btnSearch").on("click",function(){			 
+			 var count=0;
+			 for(var i=1; i<=9; i++){
+				 if($("#chk_age"+i).is(":checked")==true){
+					 count++;
+				 }
+			 }
+			 if(count==0){
+				 alert("연령대를 체크해주세요.");
+			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null){
+				 alert("기간을 입력해주세요.");
+			 }else{
+				 alert("count: "+count);
+				 var searchList = count;
+				 
+				 for(var j=1; j<=9; j++){
+					 $('#chk_age'+j+':checked').each(function() { 
+						 searchList += "," + $(this).val().substring(0,2);
+					 });
+				 }
+
+				 alert(searchList);
+				 
+				 var id = "b";
+				 
+				 $.ajax({
+						type:"GET",
+						url:"do_selectMeList.do",
+						dataType:"html",
+						async:false,
+						data:{
+							"searchDiv":id,
+							"pageNum":$("#startmonth").val(),
+							"pageSize":$("#endmonth").val()
+						},
+						error:function(){
+							alert("do_selectMeList.do error error");
+						},
+						complete:function(data){
+							alert(id);
+						},
+						success:function(medata){
+							alert("Medata="+medata);
+
+							var idtotal;
+							var idData = $.parseJSON(medata);
+							$.each(idData,function(key,value){
+								if(key!=0){
+									idtotal +=",";
+								}
+								idtotal += value.idTotal;
+							});
+							idtotal = idtotal.substring(9);
+						    
+							 $.ajax({
+									type:"GET",
+									url:"do_selectAgeList.do",
+									dataType:"html",
+									async:false,
+									data:{
+										"searchWord":searchList,
+										"pageNum":$("#startmonth").val(),
+										"pageSize":$("#endmonth").val()
+									},
+									error:function(){
+										alert("do_selectAgeList.do error error");
+									},
+									complete:function(data){
+										//alert($("#startmonth").val());
+									},
+									success:function(data){
+										alert("data="+data);
+										data = data.substring(1,data.length-1);
+										
+										count = (data.match(/aDate/g) || []).length - count;
+										
+										var dataSub = data.substring(0,data.length/2+1);
+										var dataSub2 = data.substring(data.length/2+2,data.length);
+										//alert(dataSub);
+										//alert(dataSub2);
+										
+										var dayDataSub = $.parseJSON(dataSub);
+										var dayDataSub2 = $.parseJSON(dataSub2);
+										var aa1;
+										var aa2;
+										$.each(dayDataSub,function(key,value){
+											if(key==0){
+												aa1 += "[{\"aDate\":\""+value.aDate+"\","
+													+"\"total\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
+											}else{
+												aa2 += "[{\"aDate\":\""+value.aDate+"\","
+												+"\"total\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
+											}
+					            		});
+										$.each(dayDataSub2,function(key,value){
+											if(key==0){
+												aa1 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"}]";
+											}else{
+												aa2 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"}]";
+											}
+					            		});
+										aa1 = aa1.substring(9,aa1.length-1);
+										aa2 = aa2.substring(10);
+										aa1 += ","+aa2;
+										alert(aa1);							
+										
+										var daytotalData = $.parseJSON(aa1);
+				            		    var arrList = [['date','20','30','나']];
+				            		    
+				            		    $.each(daytotalData,function(key,value){
+				            			    arrList.push([value.aDate,value.ageTotal*1,1*value.total]);
+				            		    });
+									    drawChart(arrList);
+									}
+								 });
+						}
+				 });
+				 
+				
+			 }
+		 });
+	 });
+	 google.charts.load('current', {'packages':['line']});
+	    google.charts.setOnLoadCallback(drawChart);
+	    
+		 function drawChart(arr){
+			//arr = "["+arr+"]";
+			alert("나중에 시작해야할 것"+arr);
+			var data = new google.visualization.arrayToDataTable(arr);
+			
+			alert(data);
+			var options = {
+			     chart: {
+			       title: '연령대별 차트',
+			       subtitle: 'in millions of dollars (USD)'
+			     },
+			     width: 900,
+			     height: 500
+			   };
+			
+			   var chart = new google.charts.Line(document.getElementById('curve_chart'));
+			
+			   chart.draw(data, google.charts.Line.convertOptions(options));
+		}
+ -->

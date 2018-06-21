@@ -34,24 +34,15 @@
 	</select>
 	
 	<select id="do_selectMeList" parameterType="SearchVO" resultType="Agecompare">
-		SELECT DISTINCT SUM(DISTINCT T2.total) OVER(partition by to_char(T2.a_date, 'YY/MM')) AS total
-			        ,to_char(T2.a_date, 'YY/MM') as a_date
-                    ,T2.id
-	   		 FROM su_users T1 INNER JOIN(SELECT DISTINCT SUM(amount) OVER(PARTITION BY trade_id,to_char(a_date, 'YY/MM')) AS total
-									                , id
-									                ,a_date
-									                ,trade_id
-									                ,amount
-									        FROM ( SELECT a_date
-									                    ,amount
-									                    ,id
-									                    ,trade_id
-									                FROM su_accounts
-                                                    WHERE id=#{searchWord,jdbcType=VARCHAR}
-                                                    AND TO_DATE(a_date,'YY/MM/DD')
-															                 BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(#{pageNum,jdbcType=VARCHAR})+1,-1),'YYYYMMDD'),'YY/MM/DD')
-															                AND TO_DATE(last_day(TO_CHAR(LAST_DAY(#{pageSize,jdbcType=VARCHAR}),'YYYYMMDD')),'YY/MM/DD')) Ta
-									              ) T2
-							   ON T1.id = T2.id
+		SELECT TO_CHAR(a_date,'YY/MM') AS a_date
+			   ,id
+		       ,ROUND(SUM(amount)/count(amount)) AS idTotal
+		FROM su_accounts 
+		WHERE id='#{searchDiv,jdbcType=VARCHAR}'
+		AND TO_DATE(a_date,'YY/MM/DD')
+		 BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(TO_DATE(#{pageNum,jdbcType=VARCHAR}))+1,-1),'YYYYMMDD'),'YY/MM/DD')
+		AND TO_DATE(last_day(TO_CHAR(LAST_DAY(TO_DATE(#{pageSize,jdbcType=VARCHAR})),'YYYYMMDD')),'YY/MM/DD')
+	     GROUP BY a_date, id
+ 		 ORDER BY a_date
 	</select>
 </mapper>

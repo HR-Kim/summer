@@ -24,4 +24,7 @@ public class AgecompareService {
 	public List<Agecompare> getSelectAgeList(SearchVO vo) throws SQLException {
 		return agecompareDao.getSelectAgeList(vo);
 	}
+	public List<Agecompare> getSelectMeList(SearchVO vo) throws SQLException {
+		return agecompareDao.getSelectMeList(vo);
+	}
 }
