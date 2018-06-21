@@ -39,18 +39,7 @@
 	
 	<body>
 		<h3>**주 별 화면**</h3>
-
-		<table class="table">
-			<tr>
-				<td class="text-left">
-					<!-- Button -->
-					<div class ="form-inline pull-left">
-						<button class="btn btn-sm" id="doWeek">차트주간</button>
-					</div>
-					<!-- //Button -->
-				</td>
-			</tr>
-		</table>
+			<button class="btn btn-sm" id="doWeek">차트주간</button>
 		
 		<div id="weekPieChart" style="width: 900px; height: 500px;"></div>
 	
@@ -82,11 +71,8 @@
 
 	var weekData;
 	
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['Category_Nm', 'Total per category'],	
-			['식비', 10000]
-		]);
+	function drawChart(arr) {
+		var data = google.visualization.arrayToDataTable(arr);
 
 		var options = {
 			title: '나의 주 간 지출 패턴',
@@ -120,7 +106,14 @@
 	            	if(weekDataLen == 0){
 	            		alert("데이터가 없습니다");
 	            	}else{
+	            		$("#weekChart").empty();
+	            		
+	            		var arrList = [['Category_Nm', 'Total per category']];
+	            		
 	            		$.each(weekData,function(key,value){
+	            			
+	            			arrList.push([value.cdDtlNm, value.ctgTotal]);
+	            			
 	            			$("#weekChart").append(
 									 "<tr>"
 									 +"<td>"+value.cdDtlNm+"</td>"
@@ -129,6 +122,8 @@
 									 +"</tr>"
 	            			);//append
 	            		});//each
+	            		
+	            		drawChart(arrList);
 	            	}//ifelse
 				},
 				complete: function(data){//무조건 수행

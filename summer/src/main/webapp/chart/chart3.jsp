@@ -38,69 +38,33 @@
     	
 	</head>
 	<body>
-		<h3>**(월) 별 화면**</h3>
+		<div class ="form-inline pull-left">
+			<button class="btn btn-sm" id="doMonth">차트월간</button>
+		</div>
 
-		<table class="table">
-			<tr>
-				<td class="text-left">
-					<!-- Button -->
-					<div class ="form-inline pull-left">
-						<button class="btn btn-sm" id="doMonthPie">차트월간(파이)</button>
-						<!-- <button class="btn btn-sm" id="doMonthBar">차트월간(컬럼)</button> -->
-					</div>
-					<!-- //Button -->
-				</td>
-			</tr>
-		</table>
 		
 		<div id="monthPieChart" style="width: 900px; height: 500px;"></div>
 		
-		<!-- <div id="monthBarChart" style="width: 800px; height: 600px;"></div> -->
+		<div id="monthBarChart" style="width: 900px; height: 500px;"></div>
 	
 		<!-- barList -->
 		<div class="table-responsive">
 			<form name="frmEd" id="frmEd" method="get">
 				<input type="hidden"  name="chartUserId"  id="chartUserId" />
-			
-			<table id="pieListTable" class="table table-striped table-bordered table-hover">
-				<thead>
-    				<tr class = " danger">
-    					<th>분류</th>
-    					<th>총액</th>
-    					<th>퍼센트</th>
-    				</tr>
-    			</thead>
-    			
-				<tbody id = "monthPieChart">
-				</table>
-				
-				<!-- <table id="barListTable" class="table table-striped table-bordered table-hover">
-					<thead class="bg-primary">
-						<tr class = " danger">
-    						<th>월</th>
-    						<th>총 액</th>
-    					</tr>
-					</thead>
-					
-					<tbody id = "monthBarChart">
-				</table> -->
-		</form>
-	</div>
-	<!-- //barList -->
+			</form>
+		</div>
+		<!-- //barList -->
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
+	
 	google.charts.load("current", {packages:["corechart"]});
 	google.charts.setOnLoadCallback(drawChart);
 
 	var monthPieData;
-	//var monthBarData;
 	
-	/* function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['Category_Nm', 'Total per category'],	
-			['식비', 10000]
-		]);
+	function drawChart(arr) {
+		var data = google.visualization.arrayToDataTable(arr);
 
 		var options = {
 			title: '나의 월 간 지출 패턴',
@@ -113,15 +77,11 @@
 	
 	google.charts.load('current', {'packages':['bar']});
 	google.charts.setOnLoadCallback(drawStuff);
- */
-	/* function drawStuff() {
-		var data = new google.visualization.arrayToDataTable([
-			['월 별 지출', 'Total per Month'],
-          	['1월', 100000],
-          	['2월', 20000],
-          	['3월', 80000],
-          	['4월', 5000]
-		]);
+ 
+	var monthBarData;
+	
+	function drawStuff(arrList) {
+		var data = new google.visualization.arrayToDataTable(arrList);
 		
 		var options = {
 			width: 800,
@@ -136,93 +96,89 @@
 			},
 			bar: { groupWidth: "90%" }
 		};
-	     
-		var chart = new google.charts.Bar(document.getElementById('monthBarChart'));
-		// Convert the Classic options to Material options.
-		chart.draw(data, google.charts.Bar.convertOptions(options));
-	};  */
 		
+		var chart = new google.charts.Bar(document.getElementById('monthBarChart'));
+		chart.draw(data, google.charts.Bar.convertOptions(options));
+	};
+
 	$(document).ready(function(){
-		$("#doMonthPie").on("click",function(){
+		$("#doMonth").on("click",function(){
 			$.ajax({	
 				type:"GET",
 	          	url:"doMonthPie.do",   
 	          	dataType:"html",// JSON/html
 	          	async: false,
 	          	data:{ 
-	          		"chartUserId":'a',
+            		"chartUserId":'a',
 					"year":2018,
-					"month":06
+					"month":6
 	           	},
 	          	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
-	          		//json parsing
-	           	monthPieData = $.parseJSON(data);
+	           		monthPieData = $.parseJSON(data);
 		          	var monthPieDataLen = monthPieData.length;
-						
-		          	console.log("monthPieData=" + monthPieData);
-		          	console.log("monthPieDataLen=" + monthPieDataLen);
-						
+		          	
 		          	if(monthPieDataLen == 0){
 		          		alert("데이터가 없습니다");
 	            	}else{
-	            		$.each(monthPieData,function(key,value){
-	            			$("#monthPieChart").append(
-	            					"<tr>"
-										+"<td>"+value.cdDtlNm+"</td>"
-										+"<td>"+value.ctgTotal+"</td>"
-										+"<td>"+value.percent+"%"+"</td>"
-										+"</tr>"
-	            			);//append
+	            		$("#monthPieList").empty();
+	            		
+	            		var arr = [['Category_Nm', 'Total per category']];
+	            		
+	            		$.each(monthPieData, function(key,value){
+	            			
+	            			arr.push([value.cdDtlNm, value.ctgTotal]);
+	            			
 	            		});//each
+	            		
+	            		drawChart(arr);
 	            	}//ifelse
+	            	
+	            	$.ajax({	
+	        			type:"GET",
+	            		url:"doMonthBar.do",   
+	            		dataType:"html",// JSON/html
+	            		async: false,
+	            		data:{ 
+	            			"chartUserId":'a',
+	        				"year":2018         
+	            		},
+	            		success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
+	            			//json parsing
+	            			monthBarData = $.parseJSON(data);
+	                		var monthBarDataLen = monthBarData.length;
+	        			
+	                		console.log("monthBarData=" + monthBarData);
+	                		console.log("monthBarDataLen=" + monthBarDataLen);
+	        			
+	                		if(monthBarDataLen == 0){
+	                			alert("데이터가 없습니다");
+	                		}else{
+	                			$("#monthBarList").empty();
+	                			
+	                			var arrList = [['월 별 지출', 'Total per Month']];
+	                			
+	                			$.each(monthBarData,function(key,value){
+	                				arrList.push([value.month, value.monthTotal]);
+	                			});//each
+	                			
+	                			drawStuff(arrList);
+	                		}//ifelse
+	        			},
+	        			complete: function(data){//무조건 수행
+	        			},
+	        			error: function(xhr,status,error){
+	        				console.log("doMonthBar error: "+error);
+	        			}
+	        		}); //--ajax
 	          	},
 	          	complete: function(data){//무조건 수행
 	          	},
 	          	error: function(xhr,status,error){
-	          		console.log("doWeek error: "+error);
+	          		console.log("doMonthPie error: "+error);
 	          	}
 			}); //--ajax
 		});
 	});	
-		
-		/* $("#doMonthBar").on("click",function(){
-			$.ajax({	
-				type:"GET",
-            	url:"doMonthBar.do",   
-            	dataType:"html",// JSON/html
-            	async: false,
-            	data:{ 
-            		"chartUserId":'a',
-					"year":2018         
-            	},
-            	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
-            		//json parsing
-            		monthBarData = $.parseJSON(data);
-	            	var monthBarDataLen = monthBarData.length;
-					
-	            	console.log("monthBarData=" + monthBarData);
-	            	console.log("monthBarDataLen=" + monthBarDataLen);
-					
-	            	if(monthBarDataLen == 0){
-	            		alert("데이터가 없습니다");
-	            	}else{
-	            		$.each(monthBarData,function(key,value){
-	            			$("#monthBarChart").append(
-									 "<tr>"
-									 +"<td>"+value.month+"</td>"
-									 +"<td>"+value.monthTotal+"</td>"
-									 +"</tr>"
-	            			);//append
-	            		});//each
-	            	}//ifelse
-				},
-				complete: function(data){//무조건 수행
-				},
-				error: function(xhr,status,error){
-					console.log("doMonthBar error: "+error);
-				}
-			}); //--ajax
-		}); */
 	</script>
 </body>
 </html>

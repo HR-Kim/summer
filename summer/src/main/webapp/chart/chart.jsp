@@ -39,18 +39,7 @@
 	</head>
 	<body>
 	<h3>**일 별 화면**</h3>
-		
-	<table class="table">
-		<tr>
-			<td class="text-left">
-				<!-- Button -->
-				<div class ="form-inline pull-left">
-					<button class="btn btn-sm" id="doDay">차트일간</button>
-				</div>
-				<!-- //Button -->
-			</td>
-		</tr>
-	</table>
+			<button class="btn btn-sm" id="doDay">차트일간</button>
 	
 	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
 
@@ -81,11 +70,8 @@
 
 	var dayData;
 	
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['Category_Nm', 'Total per category'],	
-			['식비', 10000]
-		]);
+	function drawChart(arr) {
+		var data = google.visualization.arrayToDataTable(arr);
 
 		var options = {
 			title: '나의 일 별 지출 패턴',
@@ -106,8 +92,8 @@
             	data:{ 
             		"chartUserId":'a',
 					"year":2018,
-					"month":6,
-					"day":15           
+					"month":5,
+					"day":22          
             	},
             	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
             		//json parsing
@@ -120,7 +106,18 @@
 	            	if(dayDataLen == 0){
 	            		alert("데이터가 없습니다");
 	            	}else{
+	            		// 차트 초기화
+	            		$("#dayChart").empty();
+	            		
+	            		// 차트에 넘겨줄 배열 초기화
+	            		var arrList = [['Category_Nm', 'Total per category']];
+	            		
+	            		// 데이터 개수만큼 반복
 	            		$.each(dayData,function(key,value){
+	            			// 배열 추가
+	            			arrList.push([value.cdDtlNm, value.ctgTotal]);
+	            			
+	            			// 테이블 데이터 추가
 	            			$("#dayChart").append(
 									 "<tr>"
 									 +"<td>"+value.cdDtlNm+"</td>"
@@ -129,6 +126,9 @@
 									 +"</tr>"
 	            			);//append
 	            		});//each
+	            		
+	            		// 파이차트 데이터 셋팅
+	            		drawChart(arrList);
 	            	}//ifelse
 				},
 				complete: function(data){//무조건 수행
