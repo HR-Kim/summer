@@ -53,7 +53,7 @@
 		<table class="table">
 			<tr>
 				<td class="text-center">
-				<div class="form-group col-lg5 col-sm6">
+				<div class="form-group">
 				<select name="pageSize" id="pageSize">
 						<option value="10" <c:if test="${searchVO.pageSize == '10'}">selected='selected'</c:if>>10</option>
 	  						<option value="30" <c:if test="${searchVO.pageSize == '30'}">selected='selected'</c:if>>30</option>
@@ -78,8 +78,8 @@
 		<table class="table  table-striped table-bordered table-hover" id="listTable">
        	<thead class="bg-primary">
        		<th class="text-center">번호</th>
-       		<th class="text-center">Product Name</th>
-       		<th class="text-center">The lower price</th>
+       		<th class="text-center">상품명</th>
+       		<th class="text-center">최저가격</th>
        		<th class="text-center" style="display:none;">goodID</th>
        	</thead>
        	<tbody>
@@ -113,8 +113,6 @@
 	
 	</div>
 
-	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
-	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
 	function doSearch(){

@@ -94,6 +94,8 @@
        </table>
 	</div>
 	<!-- list end -->
+	<br/>
+	<hr/>
 	
 	<div id="map"></div>
 	
@@ -121,10 +123,6 @@
 	    
 
    <!--// List ----------------------------------------------------------->
-
-
-	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
-	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3C_iXo7Xb-jkSbAqAQBHNcHRMP7HyWp0&callback=initMap">
     </script>
@@ -153,7 +151,7 @@
 	function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 17
+          zoom: 15
         });
        
         var infoWindow = new google.maps.InfoWindow({
@@ -200,7 +198,11 @@
 
             doEntpSearch();
             
-            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            //var image = ${CONTEXT}+"/img/flag.png";
+            var image = new google.maps.MarkerImage("${CONTEXT}/img/flag.png",
+            												null,
+								            		   		null,
+            		   										null);
             
             var marker = new google.maps.Marker({
                 position: pos,
@@ -256,9 +258,10 @@
        	$('#entpTable > tbody > tr > td').remove();
        	
        	$.each(parseData , function(idx, val) {
+     
        		 $('#entpTable > tbody').append(
        				 "<tr>"
-       				 +"<td>" + val[0] + "</td>"
+       				 +"<td>" + val[0] +"&nbsp;&nbsp;"+ ((val[2] == 'Y') ? "<span class='badge badge-success' style='font-color: white;'>1+1</span>":"") +"&nbsp;&nbsp;"+ ((val[3] == 'Y') ? "<span class='badge badge-info'>할인</span>":"") +"</td>"
        				 +"<td class='text-right'>" + numberWithCommas(val[1]) + " 원</td>"
        				 +"</tr>"
        				 );
@@ -271,7 +274,8 @@
           error: function(xhr,status,error){
           console.log("dosearchEntp error: "+error);
            }
-		}); //그리드 클릭> ajax
+		}); 
+	   //그리드 클릭> ajax
    }
    
  //천단위 콤마

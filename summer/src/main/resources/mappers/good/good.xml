@@ -52,9 +52,9 @@
   	</select>
   	<select id="do_selectEntp" parameterType="Good" resultType="Good">
   	<![CDATA[ 
-  		SELECT  T3.rnum as no, T3.eid as entp_id, T3.ename as entp_name, T3.good_price as good_price
+  		SELECT  T3.rnum as no, T3.eid as entp_id, T3.ename as entp_name, T3.good_price as good_price, T3.plusone_yn as plusone_yn, T3.good_dc_yn as good_dc_yn
 		FROM (  
-		        SELECT rownum as rnum, T1.eid, t1.ename, T1.distance, T2.good_price
+		        SELECT rownum as rnum, T1.eid, t1.ename, T1.distance, T2.good_price, T2.plusone_yn, T2.good_dc_yn
 		        FROM (
 		                SELECT  DIS.entp_id as eid, DIS.entp_name as ename, DIS.distance
 		                FROM (

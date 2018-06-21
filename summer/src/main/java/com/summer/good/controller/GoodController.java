@@ -90,6 +90,9 @@ public class GoodController {
 			JsonArray sarray = new JsonArray();
 			sarray.add(list.get(i).getEntpName());
 			sarray.add(list.get(i).getGoodPrice());
+			sarray.add(list.get(i).getPlusoneYn().trim());
+			sarray.add(list.get(i).getGoodDcYn().trim());
+			
 			
 			carray.add(sarray);
 		}
