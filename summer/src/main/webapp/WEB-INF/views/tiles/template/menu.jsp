@@ -4,6 +4,8 @@
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 <div class="col-sm-3 col-md-2 sidebar">
+			<h4>내 가계부</h4>
+			<br>
           <ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/accounts/doSelectList.do">일간 <span class="sr-only">(current)</span></a></li>
             <li><a href="${CONTEXT}/accounts/doSelectListWeek.do">주간</a></li>
@@ -11,13 +13,22 @@
             	<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
             </a></li>
           </ul>
+          <br>
+          <h4>최저가 검색</h4>
+          <br>
           <ul class="nav nav-sidebar">
-            <li><a href="${CONTEXT}/good/doSelectList.do">최저가 검색</a></li>
+            <li><a href="${CONTEXT}/good/doSelectList.do">검색하기</a></li>
           </ul>
+          <br>
+          <h4>금융상품 추천</h4>
+          <br>
           <ul class="nav nav-sidebar">
             <li><a href="">적금</a></li>
             <li><a href="">정기예금</a></li>
           </ul>
+          <br>
+          <h4>커뮤니티</h4>
+          <br>
 			<ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/board/do_selectList.do">자유게시판</a></li>
           </ul>
