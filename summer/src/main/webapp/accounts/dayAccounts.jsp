@@ -168,7 +168,7 @@
    <!-- //Modal --------------------------------------------------------->
   
    <!-- Search ----------------------------------------------------------->
-   	<form class="form-inline" name="frm" id="frm" method="get">
+   	<form class="form-inline" name="frmSearch" id="frmSearch" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
 
 
@@ -285,9 +285,9 @@
    
    
    <!-- chart ----------------------------------------------------------->
-<!--    <div class="col-md-6"> -->
-<%--    		<jsp:include page="/chart/chart.jsp"></jsp:include> --%>
-<!--    </div> -->
+   <div class="col-md-6">
+   		<jsp:include page="/chart/chart.jsp"></jsp:include>
+   </div>
    <!-- chart ----------------------------------------------------------->
    
    
@@ -297,14 +297,14 @@
 
 		//리스트 조회
 		function doSelectList(){
-			var frm = document.frm;
+			var frm = document.frmSearch;
 			frm.action = "doSelectList.do";
 			frm.submit();
 		}
 		
 		//페이지 이동
 		function search_page(url,pageNum){
-			var frm = document.frm;
+			var frm = document.frmSearch;
 			frm.action = url;
 			frm.pageNum.value = pageNum;
 			frm.submit();
