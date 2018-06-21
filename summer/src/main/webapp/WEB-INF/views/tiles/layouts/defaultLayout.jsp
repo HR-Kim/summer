@@ -5,7 +5,7 @@
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
 <html lang="ko">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,14 +23,13 @@
 <div class="container-fluid">
 
 <tiles:insertAttribute name = "header" />
-      <div class="row">
-		      <tiles:insertAttribute name = "menu" />
-		      
-		       <div class="content-wrapper">
+	<div class="row">
+		<tiles:insertAttribute name = "menu" />
+		<div class="content-wrapper">
         	<tiles:insertAttribute name = "body" />
-				</div>
-		</div> <!--  row row-offcanvas ends -->
-		</div> <!--  container-scroller ends -->
+		</div>
+	</div> <!--  row row-offcanvas ends -->
+</div> <!--  container-scroller ends -->
 						
 		      
 </body>
