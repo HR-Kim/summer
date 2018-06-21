@@ -1,6 +1,6 @@
 package com.summer.finfavs.domain;
 
-public class FinFavs {
+public class FinFavsVO {
 
     private int favsNo       ;
     private String id            ;
@@ -9,11 +9,11 @@ public class FinFavs {
     private String finPrdtCd   ;
     private String regDt				;
     
-    public FinFavs() {}
+    public FinFavsVO() {}
     
     
 
-	public FinFavs(int favsNo, String id, int dclsMonth, int finCoNo, String finPrdtCd, String regDt) {
+	public FinFavsVO(int favsNo, String id, int dclsMonth, int finCoNo, String finPrdtCd, String regDt) {
 		super();
 		this.favsNo = favsNo;
 		this.id = id;

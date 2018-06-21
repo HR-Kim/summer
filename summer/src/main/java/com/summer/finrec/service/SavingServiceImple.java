@@ -79,7 +79,6 @@ public class SavingServiceImple implements SavingService {
 				outVo.setMtrtInt(baseInfo.get("mtrt_int").getAsString());
 				outVo.setSpclCnd(baseInfo.get("spcl_cnd").getAsString());
 				outVo.setEtcNote(baseInfo.get("etc_note").getAsString());
-				outVo.setMaxLimit(baseInfo.get("max_limit").getAsInt());
 				
 				//fin_prdt_cd와 일치하는 것만 optionList에서 찾기
 				JsonArray optionWithFinPrdtCd = new JsonArray();

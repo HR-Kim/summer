@@ -2,7 +2,7 @@ package com.summer.finrec.comm;
 
 import com.summer.comm.DTO;
 
-public class FinSavingSearchVO extends DTO {
+public class FinDepositSearchVO extends DTO {
 
 	private int pageSize = 5;		//페이지 사이즈
 	private int pageNum = 1;		//현재 페이지
@@ -13,9 +13,9 @@ public class FinSavingSearchVO extends DTO {
 	private int intrRateMin;
 	private int intrRateMax;
 	
-	public FinSavingSearchVO() {}
+	public FinDepositSearchVO() {}
 
-	public FinSavingSearchVO(int pageSize, int pageNum, String intrRateType, String rsrvType, int intrRateMin,
+	public FinDepositSearchVO(int pageSize, int pageNum, String intrRateType, String rsrvType, int intrRateMin,
 			int intrRateMax) {
 		super();
 		this.pageSize = pageSize;

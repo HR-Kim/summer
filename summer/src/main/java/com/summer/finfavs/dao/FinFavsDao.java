@@ -4,15 +4,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.summer.comm.SearchVO;
-import com.summer.finfavs.domain.FinFavs;
+import com.summer.finfavs.domain.FinFavsVO;
 
 
 public interface FinFavsDao {
 	
-	public int delete(FinFavs finFavs) throws SQLException;
+	public int delete(FinFavsVO finFavs) throws SQLException;
 
-	public int add(FinFavs finFavs) throws SQLException;
+	public int add(FinFavsVO finFavs) throws SQLException;
 	
-	public List<FinFavs> selectList(SearchVO searchVO) throws SQLException;
+	public List<FinFavsVO> selectList(SearchVO searchVO) throws SQLException;
 	
 }

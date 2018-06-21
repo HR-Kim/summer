@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.summer.finrec.saving.mappers">
+
+
+<!-- 목록 보여주기 -->
+<select id="selectList" parameterType="FinSavingSearch" resultType="FinSaving">
+
+
+
+
+</select>
+
+<!-- 개별 항목 조회 -->
+<select id="selectOne" parameterType="FinSaving" resultType="FinSaving">
+SELECT
+    fin_prdt_cd,
+    fin_co_no,
+    kor_co_nm,
+    fin_prdt_nm,
+    join_way,
+    mtrt_int,
+    spcl_cnd,
+    etc_note,
+    intr_rate_min,
+    intr_rate_max,
+    intr_rate_type,
+    rsrv_type,
+    rsrv_type_nm,
+    intr_rate_type_nm
+FROM
+    su_saving
+WHERE
+    fin_prdt_cd = ${finPrdtCd}
+</select>
+
+
+</mapper>
