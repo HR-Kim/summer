@@ -1,4 +1,4 @@
-<!-- 일 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 -->
+<!-- 일 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 --> 
 <%@page import="com.summer.chart.dao.ChartDao"%>
 <%@page import="com.summer.chart.domain.Chart"%>
 <%@page import="org.slf4j.Logger"%>
