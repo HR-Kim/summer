@@ -68,7 +68,7 @@
 				</c:forEach>  
 			</select>
 		
-			<button class="btn btn-sm" id="doDay">차트월간</button>
+			<button class="btn btn-sm" id="doDay">차트일간</button>
 		</div>
 	
 	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>

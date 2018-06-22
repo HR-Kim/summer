@@ -69,9 +69,9 @@
   <!-- Button ----------------------------------------------------------->
     
    <div class="form-inline pull-right">
-		<button class="btn btn-sm" id="expenses" name="plus" value="10">+지출</button>
-   		<button class="btn btn-sm" id="incomes" name="plus" value="20">+수입</button>
-   		<button class="btn btn-sm" onclick="javascript:doExcelDown();">엑셀다운</button>
+		<button class="btn btn-md" id="expenses" name="plus" value="10">+지출</button>
+   		<button class="btn btn-md" id="incomes" name="plus" value="20">+수입</button>
+   		<br/>
    </div>
    <!--// Button --------------------------------------------------------->
     
@@ -183,7 +183,7 @@
    						</select>
     					
     					<button class="btn btn-sm btn-success" onclick="javascript:doSelectList();">검색</button>
-							
+						<input type="button" value="차트보기" onclick="showPopup();"/>	
    					</div>
    			</tr>
    		</table>
@@ -274,7 +274,8 @@
 	
 	<script type="text/javascript">
 
-	
+		function showPopup() { window.open("${CONTEXT}/chart/chart.jsp", "a", "width=1200, height=900, left=100, top=50"); }
+		
 		//리스트 조회
 		function doSelectList(){
 			var frm = document.frmSearch;
