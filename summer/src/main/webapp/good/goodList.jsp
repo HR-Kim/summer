@@ -54,7 +54,7 @@
 			<tr>
 				<td class="text-center">
 				<div class="form-group">
-				<select name="pageSize" id="pageSize">
+				<select name="pageSize" id="pageSize" class="form-control input-sm"> 
 						<option value="10" <c:if test="${searchVO.pageSize == '10'}">selected='selected'</c:if>>10</option>
 	  						<option value="30" <c:if test="${searchVO.pageSize == '30'}">selected='selected'</c:if>>30</option>
 	  						<option value="50" <c:if test="${searchVO.pageSize == '50'}">selected='selected'</c:if>>50</option>

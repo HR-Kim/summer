@@ -20,7 +20,8 @@
   		<typeAlias type = "com.summer.finrec.domain.FinSavingVO" alias = "FinSaving" />
   		<typeAlias type = "com.summer.finrec.domain.FinDepositVO" alias = "FinDeposit" />
   		<typeAlias type = "com.summer.finrec.comm.FinSavingSearchVO" alias = "FinSavingSearch" />
-  		<typeAlias type = "com.summer.finrec.comm.FinDepositSearchVO" alias = "FinDepositSearch" />  		
+  		<typeAlias type = "com.summer.finrec.comm.FinDepositSearchVO" alias = "FinDepositSearch" />
+  		<typeAlias type="com.summer.good.domain.Favo" alias="Favo"/>  		
   	</typeAliases>
 
   </configuration>

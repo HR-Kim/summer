@@ -93,6 +93,7 @@
          	</tbody>
        </table>
 	</div>
+	
 	<!-- list end -->
 	<br/>
 	<hr/>
@@ -106,11 +107,13 @@
   <h4>가까운 매장</h4>
   <hr/>
   
+	
      	<table id="entpTable" class="table table-striped table-bordered table-hover">
         	<thead class="bg-primary">
         		<tr>
         			<th class="text-center">매장명</th>
 	         		<th class="text-center">가격</th>
+	         		<th class="text-center">장바구니</th>
          		</tr>
          	</thead>
         	<tbody>
@@ -235,6 +238,8 @@
                               'Error: Your browser doesn\'t support geolocation.');
       }
       
+      var entpid, entpname;
+      
    function doEntpSearch(){
 	   //alert($("#x").val());
 	   //alert($("#y").val());
@@ -245,7 +250,7 @@
        dataType:"html",// JSON/html
        async: false,
        data:{
-    	   "goodId":${detailGood.goodId},
+    	   "goodId":'${detailGood.goodId}',
     	   "XMapCoord":$("#x").val(),
     	   "YMapCoord":$("#y").val()
         },
@@ -258,16 +263,20 @@
        	$('#entpTable > tbody > tr > td').remove();
        	
        	$.each(parseData , function(idx, val) {
-     
+
+     			entpid = val[4];
+     			entpname = val[0];
+     			
        		 $('#entpTable > tbody').append(
        				 "<tr>"
        				 +"<td>" + val[0] +"&nbsp;&nbsp;"+ ((val[2] == 'Y') ? "<span class='badge badge-success' style='font-color: white;'>1+1</span>":"") +"&nbsp;&nbsp;"+ ((val[3] == 'Y') ? "<span class='badge badge-info'>할인</span>":"") +"</td>"
        				 +"<td class='text-right'>" + numberWithCommas(val[1]) + " 원</td>"
+       				 +"<td class='text-center'><input type='button' value='추가' onclick='javascript:doUpsert(entpid, entpname);'></td>"
+       				 +"<td class='text-left' style='display:none;'>"+val[4]+"</td>"
        				 +"</tr>"
        				 );
        		
        		}); 
-       		
            },
           complete: function(data){//무조건 수행
            },
@@ -287,6 +296,47 @@
 		var frm = document.frm;
 		frm.action = "doSelectList.do";
 		frm.submit();
+	}
+	
+	function doUpsert(entpid, entpname){
+		console.log('${detailGood.goodId}');
+		console.log('${detailGood.goodName}');
+		console.log(entpid);
+		console.log(entpname);
+		
+	$.ajax({
+	      	 type:"POST",
+      url:"${CONTEXT}/favo/doUpsert.do",   
+      dataType:"html",// JSON/html
+      async: false,
+      data:{
+   	   		"goodId":'${detailGood.goodId}',
+   	   		"goodName":'${detailGood.goodName}',
+   	   		"entpId":entpid,
+   	   		"entpName":entpname,
+   	   		"goodNum":1,
+   	   		"id":'aa'
+       },
+      success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+     	 	console.log("data="+data); 
+     	 	var parseData = $.parseJSON(data); //데이터 들어있음.
+        	console.log("parseData"+parseData);
+        		
+        	if(parseData == "1"){
+        		alert(parseData.message);	
+        	}else{
+        		alert(parseData.message);	
+        	}
+      
+          },
+         complete: function(data){//무조건 수행
+          },
+         error: function(xhr,status,error){
+         console.log("doUpsert error: "+error);
+          }
+		}); 
+	   //그리드 클릭> ajax
+	
 	}
 	
 	</script>

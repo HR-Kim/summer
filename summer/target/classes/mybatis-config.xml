@@ -8,7 +8,7 @@
   	</settings>
   	
   	<typeAliases>
-  		<typeAlias type = "com.summer.finfavs.domain.FinFavs" alias="FinFavs"/>
+  		<typeAlias type = "com.summer.finfavs.domain.FinFavsVO" alias="FinFavs"/>
   		<typeAlias type="com.summer.comm.SearchVO" alias = "SearchVO"/>
   		<typeAlias type="com.summer.accounts.domain.Accounts" alias="Accounts"/>
   		<typeAlias type="com.summer.user.domain.User" alias="User"/>
@@ -16,6 +16,12 @@
   		<typeAlias type="com.summer.chart.domain.Chart" alias="Chart"/>
   		<typeAlias type="com.summer.codes.domain.CodeVO" alias="CodeVO"/>
   		<typeAlias type="com.summer.good.domain.Good" alias="Good" />
+  		<typeAlias type="com.summer.board.domain.Board" alias="Board" />
+  		<typeAlias type = "com.summer.finrec.domain.FinSavingVO" alias = "FinSaving" />
+  		<typeAlias type = "com.summer.finrec.domain.FinDepositVO" alias = "FinDeposit" />
+  		<typeAlias type = "com.summer.finrec.comm.FinSavingSearchVO" alias = "FinSavingSearch" />
+  		<typeAlias type = "com.summer.finrec.comm.FinDepositSearchVO" alias = "FinDepositSearch" />
+  		<typeAlias type="com.summer.good.domain.Favo" alias="Favo"/>  		
   	</typeAliases>
 
   </configuration>

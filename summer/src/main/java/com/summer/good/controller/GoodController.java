@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.summer.accounts.domain.Accounts;
 import com.summer.comm.SearchVO;
 import com.summer.comm.StringUtil;
+import com.summer.good.domain.Favo;
 import com.summer.good.domain.Good;
 import com.summer.good.service.GoodService;
 
@@ -92,6 +94,7 @@ public class GoodController {
 			sarray.add(list.get(i).getGoodPrice());
 			sarray.add(list.get(i).getPlusoneYn().trim());
 			sarray.add(list.get(i).getGoodDcYn().trim());
+			sarray.add(list.get(i).getEntpId());
 			
 			
 			carray.add(sarray);
@@ -102,4 +105,6 @@ public class GoodController {
 		
 		return jsonStr;
 	}
+	
+	
 }

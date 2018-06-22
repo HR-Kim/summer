@@ -13,9 +13,6 @@ import com.summer.good.domain.Good;
 
 @Service
 public class GoodServiceImple implements GoodService {
-
-	@Autowired
-	private PlatformTransactionManager transactionManager;
 	
 	@Autowired
 	private GoodDao goodDao;
