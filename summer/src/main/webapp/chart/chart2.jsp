@@ -39,9 +39,39 @@
 	
 	<body>
 		<h3>**주 별 화면**</h3>
-			<button class="btn btn-sm" id="doWeek">차트주간</button>
+			<div>
+				<select name="sh_year" id="sh_year" onchange="makeWeekSelectOptions();">
+				<option value='2013'>2013년</option>
+				<option value='2014'>2014년</option>
+				<option value='2015'>2015년</option>
+				<option value='2016'>2016년</option>
+				<option value='2017'>2017년</option>
+				<option value='2018' selected='selected'>2018년</option>
+			</select>
+
+			<select name="sh_month" id="sh_month" onchange="makeWeekSelectOptions();">
+				<option value='01'>01월</option>
+				<option value='02'>02월</option>
+				<option value='03'>03월</option>
+				<option value='04'>04월</option>
+				<option value='05'>05월</option>
+				<option value='06' selected='selected'>06월</option>
+				<option value='07'>07월</option>
+				<option value='08'>08월</option>
+				<option value='09'>09월</option>
+				<option value='10'>10월</option>
+				<option value='11'>11월</option>
+				<option value='12'>12월</option>
+			</select>
+
+			<select name="sh_week" id="sh_week" onchange="javascript:changeWeekSelectOptions();"></select>
+			
+			<button class="btn btn-sm" id="doMonth" onclick="javascript:loadWeekData();">보기</button>
+		</div>
 		
-		<div id="weekPieChart" style="width: 900px; height: 500px;"></div>
+			
+		
+		<div id="weekPieChart" style="width: 400px; height: 300px;"></div>
 	
 		<!-- List -->
 		<div class="table-responsive">
@@ -107,7 +137,7 @@
 			sMonth = (sMonth < 10) ? "0"+sMonth : sMonth;
 			sDay = (sDay < 10) ? "0"+sDay : sDay;
 
-			var stxt = sYear + "-" + sMonth + "-" + sDay;
+			var stxt = sYear + sMonth + sDay;
 
 			edate.setDate(sdate.getDate() + 6);
 
@@ -118,7 +148,7 @@
 			eMonth = (eMonth < 10) ? "0"+eMonth : eMonth;
 			eDay = (eDay < 10) ? "0"+eDay : eDay;
 
-			var etxt = eYear + "-" + eMonth + "-" + eDay;
+			var etxt = eYear + eMonth + eDay;
 
 			if(today.getTime() >= sdate.getTime() && today.getTime() <= edate.getTime()) {
 				seled = stxt+"|"+etxt;
@@ -133,57 +163,57 @@
 		changeWeekSelectOptions();
 	}
 	
-	$(document).ready(function(){
-		$("#doWeek").on("click",function(){
-			$.ajax({	
-				type:"GET",
-            	url:"doWeek.do",   
-            	dataType:"html",// JSON/html
-            	async: false,
-            	data:{ 
-            		"chartUserId":'a',
-					"weekStart":20180605,
-					"weekEnd":20180615
-            	},
-            	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
-            		//json parsing
-            		weekData = $.parseJSON(data);
-	            	var weekDataLen = weekData.length;
-					
-	            	console.log("weekData=" + weekData);
-	            	console.log("weekDataLen=" + weekDataLen);
-					
-	            	if(weekDataLen == 0){
-	            		alert("데이터가 없습니다");
-	            	}else{
-	            		$("#weekChart").empty();
-	            		
-	            		var arrList = [['Category_Nm', 'Total per category']];
-	            		
-	            		$.each(weekData,function(key,value){
-	            			
-	            			arrList.push([value.cdDtlNm, value.ctgTotal]);
-	            			
-	            			$("#weekChart").append(
-									 "<tr>"
-									 +"<td>"+value.cdDtlNm+"</td>"
-									 +"<td>"+value.ctgTotal+"</td>"
-									 +"<td>"+value.percent+"%"+"</td>"
-									 +"</tr>"
-	            			);//append
-	            		});//each
-	            		
-	            		drawChart(arrList);
-	            	}//ifelse
-				},
-				complete: function(data){//무조건 수행
-				},
-				error: function(xhr,status,error){
-					console.log("doWeek error: "+error);
-				}
-			}); //--ajax
-		});
-	});
+	function loadWeekData(){
+		$.ajax({	
+			type:"GET",
+           	url:"doWeek.do",   
+           	dataType:"html",// JSON/html
+           	async: false,
+           	data:{ 
+           		"chartUserId":'a',
+					"weekStart":$("#sh_week").val().substr(0,8),
+					"weekEnd":$("#sh_week").val().substr(9,17)
+           		},
+           	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
+           		//json parsing
+           		weekData = $.parseJSON(data);
+            	var weekDataLen = weekData.length;
+				
+            	console.log("weekData=" + weekData);
+            	console.log("weekDataLen=" + weekDataLen);
+				
+            	if(weekDataLen == 0){
+            		alert("데이터가 없습니다");
+            	}else{
+            		$("#weekChart").empty();
+            		
+            		var arrList = [['Category_Nm', 'Total per category']];
+            		
+            		$.each(weekData,function(key,value){
+            			
+            			arrList.push([value.cdDtlNm, value.ctgTotal]);
+            			
+            			$("#weekChart").append(
+								 "<tr>"
+								 +"<td>"+value.cdDtlNm+"</td>"
+								 +"<td>"+value.ctgTotal+"</td>"
+								 +"<td>"+value.percent+"%"+"</td>"
+								 +"</tr>"
+            			);//append
+            		});//each
+            		
+            		drawChart(arrList);
+            	}//ifelse
+			},
+			complete: function(data){//무조건 수행
+			},
+			error: function(xhr,status,error){
+				console.log("doWeek error: "+error);
+			}
+		}); //--ajax
+	};
+		
+	window.onload = function(){ loadWeekData(); }
 	</script>
 </body>
 </html>

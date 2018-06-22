@@ -40,7 +40,7 @@
 	<body>
 	<h3>**일 별 화면**</h3>
 	
-	<div class ="form-inline pull-left">
+	<div>
 			<select id="year" name="year">
 				<c:forEach begin="0" end="10" var="result" step="1">
 					<option value="${2018 - result}"
@@ -53,7 +53,7 @@
 			<select id="month" name="month">
 				<c:forEach begin="1" end="12" var="result" step="1">
 					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
-					<c:if test="${result == searchMonth}"> selected="selected"</c:if>>
+					<c:if test="${result == 6}"> selected="selected"</c:if>>
 					<fmt:formatNumber value="${result}" pattern="00"/>
 					</option>
 				</c:forEach>  
@@ -62,16 +62,16 @@
 			<select id="day" name="day">
 				<c:forEach begin="1" end="31" var="result" step="1">
 					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
-					<c:if test="${result == searchMonth}"> selected="selected"</c:if>>
+					<c:if test="${result == 15}"> selected="selected"</c:if>>
 					<fmt:formatNumber value="${result}" pattern="00"/>
 					</option>
 				</c:forEach>  
 			</select>
 		
-			<button class="btn btn-sm" id="doDay">차트일간</button>
+			<button class="btn btn-sm" id="doDay" onclick="javascript:loadDayData();">보기</button>
 		</div>
 	
-	<div id="dayPieChart" style="width: 900px; height: 500px;"></div>
+	<div id="dayPieChart" style="width: 400px; height: 300px;"></div>
 
 	<!-- dayList -->
 	<div class="table-responsive">
@@ -112,63 +112,64 @@
 		chart.draw(data, options);
 	}
 	
-	$(document).ready(function(){
-		$("#doDay").on("click",function(){
-			$.ajax({	
-				type:"GET",
-            	url:"doDay.do",   
-            	dataType:"html",// JSON/html
-            	async: false,
-            	data:{ 
-            		"chartUserId":'a',
+	function loadDayData(){
+		$.ajax({	
+			type:"GET",
+           	url:"doDay.do",   
+           	dataType:"html",// JSON/html
+           	async: false,
+           	data:{ 
+           		"chartUserId":'a',
 					"year":$("#year").val(),
 					"month":$("#month").val(),
 					"day":$("#day").val()    
-            	},
-            	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
-            		//json parsing
-            		dayData = $.parseJSON(data);
-	            	var dayDataLen = dayData.length;
-					
-	            	console.log("dayData=" + dayData);
-	            	console.log("dayDataLen=" + dayDataLen);
-					
-	            	if(dayDataLen == 0){
-	            		alert("데이터가 없습니다");
-	            	}else{
-	            		// 차트 초기화
-	            		$("#dayChart").empty();
-	            		
-	            		// 차트에 넘겨줄 배열 초기화
-	            		var arrList = [['Category_Nm', 'Total per category']];
-	            		
-	            		// 데이터 개수만큼 반복
-	            		$.each(dayData,function(key,value){
-	            			// 배열 추가
-	            			arrList.push([value.cdDtlNm, value.ctgTotal]);
-	            			
-	            			// 테이블 데이터 추가
-	            			$("#dayChart").append(
-									 "<tr>"
-									 +"<td>"+value.cdDtlNm+"</td>"
-									 +"<td>"+value.ctgTotal+"</td>"
-									 +"<td>"+value.percent+"%"+"</td>"
-									 +"</tr>"
-	            			);//append
-	            		});//each
-	            		
-	            		// 파이차트 데이터 셋팅
-	            		drawChart(arrList);
-	            	}//ifelse
-				},
-				complete: function(data){//무조건 수행
-				},
-				error: function(xhr,status,error){
-					console.log("doDay error: "+error);
-				}
-			}); //--ajax
-		});
-	});
+           	},
+           	success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	
+           		//json parsing
+           		dayData = $.parseJSON(data);
+            	var dayDataLen = dayData.length;
+				
+            	console.log("dayData=" + dayData);
+            	console.log("dayDataLen=" + dayDataLen);
+				
+            	if(dayDataLen == 0){
+            		alert("데이터가 없습니다");
+            	}else{
+            		// 차트 초기화
+            		$("#dayChart").empty();
+            		
+            		// 차트에 넘겨줄 배열 초기화
+            		var arrList = [['Category_Nm', 'Total per category']];
+            		
+            		// 데이터 개수만큼 반복
+            		$.each(dayData,function(key,value){
+            			// 배열 추가
+            			arrList.push([value.cdDtlNm, value.ctgTotal]);
+            			
+            			// 테이블 데이터 추가
+            			$("#dayChart").append(
+								 "<tr>"
+								 +"<td>"+value.cdDtlNm+"</td>"
+								 +"<td>"+value.ctgTotal+"</td>"
+								 +"<td>"+value.percent+"%"+"</td>"
+								 +"</tr>"
+            			);//append
+            		});//each
+            		
+            		// 파이차트 데이터 셋팅
+            		drawChart(arrList);
+            	}//ifelse
+			},
+			complete: function(data){//무조건 수행
+			},
+			error: function(xhr,status,error){
+				console.log("doDay error: "+error);
+			}
+		}); //--ajax
+	};
+	
+	window.onload = function(){ loadDayData(); }
+
 	</script>
 </body>
 </html>
