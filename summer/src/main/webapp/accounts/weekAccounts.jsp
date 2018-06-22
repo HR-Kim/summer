@@ -40,6 +40,7 @@
 
 	
 	log.debug("searchDiv"+searchDiv);
+
 	
 %>
 
@@ -49,6 +50,8 @@
   
   <div class="container">
  	<br/><br/>
+ 	
+
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
 	   	<table class="table">
@@ -79,7 +82,7 @@
 	   			</tr>
    		</table>
    	</form> 
-   	
+
   <button class="btn btn-sm btn-success" id="doSelectWeek">검색</button>
 
    	<!--// Search --------------------------------------------------------->
@@ -92,15 +95,14 @@
 	       <table id="listTable" class="table  table-striped table-bordered table-hover">
 	        	<thead class="bg-primary">
 	        		<tr>
-	        			<th class="text-center">달</th>
-		         		<th class="text-center">지출</th>
-		         		<th class="text-center">수입</th>
-		         		<th class="text-center">총합</th>
+	        			<th class="text-center" width="200">주</th>
+		         		<th class="text-center" width="200">지출</th>
+		         		<th class="text-center" width="200">수입</th>
+		         		<th class="text-center" width="200">총합</th>
 	         		</tr>
 	        	</thead>
 	        	<tbody>
-	        		
-	        		
+	        	
 	        	</tbody>
 	        </table>
 	        
