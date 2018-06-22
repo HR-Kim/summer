@@ -19,17 +19,8 @@
 	log.debug("=this.getClass()="+this.getClass());
 	log.debug("===============================");
 
-	String pageSize = "10";	//페이지 사이즈
-	String pageNum = "1";	//현재 페이지
 	String searchWord = ""; 	//검색어
 	String searchDiv = ""; 	//검색구분
-	
-	String searchTrade = "";
-	String searchCategory = "";
-	String searchAccount = "";
-	
-	int totalCnt = 0;
-	int bottomCount = 10;
 	
 	SearchVO searchVO = new SearchVO();
 	if(null != request.getAttribute("searchVO")){
@@ -39,18 +30,6 @@
 	
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"2018");
-	
-	searchTrade = StringUtil.nvl(searchVO.getSearchTrade(),"");
-	searchCategory = StringUtil.nvl(searchVO.getSearchCategory(),"");
-	searchAccount =  StringUtil.nvl(searchVO.getSearchAccount(),"");
-	
-	
-	
-	int o_pageSize = Integer.parseInt(pageSize);
-	int o_pageNum = Integer.parseInt(pageNum);
-	String o_TotalCnt = 
-			(null == request.getAttribute("totalCnt"))?"0":request.getAttribute("totalCnt").toString();
-	totalCnt = Integer.parseInt(o_TotalCnt);
 	
 	log.debug("searchDiv"+searchDiv);
 	
@@ -146,12 +125,7 @@
 			        </table>
 			      </div>
 			<!--// List ----------------------------------------------------------->
-		   
-			<!-- Paging ----------------------------------------------------------->
-			<div class="form-inline text-center">
-		   		<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "doSelectList.do", "search_page")%>
-			</div>
-			<!--// Paging --------------------------------------------------------->
+
 	</div>
    
    

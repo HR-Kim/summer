@@ -8,9 +8,10 @@
 			<br>
           <ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/accounts/doSelectList.do">일간 <span class="sr-only">(current)</span></a></li>
-            <li><a href="${CONTEXT}/accounts/doSelectListWeek.do">주간</a></li>
+            <li><a href="${CONTEXT}/accounts/doWeek.do">주간
+            	</a></li>
             <li><a href="${CONTEXT}/accounts/doSelectListMonth.do">
-            	<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
+            		<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
             </a></li>
           </ul>
           <br>

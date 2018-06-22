@@ -21,18 +21,9 @@
 	log.debug("=this.getClass()="+this.getClass());
 	log.debug("===============================");
 
-	String pageSize = "10"; //페이지 사이즈
-	String pageNum = "1";  //현재 페이지
 	String searchWord = ""; //검색어
 	String searchDiv = ""; //검색구분
-	
-	String searchTrade = "";
-	String searchCategory = "";
-	String searchAccount = "";
-	
-	int totalCnt = 0;
-	int bottomCount = 10;
-	
+
 	SearchVO searchVO = new SearchVO();
 	if(null != request.getAttribute("searchVO")){
 		searchVO = (SearchVO)request.getAttribute("searchVO");
@@ -42,20 +33,11 @@
 	searchWord = StringUtil.nvl(searchVO.getSearchWord(),"");
 	searchDiv = StringUtil.nvl(searchVO.getSearchDiv(),"2018/06");
 	
-	searchTrade = StringUtil.nvl(searchVO.getSearchTrade(),"");
-	searchCategory = StringUtil.nvl(searchVO.getSearchCategory(),"");
-	searchAccount =  StringUtil.nvl(searchVO.getSearchAccount(),"");
-
 	String searchYear = searchDiv.substring(0, searchDiv.indexOf("/"));
 	String searchMonth = searchDiv.substring(searchDiv.indexOf("/")+1);
 	
-	searchMonth=StringUtil.nvl(searchMonth,"");
-	
-	int o_pageSize = Integer.parseInt(pageSize);
-	int o_pageNum = Integer.parseInt(pageNum);
-	String o_TotalCnt = 
-			(null == request.getAttribute("totalCnt"))?"0":request.getAttribute("totalCnt").toString();
-	totalCnt = Integer.parseInt(o_TotalCnt);
+	searchMonth=StringUtil.nvl(searchMonth,"6");
+
 	
 	log.debug("searchDiv"+searchDiv);
 	
@@ -63,45 +45,23 @@
 
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
-    
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::주간 가계부:::</title>
 
-    <!-- 부트스트랩 -->
-    <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
- 
-    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-  </head>
-  <body>
   
   <div class="container">
- 	
+ 	<br/><br/>
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
 	   	<table class="table">
 	   			<tr>
 	   				<td class="text-left">
 	   					<div class="form-group col-lg6 col-sm6">
-							<select id="searchDiv" name="searchDiv">
+							<select id="searchYear" name="searchYear">
 					          <c:forEach begin="0" end="10" var="result" step="1">
 					           <option value="${2018 - result}"
-					           	<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
+					           	<c:if test="${(2018 - result) == searchYear}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
 					           </option>
 					          </c:forEach>                          
 					        </select>
-					        
 					        <select id="searchMonth" name="searchMonth" onchange="makeWeekSelectOptions();">
 					          <c:forEach begin="1" end="12" var="result" step="1">
 					           <option value=<fmt:formatNumber value="${result}" pattern="00"/>
@@ -113,13 +73,14 @@
 					        </select>
 					        
 					        <select name="sh_week" id="sh_week">
-</select>
-	
+								</select>
+	 							
 	   					</div>
 	   			</tr>
    		</table>
    	</form> 
-   	<button class="btn btn-sm btn-success" id="doSelectWeek">검색</button>
+   	
+  <button class="btn btn-sm btn-success" id="doSelectWeek">검색</button>
 
    	<!--// Search --------------------------------------------------------->
    
@@ -148,20 +109,13 @@
 
    <!--// List ----------------------------------------------------------->
    
-   <!-- Paging ----------------------------------------------------------->
-   <div class="form-inline text-center">
-   		<%=StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCount, "doSelectList.do", "search_page")%>
-   </div>
-   <!--// Paging --------------------------------------------------------->
    </div>
    
-	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
-	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
-	function doSearch(){
+	function doWeek(){
 		var frm = document.frm;
-		frm.action = "doSelectListWeek.do";
+		frm.action="doWeek.do";
 		frm.submit();
 	}
 	
@@ -218,10 +172,6 @@
 	}
 	
 	
-	
-	
-	
-	
 	//천단위 콤마
 	function numberWithCommas(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -229,9 +179,7 @@
 	
 	
 	$(document).ready(function(){
-				
-			
-
+		$("#doSelectWeek").on("click",function(){
 
 			$.ajax({
 	    			      	 type:"GET",
@@ -242,6 +190,7 @@
 		                    	"searchDiv":$("#searchYear").val() +"/"+ $("#searchMonth").val()
 			                 },
 		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+		                	
 		                	 console.log("data="+data); 
 		                 
 		                 	//json parsing
@@ -261,8 +210,7 @@
 			                console.log("do_checkedDelete error: "+error);
 			                 }
   			   }); //--그리드 클릭> ajax
-			
-			
+		});
 	});
 			
 		

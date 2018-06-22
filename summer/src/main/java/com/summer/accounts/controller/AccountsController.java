@@ -149,14 +149,10 @@ public class AccountsController {
 		return jsonStr;
 	}
 	
-	@RequestMapping(value="/accounts/doSelectListWeek.do",method=RequestMethod.POST)
-	public String getSelectListWeekPost(SearchVO vo, Model model) throws SQLException{
-		
-		log.debug("getSelectListWeekPost==RequestMethod.POST==");
-		
-		//todo : 검색 시 값 가지고 가는지 확인 
-		return "redirect:/accounts/doSelectListWeek.do";  
-		
+	@RequestMapping(value="/accounts/doWeek.do",method=RequestMethod.GET)
+	public String getDoWeek(SearchVO vo, Model model) throws SQLException{
+
+		return "accounts/weekAccounts";
 	}
 	
 	@RequestMapping(value="/accounts/doSelectListMonth.do",method=RequestMethod.GET)
