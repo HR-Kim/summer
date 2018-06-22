@@ -36,31 +36,9 @@
 %>
 
 <%-- CONTEXT --%>
-<c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
-    
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::월간 가계부:::</title>
-
-    <!-- 부트스트랩 -->
-    <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet"> 
-
-    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-  </head>
-  <body>
-  
+<c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>  
 	<div class="container">
+	<br/><br/>
 		<!-- Search ----------------------------------------------------------->
 		<form class="form-inline" name="frm" id="frm" method="get">
 	   		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
@@ -77,8 +55,9 @@
 					           </option>
 					          </c:forEach>                          
 					        </select>
+	    						
 	    						<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
-	    						<input type="button" value="차트보기" onclick="showPopup();"/>
+	    						<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showMonthPopup();"/>
 	   					</div>
 	   			</tr>
 	   		</table>
@@ -128,9 +107,6 @@
 
 	</div>
    
-   
-	<script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
-	<script src="${CONTEXT}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
 	//리스트 조회
@@ -140,7 +116,7 @@
 		frm.submit();
 	}
 	
-	 function showPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "a", "width=400, height=300, left=100, top=50"); }
+	 function showMonthPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "월 간 차트", "width=350, height=800, left=100, top=50"); }
 	</script>
   </body>
 </html>

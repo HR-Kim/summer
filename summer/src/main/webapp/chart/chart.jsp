@@ -38,8 +38,6 @@
     	
 	</head>
 	<body>
-	<h3>**일 별 화면**</h3>
-	
 	<div>
 			<select id="year" name="year">
 				<c:forEach begin="0" end="10" var="result" step="1">

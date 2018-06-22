@@ -74,13 +74,14 @@
 					        
 					        <select name="sh_week" id="sh_week" class="form-control input-sm">
 								</select>
-	 							
 	   					</div>
 	   			</tr>
    		</table>
    	</form> 
+   	
+	<button class="btn btn-sm btn-success" id="doSelectWeek">검색</button>
+	<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showWeekPopup();"/>	
 
-  <button class="btn btn-sm btn-success" id="doSelectWeek">검색</button>
 
    	<!--// Search --------------------------------------------------------->
    
@@ -111,8 +112,6 @@
    </div>
    
 	<script type="text/javascript">
-	
-
 	
 	function doWeek(){
 		var frm = document.frm;
@@ -219,7 +218,7 @@
 		
 	});
 			
-		
+		function showWeekPopup() { window.open("${CONTEXT}/chart/chart2.jsp", "월 간 차트", "width=350, height=800, left=100, top=50"); }		
 	
 		
 	</script>

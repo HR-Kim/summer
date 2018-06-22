@@ -38,7 +38,6 @@
 	</head>
 	
 	<body>
-		<h3>**주 별 화면**</h3>
 			<div>
 				<select name="sh_year" id="sh_year" onchange="makeWeekSelectOptions();">
 				<option value='2013'>2013년</option>
