@@ -123,8 +123,7 @@
         	</tbody>
         </table>
       </div>
-	    
-
+	  
    <!--// List ----------------------------------------------------------->
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3C_iXo7Xb-jkSbAqAQBHNcHRMP7HyWp0&callback=initMap">

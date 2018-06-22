@@ -43,21 +43,24 @@
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
+	<div class="container">
+	<br>
+	<br>
+	<br>
+	
+	<h3>장바구니</h3>
+	<hr/>
+	
 	<!-- list -->
-	<div class="table-responsive">
-		<table class="table table-striped table-bordered table-hover" id="listTable">
+	<table class="table">
+		<table class="table table-striped table-bordered table-hover" id="favoTable">
        	<thead class="bg-primary">
        		<th class="text-center">번호</th>
        		<th class="text-center">상품명</th>
        		<th class="text-center">매장명</th>
        		<th class="text-center">수량</th>
        		<th class="text-center">가격</th>
-       		<th class="text-center">삭제</th>
        		<th class="text-center" style="display:none;">goodID</th>
        		<th class="text-center" style="display:none;">entpID</th>
        	</thead>
@@ -69,9 +72,8 @@
 		         			<td class="text-center">${favoVO.no}</td>
 		         			<td class="text-left">${favoVO.goodName}</td>
 		         			<td class="text-left">${favoVO.entpName}</td>
-		         			<td class="text-left">${favoVO.goodNum}</td>
-		         			<td class="text-left">${favoVO.goodPrice}</td>
-		         			<td><input type='button' value='취소'></td>
+		         			<td class="text-center">${favoVO.goodNum}</td>
+		         			<td class="text-right">${favoVO.goodPrice} 원</td>
 		         			<td class="text-left" style="display:none;">${favoVO.goodId}</td>
 		         			<td class="text-left" style="display:none;">${favoVO.entpId}</td>
 		         		</tr>
@@ -88,14 +90,74 @@
 	</div>
 	<!-- list end -->
 	
+	<!-- paging -->
+  	<div class="form-inline text-center">
+  	<%= StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCnt, "doSelectList.do", "search_page") %>
+  	</div>
+  	<!--// paging -->
+	</div>
+
 	<script type="text/javascript">
 	
 	function doSearch(){
 		var frm = document.frm;
-		frm.action = "doSelectList.do";
+		frm.action = "{CONTEXT}/favo/doSelectList.do";
 		frm.submit();
 	}
 	
+	$(document).ready(function(){		
+		$("#favoTable>tbody").on("click","tr",function(){
+			alert("click");
+			
+			var tr = $(this);
+			var tds = tr.children();
+			
+			var goodid = tds.eq(5).text();
+			var entpid = tds.eq(6).text();
+			var id = 'aa';
+			
+			//삭제
+			console.log(goodid);
+			console.log(entpid);
+			console.log(id);
+			
+		
+			if(false==confirm("삭제 하시겠습니까?"))return;
+			$.ajax({	
+	      	 type:"POST",
+            url:"doDelete.do",   
+            dataType:"html",// JSON/html
+            async: false,
+            data:{ 
+				"goodId": goodid
+				,"entpId": entpid
+				,"id": id
+                },
+            success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+           	 console.log("data="+data); 
+            	//json parsing
+            	var parseData = $.parseJSON(data); //데이터 들어있음.
+            	console.log("parseData"+parseData);
+            		
+            	if(parseData.msgId == "1"){
+            		alert(parseData.message);	
+
+            		doSearch();
+            	}else{
+            		alert(parseData.message);	
+            		}
+           		
+                },
+               complete: function(data){//무조건 수행
+                },
+               error: function(xhr,status,error){
+               console.log("doDelete error: "+error);
+                }
+   		}); //--ajax
+		
+		});
+	});
+	
+	
+	
 	</script>
-</body>
-</html>

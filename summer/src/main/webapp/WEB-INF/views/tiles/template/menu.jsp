@@ -19,6 +19,7 @@
           <br>
           <ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/good/doSelectList.do">검색하기</a></li>
+            <li><a href="${CONTEXT}/favo/doSelectList.do">장바구니</a></li>
           </ul>
           <br>
           <h4>금융상품 추천</h4>

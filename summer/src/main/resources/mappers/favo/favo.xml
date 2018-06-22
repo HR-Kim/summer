@@ -28,5 +28,14 @@
 	    VALUES (T2.good_id,T2.id,T2.entp_id,T2.good_name,T2.good_price
 			            ,T2.good_num,T2.entp_name)
   </update>
-
+  <select id="do_selectList" parameterType="SearchVO" resultType="Favo">
+	  SELECT sf.rnum as no, sf.good_id as goodId, sf.good_name as goodName, sf.entp_name as entpName, sf.good_price as goodPrice,sf.entp_id as entpId, sf.good_num as goodNum, sf.id as id, sf.total_cnt
+		FROM(   SELECT rownum as rnum, good_id, good_name, entp_name, good_price, good_num, entp_id, id,COUNT(*) OVER() as total_cnt
+		        FROM su_favo) sf
+		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) +1) AND (#{pageSize} * (#{pageNum} -1)+#{pageSize})
+  </select>
+  <delete id="do_delete" parameterType="Favo">
+  	DELETE FROM su_favo
+	WHERE good_id=#{goodId} and entp_id = #{entpId} and id=#{id}
+  </delete>
   </mapper>

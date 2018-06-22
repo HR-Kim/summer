@@ -53,6 +53,12 @@
 		<put-attribute name  = "body"   value = "/good/goodList.jsp" />
 	</definition>
 	
+	<!-- favo/favo -->
+	<definition name = "favo/favo"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "장바구니" />
+		<put-attribute name  = "body"   value = "/favo/favo.jsp" />
+	</definition>
+	
 	<!-- good/goodDetail -->
 	<definition name = "good/goodDetail"  extends = "base-definition">
 		<put-attribute name  = "title"  value = "최저가검색상세" />
@@ -61,7 +67,7 @@
 	
 	<!-- accounts/dayAccounts -->
 	<definition name = "accounts/dayAccounts"  extends = "base-definition">
-		<put-attribute name  = "title"  value = "일간 가계부" />
+		<put-attribute name  = "title"  value = "일 간 가계부" />
 		<put-attribute name  = "body"   value = "/accounts/dayAccounts.jsp" />
 	</definition>
 
