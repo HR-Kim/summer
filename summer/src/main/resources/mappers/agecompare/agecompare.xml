@@ -38,10 +38,10 @@
 			   ,id
 		       ,ROUND(SUM(amount)/count(amount)) AS idTotal
 		FROM su_accounts 
-		WHERE id='#{searchDiv,jdbcType=VARCHAR}'
+		WHERE id='b'
 		AND TO_DATE(a_date,'YY/MM/DD')
-		 BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(TO_DATE(#{pageNum,jdbcType=VARCHAR}))+1,-1),'YYYYMMDD'),'YY/MM/DD')
-		AND TO_DATE(last_day(TO_CHAR(LAST_DAY(TO_DATE(#{pageSize,jdbcType=VARCHAR})),'YYYYMMDD')),'YY/MM/DD')
+		 BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(#{pageNum,jdbcType=VARCHAR})+1,-1),'YYYYMMDD'),'YY/MM/DD')
+		AND TO_DATE(last_day(TO_CHAR(LAST_DAY(#{pageSize,jdbcType=VARCHAR}),'YYYYMMDD')),'YY/MM/DD')
 	     GROUP BY a_date, id
  		 ORDER BY a_date
 	</select>

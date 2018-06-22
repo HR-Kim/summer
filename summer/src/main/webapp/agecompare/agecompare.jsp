@@ -62,41 +62,13 @@
 	
 	기간: <input type="text" id="startmonth" value="" />
 	~ <input type="text" id="endmonth"  value=""/>
-	<!-- id=testDatepicker -->
+	
 	<input type="button" id="btnSearch" value="조회" /><br><br>
-				
-	<!--<button class="btn btn-success btn-sm" id="btn20">20대</button> 
-	<button class="btn btn-success btn-sm" id="btn30">30대</button>  -->
 		
 	<div id="curve_chart" style="width: 900px; height: 500px"></div>
 		
-	<table>
-		<tr>
-				<td>total</td>
-				<td>date</td>
-				<td>tradeid</td>
-				<td>age</td>
-				<td>tradetotal</td>
-			</tr>
-		 <c:choose>	 
-         	<c:when test="${listsize>0}">
-         		<c:forEach var="ageVO" items="${list}">
-   <!-- id,adate,accountid,tradeid,amount,age,tradetotal,idtradetotal,idtotal -->
-					<tr>
-					<td>${ageVO.total}</td>
-					<td>${ageVO.aDate}</td>
-					<td>${ageVO.tradeId}</td>
-					<td>${ageVO.age}</td>
-					<td>${ageVO.tradeTotal}</td>
-					</tr>
-         		</c:forEach>
-         	</c:when>
-         	
-         	<c:otherwise>
-         		<tr><td>등록된 게시글이 없습니다.</td></tr>
-         	</c:otherwise>
-      </c:choose>
-	</table>
+	
+	
 	
 	<link rel='stylesheet' type='text/css' href='/jquery-ui.css'/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -264,130 +236,90 @@
 						success:function(medata){
 							alert("Medata="+medata);
 
-							var idtotal;
 							var idData = $.parseJSON(medata);
+							var idtotal = new Array();
 							$.each(idData,function(key,value){
-								if(key!=0){
-									idtotal +=",";
-								}
-								idtotal += value.idTotal;
+								idtotal[key] = value.idTotal;
 							});
-							idtotal = idtotal.substring(9);
 						    
-						}
-				 });
-				 $.ajax({
-						type:"GET",
-						url:"do_selectAgeList.do",
-						dataType:"html",
-						async:false,
-						data:{
-							"searchWord":searchList,
-							"pageNum":$("#startmonth").val(),
-							"pageSize":$("#endmonth").val()
-						},
-						error:function(){
-							alert("do_selectAgeList.do error error");
-						},
-						complete:function(data){
-							//alert($("#startmonth").val());
-						},
-						success:function(data){
-							alert("data="+data);
-							data = data.substring(1,data.length-1);
-							
-							count = (data.match(/aDate/g) || []).length - count;
-							//밑에꺼 바꾸는 중
-							/*var oobj = new Array();
-							for(var i=0; i<count; i++){
-								var obj = new Array();
-								var obj1 = new Array();
-								if(i==0){
-									var tt = data.substring(0,data.length/count+1);
-									var dataSub = $.parseJSON(tt);
-									$.each(dataSub,function(key,value){
-										if(key==0){
-											obj[0] = value.aDate;
-											obj[1] = (value.total/value.ageTotal).toFixed(2);
-										}else if(key==1){
-											obj1[2] = (value.total/value.ageTotal).toFixed(2);
+							 $.ajax({
+									type:"GET",
+									url:"do_selectAgeList.do",
+									dataType:"html",
+									async:false,
+									data:{
+										"searchWord":searchList,
+										"pageNum":$("#startmonth").val(),
+										"pageSize":$("#endmonth").val()
+									},
+									error:function(){
+										alert("do_selectAgeList.do error error");
+									},
+									complete:function(data){
+										//alert($("#startmonth").val());
+									},
+									success:function(data){
+										alert("data="+data);
+										data = data.substring(1,data.length-1);
+										
+										count = (data.match(/aDate/g) || []).length - count;
+																	
+										var tmpArray = new Array();
+										var i = 0;
+										tmpArray[i] = "Date";
+										for(var j=1; j<=9; j++){
+											 $('#chk_age'+j+':checked').each(function() { 
+												i++;
+												tmpArray[i] = $(this).val().substring(0,2) + "대";
+											 });
+										 }
+										tmpArray[++i] = "나";
+										var arrList = [tmpArray];
+
+										//============================//
+										alert("data="+data);
+										var oobj = new Array();
+										var oobjtmp = new Array();
+										var datatmp;
+										var tmpsize=0;
+										for(var i=0; i<count; i++){
+											if(i==0){
+												datatmp = data.substring(0,data.length/count+1);
+												var dayDataSub = $.parseJSON(datatmp);
+												$.each(dayDataSub,function(key,value){
+													if(key==0){
+														oobjtmp[tmpsize] = value.aDate;	
+														oobjtmp[++tmpsize] = (value.total/value.ageTotal).toFixed(2);
+													}else{
+														oobjtmp[++tmpsize] = (value.total/value.ageTotal).toFixed(2);
+													}
+												});
+												oobjtmp[++tmpsize] = idtotal[i];
+												oobj[i]=oobjtmp;
+											}else{
+												tmpsize=0;
+												oobjtmp = new Array();
+												datatmp = data.substring(datatmp.length+1, data.length/count*(i+1));
+												var dayDataSub = $.parseJSON(datatmp);
+												$.each(dayDataSub,function(key,value){
+													if(key==0){	
+														oobjtmp[tmpsize+1] = (value.total/value.ageTotal).toFixed(2);
+													}else{
+														oobjtmp[tmpsize] = value.aDate;
+														oobjtmp[tmpsize+2] = (value.total/value.ageTotal).toFixed(2);
+													}
+												});
+												oobjtmp[tmpsize+3] = idtotal[i];
+												oobj[i]=oobjtmp;
+											}
+											arrList.push([oobj[i][0],oobj[i][1]*1,oobj[i][2]*1,oobj[i][3]*1]);
+											alert(oobj[i]);
 										}
-									});
-								}else{
-									var tt = data.substring(data.length/2+2,data.length);
-									var dataSub = $.parseJSON(tt);
-									$.each(dataSub,function(key,value){
-										if(key==0){
-											obj1[0] = value.aDate;
-											obj1[1] = (value.total/value.ageTotal).toFixed(2);
-										}else if(key==1){
-											obj[2] = (value.total/value.ageTotal).toFixed(2);
-										}
-									});
-								}
-							}
-							alert("test1:"+obj.toString());
-							alert("test2:"+obj1.toString());
-							oobj[0] = obj;
-							oobj[1] = obj1;
-							alert("test:"+oobj.toString());
-							
-							*/
-							var dataSub = data.substring(0,data.length/2+1);
-							var dataSub2 = data.substring(data.length/2+2,data.length);
-							//alert(dataSub);
-							//alert(dataSub2);
-							
-							var dayDataSub = $.parseJSON(dataSub);
-							var dayDataSub2 = $.parseJSON(dataSub2);
-							var aa1;
-							var aa2;
-							$.each(dayDataSub,function(key,value){
-								if(key==0){
-									aa1 += "[{\"aDate\":\""+value.aDate+"\","
-										+"\"total\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
-								}else{
-									aa2 += "[{\"aDate\":\""+value.aDate+"\","
-									+"\"total\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
-								}
-		            		});
-							$.each(dayDataSub2,function(key,value){
-								if(key==0){
-									aa1 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
-								}else{
-									aa2 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
-								}
-		            		});
-							aa1 += ",\"idTotal\":\""+2200000+"\"}]";
-							aa2 += ",\"idTotal\":\""+28000+"\"}]";
-									
-							aa1 = aa1.substring(9,aa1.length-1);
-							aa2 = aa2.substring(10);
-							alert(aa1);			
-							alert(aa2);			
-							aa1 += ","+aa2;
-							alert(aa1);							
-							
-							var daytotalData = $.parseJSON(aa1);
-							var tmpArray = new Array();
-							var i = 0;
-							tmpArray[i] = "Date";
-							for(var j=1; j<=9; j++){
-								 $('#chk_age'+j+':checked').each(function() { 
-									i++;
-									tmpArray[i] = $(this).val().substring(0,2) + "대";
+									    drawChart(arrList);
+									}
 								 });
-							 }
-							tmpArray[++i] = "나";
-							var arrList = [tmpArray];
-	            		    
-	            		    $.each(daytotalData,function(key,value){
-	            			    arrList.push([value.aDate,value.ageTotal*1,1*value.total,1*value.idTotal]);
-	            		    });
-						    drawChart(arrList);
 						}
-					 });
-				 
+				 }); 
 				
 			 }
 		 });
