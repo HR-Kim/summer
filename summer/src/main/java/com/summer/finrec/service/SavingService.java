@@ -15,7 +15,7 @@ public interface SavingService {
 	 * @param FinSavingVO
 	 * @return
 	 */
-	public FinSavingVO getSelectOne(String finPrdtCd);
+	public FinSavingVO getSelectOne(FinSavingVO vo) throws SQLException;
 	
 	
 	/**
@@ -23,6 +23,6 @@ public interface SavingService {
 	 * @param vo
 	 * @return List<FinSavingVO>
 	 */
-	public List<FinSavingVO> getSelectList(FinSavingSearchVO vo);
+	public List<FinSavingVO> getSelectList(FinSavingSearchVO vo) throws SQLException;
 	
 }

@@ -1,6 +1,8 @@
 package com.summer.finrec.domain;
 
-public class FinSavingVO {
+import com.summer.comm.DTO;
+
+public class FinSavingVO extends DTO {
 	
 	//baseList
 	private String finCoNo;
@@ -49,13 +51,16 @@ public class FinSavingVO {
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
 		return "FinSavingVO [finCoNo=" + finCoNo + ", finPrdtCd=" + finPrdtCd + ", korCoNm=" + korCoNm + ", finPrdtNm="
 				+ finPrdtNm + ", joinWay=" + joinWay + ", mtrtInt=" + mtrtInt + ", spclCnd=" + spclCnd + ", etcNote="
 				+ etcNote + ", intrRateMin=" + intrRateMin + ", intrRateMax=" + intrRateMax + ", intrRateType="
 				+ intrRateType + ", rsrvType=" + rsrvType + ", intrRateTypeNm=" + intrRateTypeNm + ", rsrvTypeNm="
-				+ rsrvTypeNm + "]";
+				+ rsrvTypeNm + ", getNo()=" + getNo() + ", getTotalCnt()=" + getTotalCnt() + "]";
 	}
 
 

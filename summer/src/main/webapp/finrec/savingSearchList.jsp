@@ -11,10 +11,7 @@
 
  
  
-	 <div class="col-md-3 d-flex align-items-stretch">
-	 <div class = "row flex-grow">
-              <div class="card">
-                <div class="card-body">
+						<div>
                                 	<h2 class="card-title">적금 검색</h2>
                 	
                 	     <!-- 
@@ -42,9 +39,7 @@
 						<p>
 						<button id = "search" type="submit" class="btn btn-success mr-2" onclick="javascript:savingList(1);">검색</button>
 						</div>
-					</div>
-		</div>
-	</div>
+
 	
  <div class="col-md-7 grid-margin stretch-card" style="margin-right:none;">
               <div class="card">
@@ -58,7 +53,6 @@
                     </div>
                     </div>
                     </div>
-	</div>
 	
 
 
