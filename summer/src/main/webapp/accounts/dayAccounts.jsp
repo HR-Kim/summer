@@ -69,8 +69,8 @@
   <!-- Button ----------------------------------------------------------->
     
    <div class="form-inline pull-right">
-		<button class="btn btn-md" id="expenses" name="plus" value="10">+지출</button>
-   		<button class="btn btn-md" id="incomes" name="plus" value="20">+수입</button>
+		<button class="btn btn-success btn-md" id="expenses" name="plus" value="10">+지출</button>
+   		<button class="btn btn-success btn-md" id="incomes" name="plus" value="20">+수입</button>
    		<br/>
    </div>
    <!--// Button --------------------------------------------------------->
@@ -139,7 +139,7 @@
 					
 						<div class="col-lg-10 form-group" id="submitBtn" align="right">
 				    		
-				    			<button class="btn btn-sm" id="doUpsert">등록</button>
+				    			<button class="btn btn-sm"  class="btn btn-sm btn-success" id="doUpsert">등록</button>
 				    			
 			    		</div> 
 				</form>
@@ -160,7 +160,7 @@
    					<div class="form-group col-lg6 col-sm6">
 						<c:choose>
 			        		<c:when test="${list1.size()>0 }">
-					        		<select name="searchTrade" id="searchTrade">
+					        		<select name="searchTrade" id="searchTrade" class="form-control input-sm">
 					        			<option>전체</option>
 						        		<c:forEach var="code" items="${list1 }">
 						        			<option value="${code.cdDtlId }"
@@ -170,7 +170,7 @@
 					        		</select>
 				         	</c:when>
 			         </c:choose>
-    					<select name="pageSize" id="pageSize">
+    					<select name="pageSize" id="pageSize" class="form-control input-sm">
    							<option value="10"
    								<c:if test="${searchVO.pageSize=='10'}">selected='selected'</c:if> 
    							>10</option>
@@ -183,7 +183,7 @@
    						</select>
     					
     					<button class="btn btn-sm btn-success" onclick="javascript:doSelectList();">검색</button>
-						<input type="button" value="차트보기" onclick="showPopup();"/>	
+						<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showPopup();"/>	
    					</div>
    			</tr>
    		</table>

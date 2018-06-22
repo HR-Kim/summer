@@ -36,9 +36,6 @@
 	String searchYear = searchDiv.substring(0, searchDiv.indexOf("/"));
 	String searchMonth = searchDiv.substring(searchDiv.indexOf("/")+1);
 	
-	searchMonth=StringUtil.nvl(searchMonth,"6");
-
-	
 	log.debug("searchDiv"+searchDiv);
 
 	
@@ -58,24 +55,24 @@
 	   			<tr>
 	   				<td class="text-left">
 	   					<div class="form-group col-lg6 col-sm6">
-							<select id="searchYear" name="searchYear">
+							<select id="searchYear" name="searchYear" class="form-control input-sm">
 					          <c:forEach begin="0" end="10" var="result" step="1">
 					           <option value="${2018 - result}"
 					           	<c:if test="${(2018 - result) == searchYear}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
 					           </option>
 					          </c:forEach>                          
 					        </select>
-					        <select id="searchMonth" name="searchMonth" onchange="makeWeekSelectOptions();">
+					        <select id="searchMonth" name="searchMonth" class="form-control input-sm" onchange="makeWeekSelectOptions();">
 					          <c:forEach begin="1" end="12" var="result" step="1">
 					           <option value=<fmt:formatNumber value="${result}" pattern="00"/>
-					           	<c:if test="${result == searchMonth}"> selected="selected"</c:if>>
+					           	<c:if test="${result == 6}"> selected="selected"</c:if>>
 					           		<fmt:formatNumber value="${result}" pattern="00"/>
 					           </option>
 					          </c:forEach>  
 					                            
 					        </select>
 					        
-					        <select name="sh_week" id="sh_week">
+					        <select name="sh_week" id="sh_week" class="form-control input-sm">
 								</select>
 	 							
 	   					</div>
@@ -114,6 +111,8 @@
    </div>
    
 	<script type="text/javascript">
+	
+
 	
 	function doWeek(){
 		var frm = document.frm;
@@ -181,6 +180,8 @@
 	
 	
 	$(document).ready(function(){
+		
+		
 		$("#doSelectWeek").on("click",function(){
 
 			$.ajax({
@@ -213,6 +214,9 @@
 			                 }
   			   }); //--그리드 클릭> ajax
 		});
+		
+		$("#doSelectWeek").trigger("click"); 
+		
 	});
 			
 		
