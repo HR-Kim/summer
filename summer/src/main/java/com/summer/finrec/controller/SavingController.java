@@ -39,18 +39,11 @@ public class SavingController {
 		return "finrec/savingSearchList";
 	}
 
-	@RequestMapping(value = "/finrec/saving/showViewDetail.do", method = RequestMethod.GET)
-	public String showViewDetail() {
-		log.debug("1.showViewDetail======");
-
-		return "finrec/savingDetailView";
-	}
-
 	/**
 	 * 검색, 목록 조회
 	 */
 
-	@RequestMapping(value = "/finrec/saving/doSelectList.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/finrec/saving/doSelectList.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getSelectList(FinSavingSearchVO vo, Model model) throws SQLException {
 
@@ -79,7 +72,7 @@ public class SavingController {
 	
 	@RequestMapping(value = "/finrec/saving/doSelectOne.do", method = RequestMethod.GET)
 	public String getSelectOne(FinSavingVO vo, Model model) throws SQLException {
-		log.debug("1.doSearchOne.do===");
+		log.debug("1.doSelectOne.do===");
 		log.debug("2. inVO = " + vo.toString());
 
 		FinSavingVO outVO = service.getSelectOne(vo);

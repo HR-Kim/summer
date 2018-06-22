@@ -12,9 +12,10 @@ import com.summer.comm.SearchVO;
 import com.summer.finfavs.domain.FinFavsVO;
 
 @Repository
-public class FinFavsDaoImple implements FinFavsDao {
+public class FinFavsDAO {
 	
-	static Logger log = Logger.getLogger(FinFavsDao.class);
+	static Logger log = Logger.getLogger(FinFavsDAO.class);
+	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
@@ -23,7 +24,6 @@ public class FinFavsDaoImple implements FinFavsDao {
 	/**
 	 * 삭제
 	 */
-	@Override
 	public int delete(FinFavsVO finFavs) throws SQLException {
 		String statement = this.nameSpace + ".do_delete";
 		log.debug("param=" + finFavs.toString());
@@ -33,7 +33,6 @@ public class FinFavsDaoImple implements FinFavsDao {
 	/**
 	 * 단건 등록
 	 */
-	@Override
 	public int add(FinFavsVO finFavs) throws SQLException {
 		String statement = this.nameSpace + ".do_add";
 		log.debug("param=" + finFavs.toString());
@@ -43,13 +42,13 @@ public class FinFavsDaoImple implements FinFavsDao {
 	/**
 	 * 다건 조회
 	 */
-	@Override
+
 	public List<FinFavsVO> selectList(SearchVO searchVO) throws SQLException {
 		String statement = this.nameSpace + ".do_selectList";
 		log.debug("param=" + searchVO.toString());
 		return sqlSessionTemplate.selectList(statement, searchVO);
 	}
 	
-	public FinFavsDaoImple() {}
+	public FinFavsDAO() {}
 
 }

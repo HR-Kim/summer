@@ -30,6 +30,10 @@ public class FinSavingVO extends DTO {
 	public FinSavingVO() {}
 
 
+	
+
+
+
 	public FinSavingVO(String finCoNo, String finPrdtCd, String korCoNm, String finPrdtNm, String joinWay,
 			String mtrtInt, String spclCnd, String etcNote, float intrRateMin, float intrRateMax, String intrRateType,
 			String rsrvType, String intrRateTypeNm, String rsrvTypeNm) {
@@ -54,14 +58,19 @@ public class FinSavingVO extends DTO {
 
 
 
+
 	@Override
 	public String toString() {
 		return "FinSavingVO [finCoNo=" + finCoNo + ", finPrdtCd=" + finPrdtCd + ", korCoNm=" + korCoNm + ", finPrdtNm="
 				+ finPrdtNm + ", joinWay=" + joinWay + ", mtrtInt=" + mtrtInt + ", spclCnd=" + spclCnd + ", etcNote="
 				+ etcNote + ", intrRateMin=" + intrRateMin + ", intrRateMax=" + intrRateMax + ", intrRateType="
 				+ intrRateType + ", rsrvType=" + rsrvType + ", intrRateTypeNm=" + intrRateTypeNm + ", rsrvTypeNm="
-				+ rsrvTypeNm + ", getNo()=" + getNo() + ", getTotalCnt()=" + getTotalCnt() + "]";
+				+ rsrvTypeNm + "]";
 	}
+
+
+
+
 
 
 	public String getFinCoNo() {

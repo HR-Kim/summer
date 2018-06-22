@@ -1,11 +1,11 @@
 package com.summer.finfavs.domain;
 
-public class FinFavsVO {
+import com.summer.comm.DTO;
+
+public class FinFavsVO extends DTO {
 
     private int favsNo       ;
     private String id            ;
-    private int dclsMonth    ;
-    private int finCoNo     ;
     private String finPrdtCd   ;
     private String regDt				;
     
@@ -13,12 +13,10 @@ public class FinFavsVO {
     
     
 
-	public FinFavsVO(int favsNo, String id, int dclsMonth, int finCoNo, String finPrdtCd, String regDt) {
+	public FinFavsVO(int favsNo, String id, String finPrdtCd, String regDt) {
 		super();
 		this.favsNo = favsNo;
 		this.id = id;
-		this.dclsMonth = dclsMonth;
-		this.finCoNo = finCoNo;
 		this.finPrdtCd = finPrdtCd;
 		this.regDt = regDt;
 	}
@@ -27,8 +25,7 @@ public class FinFavsVO {
 
 	@Override
 	public String toString() {
-		return "FinFavs [favsNo=" + favsNo + ", id=" + id + ", dclsMonth=" + dclsMonth + ", finCoNo=" + finCoNo
-				+ ", finPrdtCd=" + finPrdtCd + ", regDt=" + regDt + "]";
+		return "FinFavsVO [favsNo=" + favsNo + ", id=" + id + ", finPrdtCd=" + finPrdtCd + ", regDt=" + regDt + "]";
 	}
 
 
@@ -47,22 +44,6 @@ public class FinFavsVO {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public int getDclsMonth() {
-		return dclsMonth;
-	}
-
-	public void setDclsMonth(int dclsMonth) {
-		this.dclsMonth = dclsMonth;
-	}
-
-	public int getFinCoNo() {
-		return finCoNo;
-	}
-
-	public void setFinCoNo(int finCoNo) {
-		this.finCoNo = finCoNo;
 	}
 
 	public String getFinPrdtCd() {

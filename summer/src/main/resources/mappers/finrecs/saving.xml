@@ -6,8 +6,10 @@
 
 <sql id = "searchCondition">
 <where>   
-		h.intr_rate_type = #{intrRateType}
-		AND h.rsrv_type = #{rsrv_type}
+		<if test = "intrRateType == 'all'"></if>		
+		<if test = "intrRateType != 'all'">h.intr_rate_type = #{intrRateType} </if>		
+		<if test = "rsrvType == 'all'"> </if>		
+		<if test = "intrRateType != 'all'">AND h.rsrv_type = #{intrRateType} </if>		
 		<if test = "intrRateMin != null">
 		AND h.intr_rate_min &gt;= #{intrRateMin} 
 		</if>
@@ -33,7 +35,7 @@ SELECT
     t1.intr_rate_type,
     t1.rsrv_type,
     t1.rsrv_type_nm,
-    t1.intr_rate_type_nm
+    t1.intr_rate_type_nm,
     t1.total_cnt,
     t1.rnum as no
 FROM
@@ -74,7 +76,7 @@ SELECT
 FROM
     su_saving
 WHERE
-    fin_prdt_cd = ${finPrdtCd}
+    fin_prdt_cd = '${finPrdtCd}'
 </select>
 
 
