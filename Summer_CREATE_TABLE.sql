@@ -137,9 +137,8 @@ DROP TABLE "SU_FINFAVS";
 CREATE TABLE "SU_FINFAVS" (
 	"FAVS_NO"     NUMBER(8)         NOT NULL, -- 즐겨찾기번호
 	"ID"          VARCHAR2(20 BYTE) NOT NULL, -- 회원ID
-	"DCLS_MONTH"  NUMBER(6)         NOT NULL, -- 공시제출월
-	"FIN_CO_NO"   NUMBER(8)         NOT NULL, -- 금융회사코드
-	"FIN_PRDT_CD" VARCHAR2(30 BYTE) NOT NULL  -- 금융상품코드
+	"FIN_PRDT_CD" VARCHAR2(50 CHAR) NOT NULL,  -- 금융상품코드
+	"REG_DT"      DATE 		NOT NULL   --날짜
 );
 
 CREATE UNIQUE INDEX "PK_SU_FINFAVS"
