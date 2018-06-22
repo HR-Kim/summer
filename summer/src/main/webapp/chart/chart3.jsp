@@ -12,6 +12,8 @@
 	log.debug("===========================");
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===========================");
+	
+	Chart chartVO = new Chart();
 %>
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
@@ -46,7 +48,7 @@
 			<select id="year" name="year">
 				<c:forEach begin="0" end="10" var="result" step="1">
 					<option value="${2018 - result}"
-					<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
+					<c:if test="${(2018 - result) == chartVO.year}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
 					</option>
 				</c:forEach>                          
 			</select>
