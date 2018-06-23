@@ -44,50 +44,51 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
-	<div class="container">
-	<br>
-	<br>
-	<br>
-	
-	<h3>장바구니</h3>
-	<hr/>
+<div class="container">
+<br>
+<br>
+<br>
+
+<h3>장바구니</h3>
+<hr/>
 	
 	<!-- list -->
-	<table class="table">
-		<table class="table table-striped table-bordered table-hover" id="favoTable">
-       	<thead class="bg-primary">
-       		<th class="text-center">번호</th>
-       		<th class="text-center">상품명</th>
-       		<th class="text-center">매장명</th>
-       		<th class="text-center">수량</th>
-       		<th class="text-center">가격</th>
-       		<th class="text-center" style="display:none;">goodID</th>
-       		<th class="text-center" style="display:none;">entpID</th>
-       	</thead>
-       	<tbody>
-       		<c:choose>
-       		<c:when test="${list.size() > 0}">
-       			<c:forEach var="favoVO" items="${list}">
-		         		<tr>
-		         			<td class="text-center">${favoVO.no}</td>
-		         			<td class="text-left">${favoVO.goodName}</td>
-		         			<td class="text-left">${favoVO.entpName}</td>
-		         			<td class="text-center">${favoVO.goodNum}</td>
-		         			<td class="text-right">${favoVO.goodPrice} 원</td>
-		         			<td class="text-left" style="display:none;">${favoVO.goodId}</td>
-		         			<td class="text-left" style="display:none;">${favoVO.entpId}</td>
-		         		</tr>
-	         		</c:forEach>
-	         	</c:when>
-	         	<c:otherwise>
-	         		<tr>
-	         			<td colspan="99" class="text-center">no data</td>
-	         		</tr>
-	         	</c:otherwise>
-         		</c:choose>
-         	</tbody>
-       </table>
-	</div>
+	<form class="form-inline" name="frmfavo" id="frmfavo" method="get">
+	<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
+	<table class="table table-striped table-bordered table-hover" id="favoTable">
+      	<thead class="bg-primary">
+      		<th class="text-center">번호</th>
+      		<th class="text-center">상품명</th>
+      		<th class="text-center">매장명</th>
+      		<th class="text-center">수량</th>
+      		<th class="text-center">가격</th>
+      		<th class="text-center" style="display:none;">goodID</th>
+      		<th class="text-center" style="display:none;">entpID</th>
+      	</thead>
+      	<tbody>
+     		<c:choose>
+     		<c:when test="${list.size() > 0}">
+     			<c:forEach var="favoVO" items="${list}">
+        		<tr>
+        			<td class="text-center">${favoVO.no}</td>
+        			<td class="text-left">${favoVO.goodName}</td>
+        			<td class="text-left">${favoVO.entpName}</td>
+        			<td class="text-center">${favoVO.goodNum}</td>
+        			<td class="text-right">${favoVO.goodPrice} 원</td>
+        			<td class="text-left" style="display:none;">${favoVO.goodId}</td>
+        			<td class="text-left" style="display:none;">${favoVO.entpId}</td>
+        		</tr>
+       		</c:forEach>
+       	</c:when>
+       	<c:otherwise>
+       		<tr>
+       			<td colspan="99" class="text-center">no data</td>
+       		</tr>
+       	</c:otherwise>
+      		</c:choose>
+      	</tbody>
+      </table>
+    </form>
 	<!-- list end -->
 	
 	<!-- paging -->
@@ -95,19 +96,29 @@
   	<%= StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCnt, "doSelectList.do", "search_page") %>
   	</div>
   	<!--// paging -->
-	</div>
+</div>
 
 	<script type="text/javascript">
 	
+
 	function doSearch(){
-		var frm = document.frm;
-		frm.action = "{CONTEXT}/favo/doSelectList.do";
+		
+		var frm = document.frmfavo;
+		frm.action = "doSelectList.do";
 		frm.submit();
 	}
 	
+	function search_page(url,pageNum){
+    	//console.log("=url="+url);
+    	var frm = document.frmfavo;
+		frm.action = url;
+		frm.pageNum.value = pageNum;
+		frm.submit();
+    }
+	
+	
 	$(document).ready(function(){		
 		$("#favoTable>tbody").on("click","tr",function(){
-			alert("click");
 			
 			var tr = $(this);
 			var tds = tr.children();
@@ -141,7 +152,6 @@
             		
             	if(parseData.msgId == "1"){
             		alert(parseData.message);	
-
             		doSearch();
             	}else{
             		alert(parseData.message);	
