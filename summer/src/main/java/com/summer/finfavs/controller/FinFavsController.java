@@ -23,7 +23,7 @@ public class FinFavsController {
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
+	//@Autowired
 	private FinFavsService service;
 	
 	/**
