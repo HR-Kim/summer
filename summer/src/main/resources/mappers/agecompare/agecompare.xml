@@ -6,19 +6,20 @@
 	
 	<select id="do_selectAgeList" parameterType="SearchVO" resultType="Agecompare">
 			SELECT DISTINCT SUM(DISTINCT T2.total) OVER(partition by to_char(T2.a_date, 'YY/MM'),T2.age) AS total
-			        ,to_char(T2.a_date, 'YY/MM') as a_date
-			         ,T2.age, T2.ageTotal
+			        ,TO_CHAR(T2.a_date, 'YY/MM') as a_date
+			         ,T2.age
+			         ,COUNT(*) OVER(PARTITION BY T2.age, TO_CHAR(t2.a_date,'YY/MM')) AS ageTotal
 	   		 FROM su_users T1 INNER JOIN(SELECT DISTINCT SUM(amount) OVER(PARTITION BY trade_id, Ta.age,to_char(a_date, 'YY/MM')) AS total
 									                , id
 									                ,a_date
 									                ,trade_id
 									                ,amount
-									                ,Ta.age, ageTotal
+									                ,Ta.age
 									        FROM ( SELECT TT.a_date
 									                    ,TT.amount
 									                    ,TT.id
 									                    ,TT.trade_id
-                                                        ,T3.age,count(*) over(ORDER BY T3.age) AS ageTotal
+                                                    ,T3.age
 									                FROM su_accounts TT INNER JOIN(SELECT id 
                                                                                         ,TRUNC(FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(birth,'YYYYMMDD'))/12)+1,-1) AS age 
 										                                            FROM su_users) T3 

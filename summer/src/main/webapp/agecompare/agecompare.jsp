@@ -293,16 +293,16 @@
 												var dayDataSub = $.parseJSON(datatmp);
 												$.each(dayDataSub,function(key,value){
 													adatetmp[key]=value.aDate;	
-													agetmp[key]=value.total;
-													//agetmp[key]=(value.total/value.ageTotal).toFixed(2);
+													//agetmp[key]=value.total;
+													agetmp[key]=(value.total/value.ageTotal).toFixed(2);
 												});
 												//alert("adate="+adatetmp.toString());
 											}else if(i==1){
 												datatmp = data.substring(datatmp.length+1);
 												var dayDataSub = $.parseJSON(datatmp);
 												$.each(dayDataSub,function(key,value){
-													agetmp1[key]=value.total;
-													//agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
+													//agetmp1[key]=value.total;
+													agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
 												});
 											}
 										}
