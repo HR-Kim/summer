@@ -241,7 +241,7 @@
 							$.each(idData,function(key,value){
 								idtotal[key] = value.idTotal;
 							});
-						    
+						    alert("id:"+idtotal.toString());
 							 $.ajax({
 									type:"GET",
 									url:"do_selectAgeList.do",
@@ -290,25 +290,24 @@
 										for(var i=0; i<count; i++){
 											if(i==0){
 												datatmp = data.substring(0,data.indexOf(",["));
-												alert("dd1="+datatmp);
 												var dayDataSub = $.parseJSON(datatmp);
 												$.each(dayDataSub,function(key,value){
-													adatetmp[key]=value.aDate;
-													agetmp[key]=(value.total/value.ageTotal).toFixed(2);
+													adatetmp[key]=value.aDate;	
+													agetmp[key]=value.total;
+													//agetmp[key]=(value.total/value.ageTotal).toFixed(2);
 												});
-												alert("adate="+adatetmp.toString());
-											}else if(i==2){
-												tmpsize=0;
-												oobjtmp = new Array();
-												datatmp = data.substring(datatmp.length+1, data.length);
-												alert("dd="+datatmp);
+												//alert("adate="+adatetmp.toString());
+											}else if(i==1){
+												datatmp = data.substring(datatmp.length+1);
 												var dayDataSub = $.parseJSON(datatmp);
 												$.each(dayDataSub,function(key,value){
-													agetmp2[key]=(value.total/value.ageTotal).toFixed(2);
+													agetmp1[key]=value.total;
+													//agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
 												});
 											}
-											arrList.push([oobj[i][0],oobj[i][1]*1,oobj[i][2]*1,oobj[i][3]*1]);
-											//alert(oobj[i]);
+										}
+										for(var i=0; i<adatetmp.length; i++){
+											arrList.push([adatetmp[i],agetmp[i]*1,agetmp1[i]*1,idtotal[i]*1]);
 										}
 									    drawChart(arrList);
 									}
@@ -323,11 +322,9 @@
 	    google.charts.setOnLoadCallback(drawChart);
 	    
 		 function drawChart(arr){
-			//arr = "["+arr+"]";
 			//alert("나중에 시작해야할 것"+arr);
 			var data = new google.visualization.arrayToDataTable(arr);
 			
-			alert(data);
 			var options = {
 			     chart: {
 			       title: '연령대별 차트',

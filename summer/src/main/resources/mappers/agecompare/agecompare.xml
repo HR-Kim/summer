@@ -34,15 +34,14 @@
 	</select>
 	
 	<select id="do_selectMeList" parameterType="SearchVO" resultType="Agecompare">
-		SELECT TO_CHAR(a_date,'YY/MM') AS a_date
+		SELECT DISTINCT TO_CHAR(a_date,'YY/MM') AS a_date
 			   ,id
-		       ,ROUND(SUM(amount)/count(amount)) AS idTotal
+		      ,SUM(amount) OVER(PARTITION BY TO_CHAR(a_date, 'YY/MM')) AS idTotal
 		FROM su_accounts 
 		WHERE id='b'
 		AND TO_DATE(a_date,'YY/MM/DD')
 		 BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(#{pageNum,jdbcType=VARCHAR})+1,-1),'YYYYMMDD'),'YY/MM/DD')
 		AND TO_DATE(last_day(TO_CHAR(LAST_DAY(#{pageSize,jdbcType=VARCHAR}),'YYYYMMDD')),'YY/MM/DD')
-	     GROUP BY a_date, id
- 		 ORDER BY a_date
-	</select>
+	    ORDER BY a_date
+ 	</select>
 </mapper>
