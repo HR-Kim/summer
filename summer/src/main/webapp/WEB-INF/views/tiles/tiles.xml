@@ -89,6 +89,11 @@
 		<put-attribute name  = "body"   value = "/board/boardMain.jsp" />
 	</definition>
 	
+	<definition name = "agecompare/agecompare"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "연령대 별 차트" />
+		<put-attribute name  = "body"   value = "/agecompare/agecampare.jsp" />
+	</definition>
+	
 
 </tiles-definitions>
 
