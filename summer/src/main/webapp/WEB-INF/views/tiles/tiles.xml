@@ -47,6 +47,13 @@
 		<put-attribute name  = "body"   value = "/finrec/houseLoanDetailView.jsp" />
 	</definition>
 	
+	<!-- FinFavs - List -->
+	
+		<definition name = "finfavs/favsList"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "금융상품 즐겨찾기 목록" />
+		<put-attribute name  = "body"   value = "/finfavs/favsList.jsp" />
+	</definition>
+	
 	<!-- good/goodList -->
 	<definition name = "good/goodList"  extends = "base-definition">
 		<put-attribute name  = "title"  value = "최저가검색" />

@@ -107,7 +107,7 @@ public class FinFavsController {
 	public String selectList(SearchVO vo, Model model) throws Exception {
 		log.debug("1. selectList==============");
 
-		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(), ""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(), "testuser"));
 		vo.setPageNum((StringUtil.nvl(vo.getPageNum(), "1")));
 		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "5"));
 		int totalCnt = 0;
@@ -126,7 +126,7 @@ public class FinFavsController {
 		model.addAttribute("list", list);
 		model.addAttribute("searchVO",vo);
 		
-		return "finfavs/favslist";
+		return "finfavs/favsList";
 	}
 
 }
