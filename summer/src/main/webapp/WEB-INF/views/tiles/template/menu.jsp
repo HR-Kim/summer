@@ -26,8 +26,9 @@
           <h4>금융상품 추천</h4>
           <br>
           <ul class="nav nav-sidebar">
-            <li><a href="">적금</a></li>
-            <li><a href="">정기예금</a></li>
+            <li><a href="${CONTEXT}/finrec/saving/showViewList.do">적금</a></li>
+            <li><a href="${CONTEXT}/finrec/deposit/showViewList.do">정기예금</a></li>
+           	<li><a href="${CONTEXT}/finfavs/doSelectList.do">즐겨찾기</a></li>
           </ul>
           <br>
           <h4>커뮤니티</h4>
