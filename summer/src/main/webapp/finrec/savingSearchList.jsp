@@ -52,7 +52,7 @@
 	</div>
 	<div id="pageArea" class = "form-group"></div>
 	
-
+	<input type="hidden" id = "userId" value = "<%=session.getAttribute("id")%>"/>
 </div>
 
 
@@ -84,11 +84,20 @@
 	}
 
 	function addFinFav(finNo){
-		finNo.substr(1);
-		var frm = document.getElementById(finNo);
-		frm.action = "/summer/finfavs/doAdd.do";
-		frm.submit();
-		
+		var userId = $('#userId').val();
+		console.log('userId='+userId);
+		console.log(isEmpty(userId));
+		if((isEmpty(userId))) {
+			alert('로그인을 먼저 해주세요');
+		}	
+		else {
+			console.log('로그인했어요');
+			var frm = document.getElementById(finNo);
+			frm.action = "/summer/finfavs/doAdd.do";
+			$('.id').val(userId);
+			console.log('id='+$('.id').val());
+			frm.submit();
+		} 	
 	}
 	function savingList(pageNum) {
 
@@ -144,7 +153,7 @@
 										+ list[i].rsrvTypeNm
 										+ '</td><td>'
 										+'<form id="f' + list[i].finPrdtCd + '" action = "doSelectOne.do" method = "get">'
-										+  '<input type="hidden" name = "id" value="testuser"></input>'
+										+  '<input type="hidden" class = "id" name = "id" ></input>'
 										+ '<input type="hidden" name = "finPrdtCd" value="' + list[i].finPrdtCd + '"></input></form>'
 										+ '<button type="submit" class="btn btn-light btn-fw" onclick="javascript:savingDetail(\'f' +  list[i].finPrdtCd +   '\');">상세보기</button>'
 										+ '&nbsp; &nbsp; <button type="submit" class="btn btn-primary btn-fw" onclick="javascript:addFinFav(\'f' + list[i].finPrdtCd + '\');">즐겨찾기</button></td></tr>';

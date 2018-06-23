@@ -28,7 +28,7 @@
           <ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/finrec/saving/showViewList.do">적금</a></li>
             <li><a href="${CONTEXT}/finrec/deposit/showViewList.do">정기예금</a></li>
-           	<li><a href="${CONTEXT}/finfavs/doSelectList.do">즐겨찾기</a></li>
+           	<li><a href="${CONTEXT}/finfavs/favsLoginCheck.jsp">즐겨찾기</a></li>
           </ul>
           <br>
           <h4>커뮤니티</h4>
