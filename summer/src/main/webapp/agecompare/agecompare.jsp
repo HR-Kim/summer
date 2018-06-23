@@ -231,10 +231,10 @@
 							alert("do_selectMeList.do error error");
 						},
 						complete:function(data){
-							alert(id);
+							//alert(id);
 						},
 						success:function(medata){
-							alert("Medata="+medata);
+							//alert("Medata="+medata);
 
 							var idData = $.parseJSON(medata);
 							var idtotal = new Array();
@@ -259,7 +259,7 @@
 										//alert($("#startmonth").val());
 									},
 									success:function(data){
-										alert("data="+data);
+										//alert("data="+data);
 										data = data.substring(1,data.length-1);
 										
 										count = (data.match(/aDate/g) || []).length - count;
@@ -279,41 +279,36 @@
 										//============================//
 										alert("data="+data);
 										var oobj = new Array();
-										var oobjtmp = new Array();
+										var adatetmp = new Array();
+										var agetmp = new Array();
+										var agetmp1 = new Array();
+										var agetmp2 = new Array();
+										var agetmp3 = new Array();
+										var tmp = new Array();
 										var datatmp;
 										var tmpsize=0;
 										for(var i=0; i<count; i++){
 											if(i==0){
-												datatmp = data.substring(0,data.length/count+1);
+												datatmp = data.substring(0,data.indexOf(",["));
+												alert("dd1="+datatmp);
 												var dayDataSub = $.parseJSON(datatmp);
 												$.each(dayDataSub,function(key,value){
-													if(key==0){
-														oobjtmp[tmpsize] = value.aDate;	
-														oobjtmp[++tmpsize] = (value.total/value.ageTotal).toFixed(2);
-													}else{
-														oobjtmp[++tmpsize] = (value.total/value.ageTotal).toFixed(2);
-													}
+													adatetmp[key]=value.aDate;
+													agetmp[key]=(value.total/value.ageTotal).toFixed(2);
 												});
-												oobjtmp[++tmpsize] = idtotal[i];
-												oobj[i]=oobjtmp;
-											}else{
+												alert("adate="+adatetmp.toString());
+											}else if(i==2){
 												tmpsize=0;
 												oobjtmp = new Array();
-												datatmp = data.substring(datatmp.length+1, data.length/count*(i+1));
+												datatmp = data.substring(datatmp.length+1, data.length);
+												alert("dd="+datatmp);
 												var dayDataSub = $.parseJSON(datatmp);
 												$.each(dayDataSub,function(key,value){
-													if(key==0){	
-														oobjtmp[tmpsize+1] = (value.total/value.ageTotal).toFixed(2);
-													}else{
-														oobjtmp[tmpsize] = value.aDate;
-														oobjtmp[tmpsize+2] = (value.total/value.ageTotal).toFixed(2);
-													}
+													agetmp2[key]=(value.total/value.ageTotal).toFixed(2);
 												});
-												oobjtmp[tmpsize+3] = idtotal[i];
-												oobj[i]=oobjtmp;
 											}
 											arrList.push([oobj[i][0],oobj[i][1]*1,oobj[i][2]*1,oobj[i][3]*1]);
-											alert(oobj[i]);
+											//alert(oobj[i]);
 										}
 									    drawChart(arrList);
 									}
@@ -329,7 +324,7 @@
 	    
 		 function drawChart(arr){
 			//arr = "["+arr+"]";
-			alert("나중에 시작해야할 것"+arr);
+			//alert("나중에 시작해야할 것"+arr);
 			var data = new google.visualization.arrayToDataTable(arr);
 			
 			alert(data);
@@ -350,151 +345,3 @@
     </script>
 </body>
 </html>
-<!-- 
-체크 부분
-//체크해서 조회
-		 $("#btnSearch").on("click",function(){			 
-			 var count=0;
-			 for(var i=1; i<=9; i++){
-				 if($("#chk_age"+i).is(":checked")==true){
-					 count++;
-				 }
-			 }
-			 if(count==0){
-				 alert("연령대를 체크해주세요.");
-			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null){
-				 alert("기간을 입력해주세요.");
-			 }else{
-				 alert("count: "+count);
-				 var searchList = count;
-				 
-				 for(var j=1; j<=9; j++){
-					 $('#chk_age'+j+':checked').each(function() { 
-						 searchList += "," + $(this).val().substring(0,2);
-					 });
-				 }
-
-				 alert(searchList);
-				 
-				 var id = "b";
-				 
-				 $.ajax({
-						type:"GET",
-						url:"do_selectMeList.do",
-						dataType:"html",
-						async:false,
-						data:{
-							"searchDiv":id,
-							"pageNum":$("#startmonth").val(),
-							"pageSize":$("#endmonth").val()
-						},
-						error:function(){
-							alert("do_selectMeList.do error error");
-						},
-						complete:function(data){
-							alert(id);
-						},
-						success:function(medata){
-							alert("Medata="+medata);
-
-							var idtotal;
-							var idData = $.parseJSON(medata);
-							$.each(idData,function(key,value){
-								if(key!=0){
-									idtotal +=",";
-								}
-								idtotal += value.idTotal;
-							});
-							idtotal = idtotal.substring(9);
-						    
-							 $.ajax({
-									type:"GET",
-									url:"do_selectAgeList.do",
-									dataType:"html",
-									async:false,
-									data:{
-										"searchWord":searchList,
-										"pageNum":$("#startmonth").val(),
-										"pageSize":$("#endmonth").val()
-									},
-									error:function(){
-										alert("do_selectAgeList.do error error");
-									},
-									complete:function(data){
-										//alert($("#startmonth").val());
-									},
-									success:function(data){
-										alert("data="+data);
-										data = data.substring(1,data.length-1);
-										
-										count = (data.match(/aDate/g) || []).length - count;
-										
-										var dataSub = data.substring(0,data.length/2+1);
-										var dataSub2 = data.substring(data.length/2+2,data.length);
-										//alert(dataSub);
-										//alert(dataSub2);
-										
-										var dayDataSub = $.parseJSON(dataSub);
-										var dayDataSub2 = $.parseJSON(dataSub2);
-										var aa1;
-										var aa2;
-										$.each(dayDataSub,function(key,value){
-											if(key==0){
-												aa1 += "[{\"aDate\":\""+value.aDate+"\","
-													+"\"total\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
-											}else{
-												aa2 += "[{\"aDate\":\""+value.aDate+"\","
-												+"\"total\":\""+(value.total/value.ageTotal).toFixed(2)+"\"";
-											}
-					            		});
-										$.each(dayDataSub2,function(key,value){
-											if(key==0){
-												aa1 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"}]";
-											}else{
-												aa2 += ",\"ageTotal\":\""+(value.total/value.ageTotal).toFixed(2)+"\"}]";
-											}
-					            		});
-										aa1 = aa1.substring(9,aa1.length-1);
-										aa2 = aa2.substring(10);
-										aa1 += ","+aa2;
-										alert(aa1);							
-										
-										var daytotalData = $.parseJSON(aa1);
-				            		    var arrList = [['date','20','30','나']];
-				            		    
-				            		    $.each(daytotalData,function(key,value){
-				            			    arrList.push([value.aDate,value.ageTotal*1,1*value.total]);
-				            		    });
-									    drawChart(arrList);
-									}
-								 });
-						}
-				 });
-				 
-				
-			 }
-		 });
-	 });
-	 google.charts.load('current', {'packages':['line']});
-	    google.charts.setOnLoadCallback(drawChart);
-	    
-		 function drawChart(arr){
-			//arr = "["+arr+"]";
-			alert("나중에 시작해야할 것"+arr);
-			var data = new google.visualization.arrayToDataTable(arr);
-			
-			alert(data);
-			var options = {
-			     chart: {
-			       title: '연령대별 차트',
-			       subtitle: 'in millions of dollars (USD)'
-			     },
-			     width: 900,
-			     height: 500
-			   };
-			
-			   var chart = new google.charts.Line(document.getElementById('curve_chart'));
-			
-			   chart.draw(data, google.charts.Line.convertOptions(options));
-		}
- -->
