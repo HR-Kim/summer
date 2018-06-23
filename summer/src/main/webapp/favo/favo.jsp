@@ -51,10 +51,14 @@
 
 <h3>장바구니</h3>
 <hr/>
-	
+	<div class="text-right">
+		<button class="btn btn-default" id="favoallbtn">초기화</button>
+	</div>
+	<br>
 	<!-- list -->
 	<form class="form-inline" name="frmfavo" id="frmfavo" method="get">
 	<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
+	<input type="hidden" name="id" value="aa">
 	<table class="table table-striped table-bordered table-hover" id="favoTable">
       	<thead class="bg-primary">
       		<th class="text-center">번호</th>
@@ -96,10 +100,20 @@
   	<%= StringUtil.renderPaging(totalCnt, o_pageNum, o_pageSize, bottomCnt, "doSelectList.do", "search_page") %>
   	</div>
   	<!--// paging -->
+  	
+  	<hr/>
+  	<div class="text-right">
+  		<h3>총 합계 : ${favo.goodSum} 원</h3>
+  	</div>
 </div>
 
 	<script type="text/javascript">
 	
+// 	function doSum(){
+// 		var frm = dpcument.frmfavo;
+// 		frm.action = "doSum.do";
+// 		frm.submit();
+// 	}
 
 	function doSearch(){
 		
@@ -162,6 +176,44 @@
                 },
                error: function(xhr,status,error){
                console.log("doDelete error: "+error);
+                }
+   		}); //--ajax
+		
+		});
+		
+		$("#favoallbtn").on("click",function(){
+			
+			var id = 'aa';
+			
+			console.log(id);
+		
+			if(false==confirm("초기화 하시겠습니까?"))return;
+			$.ajax({	
+	      	 type:"POST",
+            url:"doDeleteAll.do",   
+            dataType:"html",// JSON/html
+            async: false,
+            data:{
+				"id": id
+                },
+            success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
+           	 console.log("data="+data); 
+            	//json parsing
+            	var parseData = $.parseJSON(data); //데이터 들어있음.
+            	console.log("parseData"+parseData);
+            		
+            	if(parseData.msgId == "1"){
+            		alert(parseData.message);	
+            		doSearch();
+            	}else{
+            		alert(parseData.message);	
+            		}
+           		
+                },
+               complete: function(data){//무조건 수행
+                },
+               error: function(xhr,status,error){
+               console.log("doDeleteAll error: "+error);
                 }
    		}); //--ajax
 		

@@ -65,6 +65,19 @@ public class FavoDao {
 		return sqlSessionTemplate.delete(statement,vo);
 	}
 	
+	public Favo doSum(Favo vo) throws SQLException{
+		String statement = this.namespace+".do_sum";
+		
+		log.debug("param:"+vo.toString());
+		return sqlSessionTemplate.selectOne(statement, vo);
+		
+	}
+	
+	public int deleteAll(Favo vo) throws SQLException{
+		String statement = this.namespace+".do_deleteAll";
+		log.debug("param:"+vo.toString());
+		return sqlSessionTemplate.delete(statement,vo);
+	}
 	
 	
 	

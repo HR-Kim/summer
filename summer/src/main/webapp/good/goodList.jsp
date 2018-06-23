@@ -44,6 +44,8 @@
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
 	<div class="container">
+	<br><br><br>
+	<h3>최저가 검색</h3>
 	
 	<!-- search -->
 	<form class="form-inline" name="frm" id="frm" method="get">
@@ -89,7 +91,7 @@
 		         		<tr>
 		         			<td class="text-center">${goodVO.no}</td>
 		         			<td class="text-left">${goodVO.goodName}</td>
-		         			<td class="text-left">${goodVO.goodPrice}</td>
+		         			<td class="text-right">${goodVO.goodPrice} 원</td>
 		         			<td class="text-left" style="display:none;">${goodVO.goodId}</td>
 		         		</tr>
 	         		</c:forEach>

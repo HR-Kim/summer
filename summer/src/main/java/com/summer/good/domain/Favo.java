@@ -10,7 +10,17 @@ public class Favo extends DTO{
 	private String entpName;
 	private int goodPrice;
 	private int goodNum;
+	private int goodSum;
 	
+	
+	public int getGoodSum() {
+		return goodSum;
+	}
+
+	public void setGoodSum(int goodSum) {
+		this.goodSum = goodSum;
+	}
+
 	public Favo() {
 		
 	}
@@ -57,7 +67,9 @@ public class Favo extends DTO{
 	public void setGoodNum(int goodNum) {
 		this.goodNum = goodNum;
 	}
-	public Favo(String id, String goodId, String entpId, String goodName, String entpName, int goodPrice, int goodNum) {
+
+	public Favo(String id, String goodId, String entpId, String goodName, String entpName, int goodPrice, int goodNum,
+			int goodSum) {
 		super();
 		this.id = id;
 		this.goodId = goodId;
@@ -66,12 +78,17 @@ public class Favo extends DTO{
 		this.entpName = entpName;
 		this.goodPrice = goodPrice;
 		this.goodNum = goodNum;
+		this.goodSum = goodSum;
 	}
+
 	@Override
 	public String toString() {
 		return "[id=" + id + ", goodId=" + goodId + ", entpId=" + entpId + ", goodName=" + goodName + ", entpName="
-				+ entpName + ", goodPrice=" + goodPrice + ", goodNum=" + goodNum + "]";
+				+ entpName + ", goodPrice=" + goodPrice + ", goodNum=" + goodNum + ", goodSum=" + goodSum + "]";
 	}
+
+	
+	
 	
 	
 	

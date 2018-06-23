@@ -33,4 +33,14 @@ public class FavoServiceImple implements FavoService{
 		return favoDao.delete(vo);
 	}
 
+	@Override
+	public Favo doSum(Favo vo) throws SQLException {
+		return favoDao.doSum(vo);
+	}
+
+	@Override
+	public int deleteAll(Favo vo) throws SQLException {
+		return favoDao.deleteAll(vo);
+	}
+
 }

@@ -13,5 +13,9 @@ public interface FavoService {
 	public int upsert(Favo vo) throws SQLException;
 	
 	public int delete(Favo vo) throws SQLException;
+	
+	public Favo doSum(Favo vo) throws SQLException;
+	
+	public int deleteAll(Favo vo) throws SQLException;
 
 }
