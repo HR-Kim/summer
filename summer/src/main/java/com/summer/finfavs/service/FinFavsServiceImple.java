@@ -11,7 +11,7 @@ import com.summer.comm.SearchVO;
 import com.summer.finfavs.dao.FinFavsDAO;
 import com.summer.finfavs.domain.FinFavsVO;
 
-//@Service
+@Service
 public class FinFavsServiceImple implements FinFavsService {
 
 	private Logger log = Logger.getLogger(this.getClass());

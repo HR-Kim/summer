@@ -10,13 +10,12 @@ INSERT INTO SU_FINFAVS
 (
     favs_no,
     id,
-    fin_co_no,
+    fin_prdt_cd,
     reg_dt
 )
 VALUES
 (
     finfavs_seq.nextval,
-    #{favsNo},
     #{id},
     #{finPrdtCd},
     sysdate

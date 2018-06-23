@@ -23,7 +23,7 @@ public class FinFavsController {
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	//@Autowired
+	@Autowired
 	private FinFavsService service;
 	
 	/**
@@ -33,7 +33,7 @@ public class FinFavsController {
 	 */
 
 	@RequestMapping(value="/finfavs/doAdd.do"
-											   ,method=RequestMethod.POST
+											   ,method=RequestMethod.GET
 											   ,produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String add(FinFavsVO vo) throws Exception {

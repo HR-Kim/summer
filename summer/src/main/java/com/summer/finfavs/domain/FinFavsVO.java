@@ -9,8 +9,7 @@ public class FinFavsVO extends DTO {
     private String finPrdtCd   ;
     private String regDt				;
     
-    public FinFavsVO() {}
-    
+    public FinFavsVO(){}   
     
 
 	public FinFavsVO(int favsNo, String id, String finPrdtCd, String regDt) {

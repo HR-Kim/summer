@@ -83,10 +83,10 @@
 		frm.submit();
 	}
 
-	function addFavorites(finNo){
+	function addFinFav(finNo){
 		finNo.substr(1);
 		var frm = document.getElementById(finNo);
-		frm.action = "/summer/finfavs/add.do";
+		frm.action = "/summer/finfavs/doAdd.do";
 		frm.submit();
 		
 	}
@@ -143,14 +143,16 @@
 										+ ' | '
 										+ list[i].rsrvTypeNm
 										+ '</td><td>'
-										+'<form id="f' + list[i].finPrdtCd + '" action = "doSelectOne.do" method = "get"><input type="hidden" name = "finPrdtCd" value="' + list[i].finPrdtCd + '"></input>' +
-										'<button type="submit" class="btn btn-light btn-fw" onclick="javascript:savingDetail(f' +  list[i].finPrdtCd +   ');">상세보기</button></form>'
-										+ '&nbsp; &nbsp; <button type="submit" class="btn btn-primary btn-fw">즐겨찾기</button></td></tr>';
+										+'<form id="f' + list[i].finPrdtCd + '" action = "doSelectOne.do" method = "get">'
+										+  '<input type="hidden" name = "id" value="testuser"></input>'
+										+ '<input type="hidden" name = "finPrdtCd" value="' + list[i].finPrdtCd + '"></input></form>'
+										+ '<button type="submit" class="btn btn-light btn-fw" onclick="javascript:savingDetail(\'f' +  list[i].finPrdtCd +   '\');">상세보기</button>'
+										+ '&nbsp; &nbsp; <button type="submit" class="btn btn-primary btn-fw" onclick="javascript:addFinFav(\'f' + list[i].finPrdtCd + '\');">즐겨찾기</button></td></tr>';
 										
 							}
 							tableText = tableText + '</tbody></table>';
 							table.innerHTML = tableText;
-							console.log('tableText='+tableText);
+							//console.log('tableText='+tableText);
 							
 							$("#totalCnt").val(list[0].totalCnt);
 							console.log('totalCnt:'+$("#totalCnt").val());
