@@ -229,6 +229,77 @@
 						},
 						error:function(){
 							alert("do_selectMeList.do error error");
+							
+							$.ajax({
+								type:"GET",
+								url:"do_selectAgeList.do",
+								dataType:"html",
+								async:false,
+								data:{
+									"searchWord":searchList,
+									"pageNum":$("#startmonth").val(),
+									"pageSize":$("#endmonth").val()
+								},
+								error:function(){
+									alert("do_selectAgeList.do error error");
+								},
+								complete:function(data){
+									//alert($("#startmonth").val());
+								},
+								success:function(data){
+									//alert("data="+data);
+									data = data.substring(1,data.length-1);
+									
+									count = (data.match(/aDate/g) || []).length - count;
+																
+									var tmpArray = new Array();
+									var i = 0;
+									tmpArray[i] = "Date";
+									for(var j=1; j<=9; j++){
+										 $('#chk_age'+j+':checked').each(function() { 
+											i++;
+											tmpArray[i] = $(this).val().substring(0,2) + "대";
+										 });
+									 }
+									tmpArray[++i] = "나";
+									var arrList = [tmpArray];
+
+									//============================//
+									alert("data="+data);
+									var oobj = new Array();
+									var adatetmp = new Array();
+									var agetmp = new Array();
+									var agetmp1 = new Array();
+									var agetmp2 = new Array();
+									var agetmp3 = new Array();
+									var tmp = new Array();
+									var datatmp;
+									var tmpsize=0;
+									for(var i=0; i<count; i++){
+										if(i==0){
+											datatmp = data.substring(0,data.indexOf(",["));
+											var dayDataSub = $.parseJSON(datatmp);
+											$.each(dayDataSub,function(key,value){
+												adatetmp[key]=value.aDate;	
+												//agetmp[key]=value.total;
+												agetmp[key]=(value.total/value.ageTotal).toFixed(2);
+											});
+											//alert("adate="+adatetmp.toString());
+										}else if(i==1){
+											datatmp = data.substring(datatmp.length+1);
+											var dayDataSub = $.parseJSON(datatmp);
+											$.each(dayDataSub,function(key,value){
+												//agetmp1[key]=value.total;
+												agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
+											});
+										}
+									}
+									for(var i=0; i<adatetmp.length; i++){
+										arrList.push([adatetmp[i],agetmp[i]*1,agetmp1[i]*1,0*1]);
+									}
+								    drawChart(arrList);
+								}
+							 });
 						},
 						complete:function(data){
 							//alert(id);
@@ -241,80 +312,78 @@
 							$.each(idData,function(key,value){
 								idtotal[key] = value.idTotal;
 							});
-						    alert("id:"+idtotal.toString());
-							 $.ajax({
-									type:"GET",
-									url:"do_selectAgeList.do",
-									dataType:"html",
-									async:false,
-									data:{
-										"searchWord":searchList,
-										"pageNum":$("#startmonth").val(),
-										"pageSize":$("#endmonth").val()
-									},
-									error:function(){
-										alert("do_selectAgeList.do error error");
-									},
-									complete:function(data){
-										//alert($("#startmonth").val());
-									},
-									success:function(data){
-										//alert("data="+data);
-										data = data.substring(1,data.length-1);
-										
-										count = (data.match(/aDate/g) || []).length - count;
-																	
-										var tmpArray = new Array();
-										var i = 0;
-										tmpArray[i] = "Date";
-										for(var j=1; j<=9; j++){
-											 $('#chk_age'+j+':checked').each(function() { 
-												i++;
-												tmpArray[i] = $(this).val().substring(0,2) + "대";
-											 });
-										 }
-										tmpArray[++i] = "나";
-										var arrList = [tmpArray];
+							$.ajax({
+								type:"GET",
+								url:"do_selectAgeList.do",
+								dataType:"html",
+								async:false,
+								data:{
+									"searchWord":searchList,
+									"pageNum":$("#startmonth").val(),
+									"pageSize":$("#endmonth").val()
+								},
+								error:function(){
+									alert("do_selectAgeList.do error error");
+								},
+								complete:function(data){
+									//alert($("#startmonth").val());
+								},
+								success:function(data){
+									//alert("data="+data);
+									data = data.substring(1,data.length-1);
+									
+									count = (data.match(/aDate/g) || []).length - count;
+																
+									var tmpArray = new Array();
+									var i = 0;
+									tmpArray[i] = "Date";
+									for(var j=1; j<=9; j++){
+										 $('#chk_age'+j+':checked').each(function() { 
+											i++;
+											tmpArray[i] = $(this).val().substring(0,2) + "대";
+										 });
+									 }
+									tmpArray[++i] = "나";
+									var arrList = [tmpArray];
 
-										//============================//
-										alert("data="+data);
-										var oobj = new Array();
-										var adatetmp = new Array();
-										var agetmp = new Array();
-										var agetmp1 = new Array();
-										var agetmp2 = new Array();
-										var agetmp3 = new Array();
-										var tmp = new Array();
-										var datatmp;
-										var tmpsize=0;
-										for(var i=0; i<count; i++){
-											if(i==0){
-												datatmp = data.substring(0,data.indexOf(",["));
-												var dayDataSub = $.parseJSON(datatmp);
-												$.each(dayDataSub,function(key,value){
-													adatetmp[key]=value.aDate;	
-													//agetmp[key]=value.total;
-													agetmp[key]=(value.total/value.ageTotal).toFixed(2);
-												});
-												//alert("adate="+adatetmp.toString());
-											}else if(i==1){
-												datatmp = data.substring(datatmp.length+1);
-												var dayDataSub = $.parseJSON(datatmp);
-												$.each(dayDataSub,function(key,value){
-													//agetmp1[key]=value.total;
-													agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
-												});
-											}
+									//============================//
+									alert("data="+data);
+									var oobj = new Array();
+									var adatetmp = new Array();
+									var agetmp = new Array();
+									var agetmp1 = new Array();
+									var agetmp2 = new Array();
+									var agetmp3 = new Array();
+									var tmp = new Array();
+									var datatmp;
+									var tmpsize=0;
+									for(var i=0; i<count; i++){
+										if(i==0){
+											datatmp = data.substring(0,data.indexOf(",["));
+											var dayDataSub = $.parseJSON(datatmp);
+											$.each(dayDataSub,function(key,value){
+												adatetmp[key]=value.aDate;	
+												//agetmp[key]=value.total;
+												agetmp[key]=(value.total/value.ageTotal).toFixed(2);
+											});
+											//alert("adate="+adatetmp.toString());
+										}else if(i==1){
+											datatmp = data.substring(datatmp.length+1);
+											var dayDataSub = $.parseJSON(datatmp);
+											$.each(dayDataSub,function(key,value){
+												//agetmp1[key]=value.total;
+												agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
+											});
 										}
-										for(var i=0; i<adatetmp.length; i++){
-											arrList.push([adatetmp[i],agetmp[i]*1,agetmp1[i]*1,idtotal[i]*1]);
-										}
-									    drawChart(arrList);
 									}
-								 });
+									for(var i=0; i<adatetmp.length; i++){
+										arrList.push([adatetmp[i],agetmp[i]*1,agetmp1[i]*1,idtotal[i]*1]);
+									}
+								    drawChart(arrList);
+								}
+							 });
 						}
 				 }); 
-				
 			 }
 		 });
 	 });
