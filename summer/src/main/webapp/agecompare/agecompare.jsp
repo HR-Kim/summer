@@ -200,7 +200,12 @@
 		 
 		 var ajaxObject="";
 		 var ajaxObjectLen="";
-		 
+		 var date = new Date(); 
+		 var todayMonth =  new String(date.getMonth()+1); 
+		 if(todayMonth<10){
+			 todayMonth="0"+todayMonth;
+		 }
+		 todayMonth = date.getFullYear()+"/"+todayMonth;
 		 //체크해서 조회
 		 $("#btnSearch").on("click",function(){			 
 			 var count=0;
@@ -212,7 +217,8 @@
 			 if(count==0){
 				 alert("연령대를 체크해주세요.");
 			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null
-					 || $("#startmonth").val()>=$("#endmonth").val()){
+					 || $("#startmonth").val() >= $("#endmonth").val()
+					 ||$("#endmonth").val() > todayMonth){
 				 alert("기간을 알맞게 입력해주세요.");
 			 }
 			 else{
