@@ -27,26 +27,24 @@ VALUES
 WHERE favs_no = #{favsNo}{    
     </delete>
     
-    <select id = "do_selectList" parameterType="SearchVO" resultType = "FinFavs" >
-     SELECT t1.favs_no,                                                   					
-       t1.id,                        						
-       t1.fin_prdt_cd,                                                						
-       t1.reg_dt,                                            						
-       t1.total_cnt,                                              						
-       t1.rnum    as no                                                					
-  FROM                                                            						
-      (                                                           						
-        SELECT f.*,                                               						
-               ROW_NUMBER() OVER(ORDER BY f.reg_dt desc) as rnum, 						
-               COUNT(*) OVER() as total_cnt                       						
-        FROM SU_FINFAVS f                         
-        -- ID
-        WHERE f.id = #{searchWord}
-       )t1                                                        						
---<![CDATA[
-WHERE t1.rnum >= (#{pageSize}*(#{pageNum}-1)+1) 
- 						AND t1.rnum <= (#{pageSize}*(#{pageNum}-1)+#{pageSize})       
---]]>    
+    <select id = "do_selectList" parameterType="SearchVO" resultType = "FinFavsView" >
+     SELECT f.favs_no,                                                   					
+       f.id,                        						
+       f.fin_prdt_cd, 
+       b.kor_co_nm,
+       b.fin_prdt_nm,                                               						
+       f.reg_dt                                            						
+  FROM SU_FINFAVS F                                                             						
+  INNER JOIN (
+  	SELECT fin_prdt_cd, fin_co_no, kor_co_nm, fin_prdt_nm
+  	FROM SU_SAVING
+  	UNION ALL
+  	SELECT fin_prdt_cd, fin_co_no, kor_co_nm, fin_prdt_nm 
+  	FROM SU_DEPOSIT
+  ) B
+  ON F.FIN_PRDT_CD = B.FIN_PRDT_CD
+  WHERE F.ID = '${searchWord}'
+  
     </select>
     
     </mapper>

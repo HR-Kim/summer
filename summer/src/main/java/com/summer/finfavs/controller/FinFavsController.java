@@ -16,6 +16,7 @@ import com.summer.comm.StringUtil;
 import com.summer.comm.MessageVO;
 import com.summer.comm.SearchVO;
 import com.summer.finfavs.domain.FinFavsVO;
+import com.summer.finfavs.domain.FinFavsViewVO;
 import com.summer.finfavs.service.FinFavsService;
 
 @Controller
@@ -113,14 +114,10 @@ public class FinFavsController {
 	
 		log.debug("2.FinFavsVO = " + vo.toString());
 		
-		List<FinFavsVO> list = service.getSelectList(vo);
+		List<FinFavsViewVO> list = service.getSelectList(vo);
 		log.debug("3.list = " + list);
 		
-		if( null != list && list.size() > 0) {
-			totalCnt = Integer.parseInt(list.get(0).getTotalCnt());
-			log.debug("4. totalCnt ====" + totalCnt);
-		}
-		
+				
 		model.addAttribute("totalCnt",totalCnt);
 		model.addAttribute("list", list);
 		model.addAttribute("searchVO",vo);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.summer.comm.SearchVO;
 import com.summer.finfavs.domain.FinFavsVO;
+import com.summer.finfavs.domain.FinFavsViewVO;
 
 @Repository
 public class FinFavsDAO {
@@ -43,7 +44,7 @@ public class FinFavsDAO {
 	 * 다건 조회
 	 */
 
-	public List<FinFavsVO> selectList(SearchVO searchVO) throws SQLException {
+	public List<FinFavsViewVO> selectList(SearchVO searchVO) throws SQLException {
 		String statement = this.nameSpace + ".do_selectList";
 		log.debug("param=" + searchVO.toString());
 		return sqlSessionTemplate.selectList(statement, searchVO);

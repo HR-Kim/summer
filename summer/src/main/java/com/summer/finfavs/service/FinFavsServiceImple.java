@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.summer.comm.SearchVO;
 import com.summer.finfavs.dao.FinFavsDAO;
 import com.summer.finfavs.domain.FinFavsVO;
+import com.summer.finfavs.domain.FinFavsViewVO;
 
 @Service
 public class FinFavsServiceImple implements FinFavsService {
@@ -30,7 +31,7 @@ public class FinFavsServiceImple implements FinFavsService {
 	}
 
 	@Override
-	public List<FinFavsVO> getSelectList(SearchVO vo) throws SQLException {
+	public List<FinFavsViewVO> getSelectList(SearchVO vo) throws SQLException {
 		return dao.selectList(vo);
 	}
 
