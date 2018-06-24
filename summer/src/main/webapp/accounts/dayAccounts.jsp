@@ -152,8 +152,8 @@
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frmSearch" id="frmSearch" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
-
-
+		<input type="hidden" name="searchWord" id="searchWord" value="<%=session.getAttribute("id")%>"/>
+		
    		<table class="table">
    			<tr>
    				<td class="text-left">
@@ -187,7 +187,7 @@
    					</div>
    			</tr>
    		</table>
-   	</form> 
+   	</form>
 
    	<!--// Search --------------------------------------------------------->
    
@@ -280,6 +280,7 @@
 		function doSelectList(){
 			var frm = document.frmSearch;
 			frm.action = "doSelectList.do";
+			
 			frm.submit();
 		}
 		
@@ -384,7 +385,7 @@
 	      					                dataType:"html",// JSON/html
 	      					                async: false,
 	      					                data:{ 
-	      					                		"id": "a",
+	      					                		"id": $("#searchWord").val(),
 	      					                		"ano" : ano,
 	      											"categoryId"			:$("#searchCategory option:selected").val(),
 	      											"aDate"		:$("#aDate").val(),
@@ -540,7 +541,7 @@
 		                dataType:"html",// JSON/html
 		                async: false,
 		                data:{ 
-		                		"id": "a",
+		                		"id": $("#searchWord").val(),
 								"categoryId"			:$("#searchCategory").val(),
 								"aDate"		:$("#aDate").val(),
 								"item"		:$("#item").val(),

@@ -68,7 +68,7 @@
 		FROM (SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.a_date desc) as rnum
 		        ,COUNT(*) OVER() as total_cnt
 		    FROM su_accounts a 
-		    WHERE a.id='a'
+		    WHERE a.id= '#{searchWord}'
 		    <include refid="baseCondition"/>   
 		    ) T1
 		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) +1) AND (#{pageSize} * (#{pageNum} -1)+#{pageSize})

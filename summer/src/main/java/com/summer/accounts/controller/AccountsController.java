@@ -159,7 +159,7 @@ public class AccountsController {
 	public String getSelectListMonth(SearchVO vo, Model model) throws SQLException{
 		log.debug("1===doSelectList.do=======================");
 		
-		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),"2018"));
 		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
 		vo.setPageNum(StringUtil.nvl(vo.getPageNum(), "1"));
 		vo.setPageSize(StringUtil.nvl(vo.getPageSize(), "10"));
