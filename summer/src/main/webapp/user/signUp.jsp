@@ -114,7 +114,7 @@
 		<!-- Button-------------------------------------------- -->
 		 <div class="clearfix">
 		 	<button type="submit" id="signupbtn" class="signupbtn" disabled="disabled">등록</button>
-		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/login.jsp'">취소</button>
+		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/login.do'">취소</button>
 		 </div>
 		 
 		 
@@ -266,7 +266,7 @@
 			if(!OK){
 				emailCheckFlag = 0;
 				$('#emailCheckMessage').css("color","red");						
-				$('#emailCheckMessage').html('옳바르게 입력하세요.');
+				$('#emailCheckMessage').html('올바르게 입력하세요.');
 				console.log("emailCheckFlag="+emailCheckFlag)
 				$('#signupbtn').prop("disabled", true);
 			}else{

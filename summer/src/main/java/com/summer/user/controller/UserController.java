@@ -473,4 +473,16 @@ public class UserController {
 		return "user/signUp";
 		
 	}
+	
+	@RequestMapping(value = "/user/findId.do", method = RequestMethod.GET)
+	public String findId() {
+		return "user/findId";
+		
+	}
+	
+	@RequestMapping(value = "/user/findPw.do", method = RequestMethod.GET)
+	public String findPw() {
+		return "user/findPw";
+		
+	}
 }
