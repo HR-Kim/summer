@@ -34,10 +34,8 @@ public class FinFavsController {
 	 */
 
 	@RequestMapping(value="/finfavs/doAdd.do"
-											   ,method=RequestMethod.GET
-											   ,produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String add(FinFavsVO vo) throws Exception {
+											   ,method=RequestMethod.GET)
+	public String add(FinFavsVO vo, Model model) throws Exception {
 		log.debug("1. add==============");
 		Gson gson = new Gson();
 		MessageVO messageVO = new MessageVO();
@@ -56,9 +54,12 @@ public class FinFavsController {
 			messageVO.setMessage("등록/수정에 실패했습니다.");
 		}
 		
-		String json = gson.toJson(messageVO);
-		log.debug("json = " + json);
-		return json;
+//		String json = gson.toJson(messageVO);
+//		log.debug("json = " + json);
+//		return json;
+		
+		model.addAttribute("messageVO",messageVO);
+		return "finfavs/favsAdd";
 		
 	}
 	
@@ -69,10 +70,8 @@ public class FinFavsController {
 	 */
 
 	@RequestMapping(value="/finfavs/doDelete.do"
-											   ,method=RequestMethod.POST
-											   ,produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String delete(FinFavsVO vo) throws Exception {
+											   ,method=RequestMethod.POST)
+	public String delete(FinFavsVO vo, Model model) throws Exception {
 		log.debug("1. delete==============");
 		Gson gson = new Gson();
 		MessageVO messageVO = new MessageVO();
@@ -91,9 +90,12 @@ public class FinFavsController {
 			messageVO.setMessage("삭제에 실패했습니다.");
 		}
 		
-		String json = gson.toJson(messageVO);
-		log.debug("json = " + json);
-		return json;
+		//String json = gson.toJson(messageVO);
+		//log.debug("json = " + json);
+		
+		model.addAttribute("messageVO",messageVO);
+		return "finfavs/favsDelete";
+		
 		
 	}
 	
