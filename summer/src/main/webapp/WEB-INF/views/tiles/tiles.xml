@@ -54,6 +54,24 @@
 		<put-attribute name  = "body"   value = "/finfavs/favsList.jsp" />
 	</definition>
 	
+	<!-- user/updatePwd -->
+	<definition name = "user/updatePwd"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "비밀번호수정" />
+		<put-attribute name  = "body"   value = "/user/updatePwd.jsp" />
+	</definition>
+	
+	<!-- user/updateUser -->
+	<definition name = "user/updateUser"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "회원정보수정" />
+		<put-attribute name  = "body"   value = "/user/updateUser.jsp" />
+	</definition>
+	
+	<!-- user/infoUser -->
+	<definition name = "user/infoUser"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "회원정보확인" />
+		<put-attribute name  = "body"   value = "/user/infoUser.jsp" />
+	</definition>
+	
 	<!-- user/findId -->
 	<definition name = "user/findId"  extends = "base-definition">
 		<put-attribute name  = "title"  value = "아이디찾기" />

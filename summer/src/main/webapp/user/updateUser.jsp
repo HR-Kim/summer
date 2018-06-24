@@ -14,26 +14,6 @@
 
 <%-- CONTEXT --%>
 <c:set var ="CONTEXT" value="${pageContext.request.contextPath}" ></c:set>
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>:::회원정보수정:::</title>
-
-    <!-- 부트스트랩 -->
-    <link href="${CONTEXT}/resources/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
 		 <h3>회원정보수정</h3>
@@ -96,7 +76,7 @@
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
 		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/infoUser.jsp'">취소</button>
+		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/hello.do'">취소</button>
 		 </div>
 		<!--// Button------------------------------------------ -->
 		
@@ -145,9 +125,6 @@
 						
 						if (parseData.msgId == "1") {
 							alert(parseData.message);
-							var frm = document.frm;
-							frm.action = '${CONTEXT}'+"/user/infoUser.jsp";
-							frm.submit();
 						} else {
 							alert(parseData.message);
 						}
@@ -161,5 +138,3 @@
 			});//--등록
 		});//--document.ready
 	</script>
-</body>
-</html>

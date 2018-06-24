@@ -485,4 +485,10 @@ public class UserController {
 		return "user/findPw";
 		
 	}
+	
+	@RequestMapping(value = "/user/infoUser.do", method = RequestMethod.GET)
+	public String infoUser() {
+		return "user/infoUser";
+		
+	}
 }
