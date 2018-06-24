@@ -29,10 +29,10 @@
 		<put-attribute name  = "body"   value = "/finrec/savingSearchList.jsp" />
 	</definition>
 	
-		<!--  FinRec-HouseLoan -->
-	<definition name = "finrec/houseLoanSearchList"  extends = "base-definition">
-		<put-attribute name  = "title"  value = "전세대출목록" />
-		<put-attribute name  = "body"   value = "/finrec/houseLoanSearchList.jsp" />
+		<!--  FinRec-deposit -->
+	<definition name = "finrec/depositSearchList"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "정기예금목록" />
+		<put-attribute name  = "body"   value = "/finrec/depositSearchList.jsp" />
 	</definition>
 	
 		<!--  FinRec-Saving -->
@@ -41,10 +41,10 @@
 		<put-attribute name  = "body"   value = "/finrec/savingDetailView.jsp" />
 	</definition>
 	
-		<!--  FinRec-HouseLoan -->
-	<definition name = "finrec/houseLoanDetailView"  extends = "base-definition">
-		<put-attribute name  = "title"  value = "전세대출상세" />
-		<put-attribute name  = "body"   value = "/finrec/houseLoanDetailView.jsp" />
+		<!--  FinRec-deposit -->
+	<definition name = "finrec/depositDetailView"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "정기예금상세" />
+		<put-attribute name  = "body"   value = "/finrec/depositDetailView.jsp" />
 	</definition>
 	
 	<!-- FinFavs - List -->
