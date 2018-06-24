@@ -461,4 +461,10 @@ public class UserController {
 		
 		return "user/updatePwd";
 	}
+	
+	@RequestMapping(value = "/user/login.do", method = RequestMethod.GET)
+	public String login() {
+		return "user/login";
+		
+	}
 }

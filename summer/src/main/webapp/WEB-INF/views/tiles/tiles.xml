@@ -54,6 +54,18 @@
 		<put-attribute name  = "body"   value = "/finfavs/favsList.jsp" />
 	</definition>
 	
+	<!-- user/login -->
+	<definition name = "user/login"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "로그인" />
+		<put-attribute name  = "body"   value = "/user/login.jsp" />
+	</definition>
+	
+	<!-- user/login -->
+	<definition name = "user/login"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "로그인" />
+		<put-attribute name  = "body"   value = "/user/login.jsp" />
+	</definition>
+	
 	<!-- good/goodList -->
 	<definition name = "good/goodList"  extends = "base-definition">
 		<put-attribute name  = "title"  value = "최저가검색" />
