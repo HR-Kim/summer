@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//Dth HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dth">
 
-<div class = "container">
+<div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                   <h2>적금 상세</h2>
    
                   <div class="table-responsive" id = "searchResult">

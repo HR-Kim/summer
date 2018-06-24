@@ -5,7 +5,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class = "container">
+<div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 <h3>즐겨찾기 목록 페이지</h3>
 

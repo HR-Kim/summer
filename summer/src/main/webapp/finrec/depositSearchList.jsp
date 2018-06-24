@@ -12,7 +12,7 @@
 
 
 
-<div class="container">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <div class = "form-inline pull-left">
 	<h3>정기예금 검색</h3>
 
@@ -37,7 +37,7 @@
 			onclick="javascript:depositList(1);">검색</button>
 </div>
 
-<div class = "form-group">
+<div class = "form-inline">
 	<h3>정기예금 목록</h3>
 	
 	<div id="loadingImage" style="display: none">
@@ -46,7 +46,7 @@
 	<div class="table-responsive" id="searchResult">
 	
 	</div>
-	<div id="pageArea" class = "form-group"></div>
+	<div id="pageArea" class="form-inline pull-right"></div>
 	
 	<input type="hidden" id = "userId" value = "<%=session.getAttribute("id")%>"/>
 </div>
