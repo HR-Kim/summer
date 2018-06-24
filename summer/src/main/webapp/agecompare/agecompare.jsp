@@ -242,6 +242,34 @@
 						},
 						error:function(){
 							alert("do_selectMeList.do error error");
+						},
+						complete:function(data){
+							//alert(id);
+						},
+						success:function(medata){
+							//alert("Medata="+medata);
+							var adatetmp = new Array();
+							var month1 = $("#endmonth").val();
+							var month2 = $("#startmonth").val();
+							for(var i=0; i<=month1.substring(5)-month2.substring(5); i++){
+								var month = month2.substring(5)*1+i*1;
+								if(month<10)
+									month = "0" + month;
+								adatetmp[i]=month1.substring(0,5) + month;	
+							}
+							
+							var idData = $.parseJSON(medata);
+							var idtotal = new Array();
+							$.each(idData,function(key,value){//(value.idTotal/value.ageTotal).toFixed(2);
+								for(var j=0; j<adatetmp.length; j++){
+									if(adatetmp[j]=="20"+value.aDate){
+										idtotal[j] = (value.idTotal/value.ageTotal).toFixed(2);
+									}else if(idtotal[j]==null){
+										idtotal[j]=0;
+									}
+								}
+								//idtotal[key] = (value.idTotal/value.ageTotal).toFixed(2);
+							});
 							
 							$.ajax({
 								type:"GET",
@@ -276,96 +304,10 @@
 									 }
 									tmpArray[++i] = "나";
 									var arrList = [tmpArray];
-
-									//============================//
-									//alert("data="+data);
-									var oobj = new Array();
-									var adatetmp = new Array();
-									var agetmp = new Array();
-									var agetmp1 = new Array();
-									var agetmp2 = new Array();
-									var agetmp3 = new Array();
-									var tmp = new Array();
-									var datatmp;
-									var tmpsize=0;
-									for(var i=0; i<count; i++){
-										if(i==0){
-											datatmp = data.substring(0,data.indexOf(",["));
-											var dayDataSub = $.parseJSON(datatmp);
-											$.each(dayDataSub,function(key,value){
-												adatetmp[key]=value.aDate;	
-												//agetmp[key]=value.total;
-												agetmp[key]=(value.total/value.ageTotal).toFixed(2);
-											});
-											//alert("adate="+adatetmp.toString());
-										}else if(i==1){
-											datatmp = data.substring(datatmp.length+1);
-											var dayDataSub = $.parseJSON(datatmp);
-											$.each(dayDataSub,function(key,value){
-												//agetmp1[key]=value.total;
-												agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
-											});
-										}
-									}
-									for(var i=0; i<adatetmp.length; i++){
-										arrList.push([adatetmp[i],agetmp[i]*1,agetmp1[i]*1,0*1]);
-									}
-								    drawChart(arrList);
-								}
-							 });
-						},
-						complete:function(data){
-							//alert(id);
-						},
-						success:function(medata){
-							//alert("Medata="+medata);
-							var idData = $.parseJSON(medata);
-							var idtotal = new Array();
-							$.each(idData,function(key,value){//(value.idTotal/value.ageTotal).toFixed(2);
-								idtotal[key] = (value.idTotal/value.ageTotal).toFixed(2);
-							});
-							$.ajax({
-								type:"GET",
-								url:"do_selectAgeList.do",
-								dataType:"html",
-								async:false,
-								data:{
-									"searchWord":searchList,
-									"pageNum":$("#startmonth").val(),
-									"pageSize":$("#endmonth").val()
-								},
-								error:function(){
-									alert("do_selectAgeList.do error error");
-								},
-								complete:function(data){
-									//alert($("#startmonth").val());
-								},
-								success:function(data){
-									//alert("data="+data);
-									data = data.substring(1,data.length-1);
-									
-									count = (data.match(/aDate/g) || []).length - count;
-																
-									var tmpArray = new Array();
-									var i = 0;
-									tmpArray[i] = "Date";
-									for(var j=1; j<=9; j++){
-										 $('#chk_age'+j+':checked').each(function() { 
-											i++;
-											tmpArray[i] = $(this).val().substring(0,2) + "대";
-										 });
-									 }
-									tmpArray[++i] = "나";
-									var arrList = [tmpArray];
-
 									//============================//
 								//	alert("data="+data);
-									var oobj = new Array();
-									var adatetmp = new Array();
 									var agetmp = new Array();
 									var agetmp1 = new Array();
-									var agetmp2 = new Array();
-									var agetmp3 = new Array();
 									var tmp = new Array();
 									var datatmp;
 									var tmpsize=0;
@@ -374,17 +316,25 @@
 											datatmp = data.substring(0,data.indexOf(",["));
 											var dayDataSub = $.parseJSON(datatmp);
 											$.each(dayDataSub,function(key,value){
-												adatetmp[key]=value.aDate;	
-												//agetmp[key]=value.total;
-												agetmp[key]=(value.total/value.ageTotal).toFixed(2);
+												for(var j=0; j<adatetmp.length; j++){
+													if(adatetmp[j]=="20"+value.aDate){
+														agetmp[j]=(value.total/value.ageTotal).toFixed(2);
+													}else if(agetmp[j]==null){
+														agetmp[j]=0;
+													}
+												}
 											});
-											//alert("adate="+adatetmp.toString());
 										}else if(i==1){
 											datatmp = data.substring(datatmp.length+1);
 											var dayDataSub = $.parseJSON(datatmp);
 											$.each(dayDataSub,function(key,value){
-												//agetmp1[key]=value.total;
-												agetmp1[key]=(value.total/value.ageTotal).toFixed(2);
+												for(var j=0; j<adatetmp.length; j++){
+													if(adatetmp[j]=="20"+value.aDate){
+														agetmp1[j]=(value.total/value.ageTotal).toFixed(2);
+													}else if(agetmp1[j]==null){
+														agetmp1[j]=0;
+													}
+												}
 											});
 										}
 									}
