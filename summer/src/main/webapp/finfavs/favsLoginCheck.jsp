@@ -8,7 +8,7 @@
 	String id = null;
 	
 	if(null == session.getAttribute("id")){
-		response.sendRedirect("http://localhost:8080/summer/user/login.jsp");
+		response.sendRedirect("http://localhost:8080/summer/user/login.do");
 	}else {
 		id = session.getAttribute("id").toString();
 		response.sendRedirect("http://localhost:8080/summer/finfavs/doSelectList.do?searchWord=" + id);

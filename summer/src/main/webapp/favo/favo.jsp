@@ -9,6 +9,14 @@
 <%
 	Logger log = LoggerFactory.getLogger(this.getClass());
 
+	String userId = (String)session.getAttribute("id");
+	
+	if(null == session.getAttribute("id")){
+		userId = null;
+	} else {
+		userId = session.getAttribute("id").toString();
+	}
+
 	log.debug("==================================");
 	log.debug("this.getClass()"+this.getClass());
 	log.debug("==================================");
@@ -44,6 +52,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
+<c:set var="userId" value="<%=userId%>"></c:set>
 <div class="container">
 <br>
 <br>
@@ -58,7 +67,7 @@
 	<!-- list -->
 	<form class="form-inline" name="frmfavo" id="frmfavo" method="get">
 	<input type="hidden" name="pageNum" value="${searchVO.pageNum}"/>
-	<input type="hidden" name="id" value="aa">
+	<input type="hidden" name="searchWord" value="${userId}">
 	<table class="table table-striped table-bordered table-hover" id="favoTable">
       	<thead class="bg-primary">
       		<th class="text-center">번호</th>
@@ -118,7 +127,7 @@
 	function doSearch(){
 		
 		var frm = document.frmfavo;
-		frm.action = "doSelectList.do";
+		frm.action = "doSelectList.do?searchWord="+'${searchVO.searchWord}';
 		frm.submit();
 	}
 	
@@ -139,7 +148,7 @@
 			
 			var goodid = tds.eq(5).text();
 			var entpid = tds.eq(6).text();
-			var id = 'aa';
+			var id = '${searchVO.searchWord}';
 			
 			//삭제
 			console.log(goodid);
@@ -183,7 +192,7 @@
 		
 		$("#favoallbtn").on("click",function(){
 			
-			var id = 'aa';
+			var id = '${searchVO.searchWord}';
 			
 			console.log(id);
 		

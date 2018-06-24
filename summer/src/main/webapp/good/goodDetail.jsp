@@ -9,6 +9,16 @@
 <%
 	Logger log = LoggerFactory.getLogger(this.getClass());
 
+	String userId = (String)session.getAttribute("id");
+	
+	if(null == session.getAttribute("id")){
+		userId = null;
+	} else {
+		userId = session.getAttribute("id").toString();
+	}
+	
+	log.debug("userId="+userId);
+
 	log.debug("==================================");
 	log.debug("this.getClass()"+this.getClass());
 	log.debug("==================================");
@@ -43,6 +53,7 @@
 %>
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
+<c:set var="userId" value="<%=userId%>"></c:set>
   <style>
        #map {
         height: 400px;
@@ -58,7 +69,8 @@
 		<input type="hidden" name="goodId" value="${detailGood.goodId}"/>
 		<input type="hidden" id="x"/>
 		<input type="hidden" id="y"/>
-		
+		<input type="hidden" id="userId" value="<%=userId %>"/>
+		 
 		<table class="table">
 			<tr>
 				<td class="text-center">
@@ -106,14 +118,17 @@
   <br/>
   <h4>가까운 매장</h4>
   <hr/>
-  
 	
      	<table id="entpTable" class="table table-striped table-bordered table-hover">
         	<thead class="bg-primary">
         		<tr>
         			<th class="text-center">매장명</th>
 	         		<th class="text-center">가격</th>
-	         		<th class="text-center">장바구니</th>
+	         		<c:choose>
+	         			<c:when test="${userId ne null}">
+	         				<th class="text-center">장바구니</th>
+	         			</c:when>
+	         		</c:choose>
          		</tr>
          	</thead>
         	<tbody>
@@ -270,7 +285,9 @@
        				 "<tr>"
        				 +"<td>" + val[0] +"&nbsp;&nbsp;"+ ((val[2] == 'Y') ? "<span class='badge badge-success' style='font-color: white;'>1+1</span>":"") +"&nbsp;&nbsp;"+ ((val[3] == 'Y') ? "<span class='badge badge-info'>할인</span>":"") +"</td>"
        				 +"<td class='text-right'>" + numberWithCommas(val[1]) + " 원</td>"
+       				 +"<c:choose><c:when test='${userId ne null}'>"
        				 +"<td class='text-center'><input type='button' value='추가' onclick='javascript:doUpsert(entpid, entpname);'></td>"
+       				 +"</c:when></c:choose>"
        				 +"<td class='text-left' style='display:none;'>"+val[4]+"</td>"
        				 +"</tr>"
        				 );
@@ -314,7 +331,7 @@
    	   		"entpId":entpid,
    	   		"entpName":entpname,
    	   		"goodNum":1,
-   	   		"id":'aa'
+   	   		"id":$("#userId").val()
        },
       success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
      	 	console.log("data="+data); 

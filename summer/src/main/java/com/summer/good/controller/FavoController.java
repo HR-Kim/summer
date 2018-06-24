@@ -37,7 +37,7 @@ public class FavoController {
 		
 		log.debug("2===SearchVO=="+vo.toString());
 		
-		favo.setId("aa");
+		favo.setId(vo.getSearchWord());
 		log.debug("2===favo=="+favo.toString());
 		
 		List<Favo> list = favoservice.getSelectList(vo);

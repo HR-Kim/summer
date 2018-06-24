@@ -13,14 +13,14 @@
             <li><a href="${CONTEXT}/accounts/doSelectListMonth.do?searchWord=<%=session.getAttribute("id")%>">
             		<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
             </a></li>
-              <li><a href="${CONTEXT}/agecompare/agecompare.jsp">연령대 별 차트</li>
+              <li><a href="${CONTEXT}/agecompare/agecompare.jsp"></a>연령대 별 차트</li>
           </ul>
           <br>
           <h4>최저가 검색</h4>
           <br>
           <ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/good/doSelectList.do">검색하기</a></li>
-            <li><a href="${CONTEXT}/favo/doSelectList.do">장바구니</a></li>
+            <li><a href="${CONTEXT}/favo/favoLoginCheck.jsp">장바구니</a></li>
           </ul>
           <br>
           <h4>금융상품 추천</h4>
