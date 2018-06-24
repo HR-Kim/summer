@@ -2,67 +2,77 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.summer.finrec.mappers">
+<mapper namespace="com.summer.finrec.deposit.mappers">
 
-<!-- 일 별 화면 => 리스트 + 파이 차트 -->
-<select id="doDay" parameterType="Chart" resultType="Chart">
-	SELECT c.CD_DTL_NM AS cdDtlNm
-		   ,NVL(SUM(a.AMOUNT), 0) AS ctgTotal
-      	   ,NVL(ROUND(RATIO_TO_REPORT(SUM(a.AMOUNT)) OVER(PARTITION BY GROUPING_ID(c.CD_DTL_NM)) * 100 , 1), 0) AS percent
-	  FROM SU_CODES c left outer join SU_ACCOUNTS a
-		ON a.CATEGORY_ID = C.CD_DTL_ID
-	   AND a.ID = #{chartUserId}
-	   AND a.TRADE_ID = 10
-	   AND TO_CHAR(A_DATE, 'YYYY') = #{year}
-	   AND TO_CHAR(A_DATE, 'MM') = #{month}
-   	   AND TO_CHAR(A_DATE, 'DD') = #{day}
-	 WHERE c.CD_MST_ID = 'ACC_CAT_EXPENSES'
-	 GROUP BY c.CD_SEQ, c.CD_DTL_NM
-	 ORDER BY c.CD_SEQ
+<sql id = "searchCondition">
+<where>   
+		<if test = "intrRateType == 'all'"></if>		
+		<if test = "intrRateType != 'all'">h.intr_rate_type = #{intrRateType} </if>		
+		<if test = "intrRateType != 'all'">AND h.rsrv_type = #{intrRateType} </if>		
+		<if test = "intrRateMin != null">
+		AND h.intr_rate_min &gt;= #{intrRateMin} 
+		</if>
+		<if test = "intrRateMax != null">
+		AND h.intr_rate_max &gt;= #{intrRateMax}
+		</if>
+</where>
+</sql>
+
+<!-- 목록 보여주기 -->
+<select id="doSearch" parameterType="FinDepositSearch" resultType="FinDeposit">
+SELECT
+    t1.fin_prdt_cd,
+    t1.fin_co_no,
+    t1.kor_co_nm,
+    t1.fin_prdt_nm,
+    t1.join_way,
+    t1.mtrt_int,
+    t1.spcl_cnd,
+    t1.etc_note,
+    t1.intr_rate_min,
+    t1.intr_rate_max,
+    t1.intr_rate_type,
+    t1.intr_rate_type_nm,
+    t1.total_cnt,
+    t1.rnum as no
+FROM
+(                                                           						
+        SELECT h.*,                                               						
+               ROW_NUMBER() OVER(ORDER BY h.fin_prdt_cd) as rnum, 						
+               COUNT(*) OVER() as total_cnt                       						
+        FROM SU_DEPOSIT h                                           						
+
+<include refid="searchCondition"/>
+
+       )t1    
+
+<![CDATA[
+WHERE t1.rnum >= (#{pageSize}*(#{pageNum}-1)+1) 
+ 						AND t1.rnum <= (#{pageSize}*(#{pageNum}-1)+#{pageSize})       
+]]>
+
 </select>
 
-<!-- 주 별 화면 => 리스트 + 파이 차트 -->
-<select id="doWeek" parameterType="Chart" resultType="Chart">
-	SELECT c.CD_DTL_NM AS cdDtlNm
-		   ,NVL(SUM(a.AMOUNT), 0) AS ctgTotal
-      	   ,NVL(ROUND(RATIO_TO_REPORT(SUM(a.AMOUNT)) OVER(PARTITION BY GROUPING_ID(c.CD_DTL_NM)) * 100 , 1), 0) AS percent
-	  FROM SU_CODES c left outer join SU_ACCOUNTS a
-		ON a.CATEGORY_ID = C.CD_DTL_ID
-	   AND a.ID = #{chartUserId}
-	   AND a.TRADE_ID = 10
-	   AND TO_CHAR(A_DATE, 'YYYYMMDD') BETWEEN #{weekStart} AND #{weekEnd}
-	 WHERE c.CD_MST_ID = 'ACC_CAT_EXPENSES'
-	 GROUP BY c.CD_SEQ, c.CD_DTL_NM
-	 ORDER BY c.CD_SEQ
+<!-- 개별 항목 조회 -->
+<select id="doSelectOne" parameterType="FinDeposit" resultType="FinDeposit">
+SELECT
+    fin_prdt_cd,
+    fin_co_no,
+    kor_co_nm,
+    fin_prdt_nm,
+    join_way,
+    mtrt_int,
+    spcl_cnd,
+    etc_note,
+    intr_rate_min,
+    intr_rate_max,
+    intr_rate_type,
+    intr_rate_type_nm
+FROM
+    su_deposit
+WHERE
+    fin_prdt_cd = '${finPrdtCd}'
 </select>
 
-<!-- 월 별 화면 => 파이 차트 -->
-<select id="doMonthPie" parameterType="Chart" resultType="Chart">
-	SELECT c.CD_DTL_NM AS cdDtlNm
-		   ,NVL(SUM(a.AMOUNT), 0) AS ctgTotal
-      	   ,NVL(ROUND(RATIO_TO_REPORT(SUM(a.AMOUNT)) OVER(PARTITION BY GROUPING_ID(c.CD_DTL_NM)) * 100 , 1), 0) AS percent
-	  FROM SU_CODES c left outer join SU_ACCOUNTS a
-		ON a.CATEGORY_ID = C.CD_DTL_ID
-	   AND a.ID = #{chartUserId}
-	   AND a.TRADE_ID = 10
-	   AND TO_CHAR(A_DATE, 'YYYY') = #{year}
-	   AND TO_CHAR(A_DATE, 'MM') = #{month}
-	 WHERE c.CD_MST_ID = 'ACC_CAT_EXPENSES'
-	 GROUP BY c.CD_SEQ, c.CD_DTL_NM
-	 ORDER BY c.CD_SEQ
-</select>
 
-<!-- 월 별 화면 => 바 차트 -->
-<select id="doMonthBar" parameterType="Chart" resultType="Chart">
-	SELECT c.CD_DTL_NM AS month
-		   ,NVL(SUM(a.AMOUNT), 0) AS monthTotal
-	  FROM SU_CODES c left outer join SU_ACCOUNTS a
-		ON TO_CHAR(a.A_DATE, 'MM') = c.CD_DTL_ID
-	   AND a.ID = #{chartUserId}
-	   AND a.TRADE_ID = 10
-	   AND TO_CHAR(A_DATE, 'YYYY') = #{year}
-	 WHERE c.CD_MST_ID = 'CHART_MONTH'
- 	 GROUP BY c.CD_DTL_NM, c.CD_SEQ
- 	 ORDER BY c.CD_SEQ
-</select>
 </mapper>

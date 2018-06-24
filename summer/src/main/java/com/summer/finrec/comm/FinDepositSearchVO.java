@@ -7,21 +7,19 @@ public class FinDepositSearchVO extends DTO {
 	private int pageSize = 5;		//페이지 사이즈
 	private int pageNum = 1;		//현재 페이지
 	
-	//saving
+	//deposit
 	private String intrRateType;
-	private String rsrvType;
 	private int intrRateMin;
 	private int intrRateMax;
 	
 	public FinDepositSearchVO() {}
 
-	public FinDepositSearchVO(int pageSize, int pageNum, String intrRateType, String rsrvType, int intrRateMin,
+	public FinDepositSearchVO(int pageSize, int pageNum, String intrRateType, int intrRateMin,
 			int intrRateMax) {
 		super();
 		this.pageSize = pageSize;
 		this.pageNum = pageNum;
 		this.intrRateType = intrRateType;
-		this.rsrvType = rsrvType;
 		this.intrRateMin = intrRateMin;
 		this.intrRateMax = intrRateMax;
 	}
@@ -29,7 +27,7 @@ public class FinDepositSearchVO extends DTO {
 	@Override
 	public String toString() {
 		return "FinSavingSearchVO [pageSize=" + pageSize + ", pageNum=" + pageNum + ", intrRateType=" + intrRateType
-				+ ", rsrvType=" + rsrvType + ", intrRateMin=" + intrRateMin + ", intrRateMax=" + intrRateMax + "]";
+				+ ", intrRateMin=" + intrRateMin + ", intrRateMax=" + intrRateMax + "]";
 	}
 
 	public int getPageSize() {
@@ -56,13 +54,6 @@ public class FinDepositSearchVO extends DTO {
 		this.intrRateType = intrRateType;
 	}
 
-	public String getRsrvType() {
-		return rsrvType;
-	}
-
-	public void setRsrvType(String rsrvType) {
-		this.rsrvType = rsrvType;
-	}
 
 	public int getIntrRateMin() {
 		return intrRateMin;
