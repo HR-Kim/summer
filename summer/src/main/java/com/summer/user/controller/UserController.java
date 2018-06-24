@@ -467,4 +467,10 @@ public class UserController {
 		return "user/login";
 		
 	}
+	
+	@RequestMapping(value = "/user/signUp.do", method = RequestMethod.GET)
+	public String signUp() {
+		return "user/signUp";
+		
+	}
 }
