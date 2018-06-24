@@ -385,7 +385,7 @@
 	      					                dataType:"html",// JSON/html
 	      					                async: false,
 	      					                data:{ 
-	      					                		"id": $("#searchWord").val(),
+	      					                		"id": 'a',
 	      					                		"ano" : ano,
 	      											"categoryId"			:$("#searchCategory option:selected").val(),
 	      											"aDate"		:$("#aDate").val(),
@@ -541,7 +541,7 @@
 		                dataType:"html",// JSON/html
 		                async: false,
 		                data:{ 
-		                		"id": $("#searchWord").val(),
+		                		"id": 'a',
 								"categoryId"			:$("#searchCategory").val(),
 								"aDate"		:$("#aDate").val(),
 								"item"		:$("#item").val(),

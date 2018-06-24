@@ -13,7 +13,7 @@
 					and a.trade_id= '20'
 				</when>
 				<otherwise>
-					and a.trade_id='10' or a.trade_id='20'
+					and (a.trade_id='10' or a.trade_id='20')
 				</otherwise>
 			</choose>
 	</sql>
@@ -26,7 +26,7 @@
 		        ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
 		        , sum(case when trade_id='10' then amount else 0 end) AS sumInc
 		    from su_accounts
-		    where id='a'
+		    where id=#{searchWord}
 		    group by TRUNC(a_date,'iw')
 		    order by TRUNC(a_date,'iw')) T1
 		where to_char(a_date,'yyyy/mm') = #{searchDiv} or to_char(a_date,'yyyy') = #{searchDiv}
@@ -40,7 +40,7 @@
 				    ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
 				    , sum(case when trade_id='10' then amount else 0 end) AS sumInc
 				from su_accounts
-				where id='a'
+				where id=#{searchWord}
 				group by substr(TO_CHAR(a_date, 'YYYY-MM-DD'),1,7))
 		where substr(yearMonth,1,4) = #{searchDiv}
 	</select>
@@ -68,7 +68,7 @@
 		FROM (SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.a_date desc) as rnum
 		        ,COUNT(*) OVER() as total_cnt
 		    FROM su_accounts a 
-		    WHERE a.id= '#{searchWord}'
+		    WHERE a.id= #{searchWord}
 		    <include refid="baseCondition"/>   
 		    ) T1
 		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) +1) AND (#{pageSize} * (#{pageNum} -1)+#{pageSize})

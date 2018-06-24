@@ -124,6 +124,7 @@ public class AccountsController {
 		log.debug("1===doSelectList.do=======================");
 		
 		vo.setSearchDiv(StringUtil.nvl(vo.getSearchDiv(),""));
+		vo.setSearchWord(StringUtil.nvl(vo.getSearchWord(),	""));
 		
 		log.debug("2===SearchVO=="+vo.toString());
 	

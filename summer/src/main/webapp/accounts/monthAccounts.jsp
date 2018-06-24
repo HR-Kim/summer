@@ -42,6 +42,7 @@
 		<!-- Search ----------------------------------------------------------->
 		<form class="form-inline" name="frm" id="frm" method="get">
 	   		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
+			<input type="hidden" name="searchWord" id="searchWord" value="<%=session.getAttribute("id")%>"/>
 	
 	
 	   		<table class="table">

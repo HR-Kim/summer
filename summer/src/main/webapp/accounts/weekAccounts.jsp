@@ -51,6 +51,7 @@
 
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frm" id="frm" method="get">
+		<input type="hidden" name="searchWord" id="searchWord" value="<%=session.getAttribute("id")%>"/>
 	   	<table class="table">
 	   			<tr>
 	   				<td class="text-left">
@@ -189,7 +190,8 @@
 		                 dataType:"html",// JSON/html
 		                 async: false,
 		                 data:{
-		                    	"searchDiv":$("#searchYear").val() +"/"+ $("#searchMonth").val()
+		                    	"searchDiv":$("#searchYear").val() +"/"+ $("#searchMonth").val(),
+		                    	"searchWord":$("#searchWord").val()
 			                 },
 		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
 		                	
