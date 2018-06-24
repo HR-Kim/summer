@@ -37,9 +37,10 @@
 	<select id="do_selectMeList" parameterType="SearchVO" resultType="Agecompare">
 		SELECT DISTINCT TO_CHAR(a_date,'YY/MM') AS a_date
 			   ,id
+			   ,COUNT(*) OVER(PARTITION BY TO_CHAR(a_date,'YY/MM')) AS ageTotal
 		      ,SUM(amount) OVER(PARTITION BY TO_CHAR(a_date, 'YY/MM')) AS idTotal
 		FROM su_accounts 
-		WHERE id='b'
+		WHERE id=#{searchDiv,jdbcType=VARCHAR}
 		AND TO_DATE(a_date,'YY/MM/DD')
 		 BETWEEN TO_DATE(TO_CHAR(ADD_MONTHS(LAST_DAY(#{pageNum,jdbcType=VARCHAR})+1,-1),'YYYYMMDD'),'YY/MM/DD')
 		AND TO_DATE(last_day(TO_CHAR(LAST_DAY(#{pageSize,jdbcType=VARCHAR}),'YYYYMMDD')),'YY/MM/DD')

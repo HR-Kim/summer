@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.summer.comm.SearchVO;
+import com.summer.comm.StringUtil;
 import com.summer.agecompare.domain.Agecompare;
 import com.summer.agecompare.service.AgecompareService;
 
@@ -42,6 +43,8 @@ public class AgecompareController {
 		for(int i=0; i<Integer.parseInt(agelist[0]); i++) {
 			vo.setSearchWord(agelist[i+1]);
 			list = agecompareService.getSelectAgeList(vo);	
+			StringUtil.nvl(list.get(0).getTotal(),"0");
+			StringUtil.nvl(list.get(0).getAgeTotal(),"0");
 			a.add(i, list);
 		}
 
@@ -60,10 +63,12 @@ public class AgecompareController {
 	public String getMe(SearchVO vo) throws SQLException {
 		vo.setPageNum(vo.getPageNum()+"01");
 		vo.setPageSize(vo.getPageSize()+"01");
-		vo.setSearchDiv("b");
+		vo.setSearchDiv(vo.getSearchDiv());
 				
 		List<Agecompare> list = new ArrayList<Agecompare>();
 		list = agecompareService.getSelectMeList(vo);
+		StringUtil.nvl(list.get(0).getAgeTotal(),"0");
+		StringUtil.nvl(list.get(0).getIdTotal(),"0");
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(list);

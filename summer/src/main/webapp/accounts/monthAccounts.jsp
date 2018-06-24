@@ -59,6 +59,7 @@
 	    						
 	    						<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
 	    						<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showMonthPopup();"/>
+	    						<input type="button" class="btn btn-sm btn-success" value="연령대 별 차트보기" onclick="showAgeMonthPopup();"/>
 	   					</div>
 	   			</tr>
 	   		</table>
@@ -118,6 +119,7 @@
 	}
 	
 	 function showMonthPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "월 간 차트", "width=350, height=800, left=100, top=50"); }
+	 function showAgeMonthPopup() {window.open("${CONTEXT}/agecompare/agecompare.jsp", "연령대별 월 간 차트", "width=950, height=650, left=100, top=50"); }
 	</script>
   </body>
 </html>

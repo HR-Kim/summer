@@ -17,6 +17,15 @@
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===========================");
 	
+	//로그인 세션 처리
+	String id = null;
+	if(null == session.getAttribute("id")){
+		response.sendRedirect("http://localhost:8080/summer/user/login.jsp");	
+	}else {
+		id = session.getAttribute("id").toString();
+		//response.sendRedirect("http://localhost:8080/summer/finfavs/doSelectList.do?searchWord=" + id);
+	}
+	
 	String searchWord = ""; //검색어
 	String searchDiv = ""; //검색구분
 	
@@ -46,6 +55,7 @@
 </head>
 <body>
 	
+	<input type="hidden"  name="id" id="id" value="${id}"/>
 	<input type="hidden"  name="searchDiv" id="searchDiv" />
 
 	연령대 선택 <br>
@@ -65,7 +75,7 @@
 	
 	<input type="button" id="btnSearch" value="조회" /><br><br>
 		
-	<div id="curve_chart" style="width: 900px; height: 500px"></div>
+	<div id="curve_chart" style="width: 650px; height: 300px"></div>
 		
 	
 	
@@ -204,18 +214,13 @@
 			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null){
 				 alert("기간을 입력해주세요.");
 			 }else{
-				 alert("count: "+count);
 				 var searchList = count;
 				 
 				 for(var j=1; j<=9; j++){
 					 $('#chk_age'+j+':checked').each(function() { 
 						 searchList += "," + $(this).val().substring(0,2);
 					 });
-				 }
-
-				 alert(searchList);
-				 
-				 var id = "b";
+				 }				 
 				 
 				 $.ajax({
 						type:"GET",
@@ -223,7 +228,7 @@
 						dataType:"html",
 						async:false,
 						data:{
-							"searchDiv":id,
+							"searchDiv":$("#id").val(),
 							"pageNum":$("#startmonth").val(),
 							"pageSize":$("#endmonth").val()
 						},
@@ -265,7 +270,7 @@
 									var arrList = [tmpArray];
 
 									//============================//
-									alert("data="+data);
+									//alert("data="+data);
 									var oobj = new Array();
 									var adatetmp = new Array();
 									var agetmp = new Array();
@@ -306,11 +311,10 @@
 						},
 						success:function(medata){
 							//alert("Medata="+medata);
-
 							var idData = $.parseJSON(medata);
 							var idtotal = new Array();
-							$.each(idData,function(key,value){
-								idtotal[key] = value.idTotal;
+							$.each(idData,function(key,value){//(value.idTotal/value.ageTotal).toFixed(2);
+								idtotal[key] = (value.idTotal/value.ageTotal).toFixed(2);
 							});
 							$.ajax({
 								type:"GET",
@@ -347,7 +351,7 @@
 									var arrList = [tmpArray];
 
 									//============================//
-									alert("data="+data);
+								//	alert("data="+data);
 									var oobj = new Array();
 									var adatetmp = new Array();
 									var agetmp = new Array();
@@ -396,8 +400,8 @@
 			
 			var options = {
 			     chart: {
-			       title: '연령대별 차트',
-			       subtitle: 'in millions of dollars (USD)'
+			       title: '연령대별 차트'
+			       //,subtitle: 'in millions of dollars (WON)'
 			     },
 			     width: 900,
 			     height: 500

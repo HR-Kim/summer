@@ -13,7 +13,6 @@
             <li><a href="${CONTEXT}/accounts/doSelectListMonth.do?searchWord=<%=session.getAttribute("id")%>">
             		<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
             </a></li>
-              <li><a href="${CONTEXT}/agecompare/agecompare.jsp"></a>연령대 별 차트</li>
           </ul>
           <br>
           <h4>최저가 검색</h4>
