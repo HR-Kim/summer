@@ -57,24 +57,24 @@
 	
 	<input type="hidden"  name="id" id="id" value="${id}"/>
 	<input type="hidden"  name="searchDiv" id="searchDiv" />
-
-	연령대 선택 <br>
-	<input type="checkbox" id="chk_age1" name="chk_age" value="10대">10대
-	<input type="checkbox" id="chk_age2" name="chk_age" value="20대">20대
-	<input type="checkbox" id="chk_age3" name="chk_age" value="30대">30대
-	<input type="checkbox" id="chk_age4" name="chk_age" value="40대">40대
-	<input type="checkbox" id="chk_age5" name="chk_age" value="50대">50대
-	<input type="checkbox" id="chk_age6" name="chk_age" value="60대">60대
-	<input type="checkbox" id="chk_age7" name="chk_age" value="70대">70대
-	<input type="checkbox" id="chk_age8" name="chk_age" value="80대">80대
-	<input type="checkbox" id="chk_age9" name="chk_age" value="90대">90대
-	<input type="button" id="btnUnchk" value="전체 체크 해제" /><br/>
-	
-	기간: <input type="text" id="startmonth" value="" />
-	~ <input type="text" id="endmonth"  value=""/>
-	
-	<input type="button" id="btnSearch" value="조회" /><br><br>
+	<div class="form-group col-lg6 col-sm6">
+		연령대 선택 <br>
+		<input type="checkbox" id="chk_age1" name="chk_age" value="10대">10대
+		<input type="checkbox" id="chk_age2" name="chk_age" value="20대">20대
+		<input type="checkbox" id="chk_age3" name="chk_age" value="30대">30대
+		<input type="checkbox" id="chk_age4" name="chk_age" value="40대">40대
+		<input type="checkbox" id="chk_age5" name="chk_age" value="50대">50대
+		<input type="checkbox" id="chk_age6" name="chk_age" value="60대">60대
+		<input type="checkbox" id="chk_age7" name="chk_age" value="70대">70대
+		<input type="checkbox" id="chk_age8" name="chk_age" value="80대">80대
+		<input type="checkbox" id="chk_age9" name="chk_age" value="90대">90대
+		<input type="button" id="btnUnchk" class="btn btn-sm btn-success" value="전체 체크 해제" /><br/>
 		
+		기간: <input type="text" id="startmonth" value="" />
+		~ <input type="text" id="endmonth"  value=""/>
+		
+		<input type="button" id="btnSearch" class="btn btn-sm btn-success" value="조회" /><br><br>
+	</div>
 	<div id="curve_chart" style="width: 650px; height: 300px"></div>
 		
 	
@@ -211,9 +211,11 @@
 			 }
 			 if(count==0){
 				 alert("연령대를 체크해주세요.");
-			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null){
-				 alert("기간을 입력해주세요.");
-			 }else{
+			 }else if($("#startmonth").val()==null || $("#endmonth").val()==null
+					 || $("#startmonth").val()>=$("#endmonth").val()){
+				 alert("기간을 알맞게 입력해주세요.");
+			 }
+			 else{
 				 var searchList = count;
 				 
 				 for(var j=1; j<=9; j++){
