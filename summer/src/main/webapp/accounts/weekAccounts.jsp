@@ -226,7 +226,7 @@
 		
 	});
 			
-		function showWeekPopup() { window.open("${CONTEXT}/chart/chart2.jsp", "월 간 차트", "width=350, height=800, left=100, top=50"); }		
+		function showWeekPopup() { window.open("${CONTEXT}/chart/chart2.jsp", "월 간 차트", "width=380, height=800, left=100, top=50"); }		
 	
 		
 	</script>

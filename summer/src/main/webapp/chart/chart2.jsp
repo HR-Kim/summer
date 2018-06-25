@@ -72,7 +72,6 @@
 			</select>
 
 			<select name="sh_week" id="sh_week" onchange="javascript:changeWeekSelectOptions();" class="input-sm"></select>
-			
 			<input type="button" class="btn btn-sm" id="doMonth" value="보기" onclick="javascript:loadWeekData();">
 		</div>
 		

@@ -118,7 +118,7 @@
 		frm.submit();
 	}
 	
-	 function showMonthPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "월 간 차트", "width=350, height=800, left=100, top=50"); }
+	 function showMonthPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "월 간 차트", "width=350, height=700, left=100, top=50"); }
 	</script>
   </body>
 </html>
