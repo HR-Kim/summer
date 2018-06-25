@@ -87,7 +87,7 @@
         			<td class="text-left">${favoVO.goodName}</td>
         			<td class="text-left">${favoVO.entpName}</td>
         			<td class="text-center">${favoVO.goodNum}</td>
-        			<td class="text-right">${favoVO.goodPrice} 원</td>
+        			<td class="text-right"><fmt:formatNumber value="${favoVO.goodPrice}" pattern="#,###"/> 원</td>
         			<td class="text-left" style="display:none;">${favoVO.goodId}</td>
         			<td class="text-left" style="display:none;">${favoVO.entpId}</td>
         		</tr>
@@ -112,7 +112,7 @@
   	
   	<hr/>
   	<div class="text-right">
-  		<h3>총 합계 : ${favo.goodSum} 원</h3>
+  		<h3>총 합계 : <fmt:formatNumber value="${favo.goodSum}" pattern="#,###"/> 원</h3>
   	</div>
 </div>
 

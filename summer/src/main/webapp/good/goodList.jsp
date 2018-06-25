@@ -91,7 +91,7 @@
 		         		<tr>
 		         			<td class="text-center">${goodVO.no}</td>
 		         			<td class="text-left">${goodVO.goodName}</td>
-		         			<td class="text-right">${goodVO.goodPrice} 원</td>
+		         			<td class="text-right"><fmt:formatNumber value="${goodVO.goodPrice}" pattern="#,###"/> 원</td>
 		         			<td class="text-left" style="display:none;">${goodVO.goodId}</td>
 		         		</tr>
 	         		</c:forEach>
@@ -138,7 +138,7 @@
 			
 			var ano = tds.eq(3).text();
 			
-			alert(ano);
+			//alert(ano);
 			
 			var frm = document.frm;
 			frm.goodId.value = ano;

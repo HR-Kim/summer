@@ -98,9 +98,9 @@
        	</thead>
        	<tbody>
        		<tr>
-		         	<td class="text-center">${detailGood.minPrice} 원</td>
-		         	<td class="text-center">${detailGood.avgPrice} 원</td>
-		         	<td class="text-center">${detailGood.maxPrice} 원</td>
+		         	<td class="text-center"><fmt:formatNumber value="${detailGood.minPrice}" pattern="#,###"/> 원</td>
+		         	<td class="text-center"><fmt:formatNumber value="${detailGood.avgPrice}" pattern="#,###"/> 원</td>
+		         	<td class="text-center"><fmt:formatNumber value="${detailGood.maxPrice}" pattern="#,###"/> 원</td>
 		       </tr>
          	</tbody>
        </table>
@@ -252,7 +252,7 @@
                               'Error: Your browser doesn\'t support geolocation.');
       }
       
-      var entpid, entpname;
+//       var entpid, entpname;
       
    function doEntpSearch(){
 	   //alert($("#x").val());
@@ -278,19 +278,20 @@
        	
        	$.each(parseData , function(idx, val) {
 
-     			entpid = val[4];
-     			entpname = val[0];
+     			//var entpid = val[4];
+     			//var entpname = val[0];
      			
        		 $('#entpTable > tbody').append(
        				 "<tr>"
-       				 +"<td>" + val[0] +"&nbsp;&nbsp;"+ ((val[2] == 'Y') ? "<span class='badge badge-success' style='font-color: white;'>1+1</span>":"") +"&nbsp;&nbsp;"+ ((val[3] == 'Y') ? "<span class='badge badge-info'>할인</span>":"") +"</td>"
+       				 +"<td id='entpn'>" + val[0] +"&nbsp;&nbsp;"+ ((val[2] == 'Y') ? "<span class='badge badge-success' style='font-color: white;'>1+1</span>":"") +"&nbsp;&nbsp;"+ ((val[3] == 'Y') ? "<span class='badge badge-info'>할인</span>":"") +"</td>"
        				 +"<td class='text-right'>" + numberWithCommas(val[1]) + " 원</td>"
        				 +"<c:choose><c:when test='${userId ne null}'>"
-       				 +"<td class='text-center'><input type='button' class='btn btn-default' value='추가' onclick='javascript:doUpsert(entpid, entpname);'></td>"
+       				 +"<td class='text-center'><input type='button' class='btn btn-default' value='추가' onclick=javascript:doUpsert('"+val[4]+"','"+val[0]+"');></td>"
        				 +"</c:when></c:choose>"
-       				 +"<td class='text-left' style='display:none;'>"+val[4]+"</td>"
+       				 +"<td id='entpi' class='text-left' style='display:none;'>"+val[4]+"</td>"
        				 +"</tr>"
        				 );
+       		 	//alert("val[4]"+val[4]);
        		
        		}); 
            },
@@ -319,7 +320,8 @@
 		console.log('${detailGood.goodName}');
 		console.log(entpid);
 		console.log(entpname);
-		
+		alert(entpid);
+		alert(entpname);
 	$.ajax({
 	      	 type:"POST",
       url:"${CONTEXT}/favo/doUpsert.do",   
