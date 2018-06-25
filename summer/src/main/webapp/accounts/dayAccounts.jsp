@@ -354,7 +354,8 @@
 	      		                 dataType:"html",// JSON/html
 	      		                 async: false,
 	      		                 data:{
-	      		                    "ano" :ano
+	      		                    "ano" :ano,
+	      		                    	"id" : $("#searchWord").val()
 	      			                 },
 	      		                 success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
 	      		                	 console.log("data="+data); 
@@ -432,7 +433,8 @@
 	      			    	                dataType:"html",// JSON/html
 	      			    	                async: false,
 	      			    	                data:{ 
-	      			    							"ano"	:$("#ano").val()
+	      			    							"ano"	:$("#ano").val(),
+	      			    							"id": $("#searchWord").val()
 	      			    		                 },
 	      			    	                success: function(data){//통신이 성공적으로 이루어 졌을때 받을 함수
 	      			    	               	 console.log("data="+data); 

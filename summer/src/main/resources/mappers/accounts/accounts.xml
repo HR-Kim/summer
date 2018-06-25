@@ -96,7 +96,7 @@
 					,a.amount       
 					,a.memo             
 			FROM su_accounts a
-			WHERE a.ano=#{ano}
+			WHERE a.ano=#{ano} and a.id=#{id}
 		
 	</select>
 	
