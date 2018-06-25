@@ -8,10 +8,10 @@
 		<where>
 			<choose>
 				<when test="searchDiv == '10'">
-					su.id like #{searchWord} ||'%'
+					SB.id like #{searchWord} ||'%'
 				</when>
 				<when test="searchDiv == '20'">
-					su.name like #{searchWord} ||'%'
+					SB.name like #{searchWord} ||'%'
 				</when>
 				<otherwise></otherwise>
 			</choose>
