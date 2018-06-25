@@ -43,6 +43,7 @@
 				where id=#{searchWord}
 				group by substr(TO_CHAR(a_date, 'YYYY-MM-DD'),1,7))
 		where substr(yearMonth,1,4) = #{searchDiv}
+		order by yearMonth DESC
 	</select>
 
 	<select id="do_selectList" parameterType="SearchVO" resultType="Accounts">

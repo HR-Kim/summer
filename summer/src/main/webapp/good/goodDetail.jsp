@@ -320,8 +320,6 @@
 		console.log('${detailGood.goodName}');
 		console.log(entpid);
 		console.log(entpname);
-		alert(entpid);
-		alert(entpname);
 	$.ajax({
 	      	 type:"POST",
       url:"${CONTEXT}/favo/doUpsert.do",   
