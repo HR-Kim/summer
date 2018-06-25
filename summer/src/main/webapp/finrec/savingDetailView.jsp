@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String userId = (String)session.getAttribute("id");
+	
+	if(null == session.getAttribute("id")){
+		userId = null;
+	} else {
+		userId = session.getAttribute("id").toString();
+	}
+%>
+<c:set var="userId" value="<%=userId%>"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//Dth HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dth">
 
 <div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -43,13 +54,15 @@
 					기타 : ${outVO.etcNote}
                     </th>
                     </tr>
-                    
+                    <c:choose>
+	         			<c:when test="${userId ne null}">
                     <tr>
                     <th colspan="2">
                      	 <button type="submit" class="btn btn-primary btn-fw" >즐겨찾기에 추가</button>
                      	 </th>
                       </tr>
-                    
+                    </c:when>
+	         		</c:choose>
                     </tbody>
                     </table>
                     </div>

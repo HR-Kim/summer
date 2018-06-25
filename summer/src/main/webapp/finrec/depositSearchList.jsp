@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String userId = (String)session.getAttribute("id");
+	
+	if(null == session.getAttribute("id")){
+		userId = null;
+	} else {
+		userId = session.getAttribute("id").toString();
+	}
+%>
+<c:set var="userId" value="<%=userId%>"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -112,8 +123,7 @@
 		console.log("intrRateMin=" + intrRateMin);
 		console.log("intrRateMax=" + intrRateMax);
 
-		$
-				.ajax({
+		$.ajax({
 					type : "POST",
 					async : false,
 					url : "/summer/finrec/deposit/doSelectList.do",
@@ -147,8 +157,10 @@
 										+  '<input type="hidden" class = "id" name = "id" ></input>'
 										+ '<input type="hidden" name = "finPrdtCd" value="' + list[i].finPrdtCd + '"></input></form>'
 										+ '<button type="submit" class="btn btn-light btn-fw" onclick="javascript:depositDetail(\'f' +  list[i].finPrdtCd +   '\');">상세보기</button>'
-										+ '&nbsp; &nbsp; <button type="submit" class="btn btn-primary btn-fw" onclick="javascript:addFinFav(\'f' + list[i].finPrdtCd + '\');">즐겨찾기</button></td></tr>';
-										
+										+'<c:choose><c:when test="${userId ne null}">'
+										+ '&nbsp; &nbsp; <button type="submit" class="btn btn-primary btn-fw" onclick="javascript:addFinFav(\'f' + list[i].finPrdtCd + '\');">즐겨찾기</button>'
+										+'</c:when></c:choose>'
+										+"</td></tr>";
 							}
 							tableText = tableText + '</tbody></table>';
 							table.innerHTML = tableText;
