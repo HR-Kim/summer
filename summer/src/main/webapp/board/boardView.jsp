@@ -92,34 +92,6 @@
 		 
 		<!--// Button------------------------------------------ -->
 	</div>
-<div class="table-responsive container-fluid text-left">
-<!-- 댓글 리스트 -->
-<table  id="CommlistTable" class="table  table-striped table-bordered table-hover table-condensed">
-    			<c:choose>
-    			    <c:when test="${list2.size()>0}">
-    					<c:forEach  var="CommentVO"  items="${list2}" varStatus="theCount">
-    						<tr>
-    							<td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commNum}"/></td>     						    
-    						    <td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commRegId}"/></td>   						    
-    							<td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commRegDate}"/></td>
-    							<td class="text-center col-md-1 col-xs-12"><c:out value="${CommentVO.commContents}"/></td>
-    							<c:if test="${param.regId == CommentVO.commRegId}">
-    							<td class="text-center col-md-1 col-xs-12"><input type="button" class="btn btn-default btn-sm" title="<c:out value="${CommentVO.commNum}"/>" value="수정" id="update_comm_btn${theCount.count}" />  	
-									<input type="button" class="btn btn-default btn-sm"  title="<c:out value="${CommentVO.commNum}"/>" value="삭제" id="del_comm_btn${theCount.count}" />
-								</td>
-								</c:if>	
-    						</tr>
-    					</c:forEach>  
-    				</c:when>
-    				<c:otherwise>
-    					<tr>
-    						<td class="text-center col-md-1 col-xs-12" colspan="99">등록된 댓글이 없습니다.</td>
-    					</tr>
-    				</c:otherwise>
-    			</c:choose>
-    	</table> 
-<!--// 댓글 리스트 -->
-</div> 
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->

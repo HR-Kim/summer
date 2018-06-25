@@ -277,13 +277,6 @@
 
 		function showDayPopup() { window.open("${CONTEXT}/chart/chart.jsp", "일 간 차트", "width=350, height=800, left=100, top=50"); }
 		
-		//Null check
-		function isEmpty(value) {
-			if (!value) {
-				alert("값을 입력하세요.");
-				return true;
-			}
-		}
 		//리스트 조회
 		function doSelectList(){
 			var frm = document.frmSearch;
