@@ -1,4 +1,5 @@
 <!-- 일 별 화면 => 카테고리 별 파이 차트 + 카테고리 별 지출 리스트 --> 
+<%@page import="java.util.Date"%>
 <%@page import="com.summer.chart.dao.ChartDao"%>
 <%@page import="com.summer.chart.domain.Chart"%>
 <%@page import="org.slf4j.Logger"%>
@@ -12,6 +13,13 @@
 	log.debug("===========================");
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===========================");
+	String id;
+	
+	if(null == session.getAttribute("id")){
+		id = null;
+	} else {
+		id = session.getAttribute("id").toString();
+	}
 %>
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
@@ -39,7 +47,7 @@
 	</head>
 	<body>
 	<div>
-			<select id="year" name="year">
+			<select id="year" name="year" class="input-sm">
 				<c:forEach begin="0" end="10" var="result" step="1">
 					<option value="${2018 - result}"
 					<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
@@ -48,7 +56,7 @@
 			</select>
 			
 			 
-			<select id="month" name="month">
+			<select id="month" name="month" class="input-sm">
 				<c:forEach begin="1" end="12" var="result" step="1">
 					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
 					<c:if test="${result == 6}"> selected="selected"</c:if>>
@@ -57,10 +65,10 @@
 				</c:forEach>  
 			</select>
 			
-			<select id="day" name="day">
+			<select id="day" name="day" class="input-sm">
 				<c:forEach begin="1" end="31" var="result" step="1">
 					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
-					<c:if test="${result == 15}"> selected="selected"</c:if>>
+					<c:if test="${result == 26}"> selected="selected"</c:if>>
 					<fmt:formatNumber value="${result}" pattern="00"/>
 					</option>
 				</c:forEach>  
@@ -110,14 +118,14 @@
 		chart.draw(data, options);
 	}
 	
-	function loadDayData(){
+	function loadDayData(){	
 		$.ajax({	
 			type:"GET",
            	url:"doDay.do",   
            	dataType:"html",// JSON/html
            	async: false,
            	data:{ 
-           		"chartUserId":'a',
+           		"chartUserId":'${id}',
 					"year":$("#year").val(),
 					"month":$("#month").val(),
 					"day":$("#day").val()    

@@ -12,6 +12,14 @@
 	log.debug("===========================");
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===========================");
+	
+	String id;
+	
+	if(null == session.getAttribute("id")){
+		id = null;
+	} else {
+		id = session.getAttribute("id").toString();
+	}
 %>
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
@@ -39,7 +47,7 @@
 	
 	<body>
 			<div>
-				<select name="sh_year" id="sh_year" onchange="makeWeekSelectOptions();">
+				<select name="sh_year" id="sh_year" onchange="makeWeekSelectOptions();" class="input-sm">
 				<option value='2013'>2013년</option>
 				<option value='2014'>2014년</option>
 				<option value='2015'>2015년</option>
@@ -48,13 +56,13 @@
 				<option value='2018' selected='selected'>2018년</option>
 			</select>
 
-			<select name="sh_month" id="sh_month" onchange="makeWeekSelectOptions();">
+			<select name="sh_month" id="sh_month" onchange="makeWeekSelectOptions();" class="input-sm">
 				<option value='01'>01월</option>
 				<option value='02'>02월</option>
 				<option value='03'>03월</option>
 				<option value='04'>04월</option>
 				<option value='05'>05월</option>
-				<option value='06' selected='selected'>06월</option>
+				<option value='06'  selected='selected'>06월</option>
 				<option value='07'>07월</option>
 				<option value='08'>08월</option>
 				<option value='09'>09월</option>
@@ -63,9 +71,9 @@
 				<option value='12'>12월</option>
 			</select>
 
-			<select name="sh_week" id="sh_week" onchange="javascript:changeWeekSelectOptions();"></select>
+			<select name="sh_week" id="sh_week" onchange="javascript:changeWeekSelectOptions();" class="input-sm"></select>
 			
-			<button class="btn btn-sm" id="doMonth" onclick="javascript:loadWeekData();">보기</button>
+			<input type="button" class="btn btn-sm" id="doMonth" value="보기" onclick="javascript:loadWeekData();">
 		</div>
 		
 			
@@ -169,7 +177,7 @@
            	dataType:"html",// JSON/html
            	async: false,
            	data:{ 
-           		"chartUserId":'a',
+           		"chartUserId":'${id}',
 					"weekStart":$("#sh_week").val().substr(0,8),
 					"weekEnd":$("#sh_week").val().substr(9,17)
            		},
@@ -212,7 +220,12 @@
 		}); //--ajax
 	};
 		
-	window.onload = function(){ loadWeekData(); }
+	window.onload = function(){
+		setTimeout(function() {
+				loadWeekData();
+			}, 500);
+		makeWeekSelectOptions();
+	}
 	</script>
 </body>
 </html>

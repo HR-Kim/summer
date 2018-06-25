@@ -47,9 +47,9 @@
 	
 	   		<table class="table">
 	   			<tr>
-	   				<td class="text-left">
-	   					<div class="form-group col-lg6 col-sm6">
-							<select id="searchDiv" name="searchDiv">
+	   				<td style="padding-left:0; padding-right:0;">
+	   					<div class="form-group col-xs-12" style="padding:0">
+							<select id="searchDiv" name="searchDiv" class="form-control input-sm">
 					          <c:forEach begin="0" end="10" var="result" step="1">
 					           <option value="${2018 - result}"
 					           	<c:if test="${(2018 - result) == searchVO.searchDiv}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
@@ -58,9 +58,9 @@
 					        </select>
 	    						
 	    						<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
-	    						<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showMonthPopup();"/>
-	    						<input type="button" class="btn btn-sm btn-success" value="연령대 별 차트보기" onclick="showAgeMonthPopup();"/>
+	    						<input style="float:right;" type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showMonthPopup();"/>
 	   					</div>
+	   				</td>
 	   			</tr>
 	   		</table>
 	   	</form> 
@@ -119,7 +119,6 @@
 	}
 	
 	 function showMonthPopup() { window.open("${CONTEXT}/chart/chart3.jsp", "월 간 차트", "width=350, height=800, left=100, top=50"); }
-	 function showAgeMonthPopup() {window.open("${CONTEXT}/agecompare/agecompare.jsp", "연령대별 월 간 차트", "width=950, height=650, left=100, top=50"); }
 	</script>
   </body>
 </html>

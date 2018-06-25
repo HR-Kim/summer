@@ -54,8 +54,8 @@
 		<input type="hidden" name="searchWord" id="searchWord" value="<%=session.getAttribute("id")%>"/>
 	   	<table class="table">
 	   			<tr>
-	   				<td class="text-left">
-	   					<div class="form-group col-lg6 col-sm6">
+	   				<td style="padding-left:0; padding-right:0;">
+	   					<div class="form-group col-xs-12" style="padding:0">
 							<select id="searchYear" name="searchYear" class="form-control input-sm">
 					          <c:forEach begin="0" end="10" var="result" step="1">
 					           <option value="${2018 - result}"
@@ -75,13 +75,19 @@
 					        
 					        <select name="sh_week" id="sh_week" class="form-control input-sm">
 								</select>
+								
+							<input type="button" class="btn btn-sm btn-success" id="doSelectWeek" value="검색"/>
+   							<input  style="float:right;" type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showWeekPopup();"/>		
 	   					</div>
+	   				</td>
 	   			</tr>
-   		</table>
-   	</form> 
+   		</table> 
+   		
+   	</form>
+   	   		
+		
    	
-	<button class="btn btn-sm btn-success" id="doSelectWeek">검색</button>
-	<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showWeekPopup();"/>	
+
 
 
    	<!--// Search --------------------------------------------------------->

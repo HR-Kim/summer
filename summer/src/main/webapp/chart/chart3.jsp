@@ -12,8 +12,14 @@
 	log.debug("===========================");
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===========================");
+
+	String id;
 	
-	Chart chartVO = new Chart();
+	if(null == session.getAttribute("id")){
+		id = null;
+	} else {
+		id = session.getAttribute("id").toString();
+	}
 %>
 <%-- CONTEXT --%>
 <c:set var="CONTEXT" value="${pageContext.request.contextPath}"/>
@@ -45,7 +51,7 @@
 		</form>
 	
 		<div>
-			<select id="year" name="year">
+			<select id="year" name="year" class="input-sm">
 				<c:forEach begin="0" end="10" var="result" step="1">
 					<option value="${2018 - result}"
 					<c:if test="${(2018 - result) == chartVO.year}"> selected="selected"</c:if>><c:out value="${2018 - result}" />
@@ -54,7 +60,7 @@
 			</select>
 			
 			 
-			<select id="month" name="month">
+			<select id="month" name="month" class="input-sm">
 				<c:forEach begin="1" end="12" var="result" step="1">
 					<option value=<fmt:formatNumber value="${result}" pattern="00"/>
 					<c:if test="${result == 6}"> selected="selected"</c:if>>
@@ -67,9 +73,9 @@
 		</div>
 
 		
-		<div id="monthPieChart" style="width: 400px; height: 300px;"></div>
+		<div id="monthPieChart" style="width: 340px; height: 300px;"></div>
 		
-		<div id="monthBarChart" style="width: 400px; height: 300px;"></div>
+		<div id="monthBarChart" style="width: 340px; height: 300px;"></div>
 	
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -101,7 +107,7 @@
 		var data = new google.visualization.arrayToDataTable(arrList);
 		
 		var options = {
-			width: 800,
+			width: 340,
 			legend: { position: 'none' },
         	chart: {
 				title: '',
@@ -126,7 +132,7 @@
           	dataType:"html",// JSON/html
           	async: false,
           	data:{ 
-           		"chartUserId":'a',
+           		"chartUserId":'yuyuyuyu',
 				"year":$("#year").val(),
 				"month":$("#month").val()
            	},
@@ -156,7 +162,7 @@
             		dataType:"html",// JSON/html
             		async: false,
             		data:{ 
-            			"chartUserId":'a',
+            			"chartUserId":'${id}',
         				"year":$("#year").val()
             		},
             		success: function(data){		//통신이 성공적으로 이루어 졌을 때 받을 함수	

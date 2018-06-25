@@ -152,12 +152,12 @@
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frmSearch" id="frmSearch" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
-		<input type="hidden" name="searchWord" id="searchWord" value="<%=session.getAttribute("id")%>"/>
-		
+
+
    		<table class="table">
    			<tr>
-   				<td class="text-left">
-   					<div class="form-group col-lg6 col-sm6">
+   				<td style="padding-left:0; padding-right:0;">
+   					<div class="form-group col-xs-12" style="padding:0">
 						<c:choose>
 			        		<c:when test="${list1.size()>0 }">
 					        		<select name="searchTrade" id="searchTrade" class="form-control input-sm">
@@ -183,11 +183,12 @@
    						</select>
     					
     					<button class="btn btn-sm btn-success" onclick="javascript:doSelectList();">검색</button>
-						<input type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showDayPopup();"/>	
+						<input style="float:right;" type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showDayPopup();"/>	
    					</div>
+   				</td>
    			</tr>
    		</table>
-   	</form>
+   	</form> 
 
    	<!--// Search --------------------------------------------------------->
    
@@ -280,7 +281,6 @@
 		function doSelectList(){
 			var frm = document.frmSearch;
 			frm.action = "doSelectList.do";
-			
 			frm.submit();
 		}
 		
@@ -385,7 +385,7 @@
 	      					                dataType:"html",// JSON/html
 	      					                async: false,
 	      					                data:{ 
-	      					                		"id": 'a',
+	      					                		"id": "a",
 	      					                		"ano" : ano,
 	      											"categoryId"			:$("#searchCategory option:selected").val(),
 	      											"aDate"		:$("#aDate").val(),
@@ -541,7 +541,7 @@
 		                dataType:"html",// JSON/html
 		                async: false,
 		                data:{ 
-		                		"id": 'a',
+		                		"id": "a",
 								"categoryId"			:$("#searchCategory").val(),
 								"aDate"		:$("#aDate").val(),
 								"item"		:$("#item").val(),
