@@ -136,13 +136,13 @@
 							</div>		
 			    		</div>
 					</div>
-					
+				</form>
 						<div class="col-lg-10 form-group" id="submitBtn" align="right">
 				    		
 				    			<button class="btn btn-sm"  class="btn btn-sm btn-default" id="doUpsert">등록</button>
 				    			
 			    		</div> 
-				</form>
+				
     		</div>
     	</div>
    	</div>
