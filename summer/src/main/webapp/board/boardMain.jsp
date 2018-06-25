@@ -42,29 +42,32 @@
 
 <%-- CONTEXT --%>
 <c:set var ="CONTEXT" value="${pageContext.request.contextPath}" ></c:set>
-<!DOCTYPE html>
-
 
 	<div class="container">
+	<br>
+	<br>
+	<br>
 		<!-- Title-------------------------------------------- -->
 		 <h3>자유게시판</h3>
+		 <hr>
 		<!--// Title------------------------------------------ -->
+		<br>
 		<div class="clearfix pull-rigth">
-		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/board/boardWrite.jsp'">글쓰기</button>
+		 	<button type="button" class="btn btn-default" onclick="location.href='${CONTEXT}/board/boardWrite.do'">글쓰기</button>
 		</div>
-		 
+		 <br>
 		<!-- List--------------------------------------------  -->
 		<div class="table-responsive">
 			<table id="listTable" class="table  table-striped table-bordered table-hover">
 				<thead class="bg-primary">
 					<tr>
 						<th class="text-center">글번호</th>
-						<th class="text-center">구분</th>
+						<th class="text-center" style="display:none;">구분</th>
 						<th class="text-center">제목</th>
 						<th class="text-center">작성자</th>
 						<th class="text-center">등록일</th>
-						<th class="text-center">조회수</th>
-						<th class="text-center">좋아용</th>
+						<th class="text-center" style="display:none;">조회수</th>
+						<th class="text-center" style="display:none;">좋아용</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,12 +76,12 @@
 							<c:forEach var="board" items="${list}">
 								<tr>
 									<td class="text-center">${board.num}</td>
-									<td class="text-left">${board.category}</td>
+									<td class="text-left" style="display:none;">${board.category}</td>
 									<td class="text-left">${board.title}</td>
 									<td class="text-left">${board.id}</td>
 									<td class="text-right">${board.dateReg}</td>
-									<td class="text-left">${board.clickCnt}</td>
-									<td class="text-right">${board.likeCnt}</td>
+									<td class="text-left" style="display:none;">${board.clickCnt}</td>
+									<td class="text-right" style="display:none;">${board.likeCnt}</td>
 								</tr>
 							</c:forEach>
 						</c:when>
@@ -115,7 +118,7 @@
 									<c:if test="${searchVO.searchDiv == '20'}">selected='selected'</c:if>>이름</option>
 							</select> 
 							<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}" />
-						 	<button class="btn btn-success btn-sm" id="do_search" onclick="doSearch();">검색</button>
+						 	<button class="btn btn-default btn-sm" id="do_search" onclick="doSearch();">검색</button>
 						</div>
 					</td>
 				</tr>

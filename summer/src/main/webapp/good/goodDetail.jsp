@@ -286,7 +286,7 @@
        				 +"<td>" + val[0] +"&nbsp;&nbsp;"+ ((val[2] == 'Y') ? "<span class='badge badge-success' style='font-color: white;'>1+1</span>":"") +"&nbsp;&nbsp;"+ ((val[3] == 'Y') ? "<span class='badge badge-info'>할인</span>":"") +"</td>"
        				 +"<td class='text-right'>" + numberWithCommas(val[1]) + " 원</td>"
        				 +"<c:choose><c:when test='${userId ne null}'>"
-       				 +"<td class='text-center'><input type='button' value='추가' onclick='javascript:doUpsert(entpid, entpname);'></td>"
+       				 +"<td class='text-center'><input type='button' class='btn btn-default' value='추가' onclick='javascript:doUpsert(entpid, entpname);'></td>"
        				 +"</c:when></c:choose>"
        				 +"<td class='text-left' style='display:none;'>"+val[4]+"</td>"
        				 +"</tr>"

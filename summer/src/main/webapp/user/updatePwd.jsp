@@ -100,7 +100,7 @@
 						if (parseData.msgId == "1") {
 							alert(parseData.message);
 // 							var frm = document.frm;
-// 							frm.action = '${CONTEXT}'+"/hello.do";
+// 							frm.action = '${CONTEXT}'+"/user/infoUser.do";
 // 							frm.submit();	
 						} else {
 							alert(parseData.message);

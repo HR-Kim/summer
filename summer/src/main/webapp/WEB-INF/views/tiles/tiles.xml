@@ -144,10 +144,28 @@
 		<put-attribute name  = "body"   value = "/accounts/monthAccounts.jsp" />
 	</definition>
 	
-			<!--  FinRec-Saving -->
+	<!--  board/boardMain -->
 	<definition name = "board/boardMain"  extends = "base-definition">
-		<put-attribute name  = "title"  value = "적금목록" />
+		<put-attribute name  = "title"  value = "게시판" />
 		<put-attribute name  = "body"   value = "/board/boardMain.jsp" />
+	</definition>
+	
+	<!--  board/boardWrite -->
+	<definition name = "board/boardWrite"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "게시판 작성" />
+		<put-attribute name  = "body"   value = "/board/boardWrite.jsp" />
+	</definition>
+	
+	<!--  board/boardView -->
+	<definition name = "board/boardView"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "게시판 상세" />
+		<put-attribute name  = "body"   value = "/board/boardView.jsp" />
+	</definition>
+	
+		<!--  board/boardUpdate -->
+	<definition name = "board/boardUpdate"  extends = "base-definition">
+		<put-attribute name  = "title"  value = "게시판 수정" />
+		<put-attribute name  = "body"   value = "/board/boardUpdate.jsp" />
 	</definition>
 	
 </tiles-definitions>

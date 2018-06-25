@@ -169,6 +169,12 @@ public class BoardController {
 //		return json;
 	}
 	
+	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
+	public String infoUser() {
+		return "board/boardWrite";
+		
+	}
+	
 	
 	/**
 	 * 단건 삭제

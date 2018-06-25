@@ -19,11 +19,6 @@
 		 <h3>회원정보수정</h3>
 		<!--// Title------------------------------------------ -->
 		
-		<!-- Button-------------------------------------------- -->
-		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_add">등록</button>
-		 </div>
-		<!--// Button------------------------------------------ -->
 
 		<!-- Input Form--------------------------------------- -->
 		<div class="container">
@@ -125,6 +120,9 @@
 						
 						if (parseData.msgId == "1") {
 							alert(parseData.message);
+// 							var frm = document.frm;
+// 							frm.action = '${CONTEXT}'+"/user/infoUser.do";
+// 							frm.submit();
 						} else {
 							alert(parseData.message);
 						}
