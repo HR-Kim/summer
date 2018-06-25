@@ -56,9 +56,9 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/login.do'">로그인</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/signUp.do'">회원가입</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/findPw.do'">비밀번호 찾기</button>
+		 	<button class="btn btn-default btn-sm" onclick="location.href='${CONTEXT}/user/login.do'">로그인</button>
+		 	<button class="btn btn-default btn-sm" onclick="location.href='${CONTEXT}/user/signUp.do'">회원가입</button>
+		 	<button class="btn btn-default btn-sm" onclick="location.href='${CONTEXT}/user/findPw.do'">비밀번호 찾기</button>
 		 </div>
 		<!--// Button------------------------------------------ -->		
 		

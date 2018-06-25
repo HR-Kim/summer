@@ -12,6 +12,14 @@
 	log.debug("this.getClass()="+this.getClass());
 	log.debug("===================================");
 	
+	String userId = (String)session.getAttribute("id");
+	
+	if(null == session.getAttribute("id")){
+		userId = null;
+	} else {
+		userId = session.getAttribute("id").toString();
+	}
+	
 	String pageSize = "10";//페이지 사이즈
 	String pageNum  = "1";//현재 페이지
 	String searchWord ="";//검색어
@@ -42,7 +50,7 @@
 
 <%-- CONTEXT --%>
 <c:set var ="CONTEXT" value="${pageContext.request.contextPath}" ></c:set>
-
+<c:set var="userId" value="<%=userId%>"></c:set>
 	<div class="container">
 	<br>
 	<br>
@@ -53,7 +61,11 @@
 		<!--// Title------------------------------------------ -->
 		<br>
 		<div class="clearfix pull-rigth">
+		<c:choose>
+	      	<c:when test="${userId ne null}">
 		 	<button type="button" class="btn btn-default" onclick="location.href='${CONTEXT}/board/boardWrite.do'">글쓰기</button>
+		 	</c:when>
+		</c:choose>
 		</div>
 		 <br>
 		<!-- List--------------------------------------------  -->

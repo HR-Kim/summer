@@ -56,8 +56,8 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_findPw">확인</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/user/login.do'">취소</button>
+		 	<button class="btn btn-default btn-sm" id="do_findPw">확인</button>
+		 	<button class="btn btn-default btn-sm" onclick="location.href='${CONTEXT}/user/login.do'">취소</button>
 		 </div>
 		<!--// Button------------------------------------------ -->		
 		

@@ -70,8 +70,8 @@
 		
 		<!-- Button-------------------------------------------- -->
 		 <div class="form-inline pull-right">
-		 	<button class="btn btn-success btn-sm" id="do_update">수정</button>
-		 	<button class="btn btn-success btn-sm" onclick="location.href='${CONTEXT}/hello.do'">취소</button>
+		 	<button class="btn btn-default btn-sm" id="do_update">수정</button>
+		 	<button class="btn btn-default btn-sm" onclick="location.href='${CONTEXT}/hello.do'">취소</button>
 		 </div>
 		<!--// Button------------------------------------------ -->
 		

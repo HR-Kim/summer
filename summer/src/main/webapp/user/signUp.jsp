@@ -112,6 +112,8 @@
 		<!--// Input Form------------------------------------- -->
 		
 		<!-- Button-------------------------------------------- -->
+		<br>
+		<br>
 		 <div class="clearfix">
 		 	<button type="submit" id="signupbtn" class="signupbtn" disabled="disabled">등록</button>
 		 	<button type="button" class="cancelbtn" onclick="location.href='${CONTEXT}/user/login.do'">취소</button>

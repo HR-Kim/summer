@@ -46,7 +46,7 @@
 			<div class="col-lg-12"></div>
 			<div class="panel panel-default"></div>
 			<form class="form-horizontal" name="frm" id="frm"
-				method="post">
+				method="get">
 				<div class="form-group">
 					<label class="col-lg-4 control-label" style="display:none;">구분</label>
 					<div class="col-lg-8">
@@ -58,8 +58,8 @@
 				<div class="form-group">
 					<label class="col-lg-4 control-label">제목</label>
 					<div class="col-lg-8">
-						<input type="text" name="title" id="title"
-							class="form-control input-sm" value="${Board.title}" maxlength="20" />
+						<input type="text" name="title" id="title" disabled="disabled"
+							class="form-control input-sm" value="${Board.title}" maxlength="20" style="background-color:white"/>
 					</div>
 				</div>
 				
@@ -67,14 +67,14 @@
 					<label class="col-lg-4 control-label">작성자</label>
 					<div class="col-lg-8">
 						<input type="text" name="id" id="id" disabled="disabled"
-							class="form-control input-sm" value="${Board.id}" maxlength="200" />
+							class="form-control input-sm" value="${Board.id}" maxlength="200" style="background-color:white"/>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-lg-4 control-label">글내용</label>
 					<div class="col-lg-8">
-						<textarea class="form-control" id="content" name="content"  rows="15" >${Board.content}</textarea>
+						<textarea readonly class="form-control" id="content" name="content"  rows="15" style="background-color:white">${Board.content}</textarea>
 					</div>
 				</div>
 			</form>
@@ -199,7 +199,7 @@
 						if (parseData.msgId == "1") {
 							alert(parseData.message);
 							
-							var frm = document.frmselect;
+							var frm = document.frm;
 							frm.action = '${CONTEXT}'+"/board/do_selectList.do";
 							frm.submit();	
 							

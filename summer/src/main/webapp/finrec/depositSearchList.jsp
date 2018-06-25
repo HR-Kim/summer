@@ -33,7 +33,7 @@
 				name="intrRateMax" id="intrRateMax" maxlength="5" />
 	</form>
 	<p>
-		<button id="search" type="submit" class="btn btn-success mr-2"
+		<button id="search" type="submit" class="btn btn-default mr-2"
 			onclick="javascript:depositList(1);">검색</button>
 </div>
 
