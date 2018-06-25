@@ -7,10 +7,10 @@
 			<h4>내 가계부</h4>
 			<br>
           <ul class="nav nav-sidebar">
-            <li><a href="${CONTEXT}/accounts/doSelectList.do?searchWord=<%=session.getAttribute("id")%>">일간 <span class="sr-only">(current)</span></a></li>
-            <li><a href="${CONTEXT}/accounts/doWeek.do?searchWord=<%=session.getAttribute("id")%>">주간
+            <li><a href="${CONTEXT}/accounts/dayLoginCheck.jsp">일간 <span class="sr-only">(current)</span></a></li>
+            <li><a href="${CONTEXT}/accounts/weekLoginCheck.jsp">주간
             	</a></li>
-            <li><a href="${CONTEXT}/accounts/doSelectListMonth.do?searchWord=<%=session.getAttribute("id")%>">
+            <li><a href="${CONTEXT}/accounts/monthLoginCheck.jsp">
             		<input type="hidden" id="searchDiv" name="searchDiv" value="2018"/>월간
             </a></li>
           </ul>
