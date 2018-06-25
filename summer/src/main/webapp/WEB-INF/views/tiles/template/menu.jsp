@@ -4,7 +4,7 @@
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 <div class="col-sm-3 col-md-2 sidebar">
-			<h4>내 가계부</h4>
+			<h4>나의 가계부</h4>
 			<br>
           <ul class="nav nav-sidebar">
             <li><a href="${CONTEXT}/accounts/dayLoginCheck.jsp">일간 <span class="sr-only">(current)</span></a></li>
