@@ -15,6 +15,15 @@
 
 <div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                   <h2>정기예금 상세</h2>
+                  
+                   <!--  hidden -->
+      					<input type="hidden" id = "userId" value = "<%=session.getAttribute("id")%>"/>	  
+   					  <form id="f${outVO.finPrdtCd}" method="get">
+   					  	<input type="hidden" class = "id" name = "id" />
+   					  	<input type="hidden" name = "finPrdtCd" value="${outVO.finPrdtCd}"/>
+   					  	</form>
+   					  	<!-- hidden-->
+   					  	
    
                   <div class="table-responsive" id = "searchResult">
                     <table class="table table-striped table-bordered table-hover">
@@ -55,7 +64,7 @@
 	         			<c:when test="${userId ne null}">
                     <tr>
                     <th colspan="2">
-                     	 <button type="submit" class="btn btn-primary btn-fw" >즐겨찾기에 추가</button>
+                     	 < <button type="submit" class="btn btn-primary btn-fw" onclick="javascript:addFinFav('f${outVO.finPrdtCd}');">즐겨찾기에 추가</button>
                      	 </th>
                       </tr>
                       </c:when>
@@ -68,3 +77,36 @@
 
                   
 </div>
+
+<script type="text/javascript">
+
+var isEmpty = function(value) {
+	if (value == ""
+			|| value == null
+			|| value == undefined
+			|| (value != null && typeof value == "object" && !Object
+					.keys(value).length)) {
+		return true
+	} else {
+		return false;
+	}
+}
+
+
+function addFinFav(finNo){
+	var userId = $('#userId').val();
+	console.log('userId='+userId);
+	console.log(isEmpty(userId));
+	if((isEmpty(userId))) {
+		alert('로그인을 먼저 해주세요');
+	}	
+	else {
+		console.log('로그인했어요');
+		var frm = document.getElementById(finNo);
+		frm.action = "/summer/finfavs/doAdd.do";
+		$('.id').val(userId);
+		console.log('id='+$('.id').val());
+		frm.submit();
+	} 	
+}
+</script>
