@@ -57,8 +57,8 @@
 					          </c:forEach>                          
 					        </select>
 	    						
-	    						<button class="btn btn-sm btn-success" onclick="javascript:doSelectListMonth();">검색</button>
-	    						<input style="float:right;" type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showMonthPopup();"/>
+	    						<button class="btn btn-sm btn-default" onclick="javascript:doSelectListMonth();">검색</button>
+	    						<input style="float:right;" type="button" class="btn btn-sm btn-default" value="차트보기" onclick="showMonthPopup();"/>
 	   					</div>
 	   				</td>
 	   			</tr>

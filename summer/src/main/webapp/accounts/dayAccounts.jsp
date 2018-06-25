@@ -69,8 +69,8 @@
   <!-- Button ----------------------------------------------------------->
     
    <div class="form-inline pull-right">
-		<button class="btn btn-success btn-md" id="expenses" name="plus" value="10">+지출</button>
-   		<button class="btn btn-success btn-md" id="incomes" name="plus" value="20">+수입</button>
+		<button class="btn btn-default btn-md" id="expenses" name="plus" value="10">+지출</button>
+   		<button class="btn btn-default btn-md" id="incomes" name="plus" value="20">+수입</button>
    		<br/>
    </div>
    <!--// Button --------------------------------------------------------->
@@ -139,7 +139,7 @@
 					
 						<div class="col-lg-10 form-group" id="submitBtn" align="right">
 				    		
-				    			<button class="btn btn-sm"  class="btn btn-sm btn-success" id="doUpsert">등록</button>
+				    			<button class="btn btn-sm"  class="btn btn-sm btn-default" id="doUpsert">등록</button>
 				    			
 			    		</div> 
 				</form>
@@ -152,7 +152,7 @@
    <!-- Search ----------------------------------------------------------->
    	<form class="form-inline" name="frmSearch" id="frmSearch" method="get">
    		<input type="hidden" name="pageNum" id="pageNum" value="${searchVO.pageNum}"/>
-
+		<input type="hidden" name="searchWord" id="searchWord" value="<%=session.getAttribute("id")%>"/>
 
    		<table class="table">
    			<tr>
@@ -182,8 +182,8 @@
    							>100</option>
    						</select>
     					
-    					<button class="btn btn-sm btn-success" onclick="javascript:doSelectList();">검색</button>
-						<input style="float:right;" type="button" class="btn btn-sm btn-success" value="차트보기" onclick="showDayPopup();"/>	
+    					<button class="btn btn-sm btn-default" onclick="javascript:doSelectList();">검색</button>
+						<input style="float:right;" type="button" class="btn btn-sm btn-default" value="차트보기" onclick="showDayPopup();"/>	
    					</div>
    				</td>
    			</tr>
@@ -280,7 +280,9 @@
 		//리스트 조회
 		function doSelectList(){
 			var frm = document.frmSearch;
+			
 			frm.action = "doSelectList.do";
+			
 			frm.submit();
 		}
 		
@@ -385,7 +387,7 @@
 	      					                dataType:"html",// JSON/html
 	      					                async: false,
 	      					                data:{ 
-	      					                		"id": "a",
+	      					                		"id": $("#searchWord").val(),
 	      					                		"ano" : ano,
 	      											"categoryId"			:$("#searchCategory option:selected").val(),
 	      											"aDate"		:$("#aDate").val(),
@@ -541,7 +543,7 @@
 		                dataType:"html",// JSON/html
 		                async: false,
 		                data:{ 
-		                		"id": "a",
+		                		"id": $("#searchWord").val(),
 								"categoryId"			:$("#searchCategory").val(),
 								"aDate"		:$("#aDate").val(),
 								"item"		:$("#item").val(),
