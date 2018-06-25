@@ -23,8 +23,8 @@
 		from(
 		    select TRUNC(a_date,'iw') as a_date
 		    	, TRUNC(a_date,'iw') + 6 as endDate
-		        ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
-		        , sum(case when trade_id='10' then amount else 0 end) AS sumInc
+		        ,  sum(case when trade_id='10' then amount else 0 end) AS sumExp
+		        , sum(case when trade_id='20' then amount else 0 end) AS sumInc
 		    from su_accounts
 		    where id=#{searchWord}
 		    group by TRUNC(a_date,'iw')
@@ -37,8 +37,8 @@
 		select substr(yearMonth,6,2) as a_date ,sumExp,sumInc,(NVL(sumInc,0) - NVL(sumExp,0)) as sumTotal
 		from(
 				select substr(TO_CHAR(a_date, 'YYYY-MM-DD'),1,7) as yearMonth
-				    ,  sum(case when trade_id='20' then amount else 0 end) AS sumExp
-				    , sum(case when trade_id='10' then amount else 0 end) AS sumInc
+				    ,  sum(case when trade_id='10' then amount else 0 end) AS sumExp
+				    , sum(case when trade_id='20' then amount else 0 end) AS sumInc
 				from su_accounts
 				where id=#{searchWord}
 				group by substr(TO_CHAR(a_date, 'YYYY-MM-DD'),1,7))
