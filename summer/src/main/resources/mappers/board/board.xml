@@ -11,7 +11,7 @@
 					SB.id like #{searchWord} ||'%'
 				</when>
 				<when test="searchDiv == '20'">
-					SB.name like #{searchWord} ||'%'
+					SB.TITLE like #{searchWord} ||'%'
 				</when>
 				<otherwise></otherwise>
 			</choose>

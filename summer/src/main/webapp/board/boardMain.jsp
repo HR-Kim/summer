@@ -127,7 +127,7 @@
 								<option value="10"
 									<c:if test="${searchVO.searchDiv == '10'}">selected='selected'</c:if>>ID</option>
 								<option value="20"
-									<c:if test="${searchVO.searchDiv == '20'}">selected='selected'</c:if>>이름</option>
+									<c:if test="${searchVO.searchDiv == '20'}">selected='selected'</c:if>>글제목</option>
 							</select> 
 							<input type="text" class="form-control input-sm" name="searchWord" id="searchWord" value="${searchVO.searchWord}" />
 						 	<button class="btn btn-default btn-sm" id="do_search" onclick="doSearch();">검색</button>
