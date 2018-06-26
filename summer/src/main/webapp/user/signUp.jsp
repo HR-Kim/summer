@@ -15,6 +15,9 @@
 
 <%-- CONTEXT --%>
 <c:set var ="CONTEXT" value="${pageContext.request.contextPath}" ></c:set>
+<br>
+<br>
+<br>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
 		 <h3>회원가입</h3>

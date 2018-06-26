@@ -4,6 +4,9 @@
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
 <!-- <div class="col-sm-3 col-md-2 sidebar"> -->
+<br>
+<br>
+<br>
 			<h4>나의 가계부</h4>
 			<br>
           <ul class="nav nav-sidebar">

@@ -12,8 +12,10 @@
 %>
 <c:set var="userId" value="<%=userId%>"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//Dth HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dth">
-
-<div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<br>
+<br>
+<br>
+<div class="container">
                   <h2>적금 상세</h2>
                   <!--  hidden -->
       					<input type="hidden" id = "userId" value = "<%=session.getAttribute("id")%>"/>	  

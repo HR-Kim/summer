@@ -8,7 +8,7 @@
 <!--     Main Style -->
 <!--     <link href="./resources/css/style.css" rel="stylesheet"> -->
 <!-- <div class="col-sn-9 col-sm-offset-2 col-md-10 col-md offset-1 main"> -->
-  <div id="myCarousel" class="carousel slide" data-ride="carousel" style="padding-left:0; padding-right:0;">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

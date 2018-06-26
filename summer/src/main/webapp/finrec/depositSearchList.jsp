@@ -20,10 +20,12 @@
 	href="/summer/finrec/paging/simplePagination.css" />
 <script type="text/javascript"
 	src="/summer/finrec/paging/jquery.simplePagination.js"></script>
+<br>
+<br>
+<br>
 
 
-
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="container">
 <div class = "form-inline pull-left">
 	<h3>정기예금 검색</h3>
 

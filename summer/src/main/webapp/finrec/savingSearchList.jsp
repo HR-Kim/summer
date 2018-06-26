@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>\
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String userId = (String)session.getAttribute("id");
@@ -20,10 +20,10 @@
 	href="/summer/finrec/paging/simplePagination.css" />
 <script type="text/javascript"
 	src="/summer/finrec/paging/jquery.simplePagination.js"></script>
-
-
-
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<br>
+<br>
+<br>
+<div class="container">
 <div class = "form-inline pull-left">
 	<h3>적금 검색</h3>
 

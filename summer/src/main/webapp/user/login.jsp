@@ -14,6 +14,9 @@
 
 <%-- CONTEXT --%>
 <c:set var ="CONTEXT" value="${pageContext.request.contextPath}" ></c:set>
+<br>
+<br>
+<br>
 	<div class="container">
 		<!-- Title-------------------------------------------- -->
 		 <h3>로그인</h3>
@@ -53,7 +56,7 @@
         </table>
     </form>
 		<!--// Input Form------------------------------------- -->
-		
+		</div>
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="${CONTEXT}/resources/js/jquery-1.12.4.js"></script>
