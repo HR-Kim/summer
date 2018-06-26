@@ -139,7 +139,7 @@
 				</form>
 						<div class="col-lg-10 form-group" id="submitBtn" align="right">
 				    		
-				    			<button class="btn btn-sm"  class="btn btn-sm btn-default" id="doUpsert">등록</button>
+				    			<button class="btn btn-default btn-sm" id="doUpsert">등록</button>
 				    			
 			    		</div> 
 				
@@ -343,7 +343,7 @@
 	                   		});
 	        				
 	        				$('#submitBtn > #doDelete').remove();
-	        				$('#submitBtn').append('<button class="btn btn-sm" id="doDelete">삭제</button>');
+	        				$('#submitBtn').append('<button class="btn btn-default btn-sm" id="doDelete">삭제</button>');
 	        				
 	        				
 	          			  if(false==confirm("조회 하시겠습니까?"))return;

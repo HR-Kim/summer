@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <button type="button" id="do_login">로그인</button>
+                    <button type="button"  class="btn btn-default btn-sm" id="do_login">로그인</button>
                 <c:if test="${msg == 'failure'}">
                     <div style="color: red">
                         아이디 또는 비밀번호가 일치하지 않습니다.
