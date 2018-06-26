@@ -8,6 +8,9 @@
 <!--     Main Style -->
 <!--     <link href="./resources/css/style.css" rel="stylesheet"> -->
 <!-- <div class="col-sn-9 col-sm-offset-2 col-md-10 col-md offset-1 main"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
