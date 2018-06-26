@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--CONTEXT --%>
 <c:set var = "CONTEXT"  value = "${pageContext.request.contextPath}"></c:set>
-<div class="col-sm-3 col-md-2 sidebar">
+<!-- <div class="col-sm-3 col-md-2 sidebar"> -->
 			<h4>나의 가계부</h4>
 			<br>
           <ul class="nav nav-sidebar">
@@ -36,4 +36,4 @@
             <li><a href="${CONTEXT}/board/do_selectList.do">자유게시판</a></li>
           </ul>
           
-</div>
+<!-- </div> -->

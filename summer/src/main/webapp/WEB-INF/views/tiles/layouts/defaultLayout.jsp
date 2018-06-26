@@ -20,16 +20,20 @@
 <title>***<tiles:getAsString name="title"/>***</title>
 </head>
 <body>
-<div class="container-fluid">
+<!-- <div class="container-fluid"> -->
 
-<tiles:insertAttribute name = "header" />
-	<div class="row">
-		<tiles:insertAttribute name = "menu" />
-		<div class="content-wrapper">
-        	<tiles:insertAttribute name = "body" />
-		</div>
-	</div> <!--  row row-offcanvas ends -->
-</div> <!--  container-scroller ends -->
+	<tiles:insertAttribute name = "header" />
+<!-- 	</div> -->
+<!-- 	<div class="row"> -->
+	<div class="col-sm-3 col-md-2 content-wrapper">
+	<tiles:insertAttribute name = "menu" />
+	</div>
+	<div class="col-sm-9 col-md-10 content-wrapper">
+        <tiles:insertAttribute name = "body" />
+	</div>
+<!-- 	</div>  -->
+	<!--  row row-offcanvas ends -->
+<!-- </div>  container-scroller ends -->
 						
 		      
 </body>
