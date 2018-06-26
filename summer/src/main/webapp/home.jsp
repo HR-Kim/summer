@@ -17,13 +17,11 @@
 
 	</head>
   <body>
-
-	<!-- Start slider area -->
-	<div id="mu-slider">
-		<div class="mu-slide">
+	<div id="mu-slider" style="width:1500px; height:1000px;">
+		<div class="mu-slide" >
 			<!-- Start single slide  -->
 			<div class="mu-single-slide">
-				<img src="./resources/theme/images/main1.jpg" alt="slider img">
+				<img src="./resources/theme/images/main1.jpg" alt="slider img" style="width:1500px; height:800px;">
 				<div class="mu-single-slide-content-area">
 					<div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> 
 						<div class="row">
@@ -41,7 +39,7 @@
 
 			<!-- Start single slide  -->
 			<div class="mu-single-slide">
-				<img src="./resources/theme/images/main2.jpg" alt="slider img">
+				<img src="./resources/theme/images/main2.jpg" alt="slider img" style="width:1500px; height:800px;">
 				<div class="mu-single-slide-content-area">
 					<div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> 
 						<div class="row">
@@ -59,7 +57,7 @@
 
 			<!-- Start single slide  -->
 			<div class="mu-single-slide">
-				<img src="./resources/theme/images/main3.jpg" alt="slider img">
+				<img src="./resources/theme/images/main3.jpg" alt="slider img" style="width:1500px; height:800px;">
 				<div class="mu-single-slide-content-area">
 					<div class = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> 
 						<div class="row">
@@ -89,7 +87,7 @@
     <script src="https://unpkg.com/circlebars@1.0.3/dist/circle.js"></script>
 	
     <!-- Custom js -->
-	<script type="text/javascript" src="$./resources/js/custom.js"></script>
+	<script type="text/javascript" src="./resources/js/custom.js"></script>
 
 	<!-- About us Skills Circle progress  -->
 	<script>

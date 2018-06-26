@@ -239,24 +239,6 @@ a:focus,
 	color: #0091ea;
 }
 
-
-.scrollToTop,
-.mu-testimonial-slide .slick-dots li.slick-active,
-#mu-callto-action {
-	background-color: #0091ea;
-}
-
-.mu-social-media a:hover,
-.mu-social-media a:focus {
-	border: 1px solid #0091ea;
-	color: #0091ea;
-}
-
-.mu-contact-form .form-control:focus,
-.mu-featured-tours-single-info .mu-book-now-btn {
-	border: 1px solid #0091ea;    
-} 
-
 .mu-send-msg-btn,
 .mu-send-msg-btn:focus,
 .mu-register-btn:hover,
