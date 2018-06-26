@@ -73,7 +73,7 @@
 		    <include refid="baseCondition"/>   
 		    ) T1
 		WHERE rnum BETWEEN (#{pageSize} * (#{pageNum} -1) +1) AND (#{pageSize} * (#{pageNum} -1)+#{pageSize})
-
+		ORDER BY a_date DESC ,T1.ano DESC
 	
 
 	</select> 
