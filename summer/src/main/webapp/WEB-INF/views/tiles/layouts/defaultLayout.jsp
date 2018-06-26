@@ -25,7 +25,7 @@
 	<tiles:insertAttribute name = "header" />
 <!-- 	</div> -->
 	<div class="row">
-		<div class="col-sm-3 col-md-2 content-wrapper">
+		<div class="col-sm-3 col-md-2 content-wrapper" >
 			<tiles:insertAttribute name = "menu" />
 		</div>
 		<div class="col-sm-9 col-md-10 content-wrapper" style="padding-left:0; padding-right:0;">
